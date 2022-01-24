@@ -238,7 +238,7 @@ CharResistances['Barbarian_N']= {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, '
 CharResistances['Amazon_N']=    {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
 
 # Resistant enemies
-CharResistances['Salamander']= {'Fire': 1.00, 'Ice': -1.00}
+CharResistances['Salamander']= {'Impale': 0.1, 'Venom': 1.00, 'Slash': 0.10, 'Crush': 0.40, 'Ice': -1.00, 'Fire': 1.00, 'Light': 0.00, 'Drain': 0.60}
 CharResistances['Golem_clay']= {'Impale': 0.60, 'Venom': 1.00, 'Slash': 0.00, 'Crush': -0.60, 'Ice': 0.90, 'Fire': 0.90, 'Light': 0.10, 'Drain': 1.00}
 CharResistances['Golem_stone']= {'Impale': 0.90, 'Venom': 1.00, 'Slash': 0.10, 'Crush': -0.50, 'Ice': 0.80, 'Fire': 0.80, 'Light': 0.20, 'Drain': 1.00}
 CharResistances['Golem_metal']= {'Impale': 0.90, 'Venom': 1.00, 'Slash': 0.20, 'Crush': -0.20, 'Ice': -0.50, 'Fire': 0.80, 'Light': 0.60, 'Drain': 1.00}
