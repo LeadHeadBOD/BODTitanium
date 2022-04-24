@@ -187,28 +187,28 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/07-PAS51.wav', 'SigiloSobreHierba1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreHierba",s)
 
     s=Bladex.CreateSound('../../sounds/07-PAS52.wav', 'SigiloSobreHierba2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreHierba",s)
 
     s=Bladex.CreateSound('../../sounds/07-PAS53.wav', 'SigiloSobreHierba3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreHierba",s)
 
     s=Bladex.CreateSound('../../sounds/07-PAS54.wav', 'SigiloSobreHierba4')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreHierba",s)
@@ -301,28 +301,28 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/M-07-PASOSMETALR1.wav', 'PasoSigiloSobreMetal1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMetal",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-PASOSMETALR2.wav', 'PasoSigiloSobreMetal2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMetal",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-PASOSMETALL1.wav', 'PasoSigiloSobreMetal3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMetal",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-PASOSMETALL2.wav', 'PasoSigiloSobreMetal4')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMetal",s)
@@ -413,28 +413,28 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/M-PASOBARRO1.wav', 'PasoSigiloSobreBarro1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreBarro",s)
 
     s=Bladex.CreateSound('../../sounds/M-PASOBARRO3.wav', 'PasoSigiloSobreBarro2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreBarro",s)
 
     s=Bladex.CreateSound('../../sounds/M-PASOBARRO6.wav', 'PasoSigiloSobreBarro3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreBarro",s)
 
     s=Bladex.CreateSound('../../sounds/M-PASOBARRO7.wav', 'PasoSigiloSobreBarro4')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreBarro",s)
@@ -539,28 +539,28 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/M-07-pas45.wav', 'PasoSigiloSobreTierra1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreTierra",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-pas46.wav', 'PasoSigiloSobreTierra2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreTierra",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-pas47.wav', 'PasoSigiloSobreTierra3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreTierra",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-pas48.wav', 'PasoSigiloSobreTierra4')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreTierra",s)
@@ -668,28 +668,28 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/M-paso3tie.wav', 'PasoSigiloSobreArena1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreArena",s)
 
     s=Bladex.CreateSound('../../sounds/M-paso2tie.wav', 'PasoSigiloSobreArena2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreArena",s)
 
     s=Bladex.CreateSound('../../sounds/M-paso3hie.wav', 'PasoSigiloSobreArena3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreArena",s)
 
     s=Bladex.CreateSound('../../sounds/M-pasostie.wav', 'PasoSigiloSobreArena4')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreArena",s)
@@ -828,42 +828,42 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/M-07-CARR-GRAVAL1.wav', 'PasoSigiloSobreGrava1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreGrava",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-CARR-GRAVAL2.wav', 'PasoSigiloSobreGrava2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreGrava",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-CARR-GRAVAL3.wav', 'PasoSigiloSobreGrava3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreGrava",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-CARR-GRAVA-R1.wav', 'PasoSigiloSobreGrava4')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreGrava",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-CARR-GRAVAR2.wav', 'PasoSigiloSobreGrava5')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreGrava",s)
 
     s=Bladex.CreateSound('../../sounds/M-07-CARR-GRAVAR3.wav', 'PasoSigiloSobreGrava6')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreGrava",s)
@@ -960,21 +960,21 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/paso-piedra-1.wav', 'PasoSigiloSobrePiedra1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobrePiedra",s)
 
     s=Bladex.CreateSound('../../sounds/paso-piedra-2.wav','PasoSigiloSobrePiedra2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobrePiedra",s)
 
     s=Bladex.CreateSound('../../sounds/paso-piedra-3.wav',' PasoSigiloSobrePiedra3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobrePiedra",s)
@@ -1159,21 +1159,21 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/paso-madera-1.wav', 'PasoSigiloSobreMaderaTablas1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMaderaTablas",s)
 
     s=Bladex.CreateSound('../../sounds/paso-madera-2.wav', 'PasoSigiloSobreMaderaTablas2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMaderaTablas",s)
 
     s=Bladex.CreateSound('../../sounds/paso-madera-3.wav', 'PasoSigiloSobreMaderaTablas3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMaderaTablas",s)
@@ -1358,21 +1358,21 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/M-Pasomadera-.wav', 'PasoSigiloSobreMadera1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMadera",s)
 
     s=Bladex.CreateSound('../../sounds/M-Pasomaderal.wav', 'PasoSigiloSobreMadera2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMadera",s)
 
     s=Bladex.CreateSound('../../sounds/M-Pasomaderar.wav', 'PasoSigiloSobreMadera3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreMadera",s)
@@ -1639,28 +1639,28 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/M-00-NIEVEL1.wav', 'PasoSigiloSobreNieve1')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreNieve",s)
 
     s=Bladex.CreateSound('../../sounds/M-00-NIEVEL2.wav', 'PasoSigiloSobreNieve2')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreNieve",s)
 
     s=Bladex.CreateSound('../../sounds/M-00-NIEVER1.wav', 'PasoSigiloSobreNieve3')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreNieve",s)
 
     s=Bladex.CreateSound('../../sounds/M-00-NIEVER2.wav', 'PasoSigiloSobreNieve4')
     s.SendNotify=0
-    s.Volume=0.5
+    s.Volume=0.4
     s.MinDistance=5000
     s.MaxDistance=15000
     Bladex.AddStepSound("SigiloSobreNieve",s)
@@ -2075,7 +2075,7 @@ def Init():
     Bladex.AddStepSound("PasoBarroGolem",s)
 
 
-       # *********************************
+    # *********************************
     # *    PasoGdm     *
     # *********************************
     s=Bladex.CreateSound('../../sounds/paso-Gdm11.wav', 'PasoGdm1')
@@ -2093,6 +2093,37 @@ def Init():
     Bladex.AddStepSound("PasoGdm",s)
 
 
+    #**********************************
+    # Spider sounds
+    #************************************
+    
+    s=Bladex.CreateSound('../../sounds/M-PASOBARRO1.wav', 'PasoBarroAranitos1')
+    s.SendNotify=0
+    s.Volume=0.2
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("BarroAranitos",s)
+
+    s=Bladex.CreateSound('../../sounds/M-PASOBARRO3.wav', 'PasoBarroAranitos2')
+    s.SendNotify=0
+    s.Volume=0.2
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("BarroAranitos",s)
+
+    s=Bladex.CreateSound('../../sounds/M-PASOBARRO6.wav', 'PasoBarroAranitos3')
+    s.SendNotify=0
+    s.Volume=0.2
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("BarroAranitos",s)
+
+    s=Bladex.CreateSound('../../sounds/M-PASOBARRO7.wav', 'PasoBarroAranitos4')
+    s.SendNotify=0
+    s.Volume=0.2
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("BarroAranitos",s)
 
 
 
@@ -2174,6 +2205,10 @@ def Init():
     Bladex.AddMaterialStepSound("PisadaMinotauro","Arena","ArenaMinotauro")
     Bladex.AddMaterialStepSound("PisadaMinotauro","Agua","AguaMinotauro")
     Bladex.AddMaterialStepSound("PisadaGdm","default","PasoGdm")
+    
+    
+    Bladex.AddMaterialStepSound("PisadaAranitos","default","BarroAranitos")
+
 
 
 
@@ -2199,6 +2234,7 @@ def Init():
     Bladex.AddActionStepSound("Knight","Attack_f_s","PisadaSigilo")
     Bladex.AddActionStepSound("Knight","Attack_b_s","PisadaSigilo")
     Bladex.AddActionStepSound("Knight","default","default")
+    
     Bladex.AddActionStepSound("Bar","default","default")
     Bladex.AddActionStepSound("Bar","WBK_s","PisadaSigilo")
     Bladex.AddActionStepSound("Bar","WBK_no","PisadaSigilo")
@@ -2215,6 +2251,7 @@ def Init():
     Bladex.AddActionStepSound("Bar","Attack_b_s","PisadaSigilo")
     Bladex.AddActionStepSound("Bar","Attack_f_s","PisadaSigilo")
     Bladex.AddActionStepSound("Bar","Attack_rlx_s","PisadaSigilo")
+    
     Bladex.AddActionStepSound("Dwf","SNK_2h","PisadaSigilo")
     Bladex.AddActionStepSound("Dwf","SNK_1h","PisadaSigilo")
     Bladex.AddActionStepSound("Dwf","SNK_no","PisadaSigilo")
@@ -2231,6 +2268,7 @@ def Init():
     Bladex.AddActionStepSound("Dwf","Attack_f_s","PisadaSigilo")
     Bladex.AddActionStepSound("Dwf","Attack_b_s","PisadaSigilo")
     Bladex.AddActionStepSound("Dwf","default","default")
+    
     Bladex.AddActionStepSound("Amz","SNK_2h","PisadaSigilo")
     Bladex.AddActionStepSound("Amz","SNK_1h","PisadaSigilo")
     Bladex.AddActionStepSound("Amz","SNK_no","PisadaSigilo")
@@ -2247,31 +2285,32 @@ def Init():
     Bladex.AddActionStepSound("Amz","Attack_f_s","PisadaSigilo")
     Bladex.AddActionStepSound("Amz","Attack_b_s","PisadaSigilo")
     Bladex.AddActionStepSound("Amz","default","default")
+    
     Bladex.AddActionStepSound("default","default","default")
+    
     Bladex.AddActionStepSound("Skl","default","PisadaEsqueleto")
+    
     Bladex.AddActionStepSound("Chk","default","PisadaCaos")
+    
     Bladex.AddActionStepSound("Glm_st","default","PisadaGolem")
-    Bladex.AddActionStepSound("Ank","default","PisadaGdm")
-    Bladex.AddActionStepSound("Dgk","default","PisadaArmadura")
-    #Bladex.AddActionStepSound("Dkn","default","PisadaEnemigos")
-    Bladex.AddActionStepSound("Dok","default","PisadaEnemigos")
-    Bladex.AddActionStepSound("Org","default","PisadaEnemigos")
-    Bladex.AddActionStepSound("Gdm","default","PisadaGdm")
     Bladex.AddActionStepSound("Glm_cl","default","PisadaBarroGolem")
     Bladex.AddActionStepSound("Glm_lv","default","PisadaLavaGolem")
     Bladex.AddActionStepSound("Glm_mt","default","PisadaCaos")
     Bladex.AddActionStepSound("Glm_ic","default","PisadaGolem")
+    
+    Bladex.AddActionStepSound("Ank","default","PisadaGdm")
+    Bladex.AddActionStepSound("Dgk","default","PisadaArmadura")
+    Bladex.AddActionStepSound("Gdm","default","PisadaGdm")
     Bladex.AddActionStepSound("Gok","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Lch","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Ldm","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Min","default","PisadaGdm")
-    #Bladex.AddActionStepSound("Ork","default","PisadaEnemigos")
-    #Bladex.AddActionStepSound("Rgn","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Slm","default","PisadaEnemigos")
-    #Bladex.AddActionStepSound("Tkn","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Trl","default","PisadaEnemigos")
+    Bladex.AddActionStepSound("Trl_sn","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Vmp","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Cos","default","PisadaEnemigos")
+    Bladex.AddActionStepSound("Spd","default","PisadaAranitos")
 
 
     Bladex.AddActionStepSound("Knight_Traitor","default","PisadaArmadura")
@@ -2279,3 +2318,6 @@ def Init():
     Bladex.AddActionStepSound("Rgn","default","PisadaArmadura")
     Bladex.AddActionStepSound("Dkn","default","PisadaArmadura")
     Bladex.AddActionStepSound("Zkn","default","PisadaArmadura")
+    Bladex.AddActionStepSound("Dok","default","PisadaArmadura")
+    Bladex.AddActionStepSound("Org","default","PisadaArmadura")
+
