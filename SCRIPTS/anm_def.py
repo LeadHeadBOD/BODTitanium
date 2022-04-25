@@ -2552,6 +2552,15 @@ def Init():
     Bladex.AddAnmEvent("Dwf_g_09","Stop_Weapon",0.455)
     Bladex.AddAnmEvent("Dwf_g_09","Start_Weapon_Special",0.278)
     Bladex.AddAnmEvent("Dwf_g_09","Stop_Weapon_Special",0.455)
+    
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","HitInitialItp",0.120)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","HitFinalItp",0.748)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Trail",0.278)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Trail",0.709)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Weapon",0.405)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Weapon",0.709)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Weapon_Special",0.405)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Weapon_Special",0.709)
 
     Bladex.AddAnmEvent("Dwf_g_01a","Start_Weapon",0.370)
     Bladex.AddAnmEvent("Dwf_g_01a","Stop_Weapon",0.646)
