@@ -12,6 +12,7 @@ import Auras
 import GenFX
 
 
+
 if netgame.GetNetState() != 0:
 	import NetWeapon
 
@@ -1092,7 +1093,8 @@ def CheckRightHandToDrop(EntityName):
 
 def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded):
 	#pdb.set_trace()
-	
+	from Blood import DustDeathEntities
+    
 	CheckRightHandToDrop(VictimName)
 
 	# Additive vars set to 0
@@ -1465,6 +1467,8 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 		effective_damage= effective_damage + special_damage
 	
 	if(not Shielded) and (DamageType=="Impale" or DamageType=="Slash") and Bladex.GetBloodLevel()>0:
+		me.Data.TakeBleedingImpact= effective_damage
+	elif(me.Kind in DustDeathEntities) and DamageType=="Crush":
 		me.Data.TakeBleedingImpact= effective_damage
 	else:
 		me.Data.TakeBleedingImpact= 0
