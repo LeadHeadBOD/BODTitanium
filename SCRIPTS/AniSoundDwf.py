@@ -391,7 +391,9 @@ def AsignarSonidosEnano(Personaje):
 	NetSounds.AddAnimSound(per,"Dth_Fll_Dwf", Grito_Salto_VacioDwf, 0.1100)
 	
 	NetSounds.AddAnimSound(per,"Dwf_g_d_r",EsfuerzoCorto1Dwf, 0.1500)
+	NetSounds.AddAnimSound(per,"Dwf_g_d_r",SesgadoCorto, 0.3560)
 	NetSounds.AddAnimSound(per,"Dwf_g_d_l",EsfuerzoCorto2Dwf, 0.1300)
+	NetSounds.AddAnimSound(per,"Dwf_g_d_l",SesgadoCortoGrave, 0.2760)
 	NetSounds.AddAnimSound(per,"Dwf_d_b",EsfuerzoCorto3Dwf, 0.1500)
 	
 	
@@ -699,7 +701,7 @@ def AsignarSonidosEnano(Personaje):
 	NetSounds.AddAnimSound(per,'Dwf_g_s3_new', SesgadoEspecialLargo1, 0.2860)
 	NetSounds.AddAnimSound(per,'Dwf_g_s3_new', EsfuerzoGolpeArribaDwf, 0.2600)
 	NetSounds.AddAnimSound(per,'Dwf_g_s3_new', AndarDwf1, 0.3200)
-	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',SesgadoLargo, 0.3970)
+	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',SesgadoEspecialLargo2, 0.3970)
 	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',EsfuerzoGolpeArribaDwf, 0.2000)
 	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',AndarDwf1, 0.4000)
 	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',AndarDwf2, 0.8000)
