@@ -4,6 +4,7 @@ import ScriptSkip
 import MusicTool
 import darfuncs
 import Reference
+import Enm_Def
 #*************************************************************************************************
 #*************************************************************************************************
 #*************************************************************************************************
@@ -384,18 +385,19 @@ def Cierrapuerta0():
 def MuereElPobreLordKerman (VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded):
 	import Blood
 	global CanaMaster
-	
+    
 	en            = Bladex.GetEntity(VictimName)
-	Blood.BleedingImpact(en, en.Position[0], en.Position[1], en.Position[2], 0,10000,0,  0,   0,0,0,   0,0,0  )
+	wpn           = Bladex.GetEntity(WeaponName)
+	Blood.BleedingImpact(en, en.Position[0], en.Position[1], en.Position[2], 0,10000,0,  wpn,   0,0,0,   0,0,0  )
 	en.Life       = 0
 	en.DamageFunc = None
 	CanaMaster    = 0
-	darfuncs.UnhideBadGuy(OrcoCabreado.Name)
-	OrcoCabreado.Position = 18455.0322547, 50387.9289109, 24534.7211011
-	OrcoCabreado.Angle = 3.1415*3/2
-	OrcoCabreado.SetOnFloor()
-	OrcoCabreado.GoToJogging = 1
-	OrcoCabreado.GoTo(26351.1959878, 50388.8367659, 34333.0602338)
+	#darfuncs.UnhideBadGuy(OrcoCabreado.Name)
+	#OrcoCabreado.Position = 18455.0322547, 50387.9289109, 24534.7211011         # This looks like was made as a failsafe in case the Duke somehow died in his cell.
+	#OrcoCabreado.Angle = 3.1415*3/2                                             # Dont need any of this anymore since I removed his DamageFunc until the cell is unlocked.
+	#OrcoCabreado.SetOnFloor()                                                   # -LeadHead
+	#OrcoCabreado.GoToJogging = 1
+	#OrcoCabreado.GoTo(26351.1959878, 50388.8367659, 34333.0602338)
 	_MuereLordKerman.Play(en.Position[0], en.Position[1], en.Position[2], 0)
 	Bladex.ExeMusicEvent(Bladex.GetMusicEvent("Combate6"))
 
@@ -409,16 +411,17 @@ def PrisioneroX():
 	#EnemyTypes.EnemyDefaultFuncs(pris)
 	pris.Blind = 0
 	pris.Deaf = 0
-	pris.SetTmpAnmFlags(1,1,0,0,1,1,0)	
+	pris.SetTmpAnmFlags(1,1,0,0,1,1,0)
 	pris.LaunchAnimation("Tkn_prisionero_rlx")
+	pris.Life = 1
 	pris.SetOnFloor()
-	pris.DamageFunc = MuereElPobreLordKerman
-	Bladex.ReadBitMap("../../Data/Icons/Duke.bmp","DukeIcon")               ### Load duke icon into memory
-	Reference.EnemiesScorerData['PPris']=("DukeIcon","Duki")                ### Assign duke icon to Prisoner               
-	#Bladex.AddScheduledFunc(Bladex.GetTime()+0.01, pris.Freeze,())
+	pris.DamageFunc = None
+
+
+
 
 def OrcoDisfrutaMatando(x,y):
-	OrcoCabreado.SetActiveEnemy("Player1")
+	OrcoCabreado.SetActiveEnemy(pris.Name)
 	OrcoCabreado.Alpha                              = 1.0
 	Bladex.GetEntity(OrcoCabreado.InvLeft).Alpha    = 1.0
 	Bladex.GetEntity(OrcoCabreado.InvRight).Alpha   = 1.0	
@@ -510,7 +513,8 @@ def pSceneStart():
 	
 	if CanaMaster:
 		CanaMaster = 0
-		pris.DamageFunc = ""
+		AniSound.AsignarSonidosCaballeroTraidor(pris.Name) #There has to be a better way to assign hit-sounds but I can't be bothered anymore.
+		pris.DamageFunc = MuereElPobreLordKerman
 		#pris.UnFreeze()
 		#OrcoCabreado.PutToWorld()
 		pris.Position = 32497.973,50797.926,38294.32
