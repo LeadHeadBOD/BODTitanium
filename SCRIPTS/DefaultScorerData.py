@@ -39,6 +39,7 @@ def Init():
     Bladex.ReadBitMap("../../Data/Icons/troll snow.bmp","TrollSnowIcon")
     Bladex.ReadBitMap("../../Data/Icons/Vamp.bmp","VampireIcon")
     Bladex.ReadBitMap("../../Data/Icons/Mortimer.bmp","MortimerIcon")
+    Bladex.ReadBitMap("../../Data/Icons/Duke.bmp","DukeIcon")
     Bladex.ReadBitMap("../../Data/Icons/NPKnight.bmp","NPKnightIcon")
 
     Reference.EnemiesDefaultScorerData['ChaosKnight']=("ChaosIcon","Chaos Knight")
@@ -81,4 +82,5 @@ def Init():
     Reference.EnemiesDefaultScorerData['Troll_snow']=("TrollSnowIcon","Snow Troll")
     Reference.EnemiesDefaultScorerData['Vamp']=("VampireIcon","Vampire")
     Reference.EnemiesDefaultScorerData['Mortimer']=("MortimerIcon","Sir Mortimer")
+    Reference.EnemiesDefaultScorerData['Duque']=("DukeIcon","Lord Kerman")
     Reference.EnemiesDefaultScorerData['NP_Knight']=("NPKnightIcon","Knight")
