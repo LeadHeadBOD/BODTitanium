@@ -63,9 +63,32 @@ def Init():
 
 
 
+    # *********************************
+    # *    DefaultEqueleto                  *
+    # *********************************
 
+    """
+    s=Bladex.CreateSound('../../sounds/M-tajo-hueso.wav', 'PasoDefaultEsqueleto1')
+    s.SendNotify=0
+    s.Volume=0.6
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("defaultEsqueleto",s)
 
+    s=Bladex.CreateSound('../../sounds/golpe_hueso_1.wav', 'PasoDefaultEsqueleto2')
+    s.SendNotify=0
+    s.Volume=0.6
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("defaultEsqueleto",s)
 
+    s=Bladex.CreateSound('../../sounds/golpe_hueso_2.wav', 'PasoDefaultEsqueleto3')
+    s.SendNotify=0
+    s.Volume=0.6
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("defaultEsqueleto",s)
+    """
     # *********************************
     # *      Hierba                   *
     # *********************************
@@ -2164,7 +2187,9 @@ def Init():
     Bladex.AddMaterialStepSound("PisadaSigilo","Water","SigiloSobreAgua")
     Bladex.AddMaterialStepSound("default","madera ligera","Madera")
     Bladex.AddMaterialStepSound("PisadaSigilo","madera ligera","SigiloSobreMadera")
+    Bladex.AddMaterialStepSound("PisadaEsqueleto","default","PiedraEsqueleto")
     Bladex.AddMaterialStepSound("PisadaEsqueleto","Hierba","HierbaEsqueleto")
+    Bladex.AddMaterialStepSound("PisadaEsqueleto","MaderaTablas","MaderaEsqueleto")
     Bladex.AddMaterialStepSound("PisadaEsqueleto","Madera","MaderaEsqueleto")
     Bladex.AddMaterialStepSound("PisadaEsqueleto","Piedra","PiedraEsqueleto")
     Bladex.AddMaterialStepSound("PisadaCaos","default","PiedraCaos")
