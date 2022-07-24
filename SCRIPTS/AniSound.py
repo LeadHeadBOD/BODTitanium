@@ -15,7 +15,7 @@ from AniSoundRgn import *
 from AniSoundOrk import *
 from AniSoundOrg import *
 from AniSoundSkl import *
-from AniSoundTrl import *
+from AniSoundTrl import * 
 from AniSoundCos import *
 from AniSoundSpd import *
 from AniSoundVmp import *

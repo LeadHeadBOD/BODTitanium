@@ -4,10 +4,8 @@ import Bladex
 # *      Asignacion de sonidos      *
 # ***********************************
 
-#I dont know what this variable does, but it crashes if i dont comment it out
-#Must do further testing, potentially can save performane
-#Might be because I am testing on saved games
-#AsignarSonidosGolem_icCalled=0
+
+AsignarSonidosGolem_icCalled=0
 def AsignarSonidosGolem_ic(Personaje):
 	
 	from AniSoundGlm_icX import *
@@ -24,10 +22,10 @@ def AsignarSonidosGolem_ic(Personaje):
     
 	
 	
-#	global AsignarSonidosGolem_Called
-#	if AsignarSonidosGolem_icCalled:
-#		return
-#	AsignarSonidosGolem_icCalled=1
+	global AsignarSonidosGolem_icCalled
+	if AsignarSonidosGolem_icCalled:
+		return
+	AsignarSonidosGolem_icCalled=1
 
 
 

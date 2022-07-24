@@ -255,6 +255,31 @@ class Skeleton (Enm_Def.NPCPerson):
 		limb= Bladex.GetEntity(obj_name)
 		InitDataField.Initialise(limb)
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoObjeto,(obj_name,100,0,))
+        
+	def Explode (self,EntityName,EventName):
+		me = Bladex.GetEntity(EntityName)
+		me.DelAnmEventFunc(EventName)
+		###Reference.debugprint(EntityName+": in Explode")
+		#pdb.set_trace()
+		# Check valid event type
+		if EventName != "Explode":
+			print(EntityName+":-( Explode has unhandled event")
+			return
+
+		me_pos = me.Position
+
+		for limb_id in range (1, 6):
+			limb= me.SeverLimb(limb_id)
+
+			if limb:
+				# explode outward
+				limb_pos = limb.Position
+				OutImpulse= B3DLib.Normalize ((limb_pos[0]-me_pos[0], limb_pos[1]-me_pos[1], limb_pos[2]-me_pos[2]))
+				B3DLib.Scale (OutImpulse, 5000.0)
+				limb.Impulse(OutImpulse[0], OutImpulse[1], OutImpulse[2])
+
+				# we want backward impulse as well...  get this from the weapon
+				limb.Impulse(self.HitImpulse[0], self.HitImpulse[1], self.HitImpulse[2])        
 
 ################################################################################
 
@@ -1445,7 +1470,6 @@ class Troll_Dark (Enm_Def.NPCPerson):
 	def ResetSounds(self, EntityName):
 		AniSound.AsignarSonidosTroll(EntityName)
 
-
 	def ResetCombat (self,EntityName):
 		Enm_Def.NPCPerson.ResetCombat(self, EntityName)
 		me = Bladex.GetEntity(EntityName)
@@ -1457,8 +1481,39 @@ class Troll_Dark (Enm_Def.NPCPerson):
 ################################################################################
 # Define the Troll_snow class
 ################################################################################
-class Troll_snow (Troll_Dark):
-	pass
+class Troll_snow (Enm_Def.NPCPerson):
+	def __init__(self, me):
+		# base class init		
+		Enm_Def.NPCPerson.__init__(self, me)
+		
+		self.DamageFactorNone  = 0.15
+		self.DamageFactorLight = 0.25
+
+		# anims
+		#me.AnmTranFunc=AuxTran.AuxTranKnightLivingDead
+
+		# Set up specific sound priorities
+		self.SoundPriorities[Reference.SND_ARROW]   = 10.0
+		self.SoundPriorities[Reference.SND_HIT]     = 50.0
+		self.SoundPriorities[Reference.SND_NPC]     = 25.0
+		self.SoundPriorities[Reference.SND_NOISYPC] = 30.0
+		self.SoundPriorities[Reference.SND_PC]      = 80.0
+
+		# Because we share biped data with the Troll_Dark, we start with the wrong mesh
+		me.MeshName= 'Troll_snow'
+
+	def ResetSounds(self, EntityName):
+		AniSound.AsignarSonidosTroll(EntityName)
+
+	def ResetCombat (self,EntityName):
+		Enm_Def.NPCPerson.ResetCombat(self, EntityName)
+		me = Bladex.GetEntity(EntityName)	
+		if me and me.Life>0:
+			me.BlockingPropensity = 0.8
+			me.AttackList = BCopy.deepcopy(Combat.TrollAttackData)
+
+#class Troll_snow (Troll_Dark):
+#	pass
 
 ################################################################################
 
@@ -4956,6 +5011,9 @@ class Golem_metal (Golem_stone):
 # Define the Golem_ice class
 ################################################################################
 class Golem_ice (Golem_stone):
+
+    ag=None
+
     def __init__(self,me):
         # base class init
         me.Alpha=0.6
@@ -4964,6 +5022,14 @@ class Golem_ice (Golem_stone):
         self.StoneType="Piedra_Glm_ic"
         self.StoneAlpha=0.6
         self.StoneSelfIlum=0.8
+        
+        ### Aura specifically for Ice Golem
+        self.ag=Bladex.CreateEntity(me.Name+"_Aura", "Entity Aura", 0, 0, 0)
+        me.Link(self.ag)
+        self.ag.SetAuraParams(50, 1, 1, 0, 0, 1)
+        self.ag.SetAuraGradient(2, 0.9, 1.0, 1.0, 0.2, 0.1, 0.4, 0.8, 1.0, 0.0, 0.8)
+        self.ag.SetAuraActive(1)
+        
         
     def __setstate__(self,parm):
 		# Toma como parámetro lo que devuelve __getstate__() y debe recrear la clase
@@ -4979,11 +5045,17 @@ class Golem_ice (Golem_stone):
 			self.AlphaVar= parms[4]
 			self.StoneAlpha= parms[5]
 			self.StoneSelfIlum= parms[6]
+			self.ag=Bladex.CreateEntity(me.Name+"_Aura", "Entity Aura", 0, 0, 0)
+			self.ag.SetAuraParams(50, 1, 1, 0, 0, 1)
+			self.ag.SetAuraGradient(2, 0.9, 1.0, 1.0, 0.2, 0.1, 0.4, 0.8, 1.0, 0.0, 0.8)
+			self.ag.SetAuraActive(1)
 		
 		me.AddAnmEventFunc("StoneAppears", self.StoneAppearsHandler)
 		me.OnStepFunc = darfuncs.QuakeStep
 		self.NoFXOnHit= TRUE
 		me.Alpha=0.6
+        
+
         
 ################################################################################
 # Define the Ragnar class
