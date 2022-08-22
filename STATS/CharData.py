@@ -1,5 +1,13 @@
-
-
+##///
+##||| CHARSTATS.PY TITANIUM
+##||| Change list:
+##||| * Added Ice Golem entries
+##||| * Modified Gold and Dark Ork life and damage data
+##||| * Expanded Salamander resistances
+##||| * Normalized Salamander experience gain (for now same as skeleton)
+##||| * Snow Troll life values set to same as Dark Troll (Snow Trolls have better resistances, it balances out)
+##||| * Improved formatting in restistances for easier reading
+##\\\ 
 
 
 # Tablas para los personajes
@@ -22,8 +30,8 @@ CharMaxLifeValue['Dwarf_N']=             [   120,    220,    320,    420,    620
 CharMaxLifeValue['Spidersmall']=         [     2,      7,     10,     20,     24,     28,     32,     36,     40,     44,     48,     52,     56,     60,     64,     68,     72,     76,     80,     84]
 CharMaxLifeValue['Cos']=                 [     3,      8,     12,     16,     20,     24,     28,     32,     36,     40,     44,     48,     52,     56,     60,     64,     68,     72,     76,     80]
 CharMaxLifeValue['Ork']=                 [     6,     15,     25,     40,    100,    180,    280,    400,    640,    850,   1100,   1300,   1500,   1700,   1900,   2100,   2200,   2400,   2600,   2800]
-CharMaxLifeValue['Dark_Ork']=            [    10,     40,    100,    240,     50,     60,     70,     80,     90,    100,    110,    120,    130,    140,    150,    160,    170,    180,    190,    200]
-CharMaxLifeValue['Gold_Ork']=            [    20,     30,     40,     50,     60,     70,     80,     90,    100,    110,    120,    130,    140,    150,    160,    170,    180,    190,    200,    210]
+CharMaxLifeValue['Dark_Ork']=            [    10,     20,     32,     50,    150,    250,    380,    460,    800,   1000,   1250,   1500,   1800,   2000,   2200,   2400,   2700,   3000,   3200,   3400]       #Modified -LeadHead
+CharMaxLifeValue['Gold_Ork']=            [    20,     30,     40,     60,    180,    280,    420,    500,    950,   1200,   1500,   1700,   2000,   2300,   2500,   2800,   3100,   3400,   3600,   3800]       #Modified -LeadHead
 CharMaxLifeValue['Knight_Traitor']=      [    10,     30,     50,     70,    120,    220,    350,    470,    790,    930,   1250,   1480,   1600,   1800,   2000,   2100,   2200,   2300,   2400,   2500]
 CharMaxLifeValue['Great_Ork']=           [    60,    100,    200,    400,    600,    800,   1000,   1200,   1500,   1700,   1900,   2100,   2300,   2500,   2700,   2900,   3100,   3300,   3500,   3900]
 CharMaxLifeValue['Dark_Knight']=         [   400,    600,    800,   1000,   1200,   1400,   1600,   1800,   2000,   2200,   2400,   2600,   2800,   3000,   3200,   3400,   3600,   3800,   4000,   4500]     
@@ -33,11 +41,12 @@ CharMaxLifeValue['Skeleton']=            [    15,     35,     50,     80,    140
 CharMaxLifeValue['Flame_Skeleton']=      [   700,    800,    900,   1000,   1100,   1200,   1300,   1400,   1500,   1600,   1700,   1800,   1900,   2000,   2100,   2200,   2300,   2400,   2500,   2600]
 CharMaxLifeValue['Salamander']=          [   150,    200,    250,    550,    650,    750,    850,    950,   1050,   1150,   1250,   1350,   1450,   1550,   1650,   1750,   1850,   1950,   2050,   2150]
 CharMaxLifeValue['Troll_Dark']=          [   300,    440,    520,    600,    850,   1050,   1250,   1700,   2200,   2800,   3500,  12400,  13200,  14000,  14800,  15600,  16400,  17200,  18000,  18800]
-CharMaxLifeValue['Troll_snow']=          [   440,    520,    600,    680,   6600,   7400,   8200,  10000,  10800,  11600,  12400,  13200,  14000,  14800,  15600,  16400,  17200,  18000,  18800,  19600]
+CharMaxLifeValue['Troll_snow']=          [   300,    440,    520,    600,    850,   1050,   1250,   1700,   2200,   2800,   3500,  12400,  13200,  14000,  14800,  15600,  16400,  17200,  18000,  18800]       #Modified -LeadHead
 CharMaxLifeValue['Minotaur']=            [  5000,   5500,   6000,   6500,   7000,   7500,   9000,  11000,  12000,  13000,  14000,  15000,  16000,  18000,  28000,  29000,  30000,  31000,  32000,  33000]     
 CharMaxLifeValue['Golem_clay']=          [  1000,   1090,   1180,   1270,   1360,   1450,   5400,   6300,   7200,   8100,   9000,   9900,  10800,  11700,  12600,  13500,  14400,  15300,  16200,  17100]
 CharMaxLifeValue['Golem_stone']=         [  4000,   4100,   4200,   5000,   6000,   7000,   8000,   9000,   9500,  10000,  15000,  20000,  22000,  23000,  24000,  25000,  26000,  27000,  28000,  29000]
 CharMaxLifeValue['Golem_metal']=         [  8000,   8200,   8400,   9600,  10800,  12000,  14000,  16000,  18000,  20000,  22000,  24000,  26000,  27000,  28000,  29000,  30000,  31000,  32000,  33000]
+CharMaxLifeValue['Golem_ice']=           [  4000,   4100,   4200,   5000,   6000,   7000,   8000,   9000,   9500,  10000,  15000,  20000,  22000,  23000,  24000,  25000,  26000,  27000,  28000,  29000]       #Added -LeadHead
 CharMaxLifeValue['Little_Demon']=        [   200,    350,    500,    700,    900,   1100,   1300,   1500,   1700,   1900,   2000,   2500,   3000,   3500,   4000,   4500,   5000,   5500,   6000,   6500]
 CharMaxLifeValue['Ragnar']=              [   300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300,    300]
 CharMaxLifeValue['Golem_lava']=          [  6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000,   6000]
@@ -72,8 +81,8 @@ CharDamageData['Dwarf_N']=               [     2,      3,      5,      7,      9
 CharDamageData['Spidersmall']=           [    10,     15,     20,     25,     40,     45,     50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    120,    150,    170,    190]
 CharDamageData['Cos']=                   [    10,     15,     20,     25,     40,     45,     50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    120,    150,    170,    190]
 CharDamageData['Ork']=                   [     1,      5,     10,     15,     20,     25,     40,     45,     50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    100,    110]
-CharDamageData['Dark_Ork']=              [     4,      6,      8,     10,     12,     30,     31,     32,     33,     34,     35,     36,     37,     38,     39,     40,     41,     42,     43,     44]
-CharDamageData['Gold_Ork']=              [     6,      8,     10,     12,     14,     32,     33,     34,     35,     36,     37,     38,     39,     40,     41,     42,     43,     44,     45,     46]
+CharDamageData['Dark_Ork']=              [     3,      6,     12,     18,     28,     35,     50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    100,    105,    110,    120]       #Modified -LeadHead
+CharDamageData['Gold_Ork']=              [     6,      8,     14,     22,     34,     42,     55,     60,     68,     76,     84,     92,    100,    108,    116,    124,    132,    140,    148,    154]       #Modified -LeadHead
 CharDamageData['Knight_Traitor']=        [     1,      5,     10,     15,     20,     25,     40,     45,     50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    100,    110]
 CharDamageData['Great_Ork']=             [    12,     15,     18,     25,     30,     40,     50,     60,     70,     80,     90,    100,    110,    120,    130,    140,    150,    160,    170,    180]
 CharDamageData['Dark_Knight']=           [    12,     14,     16,     18,     20,     22,     24,     26,     28,     30,     32,     34,     36,     38,     40,     42,     44,     46,     48,     50]
@@ -88,6 +97,7 @@ CharDamageData['Minotaur']=              [    30,     40,     50,     60,     70
 CharDamageData['Golem_clay']=            [    44,     45,     46,     47,     48,     49,     50,     51,     52,     53,     54,     55,     56,     57,     58,     59,     60,     61,     62,     63]
 CharDamageData['Golem_stone']=           [    52,     53,     54,     55,     56,     57,     58,     59,     60,     61,     62,     63,     64,     65,     66,     67,     68,     69,     70,     71]
 CharDamageData['Golem_metal']=           [    50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    100,    105,    110,    115,    120,    125,    130,    135,    140,    145]
+CharDamageData['Golem_ice']=             [    52,     53,     54,     55,     56,     57,     58,     59,     60,     61,     62,     63,     64,     65,     66,     67,     68,     69,     70,     71]       #Added -LeadHead
 CharDamageData['Little_Demon']=          [    12,     18,     25,     35,     45,     55,     24,     26,     28,     30,     32,     34,     36,     38,     40,     42,     44,     46,     48,     50]
 CharDamageData['Ragnar']=                [     1,      2,      3,      4,      5,      6,      7,      8,      9,     10,     11,     12,     13,     14,     15,     16,     17,     18,     19,     20]
 CharDamageData['Golem_lava']=            [    60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60]
@@ -131,6 +141,7 @@ CharDefenseData['Minotaur']=             [     0,      0,      0,      0,      0
 CharDefenseData['Golem_clay']=           [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
 CharDefenseData['Golem_stone']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
 CharDefenseData['Golem_metal']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
+CharDefenseData['Golem_ice']=            [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]       #Added -LeadHead
 CharDefenseData['Little_Demon']=         [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
 CharDefenseData['Ragnar']=               [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
 CharDefenseData['Golem_lava']=           [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
@@ -144,45 +155,46 @@ CharDefenseData['DarkLord']=             [     0,      0,      0,      0,      0
 # Puntos de experiencia necesarios para pasar al siguiente nivel
 #                   at level(lvls              0       1       2       3       4       5       6       7       8       9      10      11      12      13      14      15      16      17      18      19
 CharExperienceCost={}                    ###############################################################################################################################################################
-CharExperienceCost['Prisoner_1']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Prisoner_2']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Prisoner_3']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Prisoner_4']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Prisoner_5']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Prisoner_6']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Enano1']=            [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Enano2']=            [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
+CharExperienceCost['Prisoner_1']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Prisoner_2']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Prisoner_3']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Prisoner_4']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Prisoner_5']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Prisoner_6']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Enano1']=            [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Enano2']=            [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
 CharExperienceCost['Knight_N']=          [    50,    100,    200,    400,    800,   1600,   3200,   6400,  12800,  25600,  51200, 102400, 204800, 409600, 819200,1638400,3276800,6553600,13107200,26214400]
 CharExperienceCost['Barbarian_N']=       [    50,    100,    200,    400,    800,   1600,   3200,   6400,  12800,  25600,  51200, 102400, 204800, 409600, 819200,1638400,3276800,6553600,13107200,26214400]
 CharExperienceCost['Amazon_N']=          [    50,    100,    200,    400,    800,   1600,   3200,   6400,  12800,  25600,  51200, 102400, 204800, 409600, 819200,1638400,3276800,6553600,13107200,26214400]
 CharExperienceCost['Dwarf_N']=           [    50,    100,    200,    400,    800,   1600,   3200,   6400,  12800,  25600,  51200, 102400, 204800, 409600, 819200,1638400,3276800,6553600,13107200,26214400]
-CharExperienceCost['Spidersmall']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Cos']=               [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Ork']=               [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Dark_Ork']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Gold_Ork']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Knight_Traitor']=    [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Great_Ork']=         [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Dark_Knight']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Lich']=              [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Knight_Zombie']=     [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Skeleton']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Flame_Skeleton']=    [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Salamander']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Troll_Dark']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Troll_snow']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Minotaur']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Golem_clay']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Golem_stone']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Golem_metal']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Little_Demon']=      [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Ragnar']=            [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Golem_lava']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['DalGurak']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Vamp']=              [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['ChaosKnight']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['Great_Demon']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
-CharExperienceCost['DarkLord']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
+CharExperienceCost['Spidersmall']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Cos']=               [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Ork']=               [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Dark_Ork']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Gold_Ork']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Knight_Traitor']=    [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Great_Ork']=         [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Dark_Knight']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Lich']=              [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Knight_Zombie']=     [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Skeleton']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Flame_Skeleton']=    [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Salamander']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Troll_Dark']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Troll_snow']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Minotaur']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Golem_clay']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Golem_stone']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Golem_metal']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Golem_ice']=         [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]       #Added -LeadHead
+CharExperienceCost['Little_Demon']=      [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Ragnar']=            [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Golem_lava']=        [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['DalGurak']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Vamp']=              [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['ChaosKnight']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['Great_Demon']=       [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
+CharExperienceCost['DarkLord']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,        0]
 
 
 # Puntos de experiencia que se dan al asesino
@@ -212,13 +224,14 @@ CharExperienceReward['Lich']=            [    10,     15,     20,     30,     40
 CharExperienceReward['Knight_Zombie']=   [    15,     25,     35,     55,     85,    105,    145,    280,    560,   1000,   2000,   4000,   8000,  16000,  32000,  55000,  65000,  75000,  85000, 100000]
 CharExperienceReward['Skeleton']=        [     5,     10,     15,     30,     60,    120,    240,    480,    960,   1920,   3840,   7680,  15360,  30720,  61440,  70000,  80000, 120000, 150000, 170000]
 CharExperienceReward['Flame_Skeleton']=  [     5,     10,     15,     30,     60,    120,    240,    480,    960,   1920,   3840,   7680,  15360,  30720,  61440,  70000,  80000, 120000, 150000, 170000]
-CharExperienceReward['Salamander']=      [     5,     10,     15,     30,     60,    120,    240,    480,    960,   1920,   3840,   7680,  15360,  30720,  61440,  70000,  80000, 120000, 150000, 170000]
+CharExperienceReward['Salamander']=      [     5,     10,     15,     30,     60,    120,    240,    480,    960,   1920,   3840,   7680,  15360,  30720,  61440,  70000,  80000, 120000, 150000, 170000]       #Modified -LeadHead
 CharExperienceReward['Troll_Dark']=      [   150,    300,    600,   1200,   2400,   4800,   9600,  19200,  38400,  76800,  80000,  90000, 120000, 140000, 160000, 180000, 200000, 220000, 240000, 260000]
 CharExperienceReward['Troll_snow']=      [   150,    300,    600,   1200,   2400,   4800,   9600,  19200,  38400,  76800,  80000,  90000, 120000, 140000, 160000, 180000, 200000, 220000, 240000, 260000]
 CharExperienceReward['Minotaur']=        [ 30000,  40000,  50000,  60000,  70000,  80000, 100000, 150000, 300000, 600000, 800000,1000000,1100000,1200000,1300000,1400000,1500000,1600000,1700000,1800000]
 CharExperienceReward['Golem_clay']=      [  8000,  12000,  18000,  28000,  38000,  48000,  58000,  68000,  88000, 138000, 288000, 400000, 600000, 800000,1000000,1100000,1200000,1300000,1400000,1500000]
 CharExperienceReward['Golem_stone']=     [ 18000,  28000,  38000,  48000,  58000,  68000,  88000, 138000, 288000, 400000, 600000, 800000,1000000,1100000,1200000,1300000,1400000,1500000,1600000,1700000]
 CharExperienceReward['Golem_metal']=     [ 40000,  50000,  60000,  70000,  80000, 100000, 150000, 300000, 600000, 800000,1000000,1100000,1200000,1300000,1400000,1500000,1600000,1700000,1800000,1900000]
+CharExperienceReward['Golem_ice']=       [ 18000,  28000,  38000,  48000,  58000,  68000,  88000, 138000, 288000, 400000, 600000, 800000,1000000,1100000,1200000,1300000,1400000,1500000,1600000,1700000]       #Added -LeadHead
 CharExperienceReward['Little_Demon']=    [   100,    200,    400,    800,   1600,   3200,   6400,  12800,  25600,  51200,  70000,  90000, 110000, 130000, 150000, 170000, 190000, 210000, 240000, 260000]
 CharExperienceReward['Ragnar']=          [    50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50,     50]
 CharExperienceReward['Golem_lava']=      [300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 800000, 800000, 800000, 800000, 800000, 800000, 800000, 800000, 800000, 800000]
@@ -231,39 +244,39 @@ CharExperienceReward['DarkLord']=        [8000000,8000000,8000000,8000000,800000
 
 # Resistances to various forms of attack, range 0.0-1.0
 CharResistances={}
-CharResistances['Default']=     {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
-CharResistances['Knight_N']=    {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
-CharResistances['Dwarf_N']=     {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
-CharResistances['Barbarian_N']= {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
-CharResistances['Amazon_N']=    {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
+CharResistances['Default']=        {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
+CharResistances['Knight_N']=       {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
+CharResistances['Dwarf_N']=        {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
+CharResistances['Barbarian_N']=    {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
+CharResistances['Amazon_N']=       {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
 
 # Resistant enemies
-CharResistances['Salamander']= {'Impale': 0.1, 'Venom': 1.00, 'Slash': 0.10, 'Crush': 0.40, 'Ice': -1.00, 'Fire': 1.00, 'Light': 0.00, 'Drain': 0.60}
-CharResistances['Golem_clay']= {'Impale': 0.60, 'Venom': 1.00, 'Slash': 0.00, 'Crush': -0.60, 'Ice': 0.90, 'Fire': 0.90, 'Light': 0.10, 'Drain': 1.00}
-CharResistances['Golem_stone']= {'Impale': 0.90, 'Venom': 1.00, 'Slash': 0.10, 'Crush': -0.50, 'Ice': 0.80, 'Fire': 0.80, 'Light': 0.20, 'Drain': 1.00}
-CharResistances['Golem_metal']= {'Impale': 0.90, 'Venom': 1.00, 'Slash': 0.20, 'Crush': -0.20, 'Ice': -0.50, 'Fire': 0.80, 'Light': 0.60, 'Drain': 1.00}
-CharResistances['Golem_lava']= {'Impale': 0.95, 'Venom': 1.00, 'Slash': 0.20, 'Crush': -0.40, 'Ice': -1.00, 'Fire': 1.00, 'Light': 0.80, 'Drain': 1.00}
-CharResistances['Golem_ice']= {'Impale': 0.95, 'Venom': 1.00, 'Slash': 0.20, 'Crush': -0.40, 'Ice': 1.00, 'Fire': -1.00, 'Light': 0.80, 'Drain': 1.00}
-CharResistances['Flame_Skeleton']= {'Fire': 1.00,'Impale': 1.00, 'Venom': 1.00, 'Ice': -1.00, 'Drain': 1.00} # Must revisit this later -LeadHead
-CharResistances['Skeleton']= {'Impale': 0.60, 'Venom': 1.00, 'Slash': 0.40, 'Crush': -0.20, 'Ice': 0.30, 'Fire': 0.30, 'Light': -1.00, 'Drain': 1.00}
-CharResistances['Ork']= {'Impale': 0.00, 'Venom': -0.30, 'Slash': -0.10, 'Crush': 0.00, 'Ice': 0.40, 'Fire': -0.30, 'Light': -1.00, 'Drain': 0.40}
-CharResistances['Great_Ork']= {'Impale': 0.80, 'Venom': 0.30, 'Slash': 0.00, 'Crush': 0.20, 'Ice': 0.60, 'Fire': 0.00, 'Light': -1.00, 'Drain': 0.60}
-CharResistances['Knight_Traitor']= {'Impale': -0.20, 'Venom': -0.70, 'Slash': 0.00, 'Crush': -0.10, 'Ice': -0.40, 'Fire': 0.20, 'Light': -1.00, 'Drain': 0.00}
-CharResistances['Ragnar']= {'Impale': -0.20, 'Venom': -0.70, 'Slash': 0.00, 'Crush': 0.60, 'Ice': -0.40, 'Fire': 0.20, 'Light': -1.00, 'Drain': 0.00}
-CharResistances['Dark_Knight']= {'Impale': 0.10, 'Venom': 1.00, 'Slash': 0.20, 'Crush': 0.30, 'Ice': -0.10, 'Fire': -0.10, 'Light': -1.00, 'Drain': 1.00}
-CharResistances['Lich']= {'Impale': -0.20, 'Venom': 1.00, 'Slash': 0.00, 'Crush': 0.50, 'Ice': 0.80, 'Fire': 0.50, 'Light': -1.00, 'Drain': 1.00}
-CharResistances['Knight_Zombie']= {'Impale': -0.10, 'Venom': 1.00, 'Slash': 0.00, 'Crush': 0.70, 'Ice': 0.80, 'Fire': 0.80, 'Light': -1.00, 'Drain': 1.00}
-CharResistances['ChaosKnight']= {'Impale': 0.60, 'Venom': 1.00, 'Slash': 0.40, 'Crush': -0.50, 'Ice': 1.00, 'Fire': 1.00, 'Light': -0.60, 'Drain': 1.00}
-CharResistances['Minotaur']= {'Impale': 0.20, 'Venom': -0.30, 'Slash': 0.00, 'Crush': 0.40, 'Ice': -0.50, 'Fire': -0.40, 'Light': -0.90, 'Drain': 0.90}
-CharResistances['Troll_Dark']= {'Impale': -0.20, 'Venom': -0.60, 'Slash': 0.10, 'Crush': 0.20, 'Ice': -0.60, 'Fire': -0.60, 'Light': -1.00, 'Drain': 0.80}
-CharResistances['Troll_snow']= {'Impale': -0.10, 'Venom': -0.20, 'Slash': 0.30, 'Crush': 0.30, 'Ice': 0.98, 'Fire': -1.00, 'Light': -1.00, 'Drain': 0.80}
-CharResistances['Vamp']= {'Impale': 1.00, 'Venom': 1.00, 'Slash': 0.20, 'Crush': 0.50, 'Ice': 0.98, 'Fire': 0.98, 'Light': -1.00, 'Drain': -0.20}
-CharResistances['DalGurak']= {'Impale': 1.00, 'Venom': 1.00, 'Slash': 0.10, 'Crush': 0.40, 'Ice': 0.98, 'Fire': 0.98, 'Light': -1.00, 'Drain': 1.00}
-CharResistances['DarkLord']= {'Impale': 1.00, 'Venom': 1.00, 'Slash': 0.30, 'Crush': 0.98, 'Ice': 0.98, 'Fire': 0.98, 'Light': 0.20, 'Drain': 1.00}
-CharResistances['Great_Demon']= {'Impale': 1.00, 'Venom': 1.00, 'Slash': 0.00, 'Crush': 0.10, 'Ice': 0.98, 'Fire': 0.98, 'Light': -0.20, 'Drain': 0.90}
-CharResistances['Little_Demon']= {'Impale': 0.20, 'Venom': -0.40, 'Slash': -0.20, 'Crush': 0.20, 'Ice': -0.60, 'Fire': 0.98, 'Light': -1.00, 'Drain': 0.70}
-CharResistances['Spidersmall']= {'Impale': 0.00, 'Venom': 1.00, 'Slash': 0.00, 'Crush': 0.00, 'Ice': 0.00, 'Fire': 0.00, 'Light': 0.00, 'Drain': 0.90}
-CharResistances['Cos']= {'Impale': 0.00, 'Venom': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Ice': 0.00, 'Fire': 0.00, 'Light': 0.00, 'Drain': 0.60}
+CharResistances['Salamander']=     {'Impale':  0.10, 'Venom':  1.00, 'Slash':  0.10, 'Crush':  0.40, 'Ice': -1.00, 'Fire':  1.00, 'Light':  0.00, 'Drain':  0.60}         #Modified -LeadHead
+CharResistances['Golem_clay']=     {'Impale':  0.60, 'Venom':  1.00, 'Slash':  0.00, 'Crush': -0.60, 'Ice':  0.90, 'Fire':  0.90, 'Light':  0.10, 'Drain':  1.00}
+CharResistances['Golem_stone']=    {'Impale':  0.90, 'Venom':  1.00, 'Slash':  0.10, 'Crush': -0.50, 'Ice':  0.80, 'Fire':  0.80, 'Light':  0.20, 'Drain':  1.00}
+CharResistances['Golem_metal']=    {'Impale':  0.90, 'Venom':  1.00, 'Slash':  0.20, 'Crush': -0.20, 'Ice': -0.50, 'Fire':  0.80, 'Light':  0.60, 'Drain':  1.00}
+CharResistances['Golem_lava']=     {'Impale':  0.95, 'Venom':  1.00, 'Slash':  0.20, 'Crush': -0.40, 'Ice': -1.00, 'Fire':  1.00, 'Light':  0.80, 'Drain':  1.00}
+CharResistances['Golem_ice']=      {'Impale':  0.95, 'Venom':  1.00, 'Slash':  0.20, 'Crush': -0.40, 'Ice':  1.00, 'Fire': -1.00, 'Light':  0.80, 'Drain':  1.00}
+CharResistances['Flame_Skeleton']= {'Impale':  1.00, 'Venom':  1.00, 'Fire':  1.00,  'Ice': -1.00, 'Drain':  1.00} # Must revisit, I suspect nothing has this CharData assigned. Not modified -LeadHead
+CharResistances['Skeleton']=       {'Impale':  0.60, 'Venom':  1.00, 'Slash':  0.40, 'Crush': -0.20, 'Ice':  0.30, 'Fire':  0.30, 'Light': -1.00, 'Drain':  1.00}
+CharResistances['Ork']=            {'Impale':  0.00, 'Venom': -0.30, 'Slash': -0.10, 'Crush':  0.00, 'Ice':  0.40, 'Fire': -0.30, 'Light': -1.00, 'Drain':  0.40}
+CharResistances['Great_Ork']=      {'Impale':  0.80, 'Venom':  0.30, 'Slash':  0.00, 'Crush':  0.20, 'Ice':  0.60, 'Fire':  0.00, 'Light': -1.00, 'Drain':  0.60}
+CharResistances['Knight_Traitor']= {'Impale': -0.20, 'Venom': -0.70, 'Slash':  0.00, 'Crush': -0.10, 'Ice': -0.40, 'Fire':  0.20, 'Light': -1.00, 'Drain':  0.00}
+CharResistances['Ragnar']=         {'Impale': -0.20, 'Venom': -0.70, 'Slash':  0.00, 'Crush':  0.60, 'Ice': -0.40, 'Fire':  0.20, 'Light': -1.00, 'Drain':  0.00}
+CharResistances['Dark_Knight']=    {'Impale':  0.10, 'Venom':  1.00, 'Slash':  0.20, 'Crush':  0.30, 'Ice': -0.10, 'Fire': -0.10, 'Light': -1.00, 'Drain':  1.00}
+CharResistances['Lich']=           {'Impale': -0.20, 'Venom':  1.00, 'Slash':  0.00, 'Crush':  0.50, 'Ice':  0.80, 'Fire':  0.50, 'Light': -1.00, 'Drain':  1.00}
+CharResistances['Knight_Zombie']=  {'Impale': -0.10, 'Venom':  1.00, 'Slash':  0.00, 'Crush':  0.70, 'Ice':  0.80, 'Fire':  0.80, 'Light': -1.00, 'Drain':  1.00}
+CharResistances['ChaosKnight']=    {'Impale':  0.60, 'Venom':  1.00, 'Slash':  0.40, 'Crush': -0.50, 'Ice':  1.00, 'Fire':  1.00, 'Light': -0.60, 'Drain':  1.00}
+CharResistances['Minotaur']=       {'Impale':  0.20, 'Venom': -0.30, 'Slash':  0.00, 'Crush':  0.40, 'Ice': -0.50, 'Fire': -0.40, 'Light': -0.90, 'Drain':  0.90}
+CharResistances['Troll_Dark']=     {'Impale': -0.20, 'Venom': -0.60, 'Slash':  0.10, 'Crush':  0.20, 'Ice': -0.60, 'Fire': -0.60, 'Light': -1.00, 'Drain':  0.80}
+CharResistances['Troll_snow']=     {'Impale': -0.10, 'Venom': -0.20, 'Slash':  0.30, 'Crush':  0.30, 'Ice':  0.98, 'Fire': -1.00, 'Light': -1.00, 'Drain':  0.80}
+CharResistances['Vamp']=           {'Impale':  1.00, 'Venom':  1.00, 'Slash':  0.20, 'Crush':  0.50, 'Ice':  0.98, 'Fire':  0.98, 'Light': -1.00, 'Drain': -0.20}
+CharResistances['DalGurak']=       {'Impale':  1.00, 'Venom':  1.00, 'Slash':  0.10, 'Crush':  0.40, 'Ice':  0.98, 'Fire':  0.98, 'Light': -1.00, 'Drain':  1.00}
+CharResistances['DarkLord']=       {'Impale':  1.00, 'Venom':  1.00, 'Slash':  0.30, 'Crush':  0.98, 'Ice':  0.98, 'Fire':  0.98, 'Light':  0.20, 'Drain':  1.00}
+CharResistances['Great_Demon']=    {'Impale':  1.00, 'Venom':  1.00, 'Slash':  0.00, 'Crush':  0.10, 'Ice':  0.98, 'Fire':  0.98, 'Light': -0.20, 'Drain':  0.90}
+CharResistances['Little_Demon']=   {'Impale':  0.20, 'Venom': -0.40, 'Slash': -0.20, 'Crush':  0.20, 'Ice': -0.60, 'Fire':  0.98, 'Light': -1.00, 'Drain':  0.70}
+CharResistances['Spidersmall']=    {'Impale':  0.00, 'Venom':  1.00, 'Slash':  0.00, 'Crush':  0.00, 'Ice':  0.00, 'Fire':  0.00, 'Light':  0.00, 'Drain':  0.90}
+CharResistances['Cos']=            {'Impale':  0.00, 'Venom':  0.00, 'Slash':  0.00, 'Crush':  0.00, 'Ice':  0.00, 'Fire':  0.00, 'Light':  0.00, 'Drain':  0.60}
 
 
 #   CharAccuracy at level(lvls             0       1       2       3       4       5       6       7       8       9      10      11      12      13      14      15      16      17      18      19 
