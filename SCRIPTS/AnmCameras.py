@@ -1,3 +1,12 @@
+##///
+##||| ANMCAMERAS.PY TITANIUM
+##||| Change list:
+##||| * Spear backattack animations now turn camera around
+##||| * Made g2h_back slightly faster
+##||| * Added documentation on how to use the function
+##\\\ 
+
+
 ####################################################################################
 #
 #
@@ -5,6 +14,12 @@
 #               T A B L E S   O F   T H E   C A M E R A   A N G L E S
 #
 #
+#    USAGE:
+#   Bladex.SetActionCameraMovement(anm_name, angle, unknown, speed)
+#    * anm_name - name of the character animation without biped internal name prefix
+#    * angle - 
+#    * unknown - unknown
+#    * speed - value between 0.0 and 1.0. Higher value means slower movement, 0 being instant.
 #
 ####################################################################################
 
@@ -18,8 +33,8 @@ def Init():
     #Golpes
     #
     Bladex.SetActionCameraMovement("g_back",-1.0*PI,0.1,0.5)
-    Bladex.SetActionCameraMovement("g2h_back",-1.0*PI,0.25,0.7)
-    Bladex.SetActionCameraMovement("g_spear_back",-1.0*PI,0.1,0.3)
+    Bladex.SetActionCameraMovement("g2h_back",-1.0*PI,0.25,0.7)    ### Default value 1.0, was too slow in my opinion -LeadHead
+    Bladex.SetActionCameraMovement("g_spear_back",-1.0*PI,0.1,0.3) ### Added -LeadHead
 
     #
     #Giros 180 grados
