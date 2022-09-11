@@ -1,3 +1,10 @@
+##///
+##||| ACTIONS.PY TITANIUM
+##||| Change list:
+##||| * Fixed putting away shield only to take shield and weapon from back at the same time. (See StdToggleWeapons)
+##||| * Fixed "Press F1" prompt to be correct for all weapons and hero characters.
+##\\\ 
+
 import Bladex
 ### /    Added by Dario    \ ####
 import Ontake
@@ -2291,7 +2298,7 @@ def StdToggleWeapons(EntityName):
 	#Are we in combat mode
 	#If so , abort it and return
 	if me.ActiveEnemy:
-		###Reference.debugprint ("StdToggleeapons - Aborting combat mode")
+		###Reference.debugprint ("StdToggleWeapons - Aborting combat mode")
 		me.SetActiveEnemy("")
 		me.Data.time_deactive_enemy=Bladex.GetTime()
 		return
@@ -2308,13 +2315,13 @@ def StdToggleWeapons(EntityName):
 	drop_right=0
 	#pdb.set_trace()
 	if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)<>Reference.OBJ_BOW and me.InvRightBack: #and (not me.Attack and not me.Block):
-		if not me.Attack and not me.Block:
-			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)
-			me.LaunchAnmType("Chg_l")
-			return
-		else:
+		if not me.Attack and not me.Block:      # the two following events have been switched places. This is to prioritize drawing weapon over putting away shield when trying to start combat -LeadHead
 			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
 			me.LaunchAnmType("Chg_r")
+			return
+		else:
+			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)
+			me.LaunchAnmType("Chg_l")
 			return
 	elif ((me.InvRight and right_standard==1)) and (me.InvLeft or me.InvLeftBack) and me.InvRightBack and not inv.HasBowOnBack:
 		me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
