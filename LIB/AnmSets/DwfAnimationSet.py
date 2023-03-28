@@ -1036,6 +1036,7 @@ def LoadDwfAnimationSet(ct_name):
 
 		anm_name="Dwf_attack_r" ### Borer's anm fix has been applied
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_attack_r.BMV",anm_name,1)
+		Bladex.AddAnmRStep(anm_name,0)
 		Bladex.AddAnmLStep(anm_name,0)     
 		Bladex.AddAnmRRelease(anm_name,0.167) 
 		Bladex.AddAnmRStep(anm_name,0.611)    
