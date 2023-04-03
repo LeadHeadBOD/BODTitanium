@@ -144,10 +144,11 @@ Reference.EntitiesSelectionData[bladesword.Name]=(0,0,"")
 x, y, z = bladesword.Position                                                   #
 ld=Bladex.CreateEntity("LuzDiosaFinal", "Entity Spot", x, y-260.0, z+150.0)     #   Addded
 ld.Color=90, 190, 255                                                           #
-ld.Intensity=1.0                                                                #
-ld.Precission=0.01                                                              #
+ld.Intensity=7.0                                                                #
+ld.Precission=0.08                                                              #
 ld.Visible=1                                                                    #       -LeaHead
 ld.CastShadows=0                                                                #
-ld.Flick=0
+ld.Flick=0                                                                      #
+ld.SizeFactor  = 2                                                              #
 
 Bladex.AddScheduledFunc(Bladex.GetTime()+0.1,Bladex.TriggerEvent,(21,))
