@@ -3,6 +3,8 @@
 ##||| Change list:
 ##||| * Fixed putting away shield only to take shield and weapon from back at the same time. (See StdToggleWeapons)
 ##||| * Fixed "Press F1" prompt to be correct for all weapons and hero characters.
+##||| * Quivers on back don't disappear when picking up arrows.
+##||| * 
 ##\\\ 
 
 import Bladex
@@ -305,16 +307,19 @@ def UnGraspString (EntityName,EventName):
 				except AttributeError: print "No string on bow. Do ItemTypes.ItemDefaultFuncs(Bladex.GetEntity('"+bow.Name+"'))"
 
 
-def AddQuiver(inv, new_quiver_name):
+def AddQuiver(inv, new_quiver_name):                        # edited some parts to fix quiver stuff -LeadHead
 	new_quiver= Bladex.GetEntity(new_quiver_name)
+	me = Bladex.GetEntity(inv.Owner)
 
 	# Do we already have a quiver of this type
 	for i in range (inv.nQuivers):
 		quiver_name= inv.GetQuiver(i)
 		quiver= Bladex.GetEntity(quiver_name)
 		if quiver.Data.ArrowType==new_quiver.Data.ArrowType:
+			me=Bladex.GetEntity(inv.Owner)        
+
 			# Select this quiver
-			inv.SetCurrentQuiver(quiver_name)
+			inv.SetCurrentQuiver(quiver_name)       # Is this necessary?
 			if inv.HoldingBow:
 				inv.LinkRightBack(quiver_name)
 
@@ -322,15 +327,19 @@ def AddQuiver(inv, new_quiver_name):
 			quiver.Data.ReceiveArrows (new_quiver.Data.NumberOfArrows(), inv.Owner)
 			new_quiver.SubscribeToList("Pin")
 			inv.LinkRightHand("None")
+			
 			return
 
 	# Else add a new quiver to the inventory and select it
 	inv.AddQuiver(new_quiver_name)
-	#inv.SetCurrentQuiver(new_quiver_name)
-	#inv.LinkRightHand("None")
-	#if inv.HoldingBow:
-	#	inv.LinkRightBack(new_quiver_name)
-
+    
+    # Following script added. We want to check what we have or haven't before selecting quivers. -LeadHead
+	if inv.HoldingBow:
+		print "currently holding bow"
+		if not me.InvRightBack:     # Check if don't already have another kind of quiver on back
+			print "nothing on rightback"
+			inv.SetCurrentQuiver(new_quiver_name)        
+			inv.LinkRightBack(new_quiver_name)
 
 def ExtendedTakeObject(inv,Object2TakeName):
 	global StakObjects
@@ -386,7 +395,8 @@ def TakeObject(EntityName,Object2TakeName, force_take=TRUE):
 			inv.LinkLeftHand(Object2TakeName)
 			#inv.LinkRightHand(Object2TakeName) # Esta bien ? Revisar !
 	elif object_flag == Reference.OBJ_QUIVER:
-		AddQuiver(inv, Object2TakeName)
+		#AddQuiver(inv, Object2TakeName)
+		print "TakeObject - AddQuiver skipped!"     # -LeadHead
 	elif object_flag == Reference.OBJ_STANDARD:
 		if not me.InvLeftBack and not me.InvRightBack and not me.InvRight:
 			inv.LinkRightHand(Object2TakeName)
@@ -1055,7 +1065,8 @@ def UnSheatheArrow(inv):
 				return
 	ReportMsg ("Out of Arrows")
 
-def CouldTakeQuiver(inv, QuiverName):
+def CouldTakeQuiver(inv, QuiverName):           
+	me = Bladex.GetEntity(inv.Owner)                       #       -LeadHead
 	ret_val = inv.nQuivers < inv.maxQuivers
 
 	if ret_val:
@@ -1063,19 +1074,31 @@ def CouldTakeQuiver(inv, QuiverName):
 		for i in range (inv.nQuivers):
 			quiver_name= inv.GetQuiver(i)
 			quiver= Bladex.GetEntity(quiver_name)
-			if quiver.Data.ArrowType==new_quiver.Data.ArrowType:
-				return quiver.Data.NumberOfArrows() < quiver.Data.MaxArrows
+			if me.InvRight:                                                                                                 # Added.
+				currentArrow=Bladex.GetEntity(me.InvRight)                                                                  # Fixes same bug as for CouldSheatheArrow
+				if (currentArrow.Kind==new_quiver.Data.ArrowType) and (quiver.Data.ArrowType==new_quiver.Data.ArrowType):   # See explanation there
+						return quiver.Data.NumberOfArrows() + 1 < quiver.Data.MaxArrows                                     #               -LeadHead
+			elif quiver.Data.ArrowType==new_quiver.Data.ArrowType:
+						return quiver.Data.NumberOfArrows() < quiver.Data.MaxArrows
 
 	return ret_val
 
-def CouldSheatheArrow(inv, ArrowName):
+def CouldSheatheArrow(inv, ArrowName):          
+	me = Bladex.GetEntity(inv.Owner)                       #       -LeadHead                      
 	arrow=Bladex.GetEntity(ArrowName)
+
 	for i in range (inv.nQuivers):
 		quiver_name= inv.GetQuiver(i)
 		quiver= Bladex.GetEntity(quiver_name)
-		if quiver.Data.ArrowType==arrow.Kind:
+		if me.InvRight:                                                                               # Added.
+			#print me.InvRight                                                                        # This fixes a bug that's caused by the disppearing quiver fix
+			currentArrow=Bladex.GetEntity(me.InvRight)                                                # If you had an arrow in hand and a full quiver on back,
+			if (quiver.Data.ArrowType==arrow.Kind) and (currentArrow.Kind==arrow.Kind):               # you would drop your current arrow and pick up another one immediately.
+				#print currentArrow.Kind                                                              # We don't want to pick up an arrow if the one
+				return quiver.Data.NumberOfArrows() < quiver.Data.MaxArrows - 1                       # we are holding would put us at maximum after sheathing -LeadHead
+		elif quiver.Data.ArrowType==arrow.Kind:
 			return quiver.Data.NumberOfArrows() < quiver.Data.MaxArrows
-
+            
 	# If we get this far, a quiver of the correct type was not encountered, so we could create one
 	return TRUE
 
@@ -1353,6 +1376,8 @@ def RemoveRightHandler(EntityName, EventName):
 	inv=me.GetInventory()
 	if me.InvRight and Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_ARROW:
 		SheatheArrow(inv, me.InvRight)
+	if me.InvRight and Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_QUIVER:     # Added
+		AddQuiver(inv, me.InvRight)                                                     #  - LeadHead
 	else:
 		object_name= me.InvRight
 		inv.LinkRightHand("None")
@@ -1546,8 +1571,8 @@ def TakeMainAnm(EntityName):
 		me.AnmEndedFunc=TakeStraightRecover
 	else:
 		me.AnmEndedFunc=MainTake2Inv
-		if me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)==Reference.OBJ_QUIVER:
-			inv.LinkRightBack("None")
+		# if me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)==Reference.OBJ_QUIVER:       # Fixes disappearing quivers -LeadHead
+			# inv.LinkRightBack("None")
 	return TRUE
 
 
@@ -1732,7 +1757,8 @@ def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 	elif object_flag == Reference.OBJ_BOW:	#Corregir?
 		inv.AddBow(object_name)
 	elif object_flag == Reference.OBJ_QUIVER:
-		AddQuiver(inv, object_name)
+		#AddQuiver(inv, object_name)
+		print "PickupEventHandler - AddQuiver skipped!"     # -LeadHead
 	elif object_flag == Reference.OBJ_STANDARD:
 		pass
 	elif object_flag == Reference.OBJ_KEY:
@@ -2315,14 +2341,14 @@ def StdToggleWeapons(EntityName):
 	drop_right=0
 	#pdb.set_trace()
 	if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)<>Reference.OBJ_BOW and me.InvRightBack: #and (not me.Attack and not me.Block):
-		if not me.Attack and not me.Block:      # the two following events have been switched places. This is to prioritize drawing weapon over putting away shield when trying to start combat -LeadHead
-			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
-			me.LaunchAnmType("Chg_r")
-			return
-		else:
-			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)
-			me.LaunchAnmType("Chg_l")
-			return
+		if not me.Attack and not me.Block:                              # the two following events have been switched places. 
+			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)             #This is to prioritize drawing weapon over putting away shield when trying to start combat 
+			me.LaunchAnmType("Chg_r")                                   #
+			return                                                      #
+		else:                                                           #
+			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)           #
+			me.LaunchAnmType("Chg_l")                                   #           -LeadHead
+			return                                                      #
 	elif ((me.InvRight and right_standard==1)) and (me.InvLeft or me.InvLeftBack) and me.InvRightBack and not inv.HasBowOnBack:
 		me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
 		me.LaunchAnmType("Chg_l")
