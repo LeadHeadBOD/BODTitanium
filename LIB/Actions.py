@@ -3,8 +3,9 @@
 ##||| Change list:
 ##||| * Fixed putting away shield only to take shield and weapon from back at the same time. (See StdToggleWeapons)
 ##||| * Fixed "Press F1" prompt to be correct for all weapons and hero characters.
-##||| * Quivers on back don't disappear when picking up arrows.
-##||| * 
+##||| * Quivers on back don't disappear when picking up arrows/quivers.
+##||| * Quivers don't disappear from hands when picking them up.
+##||| * Quivers immediately go to back if possible.
 ##\\\ 
 
 import Bladex
@@ -332,11 +333,14 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 
 	# Else add a new quiver to the inventory and select it
 	inv.AddQuiver(new_quiver_name)
-    
+
     # Following script added. We want to check what we have or haven't before selecting quivers. -LeadHead
+	if me.InvRightBack:
+		print "Actions.AddQuiver - " + me.InvRightBack + " is on back"    
+		inv.LinkRightHand("None")
 	if inv.HoldingBow:
 		print "currently holding bow"
-		if not me.InvRightBack:     # Check if don't already have another kind of quiver on back
+		if not me.InvRightBack:     # Check again if don't already have another kind of quiver on back just in case
 			print "nothing on rightback"
 			inv.SetCurrentQuiver(new_quiver_name)        
 			inv.LinkRightBack(new_quiver_name)
