@@ -1,9 +1,10 @@
 ##///
-##||| SPARKS.PY TITANIUM
+##||| POCIMAC.PY TITANIUM
 ##||| Change list:
 ##||| * Changed functions SoltarPocima, BeberPocima
 ##||| * Added new function EmptyPotion (implementation needs to be redone probably, current one is way too messy)
-##||| 
+##||| * Self Iluminated potions lose their luminosity as they fade
+##||| * 
 ##\\\ 
 
 import OnInitTake
@@ -176,7 +177,10 @@ class Pocima:
 		poc.Alpha = poc.Alpha - poc.Data.FadeDelta
 		if len(poc.Lights):
 			poc.Lights = [(poc.Alpha/2, poc.Lights[0][1], poc.Lights[0][2])]
-
+        
+		if poc.SelfIlum:                                     # Should make drunk power potions fade better now
+			poc.SelfIlum = poc.SelfIlum - (0.1 / 60.0)       #       - LeadHead
+        
 		if poc.Alpha <= 0:
 			poc.SubscribeToList("Pin")
 
@@ -211,8 +215,8 @@ def PocimaNoSoltada(entidad):
 			object.Data.Takeable= 0
 			inv.LinkRightHand("None")
 
-			if object.Data.Hand == 1:
-				char.AnmEndedFunc = RestoreHand
+			if object.Data.Hand == 1:                   # TODO : I suspect something goes wrong here and causes the bug
+				char.AnmEndedFunc = RestoreHand         # where player sometimes draws weapon from inv.rightback when they shouldn't.
 
 			inv.RemoveObject(char.Data.obj_used)
 			impulse = char.Rel2AbsVector(-1000.0 * object.Mass, -1000.0 * object.Mass, 0.0)
@@ -272,11 +276,11 @@ def BeberPocima(Entidad,Evento):
 	if os.path.exists("../../3DObjs/"+Poti.Kind+"_E.bod"):
 		EmptyPotion(Poti.Name)
 		PotE = Bladex.GetEntity(Poti.Name+"_E")
-		print "PotE name is "+PotE.Name
+		#print "PotE name is "+PotE.Name
 		char.Data.obj_used = PotE.Name
 		Poti = Bladex.GetEntity(char.Data.obj_used)
 		Pot = Poti.Data
-		print "Potion emptied and assigned data successfully"
+		#print "Potion emptied and assigned data successfully"
 	else:
 		print "potion_E not found for"+Poti.Name
 		pass
@@ -375,7 +379,7 @@ def UsePotion2(NombrePocima):
 		print 'Unknown Potion Type' + `Pocima.Data.Type`
 
 	Char.AddAnmEventFunc("drinkingEvent",BeberPocima)
-	print 'should throw bottle with event ThrowBottle in animation '+Char.AnimName
+	#print 'should throw bottle with event ThrowBottle in animation '+Char.AnimName
 	Char.AddAnmEventFunc("ThrowBottle",SoltarPocima)
 
 def TryToUsePotion(me, object):
@@ -617,6 +621,7 @@ def EmptyPotion(PotionName):
     newPot.UseFunc = obj.UseFunc
     newPot.Data.Increment = obj.Data.Increment
     newPot.Data.MaxLife = obj.Data.MaxLife
+    newPot.ExcludeHitFor(obj)
     # newPot.Data.Type = obj.Data.Type
 
     if Reference.HealthIncrease.has_key(obj.Kind):
@@ -635,9 +640,11 @@ def EmptyPotion(PotionName):
         newPot.Data.FAttack = obj.Data.FAttack
         newPot.Data.Increment = obj.Data.Increment
         newPot.Data.CuresPoison = obj.Data.CuresPoison
-        newPot.FiresIntensity = obj.FiresIntensity
-        newPot.Lights = obj.Lights
-        newPot.SelfIlum = obj.SelfIlum
+        
+        newPotLight=Bladex.GetEntity(newPot.Name) # Attempt at fixing the lights
+        newPotLight.FiresIntensity = obj.FiresIntensity
+        newPotLight.Lights = obj.Lights
+        newPotLight.SelfIlum = obj.SelfIlum
         spot = AuxFuncs.GetSpot(obj)
         newSpot = AuxFuncs.GetSpot(newPot)
         #print "Assigned powerport data"
@@ -661,7 +668,6 @@ def EmptyPotion(PotionName):
     else:
         inv.LinkRightHand(newPot.Name)
         
-    newPot.ExcludeHitFor(obj)
     inv.RemoveObject(obj.Name)
     obj.RemoveFromWorld()
     # print 'obj removed'
@@ -669,3 +675,11 @@ def EmptyPotion(PotionName):
     
     
 #    return Pot=newPot.Data
+
+
+# Quick potion use
+#
+
+""" def AutoPot():
+    pass
+"""
