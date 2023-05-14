@@ -15,6 +15,8 @@ import BInput
 import string
 import MenuText
 
+import pocimac      # Needed for potion hotkeys -LeadHead
+
 def GetKeyList(ActionName):
 	IManager=BInput.GetInputManager()
 	oldInputActionsSet=IManager.GetInputActionsSet()
@@ -84,7 +86,20 @@ def DefArgWrapper (PlayerName, Function):
 	FuncList.insert(0, wrapper)
 	return FuncList[0]
 
+#############
+# A slighly heavier ArgWrapper because I don't know what I'm doing
+# and this is the only way I got it to work.        -LeadHead
+########################
+def DoubleArgWrapper (arg1, arg2, Func):
+    def wrapper(name=arg1, kind=arg2, Function=Func):
+        retval = Function(name,kind)
+        Bladex.CheckPyErrors()
+        return retval
+        
+    FuncList.insert(0, wrapper)
+    return FuncList[0]
 
+    
 def eNetBinds(PlayerName):
 	pass
 
@@ -138,11 +153,21 @@ def InitBindings (PlayerName):
 		Bladex.AddBoundFunc("Throw Left",DefArgWrapper (PlayerName, Actions.TestThrowLeft))
 
 		Bladex.AddBoundFunc("Block",DefArgWrapper (PlayerName, Actions.TestThrowLeft))
-		Bladex.AddBoundFunc("Block",DefArgWrapper (PlayerName, Actions.CancelBowMode))                   # Added
+		#Bladex.AddBoundFunc("Throw",DefArgWrapper (PlayerName, Actions.CancelBowMode))                     # 
+		#Bladex.AddBoundFunc("Throw Release", Actions.CancelDelayHandler)                                   # 
+		Bladex.AddBoundFunc("Block",DefArgWrapper (PlayerName, Actions.CancelBowMode))                     # 
 		Bladex.AddBoundFunc("Block Release", Actions.CancelDelayHandler)                                   # -LeadHead
 		Bladex.AddBoundFunc("Use",DefArgWrapper (PlayerName, Actions.StdUse))
 		Bladex.AddBoundFunc("LaunchTravel",ExecTravelBookNP)
-
+        
+		# TITANIUM STUFF -LeadHead
+		Bladex.AddBoundFunc("PowerPotKey", DoubleArgWrapper (PlayerName, "PowerPotion", pocimac.QuickPot))
+		Bladex.AddBoundFunc("FullPotKey", DoubleArgWrapper (PlayerName, "PocimaTodo", pocimac.QuickPot))
+		Bladex.AddBoundFunc("200PotKey", DoubleArgWrapper (PlayerName, "Pocima200", pocimac.QuickPot))
+		Bladex.AddBoundFunc("100PotKey", DoubleArgWrapper (PlayerName, "Pocima100", pocimac.QuickPot))
+		
+		
+		        
 	#Bladex.AddBoundFunc("UnSelectEnemy",UnSelectEnemyFunc)
 
 	Bladex.AddBoundFunc("Attack",DefArgWrapper (PlayerName, Actions.TestThrowRight))
@@ -261,8 +286,14 @@ ConfigurableActions =[
 
 			#("Quick Save",     "Quick Save",             []),
 			#("Travel Book",    "Travel Book",            []),
-
-
+            
+			# TITANIUM stuff - LeadHead
+			("Hotkey - Power Potion",  "PowerPotKey",               []),
+			("Hotkey - Full Life Potion",  "FullPotKey",               []),
+			("Hotkey -  1000 Life Potion",  "200PotKey",               []),
+			("Hotkey -  500 Life Potion",  "100PotKey",               []),
+            
+            
                      ]
 
 

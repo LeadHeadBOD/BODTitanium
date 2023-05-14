@@ -4,7 +4,7 @@
 ##||| * Changed functions SoltarPocima, BeberPocima
 ##||| * Added new function EmptyPotion (implementation needs to be redone probably, current one is way too messy)
 ##||| * Self Iluminated potions lose their luminosity as they fade
-##||| * 
+##||| * Added support for potion hot-keys
 ##\\\ 
 
 import OnInitTake
@@ -384,11 +384,14 @@ def UsePotion2(NombrePocima):
 
 def TryToUsePotion(me, object):
 	if not Reference.HealthIncrease.has_key(object.Kind):
+		print `object.Name`+" has no health increase"    
 		return 1
 
 	if Reference.DefaultObjectData[object.Kind][0] == Reference.OBJ_ITEM:
+		print object.Name+" is an item"
 		return 1
-
+    
+	print "Trying to use " + `object.Name`
 	return CanIUseThePotion(me, object)
 
 def CanIUseThePotion(me, object):
@@ -676,10 +679,32 @@ def EmptyPotion(PotionName):
     
 #    return Pot=newPot.Data
 
-
+####
 # Quick potion use
-#
+####
 
-""" def AutoPot():
+""" def AutoPotHandler():
     pass
 """
+
+def QuickPot(EntityName, PotionKind):
+    FriendlyName=Reference.GetObjectFriendlyName(PotionKind)
+    me = Bladex.GetEntity(EntityName)
+    inv = me.GetInventory()
+    if not inv.nObjects:
+        Actions.ReportMsg ("Don't have any potions")
+        return
+    else:
+        for i in range(inv.nObjects):
+            potname=inv.GetObject(i)
+            potentialpot = Bladex.GetEntity(potname)
+            if potentialpot.Kind == PotionKind:
+                print "Found correct potion I guess lol"
+                #me.Data.InventoryActive=1
+                #me.Data.obj_used=potentialpot
+                me.Data.selected_entity = potentialpot
+                Actions.ForceUse(me.Name, potname)
+                #UsePotion(potname, Actions.USE_FROM_INV)
+                return
+            else:
+                Actions.ReportMsg ("I don't have any "+`FriendlyName`)

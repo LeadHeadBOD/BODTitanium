@@ -595,6 +595,37 @@ USE_FROM_NEARBY=2
 USE_FROM_TAKE=4
 
 
+######
+# ForceUse, needed for potion hotkeys far as I can tell -LeadHead
+######
+def ForceUse (EntityName, ItemName):
+    me = Bladex.GetEntity(EntityName)
+    
+    if me.Wuea==Reference.WUEA_ENDED:
+        return FALSE
+        
+    if me.Wuea==Reference.WUEA_WAIT:
+        return FALSE
+        
+    if me.AnimName=="Rlx" and me.AnmEndedFunc:
+        me.AnmEndedFunc= None
+        
+    if me.AnmEndedFunc:
+        return FALSE
+        
+    if me.Name[0:6]=="Player":
+        object=Bladex.GetEntity(ItemName)
+        me.Data.obj_used=object
+        InitDataField.Initialise(object)
+        object.Data.UsedBy = EntityName
+        object.UseFunc(ItemName, USE_FROM_INV)
+        
+
+
+
+        
+        
+
 def StdUse (EntityName):
 	me = Bladex.GetEntity(EntityName)
 
@@ -1082,9 +1113,9 @@ def CouldTakeQuiver(inv, QuiverName):
 			if me.InvRight:                                                                                                 # Added.
 				currentArrow=Bladex.GetEntity(me.InvRight)                                                                  # Fixes same bug as for CouldSheatheArrow
 				if (currentArrow.Kind==new_quiver.Data.ArrowType) and (quiver.Data.ArrowType==new_quiver.Data.ArrowType):   # See explanation there
-						return quiver.Data.NumberOfArrows() + 1 < quiver.Data.MaxArrows                                     #               -LeadHead
+						return quiver.Data.NumberOfArrows() + 1 <= quiver.Data.MaxArrows                                     #               -LeadHead
 			elif quiver.Data.ArrowType==new_quiver.Data.ArrowType:
-						return quiver.Data.NumberOfArrows() < quiver.Data.MaxArrows
+						return quiver.Data.NumberOfArrows() <= quiver.Data.MaxArrows
 
 	return ret_val
 
