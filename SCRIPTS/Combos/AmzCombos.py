@@ -1,3 +1,9 @@
+##///
+##||| AMZCOMBOS.PY TITANIUM
+##||| Change list:
+##||| * Changed IceWand trail
+##\\\ 
+
 ######################################################
 #
 # Create sets of attacks
@@ -279,7 +285,7 @@ amz.AddLevels("Amz_g_spear19_bs1",17,40)
 #GOLPE ICEWAND
 amz.AddAttack("GM36_SP","Amz_g_spear16")
 amz.AttackWindow("Amz_g_spear16",0.020,0.900,"GM36_SP_Window")
-amz.AssignTrail("GM36_SP","","EstelaAzul1")
+amz.AssignTrail("GM36_SP","","EstelaAzul1")                         #Was "EstelaRoja1" -LeadHead
 amz.AddLevels("Amz_g_spear16",12,40)
 
 #GOLPE QUEENSWORD

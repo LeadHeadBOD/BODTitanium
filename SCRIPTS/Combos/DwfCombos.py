@@ -1,3 +1,9 @@
+##///
+##||| DWFCOMBOS.PY TITANIUM
+##||| Change list:
+##||| * Changed Icehammer attack animation 
+##\\\ 
+
 ######################################################
 #
 # Create sets of attacks
@@ -309,10 +315,10 @@ dwf.AssignTrail("GM10_1H","","EstelaRoja1")
 dwf.AddLevels("Dwf_g_s22low_new",16,40)
 
 #GOLPE ICEHAMMER
-dwf.AddAttack("GM9_1H","g_s18_2h")
-dwf.AttackWindow("g_s18_2h",0.001,0.900,"GM9_1H_Window")
-dwf.AssignTrail("GM9_1H","","EstelaAzul1")
-dwf.AddLevels("g_s18_2h",12,40)
+dwf.AddAttack("GM9_1H","g_s18_2h")                          # Was "g_09"
+dwf.AttackWindow("g_s18_2h",0.001,0.900,"GM9_1H_Window")    #
+dwf.AssignTrail("GM9_1H","","EstelaAzul1")                  # was "EstelaRoja1"
+dwf.AddLevels("g_s18_2h",12,40)                             #           -LeadHead
 
 #GOLPE QUEENSWORD
 dwf.AddAttack("GM8_1H","Dwf_g_06lowkata_new")
