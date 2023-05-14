@@ -6,6 +6,7 @@
 ##||| * Quivers on back don't disappear when picking up arrows/quivers.
 ##||| * Quivers don't disappear from hands when picking them up.
 ##||| * Quivers immediately go to back if possible.
+##||| * Added and edited bow related functions for bow cancelling.
 ##\\\ 
 
 import Bladex
@@ -2510,6 +2511,9 @@ def BrwdUp(EntityName):
 
 # BowStuff
 
+# Added -LeadHead
+BowDelayTime = 0.5
+BowCancelCalled = 0
 
 def TakeArrowEventHandler(EntityName, EventName):
 	me= Bladex.GetEntity(EntityName)
@@ -2548,7 +2552,12 @@ def InitBowing(EntityName):
 	me.AimOffTarget= TWOPI
 
 def TestDrawBow(EntityName):
+	global BowCancelCalled
 	me= Bladex.GetEntity(EntityName)
+	if BowCancelCalled==1:     # Added -LeadHead
+		if EntityName=="Player1":
+			#print "Trying to draw bow while in canceldelay"
+			return
 	#print EntityName+" TestDrawBow"
 	#pdb.set_trace()
 	# Are we carrying a bow
@@ -2611,6 +2620,41 @@ def EndBowMode(EntityName):
 		pass
 	me.Aim= 0
 	me.Data.AimPressed= 0
+
+def CancelBowMode(EntityName):          #Added -LeadHead
+    me=Bladex.GetEntity(EntityName)
+    global BowCancelCalled
+    if CurrentlyBowing(EntityName):
+        #print   "Bowing cancelled"
+        BowCancelCalled = 1
+        me.Wuea=Reference.WUEA_NONE
+        me.LaunchAnmType("rlx_b")
+        me.Aim= 0
+        me.Data.AimPressed= 0
+        try:
+            if me.Data.LastPViewType!=None:
+                cam= Bladex.GetEntity("Camera")
+                cam.PViewType= me.Data.LastPViewType
+                me.Data.LastPViewType= None
+        except AttributeError:
+            pass
+        try:
+            if me.Data.LastReturns!=None:
+                me.Returns= me.Data.LastReturns
+                me.Data.LastReturns= None
+        except AttributeError:
+            pass
+        #Bladex.AddScheduledFunc(Bladex.GetTime()+BowDelayTime, CancelDelayHandler, ())
+    else:
+        pass
+### This feels very wrong, but I don't understand how scheduled funcs work
+def CancelDelayHandler():
+    global BowCancelCalled
+    if BowCancelCalled==1:
+        BowCancelCalled=0
+        #print "bowing restored"
+    else:
+        pass
 
 def TestReleaseArrow(EntityName):
 	me= Bladex.GetEntity(EntityName)
