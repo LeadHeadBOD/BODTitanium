@@ -16,7 +16,7 @@ but have nevertheless served as a great inspiration for all the work done here.
 If you are one of them, it's likely you have never spoken to me or are aware of my existence.
  * Decino
  * DumptruckDS
- * Mike Weir
+ * Mike Weir & Pierre Cayer
 
 Special thanks:
  * Arohk's Twin - for keeping up the BoD subforum alive over at Arokh's Lair
