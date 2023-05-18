@@ -725,6 +725,7 @@ def QuickPot(EntityName, PotionKind):
             if checkedItems >= inv.nObjects:
                 Actions.ReportMsg ("I don't have a "+FriendlyName)
                 checkedItems=0
+                return
             else:
                 checkedItems=checkedItems+1
                 potname=inv.GetObject(i)
