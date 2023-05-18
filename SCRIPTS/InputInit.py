@@ -96,11 +96,16 @@ Bladex.AddInputAction("LaunchTravel",0)
 #####################################
 # Titanium stuff   -LeadHead
 #####################################
+"""Hotkeys"""
 Bladex.AddInputAction("PowerPotKey",0)
 Bladex.AddInputAction("FullPotKey",0)
 Bladex.AddInputAction("200PotKey",0)
 Bladex.AddInputAction("100PotKey",0)
+Bladex.AddInputAction("BraceletKey",0)
+Bladex.AddInputAction("CrownKey",0)
+Bladex.AddInputAction("AmuletKey",0)
 
+"""Titanium Scorer"""
 #Bladex.AddInputAction("ShowTitaniumStats",0)
 
 

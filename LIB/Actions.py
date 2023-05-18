@@ -337,12 +337,13 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 
     # Following script added. We want to check what we have or haven't before selecting quivers. -LeadHead
 	if me.InvRightBack:
-		print "Actions.AddQuiver - " + me.InvRightBack + " is on back"    
+		#print "Actions.AddQuiver - " + me.InvRightBack + " is on back"    
 		inv.LinkRightHand("None")
+        return
 	if inv.HoldingBow:
 		print "currently holding bow"
 		if not me.InvRightBack:     # Check again if don't already have another kind of quiver on back just in case
-			print "nothing on rightback"
+			#print "nothing on rightback"
 			inv.SetCurrentQuiver(new_quiver_name)        
 			inv.LinkRightBack(new_quiver_name)
 
@@ -400,8 +401,9 @@ def TakeObject(EntityName,Object2TakeName, force_take=TRUE):
 			inv.LinkLeftHand(Object2TakeName)
 			#inv.LinkRightHand(Object2TakeName) # Esta bien ? Revisar !
 	elif object_flag == Reference.OBJ_QUIVER:
-		#AddQuiver(inv, Object2TakeName)
-		print "TakeObject - AddQuiver skipped!"     # -LeadHead
+		#if EntityName != "Player1":                 # Needs testing
+		AddQuiver(inv, Object2TakeName)              # 
+		#print "TakeObject - AddQuiver skipped!"     # -LeadHead
 	elif object_flag == Reference.OBJ_STANDARD:
 		if not me.InvLeftBack and not me.InvRightBack and not me.InvRight:
 			inv.LinkRightHand(Object2TakeName)
@@ -596,31 +598,24 @@ USE_FROM_TAKE=4
 
 
 ######
-# ForceUse, needed for potion hotkeys far as I can tell -LeadHead
-######
+# ForceUse, needed for hotkeys far as I can tell -LeadHead
+#
 def ForceUse (EntityName, ItemName):
     me = Bladex.GetEntity(EntityName)
-    
-    if me.Wuea==Reference.WUEA_ENDED:
-        return FALSE
-        
-    if me.Wuea==Reference.WUEA_WAIT:
-        return FALSE
-        
-    if me.AnimName=="Rlx" and me.AnmEndedFunc:
-        me.AnmEndedFunc= None
-        
-    if me.AnmEndedFunc:
-        return FALSE
-        
-    if me.Name[0:6]=="Player":
-        object=Bladex.GetEntity(ItemName)
+    object=Bladex.GetEntity(ItemName)
+    if not object.UseFunc:
+        print "!ERROR! @ Actions.ForceUse - " +ItemName+ " has no UseFunc"
+        return
+    else:
         me.Data.obj_used=object
         InitDataField.Initialise(object)
         object.Data.UsedBy = EntityName
         object.UseFunc(ItemName, USE_FROM_INV)
-        
-
+#
+# The function skips checking a character's viability of using an item
+# It will cause conflicts if called out of place, so DON'T DO IT
+# StdUse still exists for a good reason.
+#######
 
 
         
@@ -955,7 +950,6 @@ def DropToMakeRoomFor (EntityName, ObjectName):
 # Do we have all that we can carry of an object type
 def IsOneTooMany (EntityName, ObjectName):
 	me = Bladex.GetEntity(EntityName)
-
 	# Get object type
 	if Reference.EntitiesObjectData.has_key(ObjectName):
 		object_data = Reference.EntitiesObjectData[ObjectName]
@@ -963,7 +957,7 @@ def IsOneTooMany (EntityName, ObjectName):
 		object = Bladex.GetEntity(ObjectName)
 		object_data = Reference.DefaultObjectData[object.Kind]
 
-	object_flag = object_data[0]
+	object_flag = object_data[0]   
 
 	ret_val=FALSE
 
@@ -1099,23 +1093,29 @@ def UnSheatheArrow(inv):
 			if arrow:
 				inv.LinkRightHand(arrow.Name)
 				return
-	ReportMsg ("Out of Arrows")
+	if inv.Owner == 'Player1':                                                                      # Previously would always reportMsg 
+		ReportMsg ("Out of Arrows")                                                                 # Even if it wasn't the player who had no arrows
+	else:                                                                                           #
+		print "!!!ACTIONS.UNSHEATHEARROW ERROR!!! - Possible char with bow but no arrows spawned"   #       -LeadHead
 
-def CouldTakeQuiver(inv, QuiverName):           
-	me = Bladex.GetEntity(inv.Owner)                       #       -LeadHead
+def CouldTakeQuiver(inv, QuiverName):
+	if inv.maxQuivers and not inv.nQuivers: # Skip all of this if have no quiver at all      
+		return TRUE                         #
+	me = Bladex.GetEntity(inv.Owner)        # -LeadHead
 	ret_val = inv.nQuivers < inv.maxQuivers
-
 	if ret_val:
 		new_quiver=Bladex.GetEntity(QuiverName)
 		for i in range (inv.nQuivers):
 			quiver_name= inv.GetQuiver(i)
 			quiver= Bladex.GetEntity(quiver_name)
-			if me.InvRight:                                                                                                 # Added.
+			if me.InvRight and Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_ARROW:                                  # Added.
 				currentArrow=Bladex.GetEntity(me.InvRight)                                                                  # Fixes same bug as for CouldSheatheArrow
 				if (currentArrow.Kind==new_quiver.Data.ArrowType) and (quiver.Data.ArrowType==new_quiver.Data.ArrowType):   # See explanation there
-						return quiver.Data.NumberOfArrows() + 1 <= quiver.Data.MaxArrows                                     #               -LeadHead
+					return quiver.Data.NumberOfArrows() + 1 < quiver.Data.MaxArrows                                         #
+				elif quiver.Data.ArrowType==new_quiver.Data.ArrowType:                                                      #
+					return quiver.Data.NumberOfArrows() < quiver.Data.MaxArrows                                             #               -LeadHead
 			elif quiver.Data.ArrowType==new_quiver.Data.ArrowType:
-						return quiver.Data.NumberOfArrows() <= quiver.Data.MaxArrows
+				return quiver.Data.NumberOfArrows() < quiver.Data.MaxArrows
 
 	return ret_val
 
@@ -1126,7 +1126,7 @@ def CouldSheatheArrow(inv, ArrowName):
 	for i in range (inv.nQuivers):
 		quiver_name= inv.GetQuiver(i)
 		quiver= Bladex.GetEntity(quiver_name)
-		if me.InvRight:                                                                               # Added.
+		if me.InvRight and Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_ARROW:                # Added.
 			#print me.InvRight                                                                        # This fixes a bug that's caused by the disppearing quiver fix
 			currentArrow=Bladex.GetEntity(me.InvRight)                                                # If you had an arrow in hand and a full quiver on back,
 			if (quiver.Data.ArrowType==arrow.Kind) and (currentArrow.Kind==arrow.Kind):               # you would drop your current arrow and pick up another one immediately.
@@ -1793,8 +1793,9 @@ def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 	elif object_flag == Reference.OBJ_BOW:	#Corregir?
 		inv.AddBow(object_name)
 	elif object_flag == Reference.OBJ_QUIVER:
-		#AddQuiver(inv, object_name)
-		print "PickupEventHandler - AddQuiver skipped!"     # -LeadHead
+		# AddQuiver(inv, object_name)                           # Part of quiver fix
+		# print "PickupEventHandler - AddQuiver skipped!"       # 
+		pass                                                    # -LeadHead
 	elif object_flag == Reference.OBJ_STANDARD:
 		pass
 	elif object_flag == Reference.OBJ_KEY:

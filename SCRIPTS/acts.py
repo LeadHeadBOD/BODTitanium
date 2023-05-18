@@ -165,6 +165,9 @@ def InitBindings (PlayerName):
 		Bladex.AddBoundFunc("FullPotKey", DoubleArgWrapper (PlayerName, "PocimaTodo", pocimac.QuickPot))
 		Bladex.AddBoundFunc("200PotKey", DoubleArgWrapper (PlayerName, "Pocima200", pocimac.QuickPot))
 		Bladex.AddBoundFunc("100PotKey", DoubleArgWrapper (PlayerName, "Pocima100", pocimac.QuickPot))
+		Bladex.AddBoundFunc("BraceletKey", DoubleArgWrapper (PlayerName, "Brazalete", pocimac.QuickPot))
+		Bladex.AddBoundFunc("CrownKey", DoubleArgWrapper (PlayerName, "Corona", pocimac.QuickPot))
+		Bladex.AddBoundFunc("AmuletKey", DoubleArgWrapper (PlayerName, "Amuletofantasma", pocimac.QuickPot))
 		
 		
 		        
@@ -292,6 +295,9 @@ ConfigurableActions =[
 			("Hotkey - Full Life Potion",  "FullPotKey",               []),
 			("Hotkey -  1000 Life Potion",  "200PotKey",               []),
 			("Hotkey -  500 Life Potion",  "100PotKey",               []),
+			("Hotkey -  Bracelet",  "BraceletKey",               []),
+			("Hotkey -  Crown",     "CrownKey",               []),
+			("Hotkey -  Amulet",    "AmuletKey",               []),
             
             
                      ]

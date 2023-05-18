@@ -683,7 +683,8 @@ def EmptyPotion(PotionName):
 ###                ####
 # 
 # Please note that the script does NOT check whether a potion has had any of its functions altered.
-# The only thing it checks for is whether the called entity kind is located in character's iventory
+# The only thing it checks for is whether the called entity kind is located in character's iventory.
+# Try to stay true to it and use a new Kind if you are using custom potions.
 #
 ####
 
@@ -716,22 +717,15 @@ def QuickPot(EntityName, PotionKind):
         me.AnmEndedFunc= None
         
     if me.AnmEndedFunc:
-        # print "Quickpot called during an action"
+        #print "Quickpot called during an action"
         return
     
     else:
-        checkedItems=0
         for i in range(inv.nObjects):
-            if checkedItems >= inv.nObjects:
-                Actions.ReportMsg ("I don't have a "+FriendlyName)
-                checkedItems=0
+            potname=inv.GetObject(i)
+            potentialpot = Bladex.GetEntity(potname)
+            if potentialpot.Kind == PotionKind:
+                Actions.ForceUse(me.Name, potname)
                 return
-            else:
-                checkedItems=checkedItems+1
-                potname=inv.GetObject(i)
-                potentialpot = Bladex.GetEntity(potname)
-                if potentialpot.Kind == PotionKind:
-                    #print "Found correct potion I guess lol"
-                    Actions.ForceUse(me.Name, potname)
-                    checkedItems=0
-                    return
+            elif i+1 >= inv.nObjects:
+                Actions.ReportMsg ("I don't have a "+FriendlyName)
