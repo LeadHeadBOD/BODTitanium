@@ -384,14 +384,14 @@ def UsePotion2(NombrePocima):
 
 def TryToUsePotion(me, object):
 	if not Reference.HealthIncrease.has_key(object.Kind):
-		print `object.Name`+" has no health increase"    
+		#print `object.Name`+" has no health increase"    
 		return 1
 
 	if Reference.DefaultObjectData[object.Kind][0] == Reference.OBJ_ITEM:
-		print object.Name+" is an item"
+		#print object.Name+" is an item"
 		return 1
     
-	print "Trying to use " + `object.Name`
+	#print "Trying to use " + `object.Name`
 	return CanIUseThePotion(me, object)
 
 def CanIUseThePotion(me, object):
@@ -674,37 +674,63 @@ def EmptyPotion(PotionName):
     inv.RemoveObject(obj.Name)
     obj.RemoveFromWorld()
     # print 'obj removed'
-    
-    
-    
 #    return Pot=newPot.Data
 
-####
-# Quick potion use
+
+
+####               ####
+# Potion hotkey stuff #
+###                ####
+# 
+# Please note that the script does NOT check whether a potion has had any of its functions altered.
+# The only thing it checks for is whether the called entity kind is located in character's iventory
+#
 ####
 
-""" def AutoPotHandler():
+"""
+def AutoPotHandler(EntityName):
     pass
+    me=Bladex.GetEntity(EntityName)
+    inv=me.GetInventory()
+    
 """
 
 def QuickPot(EntityName, PotionKind):
     FriendlyName=Reference.GetObjectFriendlyName(PotionKind)
     me = Bladex.GetEntity(EntityName)
     inv = me.GetInventory()
-    if not inv.nObjects:
-        Actions.ReportMsg ("Don't have any potions")
+    
+    if me.Wuea==Reference.WUEA_ENDED:
+        # print "Quickpot called during an action"
         return
+        
+    if me.Wuea==Reference.WUEA_WAIT:
+        # print "Quickpot called during an action"
+        return
+
+    if not inv.nObjects:
+        Actions.ReportMsg ("I don't have a "+FriendlyName)
+        return
+
+    if me.AnimName=="Rlx" and me.AnmEndedFunc:
+        me.AnmEndedFunc= None
+        
+    if me.AnmEndedFunc:
+        # print "Quickpot called during an action"
+        return
+    
     else:
+        checkedItems=0
         for i in range(inv.nObjects):
-            potname=inv.GetObject(i)
-            potentialpot = Bladex.GetEntity(potname)
-            if potentialpot.Kind == PotionKind:
-                print "Found correct potion I guess lol"
-                #me.Data.InventoryActive=1
-                #me.Data.obj_used=potentialpot
-                me.Data.selected_entity = potentialpot
-                Actions.ForceUse(me.Name, potname)
-                #UsePotion(potname, Actions.USE_FROM_INV)
-                return
+            if checkedItems >= inv.nObjects:
+                Actions.ReportMsg ("I don't have a "+FriendlyName)
+                checkedItems=0
             else:
-                Actions.ReportMsg ("I don't have any "+`FriendlyName`)
+                checkedItems=checkedItems+1
+                potname=inv.GetObject(i)
+                potentialpot = Bladex.GetEntity(potname)
+                if potentialpot.Kind == PotionKind:
+                    #print "Found correct potion I guess lol"
+                    Actions.ForceUse(me.Name, potname)
+                    checkedItems=0
+                    return
