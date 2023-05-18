@@ -299,7 +299,7 @@ class PersonItemFX:
 		XtraParam1=('Bladex.GetEntity("'+PersonName+'").SelfIlum', 0.6)
 		XtraParam2=('Bladex.GetEntity("'+PersonName+'").SelfIlum', 0.1)
 
-		if item.Kind=="PowerPotion" or "PowerPotion_E": ### Added PowerPotion_E. There has to be a better way tho. -LeadHead
+		if item.Kind in ("PowerPotion", "PowerPotion_E"): ### Added PowerPotion_E. There has to be a better way tho. -LeadHead
 
 			AuraGradient0=(2,  0.2, 0.4, 0.8, 1.0, 0.2  ,  0.0, 0.2, 0.8, 0.0, 0.7)
 			AuraGradient1=(2,  0.8, 0.9, 1.0, 1.0, 0.2  ,  0.0, 0.2, 0.9, 0.1, 1.0)
@@ -412,7 +412,7 @@ class PersonItemFX:
 def AddPersonItemFX(PersonName, ItemName, TimeEffect):
 	pers=Bladex.GetEntity(PersonName)
 	item=Bladex.GetEntity(ItemName)
-	if ((not item) or (item.Kind not in ("PowerPotion", "PowerPotion_E", "Amuletofantasma", "Brazalete", "Corona"))):
+	if ((not item) or (item.Kind not in ("PowerPotion", "PowerPotion_E", "Amuletofantasma", "Brazalete", "Corona"))): # Same as above. -LeadHead
 		print "El item especificado no existe no hay efecto definido para este tipo de item!"
 		return
 	pers.Data.PersonItemFX=PersonItemFX(PersonName, ItemName, TimeEffect)
