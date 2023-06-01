@@ -21,4 +21,4 @@ If you are one of them, it's likely you have never spoken to me or are aware of 
 Special thanks:
  * Arohk's Twin - for keeping up the BoD subforum alive over at Arokh's Lair
  * Everyone who worked on Blade of Darkness with Rebel Act Studios
- * 
+ * SNEG, FireFalcom, General Arcade - for bringing back the game from abandonware status and the parts of the re-release that aren't horrible.
