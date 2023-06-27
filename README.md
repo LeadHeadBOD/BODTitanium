@@ -7,7 +7,7 @@ Vast majority of the work, whether it be code or otherwise, done for Titanium is
 
 Thanks to 
  * Tomash - help with python scripts, support with extensive knowledge of the game, feedback and ideas
- * Sryml - help with python scripts, 3DSMax video tutorials used as a reference
+ * Sryml - help with python scripts, 3DSMax video tutorials used as a reference, mmp_convert tool
  * Borer - help with python scripts, Dwarf animation adjustments directly adopted from his
  * Ubaid - help with python scripts
  * MichaelBK - help with python scripts
