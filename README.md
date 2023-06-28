@@ -20,6 +20,9 @@ If you are one of them, it's likely you have never spoken to me or are aware of 
  * Decino
  * DumptruckDS
  * Mike Weir & Pierre Cayer
+ * Sgt_Mark_IV
+ * coroner @ G6S
+ * Matthew Davis
 
 Special thanks:
  * Arohk's Twin - for keeping up the BoD subforum alive over at Arokh's Lair
