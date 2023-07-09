@@ -1,3 +1,15 @@
+##///
+##||| Damage.PY TITANIUM
+##||| Change list:
+##||| * Added mutilations for skeletons on crush damage
+##||| * Added sparks/dust for crush damage on DustDeathEntities
+##||| * Modified dwarf combo damage data to correspond with IceHammer change
+##||| * Added comments to make it easier to understand which attacks correspond to which animation
+##||| * Extra entries for InflictDamageFXData for elemental weapons
+##||| * Added AnimData for Gold and Dark Ork
+##||| * Adapted bow camera fix from HD update
+##\\\ 
+
 import Reference
 import Bladex
 import BCopy
@@ -147,7 +159,60 @@ InflictDamageFXData['Amz_g_spear33']=(300.0, 0.8, 240, 20, 0, 2.0, None, 1.0, 1.
 InflictDamageFXData['Amz_g_spear_sb11']=(400.0, 0.9, 240, 20, 0, 2.0, None, 1.0, 1.0)
 
 
-# Attacking Anim Table   (Damage Factor)
+
+######---------######
+# ELEMENTAL WEAPONS #
+######---------######
+
+### Fire
+# Maybe we don't even need this? -LeadHead
+# Nevermind, we do need this. Although aura is created on all fire attacks, light is not.
+# So let there be light.
+
+# # Fire Sword
+InflictDamageFXData['Kgt_g_s28kata_new']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
+# # Big Fire Sword
+InflictDamageFXData['Bar_g2h_earthpow']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
+# # Fire Axe
+InflictDamageFXData['Dwf_g_22']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
+# # Fire bo
+# InflictDamageFXData
+
+
+### Ice
+# Don't create aura, since it's already done by default, leave first value at 0 -LeadHead
+
+# Ice Sword
+InflictDamageFXData['Kgt_g_12_7_s1new']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
+# Ice Axe
+InflictDamageFXData['Bar_g_axe30']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
+# Ice Hammer
+InflictDamageFXData['Dwf_g_s18_2h']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
+# Ice Wand
+InflictDamageFXData['Amz_g_spear16']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
+
+
+### Queensword
+# Aura data not needed since it's done by default -LeadHead
+
+#InflictDamageFXData
+#InflictDamageFXData
+#InflictDamageFXData
+#InflictDamageFXData
+
+### Venom
+# Don't create additional aura?
+
+# Crush Hammer
+InflictDamageFXData['Dwf_g_s22low_new']=(0, 0.9, 20, 130, 50, 2.0, None, 1.0, 1.0)
+
+# Steel Feather
+InflictDamageFXData['Amz_g_spear19_bs1']=(0, 0.9, 20, 130, 50, 2.0, None, 1.0, 1.0)
+
+
+
+# Attacking Anim Table   (Damage Factor) ### Note that DamageFactor also determines stamina use!
+### There are multiple entries here for the same animations. This must be investiagated -LeadHead
 AnimationData={}         #############
 
 ###############
@@ -206,7 +271,7 @@ AnimationData['Bar_g2h_earthpow']=   60.0
 #comborapidoextra1
 AnimationData['Bar_g2h_21_6kata']=   3.0
 #comborapidoextra2
-AnimationData['Bar_g2h_26_b6']=   3.5
+AnimationData['Bar_g2h_26_b6']=   3.5 
 
 
 #sin utilizar
@@ -330,8 +395,13 @@ AnimationData['Kgt_g_12_7_s1new']=   70.0
 #firesword
 AnimationData['Kgt_g_s28kata_new']=   30.0
 
+#south cross
 AnimationData['Kgt_g_3s9_6new']=  3.5
+
+#attack 180
 AnimationData['Kgt_g_back']=   1.8
+
+#clumsy
 AnimationData['Kgt_g_bad_axe']=   1.6
 AnimationData['Kgt_g_bad_sword']=   1.0
 AnimationData['Kgt_g_bad_sword2']=   1.3
@@ -339,10 +409,12 @@ AnimationData['Kgt_g_bad_sword3']=   1.5
 AnimationData['Kgt_g_bad_spear']=   1.9
 AnimationData['Kgt_g_bad_spear2']=   1.9
 
+#unarmed attacks
 AnimationData['Kgt_g_punch1']=   1.2
 AnimationData['Kgt_g_punch2']=   1.2
 AnimationData['Kgt_g_kick']=   1.2
 
+#dodge attacks
 AnimationData['Kgt_g_d_r']=   1.2
 AnimationData['Kgt_g_d_l']=   1.2
 
@@ -456,13 +528,12 @@ AnimationData['Dwf_g_02']=   1.0
 AnimationData['Dwf_g_05']=   8.0
 AnimationData['Dwf_g_06']=   1.0
 AnimationData['Dwf_g_07']=   11.0
-AnimationData['Dwf_g_09']=   38.0
 AnimationData['Dwf_g_01a']=   1.0
 AnimationData['Dwf_g_02a']=   1.0
 AnimationData['Dwf_g_05a']=   1.0
 AnimationData['Dwf_g_06a']=   1.0
 AnimationData['Dwf_g_07a']=   1.0
-AnimationData['Dwf_g_09a']=   1.0
+
 AnimationData['Dwf_g_18']=   9.2
 AnimationData['Dwf_g_15']=   6.0
 AnimationData['Dwf_g_14']=   4.5
@@ -471,22 +542,28 @@ AnimationData['Dwf_g_16']=   7.8
 AnimationData['Dwf_g_11']=   8.0
 AnimationData['Dwf_g_12']=   9.2
 AnimationData['Dwf_g_17']=   9.0
+#MAZADOBLE
 AnimationData['Dwf_g_21']=   9.0
+#DOOM HAMMER
 AnimationData['Dwf_g_22']=   70.0
 AnimationData['Dwf_g_23']=   1.5
 AnimationData['Dwf_g_26']=   1.5
 AnimationData['Dwf_g_27']=   1.5
+#MARTILLO3 (DOOMHAMMER)
 AnimationData['Dwf_g_31']=   8.0
 
 AnimationData['Dwf_g_back']=   1.0
-AnimationData['Dwf_g_s18_2h']=   38.0
-AnimationData['Dwf_g_32_5_3new']=   1.0
+#ICE HAMMER 
+AnimationData['Dwf_g_s18_2h']=   38.0 # g_s18_2h was unused prior to Titanium - LeadHead
+#CRUSH HAMMER
 AnimationData['Dwf_g_s22low_new']=   50.0
 AnimationData['Dwf_g_s3_new']=   12.0
 AnimationData['Dwf_g_27kata']=   1.0
 AnimationData['Dwf_g_12low']=   1.0
 AnimationData['Dwf_g_s11']=   1.0
+#QUEENSWORD
 AnimationData['Dwf_g_06lowkata_new']=   10.0
+#BLADESWORD
 AnimationData['Dwf_g_magic']=   37.5
 AnimationData['Dwf_g_magic2']=   21.0
 
@@ -514,6 +591,15 @@ AnimationData['Dwf_g_punch1']=   1.0
 AnimationData['Dwf_g_punch2']=   1.0
 AnimationData['Dwf_g_kick']=   1.0
 
+#Unused animations - random damage data given as placeholders unless otherwise stated, feel free to comment/uncomment and change them if you wish to -LeadHead
+#AnimationData['Dwf_g_s18']=   11.0 #Unused, added
+AnimationData['Dwf_g_09']=    1.0 #Old IceHammer attack, had damage modifier of 38.0
+#AnimationData['Dwf_g_32_5_3new']=   1.0 #Animation of "The Dream"
+#AnimationData['Dwf_g_09a']=   1.0 #Same animation as g_09 but with weird head movement at the end
+#AnimationData['Dwf_g_08a']=   1.0 #Same animation as g_08 but with weird head movement at the end
+
+
+
 
 ##########
 #  ORCO  #
@@ -533,6 +619,24 @@ AnimationData['Gok_g_06']=   1.3
 AnimationData['Gok_g_15']=   2.0
 AnimationData['Gok_g_16']=   2.5
 AnimationData['Gok_g_18']=   3.0
+###############
+#  ORCO  GOLD # -LeadHead
+###############
+AnimationData['Org_g_01']=   1.0
+AnimationData['Org_g_02']=   1.0
+AnimationData['Org_g_06']=   1.0
+AnimationData['Org_g_15']=   1.2
+AnimationData['Org_g_16']=   1.5
+AnimationData['Org_g_18']=   1.8
+###############
+# ORCO OSCURO # -LeadHead
+###############
+AnimationData['Dok_g_01']=   1.0
+AnimationData['Dok_g_02']=   1.0
+AnimationData['Dok_g_06']=   1.0
+AnimationData['Dok_g_15']=   1.2
+AnimationData['Dok_g_16']=   1.5
+AnimationData['Dok_g_18']=   1.8
 
 ###############
 #  ESQUELETO  #
@@ -1093,7 +1197,6 @@ def CheckRightHandToDrop(EntityName):
 
 def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded):
 	#pdb.set_trace()
-	from Blood import DustDeathEntities
     
 	CheckRightHandToDrop(VictimName)
 
@@ -1227,6 +1330,26 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 					bowF = Reference.DefaultObjectData[kind][1]
 	######################################################################################
 	
+    ### Bow camera fix from HD update. 
+    ### Has NOT been tested extensively, but the code seems fine.
+    
+	me = Bladex.GetEntity(VictimName)
+	if me.Data.AimPressed==0 and me.Aim==1:
+		Actions.EndBowMode(VictimName)
+
+	try:
+		if me.Data.LastPViewType!=None and not me.Data.AimPressed:
+			cam= Bladex.GetEntity("Camera")
+			cam.PViewType= me.Data.LastPViewType
+			me.Data.LastPViewType= None
+	except:
+		pass
+
+    ### Again, the code is lifted directly from the HD update, it's unchanged.
+    ### -LeadHead
+            
+    ######################################################################################
+
 	if AttackerName and attacker and attacker.Person:
 		lvl= attacker.Level+1
 	else:
@@ -1360,9 +1483,9 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	effective_damage = max( effective_damage, 0 )
 
 
-	if PrintFormula==1:
-		print "Effective Damage Formula = basic_damage - (charF * magicF) - shieldF - weaponF"
-		print "Effective Damage Formula = "+`basic_damage`+" - ( "+`charF`+" * "+`magicF`+" ) - "+`shieldF`+" - "+`weaponF`+" = "+`effective_damage`
+	# if PrintFormula==1:
+	#print "Effective Damage Formula = basic_damage - (charF * magicF) - shieldF - weaponF"
+	#print "Effective Damage Formula = "+`basic_damage`+" - ( "+`charF`+" * "+`magicF`+" ) - "+`shieldF`+" - "+`weaponF`+" = "+`effective_damage`
 
 	if Shielded:
 		damage_withstood= int (max (basic_damage - (DEF-shieldF), 0))
@@ -1468,7 +1591,7 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	
 	if(not Shielded) and (DamageType=="Impale" or DamageType=="Slash") and Bladex.GetBloodLevel()>0:
 		me.Data.TakeBleedingImpact= effective_damage
-	elif(me.Kind in DustDeathEntities) and DamageType=="Crush":
+	elif(me.Kind in Blood.DustDeathEntities) and DamageType=="Crush": ### Sparks and dust on crushing damage -LeadHead
 		me.Data.TakeBleedingImpact= effective_damage
 	else:
 		me.Data.TakeBleedingImpact= 0
@@ -1480,7 +1603,7 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 		me.Life= me.Life - effective_damage
         
 	if effective_damage>0:
-		me.Data.Mutilate= me.Life <= 0 and (DamageType=="Slash" or (DamageType=="Crush" and me.Kind=="Skeleton"))
+		me.Data.Mutilate= me.Life <= 0 and (DamageType=="Slash" or (DamageType=="Crush" and me.Kind=="Skeleton")) ### Skeletons now can be mutilated by crushing damage -LeadHead
 	else:
 		me.Data.Mutilate= 0
 		if not Shielded:
@@ -1528,6 +1651,7 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 		weapon.Stop(x, y, z)
 		# Check type of damage
 		if me and (not me.Data.Mutilate) and DamageNode!=-1 and DamageZone!=Reference.BODY_HEAD and me.Life>0.0:
+			print "DamageNode is" +`DamageNode`+ ". DamageZone is" +`DamageZone`
 			me.LinkToNode(weapon, DamageNode)
 			sticktime= (3.0)/weapon.Mass
 			print "object "+weapon.Name+" of kind "+weapon.Kind+" of mass "+`weapon.Mass`+" sticking for "+`sticktime`+" seconds"
