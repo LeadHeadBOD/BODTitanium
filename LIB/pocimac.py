@@ -215,7 +215,7 @@ def PocimaNoSoltada(entidad):
 			object.Data.Takeable= 0
 			inv.LinkRightHand("None")
 
-			if object.Data.Hand == 1:                   # TODO : I suspect something goes wrong here and causes the bug
+			if object.Data.Hand == 1:                   # PLAGUE: I suspect something goes wrong here and causes the bug
 				char.AnmEndedFunc = RestoreHand         # where player sometimes draws weapon from inv.rightback when they shouldn't.
 
 			inv.RemoveObject(char.Data.obj_used)
@@ -620,9 +620,10 @@ def EmptyPotion(PotionName):
     newPot.Orientation = obj.Orientation
     newPot.Scale = obj.Scale
     
-    newPot.Data = Pocima(obj)
-    newPot.UseFunc = obj.UseFunc
-    newPot.Data.Increment = obj.Data.Increment
+    Reference.DefaultObjectData[newPot.Kind] = Reference.DefaultObjectData[obj.Kind]       # PLAGUE: If this is missing they don't get recognized by Damage.py as valid objects to drop on damage
+    newPot.Data = Pocima(obj)                                                              # Must check if it doesn't break the game somehow
+    newPot.UseFunc = obj.UseFunc                                                           
+    newPot.Data.Increment = obj.Data.Increment              ### PLAGUE: Why was this info duplicated?
     newPot.Data.MaxLife = obj.Data.MaxLife
     newPot.ExcludeHitFor(obj)
     # newPot.Data.Type = obj.Data.Type
@@ -688,6 +689,8 @@ def EmptyPotion(PotionName):
 #
 ####
 
+### PLAGUE: Todo - automatically parse how much health you have, what potions you have available and use the most appropriate one.
+
 """
 def AutoPotHandler(EntityName):
     pass
@@ -722,10 +725,13 @@ def QuickPot(EntityName, PotionKind):
     
     else:
         for i in range(inv.nObjects):
-            potname=inv.GetObject(i)
+            potname = inv.GetObject(i)                                        ### BUG!!! If 2 more items are stacked in the same slot, the script dies because it seemingly returns a list rather than string?
+            if not potname:
+                Actions.ReportMsg ("I don't have a "+FriendlyName)
+                break
             potentialpot = Bladex.GetEntity(potname)
             if potentialpot.Kind == PotionKind:
-                Actions.ForceUse(me.Name, potname)
-                return
+                Actions.ForceUse(me.Name, potname)              
+                break
             elif i+1 >= inv.nObjects:
                 Actions.ReportMsg ("I don't have a "+FriendlyName)
