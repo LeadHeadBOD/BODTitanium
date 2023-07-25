@@ -6,6 +6,7 @@
 ##||| * Quivers on back don't disappear when picking up arrows/quivers.
 ##||| * Quivers don't disappear from hands when picking them up.
 ##||| * Quivers immediately go to back if possible.
+##||| * Arrows are now correctly drawn after using keys.
 ##||| * Added and edited bow related functions for bow cancelling.
 ##\\\ 
 
@@ -1607,7 +1608,7 @@ def TakeMainAnm(EntityName):
 		me.AnmEndedFunc=TakeStraightRecover
 	else:
 		me.AnmEndedFunc=MainTake2Inv
-		# if me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)==Reference.OBJ_QUIVER:       # Fixes disappearing quivers -LeadHead
+		# if me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)==Reference.OBJ_QUIVER:       # Commented out. Fixes disappearing quivers -LeadHead
 			# inv.LinkRightBack("None")
 	return TRUE
 
@@ -2263,8 +2264,9 @@ def Left2BackEvent(pj_name,event):
 		inv.LinkLeftBack(me.InvLeft)
 
 
-
-
+###
+### 
+###
 def ToggleWEvent(pj_name,event):
 	me=Bladex.GetEntity(pj_name)
 
@@ -2298,11 +2300,14 @@ def ToggleWEvent(pj_name,event):
 	tmp_lback=me.InvLeftBack
 	if tmp_rback:
 		if Reference.GiveObjectFlag(tmp_rback)==Reference.OBJ_QUIVER:
+			rback_backup=me.InvRightBack ### Retarded fix -LeadHead
+			print "rback_backup is" +`rback_backup`
 			tmp_rback=""
 
 	something_on_back= SthOnBack(pj_name)
 	inv.LinkBack("None")
 
+	ArrowDrawn=0 ### Part of the retarded fix -LeadHead
 	add_quiver=0
 	if something_on_back and (event=="ChangeRLEvent" or event=="ChangeREvent"):
 
@@ -2317,25 +2322,33 @@ def ToggleWEvent(pj_name,event):
 			add_quiver=1
 
 
-	if event=="ChangeRLEvent" or event=="ChangeREvent":
+	if event=="ChangeRLEvent" or event=="ChangeREvent": #PLAGUE: This is part of the problem - too much reliance on RLEvent and REvent at the same time.
 		if me.InvRight:
 			if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW and me.InvRight and Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_ARROW:
-				SheatheArrow(inv, me.InvRight)	# We must be carrying an arrow in the right hand, lets sheathe it
+				SheatheArrow(inv, me.InvRight)	# We must be carrying an arrow in the right hand, lets sheathe it           
 			else:
 				inv.LinkBack(me.InvRight)
 		else:
 			if inv.HoldingBow:
-				des_quiver_name=inv.GetSelectedQuiver()
-				if des_quiver_name:
-					inv.SetCurrentQuiver(des_quiver_name)
-					inv.LinkRightBack(des_quiver_name)
-				#print "BUG KK"
+				if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW and rback_backup:  # The core part of the retarded fix
+					#print "we have bow in left and rback_backup ("+`rback_backup`+") was found"             # Fixes a bug where after using an item/key/lever with a bow in hand
+					inv.LinkBack(rback_backup)                                                               # the arrow would be sheathed, the animation would play to unsheath it
+					UnSheatheArrow(inv)                                                                      # but no arrow would actually be drawn
+					ArrowDrawn=1                                                                             #                          -LeadHead
+				else: 
+					des_quiver_name=inv.GetSelectedQuiver()
+					if des_quiver_name:
+						inv.SetCurrentQuiver(des_quiver_name)
+						inv.LinkRightBack(des_quiver_name)
+					#print "BUG KK"
 
-		if not tmp_rback:
+		if not tmp_rback and not ArrowDrawn:
 			inv.LinkRightHand("None")
-		else:
+		elif not ArrowDrawn:
 			inv.LinkRightHand(tmp_rback)
 			tmp_rback=""
+		else:
+			pass
 
 	if event=="ChangeRLEvent" or event=="ChangeLEvent":
 		#inv.LinkBack("None")
