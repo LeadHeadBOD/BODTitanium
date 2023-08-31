@@ -186,8 +186,8 @@ class Pocima:
 
 def RestoreHand(entidad):
 	char = Bladex.GetEntity(entidad)
-	char.AddAnmEventFunc("ChangeREvent",Actions.ToggleWEvent)
-	char.LaunchAnmType("Chg_r")
+	char.AddAnmEventFunc("ChangeREvent",Actions.ToggleWEvent)      # PLAGUE: I suspect something goes wrong here and causes the bug
+	char.LaunchAnmType("Chg_r")                                    # where player sometimes draws weapon from inv.rightback when they shouldn't.
 
 def TakePotionUsed():
 	pass
@@ -215,8 +215,8 @@ def PocimaNoSoltada(entidad):
 			object.Data.Takeable= 0
 			inv.LinkRightHand("None")
 
-			if object.Data.Hand == 1:                   # PLAGUE: I suspect something goes wrong here and causes the bug
-				char.AnmEndedFunc = RestoreHand         # where player sometimes draws weapon from inv.rightback when they shouldn't.
+			if object.Data.Hand == 1:          
+				char.AnmEndedFunc = RestoreHand
 
 			inv.RemoveObject(char.Data.obj_used)
 			impulse = char.Rel2AbsVector(-1000.0 * object.Mass, -1000.0 * object.Mass, 0.0)
@@ -620,8 +620,8 @@ def EmptyPotion(PotionName):
     newPot.Orientation = obj.Orientation
     newPot.Scale = obj.Scale
     
-    Reference.DefaultObjectData[newPot.Kind] = Reference.DefaultObjectData[obj.Kind]       # PLAGUE: If this is missing they don't get recognized by Damage.py as valid objects to drop on damage
-    newPot.Data = Pocima(obj)                                                              # Must check if it doesn't break the game somehow
+    Reference.EntitiesObjectData[newPot.Name] = Reference.DefaultObjectData[obj.Kind]       
+    newPot.Data = Pocima(obj)                                                               
     newPot.UseFunc = obj.UseFunc                                                           
     newPot.Data.Increment = obj.Data.Increment              ### PLAGUE: Why was this info duplicated?
     newPot.Data.MaxLife = obj.Data.MaxLife
@@ -698,6 +698,8 @@ def AutoPotHandler(EntityName):
     inv=me.GetInventory()
     
 """
+import InitDataField
+USE_FROM_INV=0
 
 def QuickPot(EntityName, PotionKind):
     FriendlyName=Reference.GetObjectFriendlyName(PotionKind)
@@ -731,7 +733,18 @@ def QuickPot(EntityName, PotionKind):
                 break
             potentialpot = Bladex.GetEntity(potname)
             if potentialpot.Kind == PotionKind:
-                Actions.ForceUse(me.Name, potname)              
+                #Actions.ForceUse(me.Name, potname)            
+                me = Bladex.GetEntity(EntityName)
+                object=Bladex.GetEntity(potname)
+                if not object.UseFunc:
+                    print "!ERROR! @ Actions.ForceUse - " +ItemName+ " has no UseFunc"
+                    return
+                else:
+                    me.Data.obj_used=object
+                    InitDataField.Initialise(object)
+                    object.Data.UsedBy = EntityName
+                    object.UseFunc(potname, USE_FROM_INV)
+                        
                 break
             elif i+1 >= inv.nObjects:
                 Actions.ReportMsg ("I don't have a "+FriendlyName)
