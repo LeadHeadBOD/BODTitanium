@@ -322,7 +322,7 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 			me=Bladex.GetEntity(inv.Owner)        
 
 			# Select this quiver
-			inv.SetCurrentQuiver(quiver_name)       # Is this necessary?
+			inv.SetCurrentQuiver(quiver_name)       # PLAGUE: Is this necessary?
 			if inv.HoldingBow:
 				inv.LinkRightBack(quiver_name)
 
@@ -340,6 +340,7 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 	if me.InvRightBack:
 		#print "Actions.AddQuiver - " + me.InvRightBack + " is on back"    
 		inv.LinkRightHand("None")
+		inv.SetCurrentQuiver(new_quiver_name)
         return
 	if inv.HoldingBow:
 		print "currently holding bow"
@@ -598,25 +599,7 @@ USE_FROM_NEARBY=2
 USE_FROM_TAKE=4
 
 
-######
-# ForceUse, needed for hotkeys far as I can tell -LeadHead
-#
-def ForceUse (EntityName, ItemName):
-    me = Bladex.GetEntity(EntityName)
-    object=Bladex.GetEntity(ItemName)
-    if not object.UseFunc:
-        print "!ERROR! @ Actions.ForceUse - " +ItemName+ " has no UseFunc"
-        return
-    else:
-        me.Data.obj_used=object
-        InitDataField.Initialise(object)
-        object.Data.UsedBy = EntityName
-        object.UseFunc(ItemName, USE_FROM_INV)
-#
-# The function skips checking a character's viability of using an item
-# It will cause conflicts if called out of place, so DON'T DO IT
-# StdUse still exists for a good reason.
-#######
+
 
 
         
@@ -3246,3 +3229,52 @@ def QuickDeath(EntityName,EventName):
 		AuxFuncs.FadeTo(3.5,10.0,128,0,0)
 
 ##################################################################################################
+'''
+
+                                        T I T A N I U M
+
+                                                                                               '''
+##################################################################################################
+""" Commented out because I suspect it's not needed after all.
+######
+# ForceUse, needed for hotkeys far as I can tell -LeadHead
+#
+
+def ForceUse (EntityName, ItemName):
+    me = Bladex.GetEntity(EntityName)
+    object=Bladex.GetEntity(ItemName)
+    if not object.UseFunc:
+        print "!ERROR! @ Actions.ForceUse - " +ItemName+ " has no UseFunc"
+        return
+    else:
+        me.Data.obj_used=object
+        InitDataField.Initialise(object)
+        object.Data.UsedBy = EntityName
+        object.UseFunc(ItemName, USE_FROM_INV)
+#
+# The function skips checking a character's viability of using an item
+# It will cause conflicts if called out of place, so DON'T DO IT
+# StdUse still exists for a good reason.
+#######
+"""
+
+### JumpHandler for relaxed state dodging fix.
+def JumpHandler (EntityName, EventName):
+    # print "Calling Actions.JumpHandler"
+    me = Bladex.GetEntity(EntityName)
+    
+    if me.Name == "Player1":
+        RightPressed = Bladex.GetTimeActionHeld ("Turn Right")
+        LeftPressed = Bladex.GetTimeActionHeld ("Turn Left")
+        BackPressed = Bladex.GetTimeActionHeld ("Backwards")
+        ForwardPressed = Bladex.GetTimeActionHeld ("Forwards")
+        # print LeftPressed
+        # print RightPressed
+        if RightPressed or LeftPressed or BackPressed:
+            print "button is pressed"
+            me.RaiseEvent("Dodge")
+        elif ForwardPressed:
+            print "no button is pressed"
+            me.RaiseEvent("JumpWrap")
+    else:
+        me.RaiseEvent("JumpWrap")
