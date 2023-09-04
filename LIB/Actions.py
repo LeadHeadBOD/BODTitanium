@@ -8,6 +8,7 @@
 ##||| * Quivers immediately go to back if possible.
 ##||| * Arrows are now correctly drawn after using keys.
 ##||| * Added and edited bow related functions for bow cancelling.
+##||| * Added JumpHandler for DodgeFix.
 ##\\\ 
 
 import Bladex
@@ -322,7 +323,7 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 			me=Bladex.GetEntity(inv.Owner)        
 
 			# Select this quiver
-			inv.SetCurrentQuiver(quiver_name)       # PLAGUE: Is this necessary?
+			inv.SetCurrentQuiver(quiver_name)
 			if inv.HoldingBow:
 				inv.LinkRightBack(quiver_name)
 
@@ -334,19 +335,19 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 			return
 
 	# Else add a new quiver to the inventory and select it
-	inv.AddQuiver(new_quiver_name)
+	inv.AddQuiver(new_quiver_name)                   # PLAGUE: Don't switch if already have a quiver on back.
 
-    # Following script added. We want to check what we have or haven't before selecting quivers. -LeadHead
-	if me.InvRightBack:
-		#print "Actions.AddQuiver - " + me.InvRightBack + " is on back"    
-		inv.LinkRightHand("None")
+    # Everything that follows added. We want to check what we have or haven't before selecting quivers. -LeadHead
+	inv.LinkRightHand("None")
+	if not me.InvRightBack and inv.HoldingBow:
+		#print "Actions.AddQuiver - " + me.InvRightBack + " is on back"
 		inv.SetCurrentQuiver(new_quiver_name)
-        return
+		return
 	if inv.HoldingBow:
 		print "currently holding bow"
 		if not me.InvRightBack:     # Check again if don't already have another kind of quiver on back just in case
 			#print "nothing on rightback"
-			inv.SetCurrentQuiver(new_quiver_name)        
+			inv.SetCurrentQuiver(new_quiver_name)
 			inv.LinkRightBack(new_quiver_name)
 
 def ExtendedTakeObject(inv,Object2TakeName):
