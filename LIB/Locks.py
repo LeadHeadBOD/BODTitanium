@@ -2,8 +2,8 @@
 ##||| Locks.PY TITANIUM
 ##||| Change list:
 ##||| * Added func "KeyUp"
-##||| * Func "LockUseFunc2" had to be subsequently edited.
-##||| * 
+##||| * Func "LockUseFunc2" had to be subsequently edited
+##||| * Added message for when the player is too far from a lock to use it
 ##||| * 
 ##||| * 
 ##||| * 
@@ -65,6 +65,7 @@ def LockUseFunc(lock_name,use_from):
 	pj=Bladex.GetEntity("Player1")
 	
 	if B3DLib.GetXZDistance('Player1', lock_name)> LOCK_DISTANCE:
+		Actions.ReportMsg ("Not in reach")          # Added -LeadHead
 		return
 		
 	if pj.Wuea==Reference.WUEA_WAIT:
