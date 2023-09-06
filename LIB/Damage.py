@@ -8,6 +8,7 @@
 ##||| * Extra entries for InflictDamageFXData for elemental weapons
 ##||| * Added AnimData for Gold and Dark Ork
 ##||| * Adapted bow camera fix from HD update
+##||| * Blocking with weapons with no "brkobjdata" (special weapons) will now still cause attacker to recoil
 ##\\\ 
 
 import Reference
@@ -180,7 +181,7 @@ InflictDamageFXData['Dwf_g_22']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
 
 
 ### Ice
-# Don't create aura, since it's already done by default, leave first value at 0 -LeadHead
+# Don't create aura but we want light, since it's already done by default, leave first value at 0 -LeadHead
 
 # Ice Sword
 InflictDamageFXData['Kgt_g_12_7_s1new']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
@@ -201,7 +202,7 @@ InflictDamageFXData['Amz_g_spear16']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0
 #InflictDamageFXData
 
 ### Venom
-# Don't create additional aura?
+# Don't create additional aura, only light?
 
 # Crush Hammer
 InflictDamageFXData['Dwf_g_s22low_new']=(0, 0.9, 20, 130, 50, 2.0, None, 1.0, 1.0)
@@ -223,10 +224,10 @@ AnimationData['Bar_g2h_08']=   1.0
 
 #combos arriba
 AnimationData['Bar_g2h_b6kata']=  1.25
-AnimationData['Bar_g2h_b7']=  2.8
+AnimationData['Bar_g2h_b7']=  2.8           ### PLAGUE: Duplicated
 
 #combos derecha
-AnimationData['Bar_g2h_s7']=  1.0
+AnimationData['Bar_g2h_s7']=  1.0           ### PLAGUE: Duplicated
 AnimationData['Bar_g2h_02kata']=  1.2
 
 #combos izquierda
@@ -245,7 +246,7 @@ AnimationData['Bar_g2h_b6']=   8.0
 
 #bigsword
 AnimationData['Bar_g2h_b29']=  10.0
-AnimationData['Bar_g2h_s7']=   1.0
+AnimationData['Bar_g2h_s7']=   1.0          ### PLAGUE: Duplicated
 AnimationData['Bar_g2h_19']=  10.0
 
 #longsword
@@ -253,12 +254,12 @@ AnimationData['Bar_g2h_13']=    7.0
 
 #alfange
 AnimationData['Bar_g2h_s8']=   6.2
-AnimationData['Bar_g2h_26']=   10.0
+AnimationData['Bar_g2h_26']=   10.0         ### PLAGUE: Unused?
 
 #flatsword
 AnimationData['Bar_g2h_28']=   10.0
-AnimationData['Bar_g2h_17']=   10.0
-AnimationData['Bar_g2h_b7']=   10.0
+AnimationData['Bar_g2h_17']=   10.0         ### PLAGUE: Unused?
+AnimationData['Bar_g2h_b7']=   10.0         ### PLAGUE: Duplicated
 
 #sawsword
 AnimationData['Bar_g2h_21_7']=   8.0
@@ -274,7 +275,7 @@ AnimationData['Bar_g2h_21_6kata']=   3.0
 AnimationData['Bar_g2h_26_b6']=   3.5 
 
 
-#sin utilizar
+#sin utilizar /// or Unused in English 
 AnimationData['Bar_g2h_02']=   10.0
 
 
@@ -285,7 +286,7 @@ AnimationData['Bar_g_axe08']=   1.0
 #arriba
 AnimationData['Bar_g_axe18']=   1.0
 AnimationData['Bar_g_axe01']=  2.6
-#AnimationData['Bar_g_axe08strong']= 1.2
+#AnimationData['Bar_g_axe08strong']= 1.2        ### PLAGUE: Unused, seems to be missing anmFlags to move it to left hand
 
 #derecha
 AnimationData['Bar_g_axe02']=   1.0
@@ -302,8 +303,8 @@ AnimationData['Bar_g_axe31']=   3.2
 
 #hacharrajada
 AnimationData['Bar_g_axe32']=  9.0
-AnimationData['Bar_g_axe_26kata']=   9.0
-AnimationData['Bar_g_axe_3s2']=   9.0
+AnimationData['Bar_g_axe_26kata']=   9.0        ### PLAGUE: Unused, one of Amazon's anims repurposed for barb?
+AnimationData['Bar_g_axe_3s2']=   9.0           ### PLAGUE: Unused, one of Amazon's anims repurposed for barb?
 
 #eclipse
 AnimationData['Bar_g_axe211']=   10.0
@@ -316,7 +317,7 @@ AnimationData['Bar_g_axe12']=  10.0
 
 #hacha2hojas
 AnimationData['Bar_g_axe34']=  8.0
-AnimationData['Bar_g_axe_32kata_b2']=   8.0
+AnimationData['Bar_g_axe_32kata_b2']=   8.0     ### PLAGUE: Unused, one of Amazon's anims repurposed for barb?
 
 #iceaxe
 AnimationData['Bar_g_axe30']=   34.0
@@ -971,7 +972,7 @@ SpecialDamageFuncs['Electric']= InflictElectricDamage
 SpecialDamageFuncs['Light']   = InflictLightDamage
 
 
-def DropInvalidObjectsOnImpact(EntityName):
+def DropInvalidObjectsOnImpact(EntityName):     ### Modified as a crappy workaround for empty potions not dropping on damage. -LeadHead
 	me=Bladex.GetEntity(EntityName)
 	if me:
 		Actions.UnGraspString (EntityName,"UnGraspString")
@@ -988,6 +989,12 @@ def DropInvalidObjectsOnImpact(EntityName):
 			or right_type==Reference.OBJ_SPECIALKEY \
 			or right_type==Reference.OBJ_TABLET:
 				Actions.DropReleaseEventHandler (EntityName, "DropRightEvent")
+			# elif me.InvRight[-2:]=="_E":
+				# inv=me.GetInventory()
+				# inv.LinkRightHand("None")
+				# invRight=Bladex.GetEntity(me.InvRight)
+				# inv.RemoveObject(invRight)
+
 		if me.InvLeft:
 			left_type= Reference.GiveObjectFlag(me.InvLeft)
 			if left_type==Reference.OBJ_ITEM \
@@ -1000,6 +1007,14 @@ def DropInvalidObjectsOnImpact(EntityName):
 			or left_type==Reference.OBJ_SPECIALKEY \
 			or left_type==Reference.OBJ_TABLET:
 				Actions.DropReleaseEventHandler (EntityName, "DropLeftEvent")
+		# if me.InvLeft2:
+			# if me.InvLeft2[-2]=="_E":
+				# inv=me.GetInventory()
+				# inv.LinkLeftHand2("None")
+				# invLeft2=Bladex.GetEntity(me.InvLeft2)
+				# inv.RemoveObject(invLeft2)
+        
+			
 
 
 def BreakMyShield(EntityName):
@@ -1483,36 +1498,40 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	effective_damage = max( effective_damage, 0 )
 
 
-	# if PrintFormula==1:
-	#print "Effective Damage Formula = basic_damage - (charF * magicF) - shieldF - weaponF"
-	#print "Effective Damage Formula = "+`basic_damage`+" - ( "+`charF`+" * "+`magicF`+" ) - "+`shieldF`+" - "+`weaponF`+" = "+`effective_damage`
+	if PrintFormula==1:
+		print "Effective Damage Formula = basic_damage - (charF * magicF) - shieldF - weaponF"
+		print "Effective Damage Formula = "+`basic_damage`+" - ( "+`charF`+" * "+`magicF`+" ) - "+`shieldF`+" - "+`weaponF`+" = "+`effective_damage`
 
 	if Shielded:
 		damage_withstood= int (max (basic_damage - (DEF-shieldF), 0))
 		if not blocking_with_weapon:
 			shield= Bladex.GetEntity(me.GetInventory().GetActiveShield())
 			try:
-				if shield:
-					if shield_breakable:
-						# Lower the resistance of the shield
-						if victimsShieldData:
-							if not Reference.EntitiesObjectData.has_key(shield.Name):
-								Reference.EntitiesObjectData[shield.Name]= BCopy.deepcopy(victimsShieldData)
-								victimsShieldData= Reference.EntitiesObjectData[shield.Name]
-							victimsShieldData[2]= victimsShieldData[2]-damage_withstood
-							
-							# Break the shield if 0 resistance
-							if victimsShieldData[2] <= 0.0:
-								victimsShieldData[2]=0.0
-								if shield.Data.brkobjdata:
-									BreakMyShield(me.Name)
-									Shielded=0
-							elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
-								if shield.Data.brkobjdata:
-									BreakMyShield(me.Name)
-									Shielded=0
-									if PrintFormula==1:
-										print "Shield Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
+				if shield:                                                                                                            # Bugfix pt.1
+					try:
+						if shield_breakable:
+							# Lower the resistance of the shield
+							if victimsShieldData:
+								if not Reference.EntitiesObjectData.has_key(shield.Name):
+									Reference.EntitiesObjectData[shield.Name]= BCopy.deepcopy(victimsShieldData)
+									victimsShieldData= Reference.EntitiesObjectData[shield.Name]
+								victimsShieldData[2]= victimsShieldData[2]-damage_withstood
+								
+								# Break the shield if 0 resistance
+								if victimsShieldData[2] <= 0.0:
+									victimsShieldData[2]=0.0
+									if shield.Data.brkobjdata:
+										BreakMyShield(me.Name)
+										Shielded=0
+								elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
+									if shield.Data.brkobjdata:
+										BreakMyShield(me.Name)
+										Shielded=0
+										if PrintFormula==1:
+											print "Shield Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
+					except AttributeError:                                                                                            # Bugfix pt.2
+							print "~~Damage.py~~ blockng shield "+`shield.Name`+" has no 'brkobjdata' (SPECIAL SHIELD?)"              # If weapon/shield doesn't have brkobjdata,
+							pass                                                                                                      # we still want the oppoenent to play the flinch animation. -LeadHead 
 					if Shielded:
 						#rules out cases where shield has broken
 						if (not thrown_flag) and attacker and attacker.Person and attacker.GotAnmType("sw_react"):
@@ -1527,26 +1546,30 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 			weapon= Bladex.GetEntity(me.GetInventory().GetActiveWeapon())
 			try:
 				if weapon:
-					if weapon.Data.brkobjdata:
-						# Lower the resistance of the shield
-						if victimsShieldData:
-							if not Reference.EntitiesObjectData.has_key(weapon.Name):
-								Reference.EntitiesObjectData[weapon.Name]= BCopy.deepcopy(victimsShieldData)
-								victimsShieldData= Reference.EntitiesObjectData[weapon.Name]
-							victimsShieldData[5][4]= victimsShieldData[5][4]-damage_withstood
-							
-							# Break the shield if 0 resistance
-							if victimsShieldData[5][4] <= 0.0:
-								victimsShieldData[5][4]=0.0
-								if weapon.Data.brkobjdata:
-									BreakMySword(me.Name)
-									Shielded=0
-							elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
-								if weapon.Data.brkobjdata:
-									BreakMySword(me.Name)
-									Shielded=0
-									if PrintFormula==1:
-										print "Weapon Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
+					try:                                                                                                              # Bugfix pt.3
+						if weapon.Data.brkobjdata:
+								# Lower the resistance of the shield
+								if victimsShieldData:
+									if not Reference.EntitiesObjectData.has_key(weapon.Name):
+										Reference.EntitiesObjectData[weapon.Name]= BCopy.deepcopy(victimsShieldData)
+										victimsShieldData= Reference.EntitiesObjectData[weapon.Name]
+									victimsShieldData[5][4]= victimsShieldData[5][4]-damage_withstood
+									
+									# Break the shield if 0 resistance
+									if victimsShieldData[5][4] <= 0.0:
+										victimsShieldData[5][4]=0.0
+										if weapon.Data.brkobjdata:
+											BreakMySword(me.Name)
+											Shielded=0
+									elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
+										if weapon.Data.brkobjdata:
+											BreakMySword(me.Name)
+											Shielded=0
+											if PrintFormula==1:
+												print "Weapon Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
+					except AttributeError:                                                                                            # Bugfix pt.4
+							print "~~Damage.py~~ blocked weapon "+`weapon.Name`+" has no 'brkobjdata' (SPECIAL WEAPON?)"              # If weapon/shield doesn't have brkobjdata,
+							pass                                                                                                      # we still want the oppoenent to play the flinch animation. -LeadHead
 					if Shielded:
 						#rules out cases where shield has broken
 						if (not thrown_flag) and attacker and attacker.Person and attacker.GotAnmType("sw_react"):
