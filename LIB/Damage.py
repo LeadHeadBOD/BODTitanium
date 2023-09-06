@@ -972,7 +972,7 @@ SpecialDamageFuncs['Electric']= InflictElectricDamage
 SpecialDamageFuncs['Light']   = InflictLightDamage
 
 
-def DropInvalidObjectsOnImpact(EntityName):     ### Modified as a crappy workaround for empty potions not dropping on damage. -LeadHead
+def DropInvalidObjectsOnImpact(EntityName):
 	me=Bladex.GetEntity(EntityName)
 	if me:
 		Actions.UnGraspString (EntityName,"UnGraspString")
@@ -989,11 +989,6 @@ def DropInvalidObjectsOnImpact(EntityName):     ### Modified as a crappy workaro
 			or right_type==Reference.OBJ_SPECIALKEY \
 			or right_type==Reference.OBJ_TABLET:
 				Actions.DropReleaseEventHandler (EntityName, "DropRightEvent")
-			# elif me.InvRight[-2:]=="_E":
-				# inv=me.GetInventory()
-				# inv.LinkRightHand("None")
-				# invRight=Bladex.GetEntity(me.InvRight)
-				# inv.RemoveObject(invRight)
 
 		if me.InvLeft:
 			left_type= Reference.GiveObjectFlag(me.InvLeft)
@@ -1007,12 +1002,6 @@ def DropInvalidObjectsOnImpact(EntityName):     ### Modified as a crappy workaro
 			or left_type==Reference.OBJ_SPECIALKEY \
 			or left_type==Reference.OBJ_TABLET:
 				Actions.DropReleaseEventHandler (EntityName, "DropLeftEvent")
-		# if me.InvLeft2:
-			# if me.InvLeft2[-2]=="_E":
-				# inv=me.GetInventory()
-				# inv.LinkLeftHand2("None")
-				# invLeft2=Bladex.GetEntity(me.InvLeft2)
-				# inv.RemoveObject(invLeft2)
         
 			
 
