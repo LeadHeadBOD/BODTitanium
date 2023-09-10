@@ -3,7 +3,7 @@
 ##||| Change list:
 ##||| * Ajusted sneak walk timings
 ##||| * Removed steps from _fire type anims where they were not needed.
-##||| 
+##||| * Added steps for dth anims that were missing them.
 ##\\\ 
 
 import Bladex
@@ -2324,19 +2324,30 @@ def LoadKnightAnimationSet(ct_name):
 
 
 
-	anm_name="Kgt_dth0"         # PLAGUE: Missing steps
+	anm_name="Kgt_dth0"
 	Bladex.LoadSampledAnimation("../../Anm/" + anm_name + ".BMV",anm_name,0)
-	Bladex.AddAnmLStep(anm_name,0)
+	Bladex.AddAnmLStep(anm_name,0.00)
 	Bladex.AddAnmRStep(anm_name,0.00)
+	Bladex.AddAnmRRelease(anm_name,0.083)   # Added.
+	Bladex.AddAnmRStep(anm_name,0.205)      #
+	Bladex.AddAnmRRelease(anm_name,0.604)   #
+	Bladex.AddAnmRStep(anm_name,0.872)      #
+	Bladex.AddAnmLRelease(anm_name,0.178)   #
+	Bladex.AddAnmLStep(anm_name,0.508)      #
+	Bladex.AddAnmLRelease(anm_name,0.641)   #
+	Bladex.AddAnmLStep(anm_name,0.896)      #   -LeadHead
 
 
-
-	anm_name="Kgt_dth_c1"       # PLAGUE: Missing steps
+	anm_name="Kgt_dth_c1"
 	Bladex.LoadSampledAnimation("../../Anm/" + anm_name + ".BMV",anm_name,0)
 	Bladex.AddAnmLStep(anm_name,0.00)
 	Bladex.AddAnmRStep(anm_name,0.00)
 	Bladex.AddAnmLRelease(anm_name,0.040)
 	Bladex.AddAnmLStep(anm_name,0.081)
+ 	Bladex.AddAnmLRelease(anm_name,0.745)  # Added.
+	Bladex.AddAnmRRelease(anm_name,0.789)  #
+	Bladex.AddAnmLStep(anm_name,0.883)     #
+	Bladex.AddAnmRStep(anm_name,0.908)     #    -LeadHead
 
 	anm_name="Kgt_dth_c2"
 	Bladex.LoadSampledAnimation("../../Anm/" + anm_name + ".BMV",anm_name,0)

@@ -2,8 +2,10 @@
 ###||| DWFANIMATIONSET.PY TITANIUM
 ###||| Change list:
 ###||| * Included Borer's animation fix for smoother camera
+###||| * Adjusted step timings for certain animations as part of sneak fix.
+###||| * Added missing steps in death animm.
 ###|||
-###||| Because of this, ../AnmPak/Dwf.dat, Enb.dat and Ena.dat MUST be deleted or replaced upon installation
+###||| Because of this, ../AnmPak/Dwf.dat, Enb.dat and Ena.dat might need to be deleted or replaced upon installation
 ###\\\
 
 import Bladex
@@ -19,6 +21,11 @@ def LoadDwfAnimationSet(ct_name):
 		print "Loading the DwArF animation sets..."
 
 		#### Relax ####
+        
+		Bladex.LoadSampledAnimation("../../Anm/Dwf_rlx_no.BMV","Rlx_no_Dwf",1)
+		Bladex.AddAnmRStep("Rlx_no_Dwf",0.0)
+		Bladex.AddAnmLStep("Rlx_no_Dwf",0.0)
+
 
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_rlx_1h.BMV","Rlx_1h_Dwf",1)
 		Bladex.AddAnmRStep("Rlx_1h_Dwf",0.0)
@@ -64,9 +71,9 @@ def LoadDwfAnimationSet(ct_name):
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_jog_no.BMV","Jog_no_Dwf",1)
 		Bladex.AddAnmRStep("Jog_no_Dwf",0.0)
 		Bladex.AddAnmRRelease("Jog_no_Dwf",0.166)
-		Bladex.AddAnmLStep("Jog_no_Dwf",0.389)
+		Bladex.AddAnmLStep("Jog_no_Dwf",0.421)      # was 0.389 -LeadHead
 		Bladex.AddAnmLRelease("Jog_no_Dwf",0.624)
-		Bladex.AddAnmRStep("Jog_no_Dwf",1.0)
+		Bladex.AddAnmRStep("Jog_no_Dwf",1.0)       # was 1.0 -LeadHead
 		Bladex.AddStopTests("Jog_no_Dwf")
 
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_jog_b.BMV","Jog_b_Dwf",1)
@@ -80,7 +87,7 @@ def LoadDwfAnimationSet(ct_name):
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_jog_1h.BMV","Jog_1h_Dwf",1)
 		Bladex.AddAnmLStep("Jog_1h_Dwf",0.00)
 		Bladex.AddAnmLRelease("Jog_1h_Dwf",0.31)
-		Bladex.AddAnmRStep("Jog_1h_Dwf",0.5)
+		Bladex.AddAnmRStep("Jog_1h_Dwf",0.52)       # was 0.5 -LeadHead
 		Bladex.AddAnmRRelease("Jog_1h_Dwf",0.79)
 		Bladex.AddAnmLStep("Jog_1h_Dwf",1.0)
 		Bladex.AddStopTests("Jog_1h_Dwf")
@@ -88,8 +95,8 @@ def LoadDwfAnimationSet(ct_name):
 
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_jog_sword.BMV","Jog_2w_Dwf",1)
 		Bladex.AddAnmLStep("Jog_2w_Dwf",0.00)
-		Bladex.AddAnmLRelease("Jog_2w_Dwf",0.31)
-		Bladex.AddAnmRStep("Jog_2w_Dwf",0.5)
+		Bladex.AddAnmLRelease("Jog_2w_Dwf",0.29)    # was 0.31 -LeadHead
+		Bladex.AddAnmRStep("Jog_2w_Dwf",0.52)       # was 0.5 -LeadHead
 		Bladex.AddAnmRRelease("Jog_2w_Dwf",0.79)
 		Bladex.AddAnmLStep("Jog_2w_Dwf",1.0)
 		Bladex.AddStopTests("Jog_2w_Dwf")
@@ -97,8 +104,8 @@ def LoadDwfAnimationSet(ct_name):
 
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_jog_axe.BMV","Jog_axe_Dwf",1)
 		Bladex.AddAnmLStep("Jog_axe_Dwf",0.00)
-		Bladex.AddAnmLRelease("Jog_axe_Dwf",0.31)
-		Bladex.AddAnmRStep("Jog_axe_Dwf",0.5)
+		Bladex.AddAnmLRelease("Jog_axe_Dwf",0.29)    # was 0.31 -LeadHead
+		Bladex.AddAnmRStep("Jog_axe_Dwf",0.52)       # was 0.5 -LeadHead
 		Bladex.AddAnmRRelease("Jog_axe_Dwf",0.79)
 		Bladex.AddAnmLStep("Jog_axe_Dwf",1.0)
 		Bladex.AddStopTests("Jog_axe_Dwf")
@@ -185,21 +192,21 @@ def LoadDwfAnimationSet(ct_name):
 
 		### SNEAK   ####
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_snk_no.BMV","Snk_no_Dwf",1)
-		Bladex.AddAnmRStep("Snk_no_Dwf",0)
-		Bladex.AddAnmRRelease("Snk_no_Dwf",0.617)
-		Bladex.AddAnmRStep("Snk_no_Dwf",1)
-		Bladex.AddAnmLStep("Snk_no_Dwf",0)
+		Bladex.AddAnmRStep("Snk_no_Dwf",0.0)
+		Bladex.AddAnmRRelease("Snk_no_Dwf",0.631)   # was 0.617 -LeadHead
+		Bladex.AddAnmRStep("Snk_no_Dwf",1.0)
+		Bladex.AddAnmLStep("Snk_no_Dwf",0.0)
 		Bladex.AddAnmLRelease("Snk_no_Dwf",0.121)
-		Bladex.AddAnmLStep("Snk_no_Dwf",0.497)
+		Bladex.AddAnmLStep("Snk_no_Dwf",0.472)      # was 0.497 -LeadHead
 		Bladex.AddStopTests("Snk_no_Dwf")
 
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_snk_1h.BMV","Snk_1h_Dwf",1)
-		Bladex.AddAnmRStep("Snk_1h_Dwf",0)
-		Bladex.AddAnmRRelease("Snk_1h_Dwf",0.617)
-		Bladex.AddAnmRStep("Snk_1h_Dwf",1)
-		Bladex.AddAnmLStep("Snk_1h_Dwf",0)
+		Bladex.AddAnmRStep("Snk_1h_Dwf",0.0)
+		Bladex.AddAnmRRelease("Snk_1h_Dwf",0.631)   # was 0.617 -LeadHead
+		Bladex.AddAnmRStep("Snk_1h_Dwf",1.0)
+		Bladex.AddAnmLStep("Snk_1h_Dwf",0.0)
 		Bladex.AddAnmLRelease("Snk_1h_Dwf",0.121)
-		Bladex.AddAnmLStep("Snk_1h_Dwf",0.497)
+		Bladex.AddAnmLStep("Snk_1h_Dwf",0.472)      # was 0.497 -LeadHead
 		Bladex.AddStopTests("Snk_1h_Dwf")
 
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_snk_b.BMV","Snk_b_Dwf",1)
@@ -237,7 +244,7 @@ def LoadDwfAnimationSet(ct_name):
 		Bladex.AddAnmRStep("Wbk_no_Dwf",0.388)
 		Bladex.AddAnmLRelease("Wbk_no_Dwf",0.478)
 		Bladex.AddAnmLStep("Wbk_no_Dwf",1.0)
-		Bladex.AddAnmRRelease("Wbk_no_Dwf",1)
+		Bladex.AddAnmRRelease("Wbk_no_Dwf",1.0)
 		Bladex.AddStopTests("Wbk_no_Dwf")
 
 
@@ -928,8 +935,8 @@ def LoadDwfAnimationSet(ct_name):
 		anm_name="Dwf_g_punch2"
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_g_punch2.BMV",anm_name,0)
 		Bladex.AddAnmRStep(anm_name,0.000)
-		Bladex.AddAnmRRelease(anm_name,0.020)
-		Bladex.AddAnmRStep(anm_name,0.108)
+		# Bladex.AddAnmRRelease(anm_name,0.020)     # Why? -LeadHead
+		# Bladex.AddAnmRStep(anm_name,0.108)
 		Bladex.AddAnmRRelease(anm_name,0.324)
 		Bladex.AddAnmRStep(anm_name,0.618)
 		Bladex.AddAnmLStep(anm_name,0.000)
@@ -976,13 +983,13 @@ def LoadDwfAnimationSet(ct_name):
 		#
 		anm_name="Dwf_attack_l"
 		Bladex.LoadSampledAnimation("../../Anm/Dwf_attack_l.BMV",anm_name,1)
-		Bladex.AddAnmLStep(anm_name,0)
+		Bladex.AddAnmLStep(anm_name,0.0)
 		Bladex.AddAnmLRelease(anm_name,0.119)
 		Bladex.AddAnmLStep(anm_name,0.291)
 		Bladex.AddAnmLRelease(anm_name,0.458)
 		Bladex.AddAnmLStep(anm_name,0.667)
 		Bladex.AddAnmLRelease(anm_name,0.786)
-		Bladex.AddAnmLStep(anm_name,1)
+		Bladex.AddAnmLStep(anm_name,1.0)
 		Bladex.AddAnmRStep(anm_name,0.0)
 		Bladex.AddAnmRRelease(anm_name,0.02)
 		Bladex.AddAnmRStep(anm_name,0.17)
@@ -1906,10 +1913,18 @@ def LoadDwfAnimationSet(ct_name):
 
 
 
-		anm_name="Dwf_dth0"
+		anm_name="Dwf_dth0"     
 		Bladex.LoadSampledAnimation("../../Anm/Kgt_dth0.BMV",anm_name,0,"Dwarf_N")
 		Bladex.AddAnmLStep(anm_name,0.00)
 		Bladex.AddAnmRStep(anm_name,0.00)
+		Bladex.AddAnmRRelease(anm_name,0.083)   # Added.
+		Bladex.AddAnmRStep(anm_name,0.205)      #
+		Bladex.AddAnmRRelease(anm_name,0.604)   #
+		Bladex.AddAnmRStep(anm_name,0.872)      #
+		Bladex.AddAnmLRelease(anm_name,0.178)   #
+		Bladex.AddAnmLStep(anm_name,0.508)      #
+		Bladex.AddAnmLRelease(anm_name,0.641)   #
+		Bladex.AddAnmLStep(anm_name,0.896)      #   -LeadHead
 
 
 		anm_name="Dwf_dth_c1"
@@ -1918,6 +1933,11 @@ def LoadDwfAnimationSet(ct_name):
 		Bladex.AddAnmRStep(anm_name,0.00)
 		Bladex.AddAnmLRelease(anm_name,0.040)
 		Bladex.AddAnmLStep(anm_name,0.081)
+		Bladex.AddAnmLRelease(anm_name,0.745)  # Added.
+		Bladex.AddAnmRRelease(anm_name,0.789)  #
+		Bladex.AddAnmLStep(anm_name,0.883)     #
+		Bladex.AddAnmRStep(anm_name,0.908)     #    -LeadHead
+
 
 		anm_name="Dwf_dth_c2"
 		Bladex.LoadSampledAnimation("../../Anm/Kgt_dth_c2.BMV",anm_name,0,"Dwarf_N")
