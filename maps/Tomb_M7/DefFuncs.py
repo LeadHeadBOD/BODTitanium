@@ -1,3 +1,11 @@
+##///
+##||| TOMB_M7/DEFFUNCS.PY TITANIUM
+##||| Change list:
+##||| * Fix for characters sinking in ground when picking up King's shield.
+##||| * King's sword now shatters on death.
+##||| * Dwarf now uses appropriate "esfuerzo" sounds in cutscene.
+##\\\ 
+
 import def_class
 import Bladex
 import EnemyTypes
@@ -158,7 +166,7 @@ def CreatePendulo(Name):
 	Pen.Luz=AuxFuncs.GetSpot(Pendulo)
 	Pen.Luz.Intensity = 0.0
 	Pen.Luz.Precission=0.15
-#	Pen.Luz.CastShadows=0
+#	Pen.Luz.CastShadows=0       # PLAGUE: Why not?
 	Pen.Fire=AuxFuncs.GetFire(Pendulo)
 	Pen.Fire.Intensity = 20.0
 
@@ -825,7 +833,7 @@ def Abretelas2():
     pers.LaunchAnimation("Ork_jmp_elevator")
     pers.Data.ImDeadFuncX = pers.ImDeadFunc
     pers.ImDeadFunc       = deKeletum
-    Bladex.AddScheduledFunc(Bladex.GetTime()+2.15, AfterSkeletonJump,(pers.Name,))
+    Bladex.AddScheduledFunc(Bladex.GetTime()+1.75, AfterSkeletonJump,(pers.Name,))      # PLAGUE: 2.15 is too much
 
 
 
@@ -842,7 +850,7 @@ def Abretelas1():
     pers.LaunchAnimation("Ork_jmp_elevator")
     pers.Data.ImDeadFuncX = pers.ImDeadFunc
     pers.ImDeadFunc = deKeletum
-    Bladex.AddScheduledFunc(Bladex.GetTime()+2.15, AfterSkeletonJump,(pers.Name,))
+    Bladex.AddScheduledFunc(Bladex.GetTime()+1.75, AfterSkeletonJump,(pers.Name,))
 
 
 
@@ -857,7 +865,7 @@ def Abretelas0():
     pers.LaunchAnimation("Ork_jmp_elevator")
     pers.Data.ImDeadFuncX = pers.ImDeadFunc
     pers.ImDeadFunc = deKeletum
-    Bladex.AddScheduledFunc(Bladex.GetTime()+2.15, AfterSkeletonJump,(pers.Name,))
+    Bladex.AddScheduledFunc(Bladex.GetTime()+1.75, AfterSkeletonJump,(pers.Name,))
 
 
 def Abretelas(sectorindex,entityname):
@@ -877,7 +885,7 @@ def Abretelas(sectorindex,entityname):
             pers.ImDeadFunc = deKeletum
             CierraPuertadobleT()
             Cierrapuertatemplo()
-            Bladex.AddScheduledFunc(Bladex.GetTime()+2.15, AfterSkeletonJump,(pers.Name,))
+            Bladex.AddScheduledFunc(Bladex.GetTime()+1.75, AfterSkeletonJump,(pers.Name,))
 
 
 #####################################################################################
@@ -1175,8 +1183,12 @@ def SetSoundsEsfuerzo(type):
 		sonido_esfuerzo1=Sounds.CreateEntitySound("../../Sounds/esfuerzos_barb_largo_2.wav","sonido_esfuerzo1")
 		sonido_esfuerzo2=Sounds.CreateEntitySound("../../Sounds/esfuerzos_barb_corto_8.wav","sonido_esfuerzo2")
 	if type == "D":
-		sonido_esfuerzo1=Sounds.CreateEntitySound("../../Sounds/enano-esfuerzos.wav","sonido_esfuerzo1")
-		sonido_esfuerzo2=Sounds.CreateEntitySound("../../Sounds/enano-esfuerzo3.wav","sonido_esfuerzo2")
+		# sonido_esfuerzo1=Sounds.CreateEntitySound("../../Sounds/enano-esfuerzos.wav","sonido_esfuerzo1")    # PLAGUE: Sound file does not exist
+		# sonido_esfuerzo2=Sounds.CreateEntitySound("../../Sounds/enano-esfuerzo3.wav","sonido_esfuerzo2")
+		
+		### Above files seem like beta dwarf sounds. Replacing with something higher quality. -LeadHead
+		sonido_esfuerzo1=Sounds.CreateEntitySound("../../Sounds/esfuerzo-Dwf5.wav","sonido_esfuerzo1")
+		sonido_esfuerzo2=Sounds.CreateEntitySound("../../Sounds/esfuerzo-Dwf10.wav","sonido_esfuerzo2")
 	else:
 		return
 
@@ -1808,7 +1820,12 @@ def sSceneLaunchTakeAnimationA():
 	print(">>sSceneLaunchTakeAnimationA()")
 	char = Bladex.GetEntity("Player1")
 	char.Wuea = Reference.WUEA_ENDED
-	char.LaunchAnimation("Kgt_read_shield_a")
+	if char.Kind[0] == "D":                         # Edited.
+		char.LaunchAnimation("Dwf_read_shield_a")   # 
+		print "das a dworf"                         #
+	else:                                           #
+		char.LaunchAnimation("Kgt_read_shield_a")   #
+		print "das definitely no dworf"             #       -LeadHead
 	char.AddAnmEventFunc("RightStoreShield",sSceneKeepShield)
 	char.AddAnmEventFunc("RightPickupShield",sSceneTakeShield)
 	char.AddAnmEventFunc("StartRead",sSceneReadStartEvent)
@@ -2023,8 +2040,8 @@ def TheKingIsDeath(entity_name):
    wr  = Bladex.GetEntity(rey.InvRight)
 
    rey.Data.StdImDead(entity_name)
-   Breakings.SetBreakable(wr.Name)
-   Breakings.ExplodeSpecialObject (wr.Name, 1000.0)
+   Breakings.SetBreakable(wr.Name)                      # Added.
+   Breakings.ExplodeSpecialObject (wr.Name, 1000.0)     #       -LeadHead
    Bladex.AddScheduledFunc(Bladex.GetTime()+0.05, rey.GetInventory().LinkLeftHand, ("EscudoDeFuego",))
 
 
