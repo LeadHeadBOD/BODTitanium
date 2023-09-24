@@ -1,4 +1,14 @@
-
+##///
+##||| anm_def.PY TITANIUM
+##||| Change list:
+##||| * Added missing skeleton attack flags
+##||| * Commented out some duplicate entries. This probably does nothing, but there's no reason to AddAnmEvents twice.
+##||| * Commented out non-existant animations and Anim Events (beta holdovers?)
+##||| * Added missing Swap180 events to 2handed back attacks.
+##||| * Restored spider spitting.
+##||| * Fixed Knight's and DalGurak's "g_02_new" (Speedkill anim) weapon flags lingering too long.
+##||| * Added Dwarf specific animation events for Tomb of Ephyra cutscene.
+##\\\ 
 
 def Init():
     import Bladex
@@ -519,6 +529,7 @@ def Init():
     Bladex.AddAnmEvent("Amz_g_spear_back","Stop_Trail",0.458)
     Bladex.AddAnmEvent("Amz_g_spear_back","Start_Weapon",0.272)
     Bladex.AddAnmEvent("Amz_g_spear_back","Stop_Weapon",0.458)
+    Bladex.AddAnmEvent("Amz_g_spear_back","Swap180",0.95)           # Added. -LeadHead
 
 
 
@@ -752,6 +763,7 @@ def Init():
     Bladex.AddAnmEvent("Bar_g2h_back","Stop_Weapon",0.556)
     Bladex.AddAnmEvent("Bar_g2h_back","HitInitialItp",0.3)
     Bladex.AddAnmEvent("Bar_g2h_back","HitFinalItp",0.867)
+    Bladex.AddAnmEvent("Bar_g2h_back","Swap180",0.95)           # Added. -LeadHead
 
     Bladex.AddAnmEvent("Bar_g2h_s1","Start_Trail",0.361)
     Bladex.AddAnmEvent("Bar_g2h_s1","Stop_Trail",0.499)
@@ -1086,8 +1098,10 @@ def Init():
     #     BARBARO VIEJAS ANIMACIONES                           #
     #                                                          #
     ############################################################
-    Bladex.AddAnmEvent("Bar_gulp00","drinkingEvent",0.2826)
-    Bladex.AddAnmEvent("Bar_gulp00","ThrowBottle",0.7391)
+#   ###     Duplicated with previous lines, commenting out -LeadHead
+#
+#    Bladex.AddAnmEvent("Bar_gulp00","drinkingEvent",0.2826)
+#    Bladex.AddAnmEvent("Bar_gulp00","ThrowBottle",0.7391)
 
     Bladex.AddAnmEvent("Bar_bag","ChangeREvent",0.556)
 
@@ -1376,6 +1390,13 @@ def Init():
     Bladex.AddAnmEvent("Kgt_g_28new","Start_Weapon",0.345)
     Bladex.AddAnmEvent("Kgt_g_28new","Stop_Weapon",0.623)
 
+    # Bladex.AddAnmEvent("Kgt_g_19","HitInitialItp",0.055) PLAGUE: To be decided
+    # Bladex.AddAnmEvent("Kgt_g_19","HitFinalItp",0.691)
+    # Bladex.AddAnmEvent("Kgt_g_19","Start_Trail",0.379)
+    # Bladex.AddAnmEvent("Kgt_g_19","Stop_Trail",0.732)
+    # Bladex.AddAnmEvent("Kgt_g_19","Start_Weapon",0.379)
+    # Bladex.AddAnmEvent("Kgt_g_19","Stop_Weapon",0.698)
+
     Bladex.AddAnmEvent("Kgt_g_39_new","HitInitialItp",0.131)
     Bladex.AddAnmEvent("Kgt_g_39_new","HitFinalItp",0.843)
     Bladex.AddAnmEvent("Kgt_g_39_new","Start_Trail",0.197)
@@ -1509,7 +1530,7 @@ def Init():
     Bladex.AddAnmEvent("Kgt_g_02_new","HitInitialItp",0.131)
     Bladex.AddAnmEvent("Kgt_g_02_new","HitFinalItp",0.553)
     Bladex.AddAnmEvent("Kgt_g_02_new","Start_Weapon",0.287)
-    Bladex.AddAnmEvent("Kgt_g_02_new","Stop_Weapon",462)
+    Bladex.AddAnmEvent("Kgt_g_02_new","Stop_Weapon",0.462)        # Bugfix. Was 462 (yes, no decimal) -LeadHead
     Bladex.AddAnmEvent("Kgt_g_02_new","Start_Trail",0.287)
     Bladex.AddAnmEvent("Kgt_g_02_new","Stop_Trail",0.462)
 
@@ -1875,9 +1896,11 @@ def Init():
 
     Bladex.AddAnmEvent("Kgt_pour","StartPouring",0.2407)
     Bladex.AddAnmEvent("Kgt_pour","EndPouring",0.6667)
-
+    """ # PLAGUE: non-existent anims
     Bladex.AddAnmEvent("Kgt_dth_c1","head_out",0.0517)
     Bladex.AddAnmEvent("Kgt_dth_bl1","dth_fly",0.2558)
+    """
+
     Bladex.AddAnmEvent("Kgt_fire_g","SetAlightEvent",0.3617)
     Bladex.AddAnmEvent("Kgt_fire0","SetAlightEvent",0.3590)
     Bladex.AddAnmEvent("Kgt_fire1","SetAlightEvent",0.2653)
@@ -1897,6 +1920,10 @@ def Init():
     Bladex.AddAnmEvent("Kgt_1tw_l_f","ThrowLightFacingEvent",0.391)
     Bladex.AddAnmEvent("Kgt_1tw_h_f","ThrowHeavyFacingEvent",0.416) ####0.424
 
+
+    """
+    # PLAGUE: Look like beta content. Commenting out to prevent unnecessary memory use.
+    # Also references non-existant animations.
     Bladex.AddAnmEvent("Kgt_dth_n00","scream_kgt",0.0179)
     Bladex.AddAnmEvent("Kgt_dth_n01","scream_kgt",0.0526)
     Bladex.AddAnmEvent("Kgt_dth_n02","scream_kgt",0.0638)
@@ -1968,6 +1995,8 @@ def Init():
     Bladex.AddAnmEvent("Kgt_dth_bl1","drop_dth_r",0.1860)
     Bladex.AddAnmEvent("Kgt_dth_bl2","drop_dth_l",0.0847)
     Bladex.AddAnmEvent("Kgt_dth_bl2","drop_dth_r",0.2373)
+    """
+
 
     Bladex.AddAnmEvent("Kgt_tke_r_key02","PickupEvent",0.2759)
     Bladex.AddAnmEvent("Kgt_tke_r_key02","Key_down",0.8621)
@@ -2070,6 +2099,7 @@ def Init():
     Bladex.AddAnmEvent("Kgt_read_shield_b","StartRead",0.2548)
     Bladex.AddAnmEvent("Kgt_read_shield_b","EndRead",0.7643)
 
+    # PLAGUE: Suspected unused AnmEvents
     Bladex.AddAnmEvent("Kgt_fll_high_no","StepS_RFoot",0.1628)
     Bladex.AddAnmEvent("Kgt_fll_high_no","StepS_LFoot",0.1651)
     Bladex.AddAnmEvent("Kgt_fll_high_1h","StepS_RFoot",0.0986)
@@ -2553,14 +2583,14 @@ def Init():
     Bladex.AddAnmEvent("Dwf_g_09","Start_Weapon_Special",0.278)
     Bladex.AddAnmEvent("Dwf_g_09","Stop_Weapon_Special",0.455)
     
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","HitInitialItp",0.120)
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","HitFinalItp",0.748)
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Trail",0.278)
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Trail",0.709)
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Weapon",0.405)
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Weapon",0.709)
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Weapon_Special",0.405)
-    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Weapon_Special",0.709)
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","HitInitialItp",0.120)           # Added
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","HitFinalItp",0.748)             # Anim previously unused
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Trail",0.378)             #
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Trail",0.727)              # Now used by IceHammer
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Weapon",0.463)            #
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Weapon",0.727)             #
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Start_Weapon_Special",0.463)    #
+    Bladex.AddAnmEvent("Dwf_g_s18_2h","Stop_Weapon_Special",0.727)     #                -LeadHead
 
     Bladex.AddAnmEvent("Dwf_g_01a","Start_Weapon",0.370)
     Bladex.AddAnmEvent("Dwf_g_01a","Stop_Weapon",0.646)
@@ -2705,6 +2735,11 @@ def Init():
     Bladex.AddAnmEvent("Dwf_fire1","UnGraspString",0.05)
     Bladex.AddAnmEvent("Dwf_fire2","UnGraspString",0.05)
     Bladex.AddAnmEvent("Dwf_fire3","UnGraspString",0.05)
+    
+    Bladex.AddAnmEvent("Dwf_read_shield_a","RightPickupShield",0.1579)   # Added.
+    Bladex.AddAnmEvent("Dwf_read_shield_a","RightStoreShield",0.9240)    #
+    Bladex.AddAnmEvent("Dwf_read_shield_a","StartRead",0.3509)           #
+    Bladex.AddAnmEvent("Dwf_read_shield_a","EndRead",0.8187)             #      -LeadHead
 
 
 
@@ -2740,7 +2775,7 @@ def Init():
     Bladex.AddAnmEvent("Dgk_g_02_new","HitInitialItp",0.131)
     Bladex.AddAnmEvent("Dgk_g_02_new","HitFinalItp",0.655)
     Bladex.AddAnmEvent("Dgk_g_02_new","Start_Weapon",0.268)
-    Bladex.AddAnmEvent("Dgk_g_02_new","Stop_Weapon",525)
+    Bladex.AddAnmEvent("Dgk_g_02_new","Stop_Weapon",0.525)      # Same issue as Knight's SpeedKill, was missing a decimal -LeadHead
     Bladex.AddAnmEvent("Dgk_g_02_new","Start_Trail",0.268)
     Bladex.AddAnmEvent("Dgk_g_02_new","Stop_Trail",0.525)
                
@@ -2956,7 +2991,7 @@ def Init():
 
     ############################################################
     #                                                          #
-    #     DEMONIO JEFE                                               #
+    #     DEMONIO JEFE                                         #
     #                                                          #
     ############################################################
     Bladex.AddAnmEvent("Gdm_g_01","HitInitialItp",0.052)
@@ -3014,12 +3049,14 @@ def Init():
     #     CABALLERO TRAIDOR/OSCURO                             #
     #                                                          #
     ############################################################
+    
+    """ # PLAGUE: Beta AnmEvents.
     Bladex.AddAnmEvent("Tkn_dth_sleep_wall","scream_Tkn",0.0532)
     Bladex.AddAnmEvent("Tkn_dth_sleep_wall","drop_dth_r",0.2021)
     Bladex.AddAnmEvent("Tkn_dth_sleep_wall","little_imp",0.4787)
     Bladex.AddAnmEvent("Tkn_dth_sleep_wall","body_imp",0.6489)
     Bladex.AddAnmEvent("Tkn_dth_sleep_wall","little_imp",0.8617)
-
+    """
 
     Bladex.AddAnmEvent("Tkn_chg_r_l","ChangeRLEvent",0.5385)
     Bladex.AddAnmEvent("Tkn_attack_chg_r_l","ChangeRLEvent",0.4444)
@@ -3270,6 +3307,8 @@ def Init():
     Bladex.AddAnmEvent("Trl_g_19","HitFinalItp",0.931)
     Bladex.AddAnmEvent("Trl_g_31","HitInitialItp",0.055)
     Bladex.AddAnmEvent("Trl_g_31","HitFinalItp",0.837)
+    
+    """ # PLAGUE: Beta AnmEvents.
     Bladex.AddAnmEvent("Trl_hurt_r_arm","CutHurt",0.4706)
     Bladex.AddAnmEvent("Trl_hurt_l_arm","CutHurt",0.5333)
     Bladex.AddAnmEvent("Trl_hurt_head","CutHurt",0.6000)
@@ -3288,7 +3327,7 @@ def Init():
     Bladex.AddAnmEvent("Trl_hurt_breast","CutHurt",0.3889)
     Bladex.AddAnmEvent("Trl_hurt_r_leg","CutHurt",0.4706)
     Bladex.AddAnmEvent("Trl_hurt_l_leg","CutHurt",0.4375)
-
+    """
 
     ############################################################
     #                                                          #
@@ -3320,13 +3359,13 @@ def Init():
 
     ############################################################
     #                                                          #
-    #     ARAÑA PEQUEÑA                                        #
+    #     ARANA PEQUEDA                                        #
     #                                                          #
     ############################################################
     Bladex.AddAnmEvent("Spd_g_01","Start_Weapon",0.4118)
     Bladex.AddAnmEvent("Spd_g_01","Stop_Weapon",0.8824)
-    Bladex.AddAnmEvent("Spd_spit","Spit",0.4762)
-
+    Bladex.AddAnmEvent("Spd_g_spit","Spit",0.4762)              # This one was misnamed as "Spd_spit", hence couldn't spit... -LeadHead
+                                                                # It has taken me 2 years to finally find the reason spider spitting didn't work.
 
     ############################################################
     #                                                          #
@@ -3523,12 +3562,12 @@ def Init():
     Bladex.AddAnmEvent("Skl_g_16","Stop_Weapon",0.535)
     Bladex.AddAnmEvent("Skl_g_16","HitInitialItp",0.135)
     Bladex.AddAnmEvent("Skl_g_16","HitFinalItp",0.731)
-    Bladex.AddAnmEvent("Skl_g_18","Start_Trail",0.445)
-    Bladex.AddAnmEvent("Skl_g_18","Stop_Trail",0.652)
-    Bladex.AddAnmEvent("Skl_g_18","Start_Weapon",0.445)
-    Bladex.AddAnmEvent("Skl_g_18","Stop_Weapon",0.652)
-    Bladex.AddAnmEvent("Skl_g_18","HitInitialItp",0.170)
-    Bladex.AddAnmEvent("Skl_g_18","HitFinalItp",0.869)
+    Bladex.AddAnmEvent("Skl_g_18","Start_Trail",0.445)   ## All this g_18 stuff added, because was originally missing -LeadHead
+    Bladex.AddAnmEvent("Skl_g_18","Stop_Trail",0.652)    ##
+    Bladex.AddAnmEvent("Skl_g_18","Start_Weapon",0.445)  ##
+    Bladex.AddAnmEvent("Skl_g_18","Stop_Weapon",0.652)   ##
+    Bladex.AddAnmEvent("Skl_g_18","HitInitialItp",0.170) ##
+    Bladex.AddAnmEvent("Skl_g_18","HitFinalItp",0.869)   ##
     Bladex.AddAnmEvent("Skl_g_22","Start_Trail",0.115)
     Bladex.AddAnmEvent("Skl_g_22","Stop_Trail",0.181)
     Bladex.AddAnmEvent("Skl_g_22","Start_Trail",0.243)
@@ -3543,8 +3582,6 @@ def Init():
     Bladex.AddAnmEvent("Skl_g_22","Stop_Weapon",0.564)
     Bladex.AddAnmEvent("Skl_g_22","HitInitialItp",0.099)
     Bladex.AddAnmEvent("Skl_g_22","HitFinalItp",0.777)
-
-
 
     ############################################################
     #                                                          #
@@ -3758,7 +3795,7 @@ def Init():
 
     ############################################################
     #                                                          #
-    #     SEÑOR OSCURO                                         #
+    #     SEnOR OSCURO                                         #
     #                                                          #
     ############################################################
     Bladex.AddAnmEvent("Ank_g_01","Start_Weapon",0.4)
