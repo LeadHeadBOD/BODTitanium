@@ -1,3 +1,17 @@
+##///
+##||| ENEMYTYPES.PY TITANIUM
+##||| Change list:
+##||| * Added Gold Ork
+##||| * Skeletons now explode violently on death (# PLAGUE: Needs reworking)
+##||| * Aded Ice Golem
+##||| * Lich limbs now are excluded from collisions giving reliable weapon drops
+##||| * Liches now award experience caused by early mutilation death if the weapon is thrown.
+##||| * Lich vomit attack now deals more poison damage per level.
+##||| * Cositas should no longer rotate on hit when already dead.
+##||| * Spider spitting should now somewhat work  (# PLAGUE: Might need adjustments)
+##\\\ 
+
+
 ################################################################################
 # Define all the basic enemy race classes here.
 # All races inherit from Enm_Def.NPCPerson.
@@ -126,10 +140,10 @@ class Ork (Enm_Def.NPCPerson):
 			AniSound.AsignarSonidosOrco(EntityName)
 		elif me.Kind=="Great_Ork":
 			AniSound.AsignarSonidosOrcoGrande(EntityName)
-		elif me.Kind=="Dark_Ork":
-			AniSound.AsignarSonidosOrcoOscuro(EntityName)
-		elif me.Kind=="Gold_Ork":
-			AniSound.AsignarSonidosOrcoGold(EntityName)
+		elif me.Kind=="Dark_Ork":                           # Added
+			AniSound.AsignarSonidosOrcoOscuro(EntityName)   #
+		elif me.Kind=="Gold_Ork":                           #
+			AniSound.AsignarSonidosOrcoGold(EntityName)     #       -LeadHead
 
 	# Functions for loading and saving state
 	def __getstate__(self):
@@ -186,7 +200,7 @@ class Dark_Ork (Ork):
 # Define the Gold_Ork class
 ################################################################################
 class Gold_Ork (Ork):
-    pass
+	pass
 
 ################################################################################
 
@@ -194,10 +208,18 @@ class Gold_Ork (Ork):
 # Define the Skeleton class
 ################################################################################
 class Skeleton (Enm_Def.NPCPerson):
+
+    ### Set up constants for getting ended rightly
+	pHitImpulse = [0.0,0.0,0.0]
+	# dHitImpulse = [0.0,0.0,0.0]
+	Absolutely_Annihilated = FALSE
+    
+    
 	def __init__(self, me):
 		# base class init
 		Enm_Def.NPCPerson.__init__(self, me)
-
+		self.pHitImpulse = [0.0,0.0,0.0]
+		self.Absolutely_Annihilated = FALSE
 		# anims
 		#me.AnmTranFunc=AuxTran.AuxTranKnightLivingDead
 
@@ -251,35 +273,60 @@ class Skeleton (Enm_Def.NPCPerson):
 		print "El esqueleto se convertira en polvo"
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoPerson,(EntityName,100,0,))
 
+		### For shattering on powerful hits -LeadHead
+        ### Unused cosita code utilized as a basis.
+		if self.Absolutely_Annihilated == TRUE:
+			me.InterruptCombat()
+			me.Wuea=Reference.WUEA_ENDED
+			me.LaunchAnmType("dth_explo")
+			me.ExclusionGroup=1                 ### PLAGUE: Seems to be a solution for getting stuck in corpses.
+			me_pos = me.Position
+
+			for limb_id in (1, 2, 3, 4, 5, 6, 8):
+				limb = me.SeverLimb(limb_id)
+				# print "severing "+`limb_id`
+				# limb.Position = (limb.Position[0], limb.Position[1]-200, limb.Position[2])    # move the limb higher so it doesn't trigger TestHit.
+				# print `limb_id`+" position set"
+                
+				if limb:
+					limb_pos = limb.Position
+					OutImpulse = B3DLib.Normalize ((limb_pos[0]-me_pos[0], limb_pos[1]-me_pos[1], limb_pos[2]-me_pos[2]))
+					OutImpulse = B3DLib.Scale (OutImpulse, 4000.0)
+					limb.Impulse(OutImpulse[0], OutImpulse[1], OutImpulse[2])
+					# print `limb_id`+" OutImpulse applied"
+					# limb.Impulse(self.dHitImpulse[0], self.dHitImpulse[1], self.dHitImpulse[2])
+					# print `limb_id`+" pHitImpulse applied"
+			else: 
+				me.Angle= B3DLib.GetXZAngle(-self.pHitImpulse[0], 0.0, -self.pHitImpulse[2])
+
+
 	def MutilateFunc(self,EntityName,obj_name,x,y,z,nx,ny,nz,node):
 		limb= Bladex.GetEntity(obj_name)
 		InitDataField.Initialise(limb)
+		limb.ExclusionGroup=1   # Ensure limbs aren't causing unneeded hit detection calls -LeadHead
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoObjeto,(obj_name,100,0,))
+
         
-	def Explode (self,EntityName,EventName):
+	def RespondToHit(self, EntityName, AttackerName, DamagePoints, DamageType, DamageZone, Shielded):                       ### We override this function because we want to check
+		Enm_Def.NPCPerson.RespondToHit(self, EntityName, AttackerName, DamagePoints, DamageType, DamageZone, Shielded)      ### what was the last damage type and does it do enough damage
+		me = Bladex.GetEntity(EntityName)                                                                                   ### -LeadHead
+		
+		if DamageType == "Crush" and (DamagePoints > CharStats.GetCharMaxLife(me.Kind, me.Level)):
+			self.Absolutely_Annihilated = TRUE
+            
+	def HitFunc (self, EntityName, WeaponName, Cx, Cy, Cz, Px, Py, Pz,wcx,wcy,wcz,wdx,wdy,wdz):                             ### Override this func to save values for weapon impulse.
+		Enm_Def.NPCPerson.HitFunc(self, EntityName, WeaponName, Cx, Cy, Cz, Px, Py, Pz,wcx,wcy,wcz,wdx,wdy,wdz)             ### -LeadHead
 		me = Bladex.GetEntity(EntityName)
-		me.DelAnmEventFunc(EventName)
-		###Reference.debugprint(EntityName+": in Explode")
-		#pdb.set_trace()
-		# Check valid event type
-		if EventName != "Explode":
-			print(EntityName+":-( Explode has unhandled event")
-			return
-
-		me_pos = me.Position
-
-		for limb_id in range (1, 6):
-			limb= me.SeverLimb(limb_id)
-
-			if limb:
-				# explode outward
-				limb_pos = limb.Position
-				OutImpulse= B3DLib.Normalize ((limb_pos[0]-me_pos[0], limb_pos[1]-me_pos[1], limb_pos[2]-me_pos[2]))
-				B3DLib.Scale (OutImpulse, 5000.0)
-				limb.Impulse(OutImpulse[0], OutImpulse[1], OutImpulse[2])
-
-				# we want backward impulse as well...  get this from the weapon
-				limb.Impulse(self.HitImpulse[0], self.HitImpulse[1], self.HitImpulse[2])        
+		if me.Life>0:
+			self.pHitImpulse[0] = Px*0.2;
+			self.pHitImpulse[1] = Py*0.2;
+			self.pHitImpulse[2] = Pz*0.2;
+			
+			# self.dHitImpulse[0] = Cx*50000.0;
+			# self.dHitImpulse[1] = Cy*50000.0;
+			# self.dHitImpulse[2] = Cz*50000.0
+			
+			# print self.pHitImpulse
 
 ################################################################################
 
@@ -1624,7 +1671,6 @@ class Cos (Enm_Def.NPCPerson):
 		if self.last_hit_in_air:
 			#pdb.set_trace()
 			#me.Angle= B3DLib.GetEntity2EntityAngle (EntityName, "Player1")
-			me.Angle= B3DLib.GetXZAngle(-self.HitImpulse[0], 0.0, -self.HitImpulse[2])
 			me.SetActiveEnemy(None)
 
 		# launch appropriate hurt anim
@@ -1633,6 +1679,7 @@ class Cos (Enm_Def.NPCPerson):
 			me.InterruptCombat()
 			if self.last_hit_in_air:
 				me.LaunchAnmType("fly")
+				me.Angle= B3DLib.GetXZAngle(-self.HitImpulse[0], 0.0, -self.HitImpulse[2])  # Moved. Prevents them from rotating around when already dead. -LeadHead
 			else:
 				me.LaunchAnmType("hurt_lite")
 
@@ -1800,9 +1847,9 @@ class Spidersmall (Enm_Def.NPCPerson):
 			if victim:
 				if victim.Person and not victim.Kind=="Spidersmall":
 					# Need to check immunity
-					#ptcl=Bladex.GetEntity(prtl_name)
-					#print (hit_entity+" was hit by "+prtl_name+ " of type "+ptcl.Kind)
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,   1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +2.0]]
+					me = Bladex.GetEntity(self.Name)                                                                                                                    # Now does VenomDamage
+					VenomDamage= 2.0 + me.Level # Damage increases per level. -LeadHead                                                                                 #
+					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,   1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +VenomDamage]] #           -LeadHead
 					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Poison", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
@@ -1848,7 +1895,7 @@ class Spidersmall (Enm_Def.NPCPerson):
 		venom.Friction=0.075
 		venom.PPS=512
 		venom.DeathTime=end_time+1.0/60.0;
-		vx,vy,vz=me.Rel2AbsVector(0,-14000.0,6500.0)
+		vx,vy,vz=me.Rel2AbsVector(0,-14000.0,8500.0)        # vz was 6500.0
 		venom.Velocity=vx,vy,vz
 		venom.RandomVelocity=5.0
 		me.LinkToNode(venom,node)
@@ -2307,6 +2354,8 @@ class Lich (Enm_Def.NPCPerson):
 	def ImDeadFunc (self,EntityName):
 		Enm_Def.NPCPerson.StdImDead(self,EntityName)
 		me = Bladex.GetEntity(EntityName)
+		enemy=Bladex.GetEntity(me.GetEnemyName())                                                       ### We're doing this to avoid getting stuck in dead corpses
+		me.ExcludeHitInAnimationFor(enemy)                                                              ### While they're flailing about -LeadHead
 		print "El lich se convertira en polvo"
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoPerson,(EntityName,100,0,))
 
@@ -2314,6 +2363,10 @@ class Lich (Enm_Def.NPCPerson):
 		Blood.Mutilate (EntityName,obj_name,x,y,z,nx,ny,nz,node)
 		limb= Bladex.GetEntity(obj_name)
 		InitDataField.Initialise(limb)
+        ### Disable collisions for limbs, otherwise they trigger TestHit on mutilations while still alive - LeadHead
+        ### This is not a big deal, since the limbs will turn to dust in 10seconds anyway.
+		limb.ExclusionGroup=1
+
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoObjeto,(obj_name,100,0,))
 
 	def VomitPrtlHit(self,prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
@@ -2322,14 +2375,9 @@ class Lich (Enm_Def.NPCPerson):
 			if victim:
 				if victim.Person and not victim.Kind=="Lich":
 					me = Bladex.GetEntity(self.Name)
-						#print "me set as" +`me.Name`
-						#print "and my level is" +`me.Level`
-					VmtDamage= 2.0 + me.Level #Since Python starts counting from 0, level 1 lch and zkn will do exactly 2 venom damage as in original game.
-						#print "VmtDamage set as" +`VmtDamage`
+					VmtDamage= 2.0 + me.Level #Since Python starts counting from 0, level 1 lch and zkn will do exactly 2 venom damage as in original game. -LeadHead
 					# Need to check immunity ## Do we?
-					#ptcl=Bladex.GetEntity(prtl_name)
-					#print (hit_entity+" was hit by "+prtl_name+ " of type "+ptcl.Kind)
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +VmtDamage]]
+					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +VmtDamage]] ### Now does VmtDamage -LeadHead
 					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Vomit", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
@@ -2350,7 +2398,6 @@ class Lich (Enm_Def.NPCPerson):
 				Bladex.AddScheduledFunc(Bladex.GetTime()+period,self.SpitFunc,(vomit_name,end_time,period))
 
 	def StartSpit (self,EntityName,EventName):
-		#pdb.set_trace()
 		me = Bladex.GetEntity(EntityName)
 		self.AGE_Number=self.AGE_Number+1
 		end_time=Bladex.GetTime()+0.5
@@ -2432,6 +2479,12 @@ class Lich (Enm_Def.NPCPerson):
 								AttackerEntity= weapon
 							elif weapon.Parent:
 								AttackerEntity= Bladex.GetEntity(weapon.Parent)
+							elif weapon.Data:
+								try:                                                                    # Bugfix. If mutilation is done by a thrown weapon,
+									if weapon.Data.ThrownBy:                                            # previously would fail to trigger OnKilledEnemy func
+										AttackerEntity= weapon.Data.ThrownBy                            # like awarding experience              
+								except:                                                                 #
+									AttackerEntity= None                                                #                                   -LeadHead
 							else:
 								AttackerEntity= None
 							if AttackerEntity and AttackerEntity.Person:
@@ -5010,7 +5063,7 @@ class Golem_metal (Golem_stone):
 ################################################################################
 # Define the Golem_ice class
 ################################################################################
-class Golem_ice (Golem_stone):
+class Golem_ice (Golem_stone):      ### Proper implementation of Ice Golem. Needs to be revisited, might have unneeded variables -LeadHead
 
     ag=None
 
