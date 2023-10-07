@@ -1,3 +1,13 @@
+##///
+##||| AniSoundDwf.PY TITANIUM
+##||| Change list:
+##||| * Added "Woosh" for dodge attacks.
+##||| * Special weapon attacks now use special weapon whoosh sounds (IceHammer, Venom Hammer, Fire Axe)
+##||| * Fire Axe special attack now has a fire-y charge sound.
+##||| * 
+##\\\ 
+
+
 import Bladex
 import NetSounds
 import netgame
@@ -391,9 +401,9 @@ def AsignarSonidosEnano(Personaje):
 	NetSounds.AddAnimSound(per,"Dth_Fll_Dwf", Grito_Salto_VacioDwf, 0.1100)
 	
 	NetSounds.AddAnimSound(per,"Dwf_g_d_r",EsfuerzoCorto1Dwf, 0.1500)
-	NetSounds.AddAnimSound(per,"Dwf_g_d_r",SesgadoCorto, 0.3560)
+	NetSounds.AddAnimSound(per,"Dwf_g_d_r",SesgadoCorto, 0.3760)        # Added -LeadHead
 	NetSounds.AddAnimSound(per,"Dwf_g_d_l",EsfuerzoCorto2Dwf, 0.1300)
-	NetSounds.AddAnimSound(per,"Dwf_g_d_l",SesgadoCortoGrave, 0.2760)
+	NetSounds.AddAnimSound(per,"Dwf_g_d_l",SesgadoCortoGrave, 0.3260)   # Added -LeadHead
 	NetSounds.AddAnimSound(per,"Dwf_d_b",EsfuerzoCorto3Dwf, 0.1500)
 	
 	
@@ -649,9 +659,12 @@ def AsignarSonidosEnano(Personaje):
 	NetSounds.AddAnimSound(per,'Dwf_g_21', EsfuerzoGolpeArribaDwf, 0.5300)
 	NetSounds.AddAnimSound(per,'Dwf_g_21', AndarDwf1, 0.4600)
 	NetSounds.AddAnimSound(per,'Dwf_g_21', SesgadoEspecialLargo1, 0.5410)
+    
+	NetSounds.AddAnimSound(per,'Dwf_g_22', AtaqueFuego4, 0.2020)            # Added
 	NetSounds.AddAnimSound(per,'Dwf_g_22', EsfuerzoGolpeAtrasDwf, 0.4000)
-	NetSounds.AddAnimSound(per,'Dwf_g_22', AndarDwf1, 0.4100)
-	NetSounds.AddAnimSound(per,'Dwf_g_22', SesgadoLargo, 0.4698)
+	NetSounds.AddAnimSound(per,'Dwf_g_22', SesgadoEspecialLargo2, 0.4100)   # Added
+	NetSounds.AddAnimSound(per,'Dwf_g_22', SesgadoEspecialLargo1, 0.5698)   # Was SesgadoLargo, 0.4698
+    
 	NetSounds.AddAnimSound(per,'Dwf_g_23', EsfuerzoGolpeArribaDwf, 0.4800)
 	NetSounds.AddAnimSound(per,'Dwf_g_23', SesgadoLargo, 0.5000)
 	NetSounds.AddAnimSound(per,'Dwf_g_23', AndarDwf1, 0.3000)
@@ -672,11 +685,11 @@ def AsignarSonidosEnano(Personaje):
 	NetSounds.AddAnimSound(per,'Dwf_g_31', SesgadoEspecialLargo1, 0.4300)
 	NetSounds.AddAnimSound(per,'Dwf_g_s18', EsfuerzoGolpeFrontalDwf, 0.1500)
 	NetSounds.AddAnimSound(per,'Dwf_g_s18', AndarDwf1, 0.2750)
-	NetSounds.AddAnimSound(per,'Dwf_g_s18', SesgadoEspecialLargo1, 0.6140)
+	NetSounds.AddAnimSound(per,'Dwf_g_s18', SesgadoEspecialLargo1, 0.6140)      # Was SesgadoCorto
 	NetSounds.AddAnimSound(per,'Dwf_g_s18', AndarDwf2, 0.7000)
-	NetSounds.AddAnimSound(per,'Dwf_g_s18_2h', EsfuerzoCorto6Dwf, 0.1500)
+	NetSounds.AddAnimSound(per,'Dwf_g_s18_2h', EsfuerzoCorto6Dwf, 0.1500)       # Was EsfuerzoGolpeFrontalDwf
 	NetSounds.AddAnimSound(per,'Dwf_g_s18_2h', AndarDwf1, 0.2750)
-	NetSounds.AddAnimSound(per,'Dwf_g_s18_2h', SesgadoEspecialLargo2, 0.6100)
+	NetSounds.AddAnimSound(per,'Dwf_g_s18_2h', SesgadoEspecialLargo2, 0.6100)   # Was SesgadoCorto
 	NetSounds.AddAnimSound(per,'Dwf_g_s18_2h', AndarDwf2, 0.7000)
 	NetSounds.AddAnimSound(per,'Dwf_g_06lowkata_new', SesgadoCorto, 0.2270)
 	NetSounds.AddAnimSound(per,'Dwf_g_06lowkata_new', SesgadoCortoAgudo, 0.4750)
@@ -701,7 +714,7 @@ def AsignarSonidosEnano(Personaje):
 	NetSounds.AddAnimSound(per,'Dwf_g_s3_new', SesgadoEspecialLargo1, 0.2860)
 	NetSounds.AddAnimSound(per,'Dwf_g_s3_new', EsfuerzoGolpeArribaDwf, 0.2600)
 	NetSounds.AddAnimSound(per,'Dwf_g_s3_new', AndarDwf1, 0.3200)
-	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',SesgadoEspecialLargo2, 0.3970)
+	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',SesgadoEspecialLargo2, 0.2870)    # Was SesgadoLargo, 0.3970
 	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',EsfuerzoGolpeArribaDwf, 0.2000)
 	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',AndarDwf1, 0.4000)
 	NetSounds.AddAnimSound(per,'Dwf_g_s22low_new',AndarDwf2, 0.8000)
