@@ -2,6 +2,7 @@
 ##||| DWFCOMBOS.PY TITANIUM
 ##||| Change list:
 ##||| * Changed Icehammer attack animation 
+##||| * Venom hammer special attack trail now yellow.
 ##\\\ 
 
 ######################################################
@@ -311,7 +312,7 @@ dwf.AddLevels("Dwf_g_s3_new",15,40)
 #GOLPE CRUSHHAMMER
 dwf.AddAttack("GM10_1H","Dwf_g_s22low_new")
 dwf.AttackWindow("Dwf_g_s22low_new",0.001,0.900,"GM10_1H_Window")
-dwf.AssignTrail("GM10_1H","","EstelaRoja1")
+dwf.AssignTrail("GM10_1H","","EstelaAmarilla1")             # Was "EstelaRoja1" -LeadHead
 dwf.AddLevels("Dwf_g_s22low_new",16,40)
 
 #GOLPE ICEHAMMER
