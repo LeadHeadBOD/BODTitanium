@@ -1,3 +1,12 @@
+##///
+##||| AniSoundAmz.PY TITANIUM
+##||| Change list:
+##||| * Ice Wand now has a more powerful shout and whoosh.
+##||| * Fire Bo now has a more powerful whoosh and fire effect.
+##||| * 
+##||| * 
+##\\\ 
+
 import Bladex
 import NetSounds
 import netgame
@@ -637,14 +646,20 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_g_spear17', SesgadoLargoAgudo, 0.4700)
 	NetSounds.AddAnimSound(per,'Amz_g_spear17', AndarAmz1, 0.3000)
 	NetSounds.AddAnimSound(per,'Amz_g_spear17', AndarAmz2, 0.7000)
-	NetSounds.AddAnimSound(per,'Amz_g_spear16', EsfuerzoGolpeArribaAmz, 0.1200)
-	NetSounds.AddAnimSound(per,'Amz_g_spear16', AtaquesEspecialesAmz2, 0.4590)
+	NetSounds.AddAnimSound(per,'Amz_g_spear16', EsfuerzoGolpeArribaAmz, 0.1200)     # Was 0.1100
+	NetSounds.AddAnimSound(per,'Amz_g_spear16', AtaquesEspecialesAmz2, 0.4590)      # Was SesgadoLargoAgudo
 	NetSounds.AddAnimSound(per,'Amz_g_spear16', AndarAmz1, 0.3000)
 	NetSounds.AddAnimSound(per,'Amz_g_spear16', AndarAmz2, 0.7000)
+	
+	## Fire Bo
+	NetSounds.AddAnimSound(per,'Amz_g_spear_b6_26', AtaqueFuego4, 0.2020)            # Added
+	NetSounds.AddAnimSound(per,'Amz_g_spear_b6_26', AtaquesEspecialesAmz2, 0.4100)   # Added
+	NetSounds.AddAnimSound(per,'Amz_g_spear_b6_26', AtaquesEspecialesAmz1, 0.5698)   # Was SesgadoLargoAgudo, 0.4770
 	NetSounds.AddAnimSound(per,'Amz_g_spear_b6_26', EsfuerzoGolpeArribaAmz, 0.2500)
-	NetSounds.AddAnimSound(per,'Amz_g_spear_b6_26', SesgadoLargoAgudo, 0.4770)
 	NetSounds.AddAnimSound(per,'Amz_g_spear_b6_26', AndarAmz1, 0.3000)
 	NetSounds.AddAnimSound(per,'Amz_g_spear_b6_26', AndarAmz2, 0.7000)
+	
+	
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_13', EsfuerzoCorto2Amz, 0.471)
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_13', SesgadoCortoAgudo, 0.265)
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_13', SesgadoCorto, 0.470)
