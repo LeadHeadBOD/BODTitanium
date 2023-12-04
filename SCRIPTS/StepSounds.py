@@ -6,6 +6,7 @@
 ##||| * Sneak stepsounds should actually be sneaky now (hopefully).
 ##||| * Added sounds for falling in water and lava.
 ##||| * All enemies should now have a default step sound for any material that it's not assigned to by default.
+##||| * Traitor knight and other "armoured" opponents now have woodenboard step sounds.
 ##\\\ 
 
 
@@ -1997,7 +1998,33 @@ def Init():
     Bladex.AddStepSound("PasoMetalArmadura",s)
 
 
+    # ********************************************
+    # *            PasoMaderaArmadura           *
+    # * Added. They forgot about this -LeadHead *
+    # ********************************************
+    s=Bladex.CreateSound('../../sounds/M-Pasomadera-arm-01.wav', 'PasoMaderaArmadura1')
+    s.SendNotify=0
+    s.Volume=0.4
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("PasoMaderaArmadura",s)
 
+    s=Bladex.CreateSound('../../sounds/M-Pasomadera-arm-02.wav', 'PasoMaderaArmadura2')
+    s.SendNotify=0
+    s.Volume=0.4
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("PasoMaderaArmadura",s)
+
+    s=Bladex.CreateSound('../../sounds/M-Pasomadera-arm-03.wav', 'PasoMaderaArmadura3')
+    s.SendNotify=0
+    s.Volume=0.4
+    s.MinDistance=5000
+    s.MaxDistance=15000
+    Bladex.AddStepSound("PasoMaderaArmadura",s)
+    ###
+    # These sounds are new as well, since originally they didn't exist, as such, PasoMaderaArmadura, while the group existed, had nothing assigned to it.
+    ###
 
 
 
