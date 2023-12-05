@@ -2,8 +2,8 @@
 ##||| SCORERWIDGETS.PY TITANIUM
 ##||| Change list:
 ##||| * Small key icons next to key names should now properly scale.
-##||| * 
-##||| * 
+##||| * Venom icon 
+##||| * PLAGUE: Rework enemy icons to be in an independent frame so they can be properly centered.
 ##||| * 
 ##||| * 
 ##||| * 
@@ -412,8 +412,8 @@ if netgame.GetNetState() == 0:
     wVenomEnemy.SetVisible(0)
     wEnemy.AddLabel(wVenomEnemy,0.5,0.5,
                     BUIx.B_Widget.B_LAB_HCenter,BUIx.B_Widget.B_LAB_VCenter,
-                    BUIx.B_Widget.B_FR_HRelative, BUIx.B_Widget.B_FR_HCenter,
-                    BUIx.B_Widget.B_FR_VRelative, BUIx.B_Widget.B_FR_VCenter
+                    BUIx.B_Widget.B_FR_Left,BUIx.B_Widget.B_FR_Left,            # Fixed
+                    BUIx.B_Widget.B_FR_AbsoluteTop,BUIx.B_Widget.B_FR_Top       #       -LeadHead
                     )
 
     wEnemyLifeLabel=BUIx.B_TextWidget(wEnemy,RootName+"LifeLabel","250",font_server,Language.MapaDeLetrasHi)
