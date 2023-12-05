@@ -7,6 +7,7 @@
 ##||| * Added effect events for Venom Hammer
 ##||| * Added effect events for Fire Axe
 ##||| * Added effect events for Ice Hammer
+##||| * Added effect events for Fire Sword
 ##\\\ 
 
 import Bladex
@@ -55,6 +56,10 @@ Bladex.AddAnmEvent("Kgt_g_magic2","Kgt_g_magic2_1",0.0900)
 Bladex.AddAnmEvent("Kgt_g_magic2","Kgt_g_magic2_2",0.1600)
 Bladex.AddAnmEvent("Kgt_g_magic2","Kgt_g_magic2_3",0.3200)
 
+Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_1",0.0800)             # Added
+Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_2",0.3200)             #
+Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_3",0.4200)             #
+Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_4",0.6800)             #          -LeadHead
 
 Bladex.AddAnmEvent("Bar_g2h_b6","Bar_g2h_b6_1",0.3700)
 Bladex.AddAnmEvent("Bar_g_axe211","Bar_g_axe211_1",0.3160)

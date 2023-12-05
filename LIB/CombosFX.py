@@ -4,7 +4,7 @@
 ##||| * Ice and venom weapons now use correct trails
 ##||| * Particle effects added for Venom Hammer, Ice Hammer, Fire Axe
 ##||| * Particle effects added for Steel Feather, Ice Wand, Fire Bo
-##||| * 
+##||| * Particle effects added for Fire Sword
 ##||| * 
 ##||| * 
 ##\\\ 
@@ -198,6 +198,22 @@ def Kgt_g_magic2_FX(EntityName, EventName):
 	elif step==3:
 		ComboFX_prtlsys2=GenFX.AddParticles(pers.InvRight, "LittleEnergyDissip", 6000, 60, 0, 0.05, 20, 0.1)
 
+#"Kgt_g_s28kata_new" FIRESWORD      -LeadHead
+def Kgt_g_s28kata_new_FX(EntityName, EventName):
+	global ComboFX_prtlsys
+	step=int(EventName[len(EventName)-1:])
+	if step==1:
+		pers=Bladex.GetEntity(EntityName)
+		inv=pers.GetInventory()
+		ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "RedTrail", 2000, 3, 0, 0.1, 30, 1.3) #
+	elif step==2:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 1000, 40, 0, 0.2, 25, 0.2)
+	elif step==3:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 3000, 3, 0, 0.1, 30, 1.3)
+		#ComboFX_prtlsys2=GenFX.AddParticles(inv.GetActiveWeapon(), "RedTrail", 3000, 3, 0, 0.1, 30, 1.3)
+	elif step==4:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 1000, 200, 0, 0.2, 20, 0.2)
+		#GenFX.ModifyParticles(ComboFX_prtlsys2, 1000, 90, 300, 0.2, 25, 0.2)
 
 
 #BARBARO
@@ -546,6 +562,7 @@ def Amz_g_spear19_bs1_FX(EntityName, EventName):
         inv=pers.GetInventory()
         ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "YellowTrail", 2000, 5, 0, 0.1, 10, 1.6)
 
+#"Amz_g_spear19_bs1" FIREBO
 def Amz_g_spear_b6_26_FX(EntityName, EventName):
 	global ComboFX_prtlsys
 	step=int(EventName[len(EventName)-1:])
@@ -859,6 +876,11 @@ def KgtCombosFX(pers_name):
 	pers.AddAnmEventFunc("Kgt_g_magic2_1", Kgt_g_magic2_FX)
 	pers.AddAnmEventFunc("Kgt_g_magic2_2", Kgt_g_magic2_FX)
 	pers.AddAnmEventFunc("Kgt_g_magic2_3", Kgt_g_magic2_FX)
+    
+	pers.AddAnmEventFunc("Kgt_g_s28kata_new_1", Kgt_g_s28kata_new_FX)    # Added
+	pers.AddAnmEventFunc("Kgt_g_s28kata_new_2", Kgt_g_s28kata_new_FX)    # 
+	pers.AddAnmEventFunc("Kgt_g_s28kata_new_3", Kgt_g_s28kata_new_FX)    # 
+	pers.AddAnmEventFunc("Kgt_g_s28kata_new_4", Kgt_g_s28kata_new_FX)	 #      -LeadHead
 
 
 def AmzCombosFX(pers_name):

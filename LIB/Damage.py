@@ -177,7 +177,7 @@ InflictDamageFXData['Bar_g2h_earthpow']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.
 # # Fire Axe
 InflictDamageFXData['Dwf_g_22']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
 # # Fire bo
-# InflictDamageFXData
+InflictDamageFXData['Amz_g_spear_b6_26']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
 
 
 ### Ice
@@ -205,15 +205,15 @@ InflictDamageFXData['Amz_g_spear16']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0
 # Don't create additional aura, only light?
 
 # Crush Hammer
-InflictDamageFXData['Dwf_g_s22low_new']=(0, 0.9, 20, 130, 50, 2.0, None, 1.0, 1.0)
+InflictDamageFXData['Dwf_g_s22low_new']=(0, 0.9, 10, 110, 20, 2.0, None, 1.0, 1.0)
 
 # Steel Feather
-InflictDamageFXData['Amz_g_spear19_bs1']=(0, 0.9, 20, 130, 50, 2.0, None, 1.0, 1.0)
+InflictDamageFXData['Amz_g_spear19_bs1']=(0, 0.9, 10, 110, 20, 2.0, None, 1.0, 1.0)
 
 
 
 # Attacking Anim Table   (Damage Factor) ### Note that DamageFactor also determines stamina use!
-### There are multiple entries here for the same animations. This must be investiagated -LeadHead
+###  PLAGUE: There are multiple entries here for the same animations. This must be investiagated
 AnimationData={}         #############
 
 ###############
@@ -224,7 +224,7 @@ AnimationData['Bar_g2h_08']=   1.0
 
 #combos arriba
 AnimationData['Bar_g2h_b6kata']=  1.25
-AnimationData['Bar_g2h_b7']=  2.8           ### PLAGUE: Duplicated
+AnimationData['Bar_g2h_b7']=  2.8           ### PLAGUE: Duplicated - Skysmash
 
 #combos derecha
 AnimationData['Bar_g2h_s7']=  1.0           ### PLAGUE: Duplicated
@@ -259,7 +259,7 @@ AnimationData['Bar_g2h_26']=   10.0         ### PLAGUE: Unused?
 #flatsword
 AnimationData['Bar_g2h_28']=   10.0
 AnimationData['Bar_g2h_17']=   10.0         ### PLAGUE: Unused?
-AnimationData['Bar_g2h_b7']=   10.0         ### PLAGUE: Duplicated
+AnimationData['Bar_g2h_b7']=   10.0         ### PLAGUE: Duplicated - Skysmash
 
 #sawsword
 AnimationData['Bar_g2h_21_7']=   8.0
@@ -1663,10 +1663,10 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 		weapon.Stop(x, y, z)
 		# Check type of damage
 		if me and (not me.Data.Mutilate) and DamageNode!=-1 and DamageZone!=Reference.BODY_HEAD and me.Life>0.0:
-			print "DamageNode is" +`DamageNode`+ ". DamageZone is" +`DamageZone`
+			# print "DamageNode is" +`DamageNode`+ ". DamageZone is" +`DamageZone`
 			me.LinkToNode(weapon, DamageNode)
 			sticktime= (3.0)/weapon.Mass
-			print "object "+weapon.Name+" of kind "+weapon.Kind+" of mass "+`weapon.Mass`+" sticking for "+`sticktime`+" seconds"
+			# print "object "+weapon.Name+" of kind "+weapon.Kind+" of mass "+`weapon.Mass`+" sticking for "+`sticktime`+" seconds"
 			Bladex.AddScheduledFunc (Bladex.GetTime()+sticktime, StuckWeaponFall, (weapon.Name, VictimName), weapon.Name+"_StuckWeaponFall")
 			if weapon.StickFunc:
 				weapon.StickFunc (weapon.Name, me.Name)

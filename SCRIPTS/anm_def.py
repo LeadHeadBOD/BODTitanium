@@ -8,6 +8,7 @@
 ##||| * Restored spider spitting.
 ##||| * Fixed Knight's and DalGurak's "g_02_new" (Speedkill anim) weapon flags lingering too long.
 ##||| * Added Dwarf specific animation events for Tomb of Ephyra cutscene.
+##||| * Added additional Start_Weapon event for Knight's FireSword combo
 ##\\\ 
 
 def Init():
@@ -1643,27 +1644,28 @@ def Init():
     Bladex.AddAnmEvent("Kgt_g_magic2","Start_Weapon_Special",0.629)
     Bladex.AddAnmEvent("Kgt_g_magic2","Stop_Weapon_Special",0.724)
 
-    Bladex.AddAnmEvent("Kgt_g_286new","HitInitialItp",0.099)
-    Bladex.AddAnmEvent("Kgt_g_286new","HitFinalItp",0.821)
-    Bladex.AddAnmEvent("Kgt_g_286new","Start_Weapon",0.175)
-    Bladex.AddAnmEvent("Kgt_g_286new","Stop_Weapon",0.303)
-    Bladex.AddAnmEvent("Kgt_g_286new","Start_Trail",0.175)
-    Bladex.AddAnmEvent("Kgt_g_286new","Stop_Trail",0.303)
-    Bladex.AddAnmEvent("Kgt_g_286new","Start_Weapon",0.404)
-    Bladex.AddAnmEvent("Kgt_g_286new","Stop_Weapon",0.601)
-    Bladex.AddAnmEvent("Kgt_g_286new","Start_Trail",0.404)
-    Bladex.AddAnmEvent("Kgt_g_286new","Stop_Trail",0.601)
+    ### Commented out, anims don't exist -LeadHead
+    # Bladex.AddAnmEvent("Kgt_g_286new","HitInitialItp",0.099)
+    # Bladex.AddAnmEvent("Kgt_g_286new","HitFinalItp",0.821)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Start_Weapon",0.175)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Stop_Weapon",0.303)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Start_Trail",0.175)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Stop_Trail",0.303)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Start_Weapon",0.404)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Stop_Weapon",0.601)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Start_Trail",0.404)
+    # Bladex.AddAnmEvent("Kgt_g_286new","Stop_Trail",0.601)
 
-    Bladex.AddAnmEvent("Kgt_g_318new","HitInitialItp",0.024)
-    Bladex.AddAnmEvent("Kgt_g_318new","HitFinalItp",0.900)
-    Bladex.AddAnmEvent("Kgt_g_318new","Start_Weapon",0.078)
-    Bladex.AddAnmEvent("Kgt_g_318new","Stop_Weapon",0.280)
-    Bladex.AddAnmEvent("Kgt_g_318new","Start_Trail",0.078)
-    Bladex.AddAnmEvent("Kgt_g_318new","Stop_Trail",0.280)
-    Bladex.AddAnmEvent("Kgt_g_318new","Start_Weapon",0.468)
-    Bladex.AddAnmEvent("Kgt_g_318new","Stop_Weapon",0.611)
-    Bladex.AddAnmEvent("Kgt_g_318new","Start_Trail",0.468)
-    Bladex.AddAnmEvent("Kgt_g_318new","Stop_Trail",0.611)
+    # Bladex.AddAnmEvent("Kgt_g_318new","HitInitialItp",0.024)
+    # Bladex.AddAnmEvent("Kgt_g_318new","HitFinalItp",0.900)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Start_Weapon",0.078)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Stop_Weapon",0.280)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Start_Trail",0.078)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Stop_Trail",0.280)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Start_Weapon",0.468)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Stop_Weapon",0.611)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Start_Trail",0.468)
+    # Bladex.AddAnmEvent("Kgt_g_318new","Stop_Trail",0.611)
 
     Bladex.AddAnmEvent("Kgt_g_27kata_new","HitInitialItp",0.105)
     Bladex.AddAnmEvent("Kgt_g_27kata_new","HitFinalItp",0.688)
@@ -1767,10 +1769,14 @@ def Init():
 
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","HitInitialItp",0.070)
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","HitFinalItp",0.820)
+    Bladex.AddAnmEvent("Kgt_g_s28kata_new","Start_Weapon",0.275)             # Added
+    Bladex.AddAnmEvent("Kgt_g_s28kata_new","Stop_Weapon",0.380)              #   -LeadHead
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","Start_Weapon",0.575)
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","Stop_Weapon",0.729)
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","Start_Trail",0.113)
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","Stop_Trail",0.729)
+    Bladex.AddAnmEvent("Kgt_g_s28kata_new","Start_Weapon_Special",0.275)    # Added
+    Bladex.AddAnmEvent("Kgt_g_s28kata_new","Stop_Weapon_Special",0.380)     #   -LeadHead
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","Start_Weapon_Special",0.575)
     Bladex.AddAnmEvent("Kgt_g_s28kata_new","Stop_Weapon_Special",0.729)
 
