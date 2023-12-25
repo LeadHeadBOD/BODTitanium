@@ -2,6 +2,8 @@
 ##||| LUGARESBACK.PY TITANIUM
 ##||| Change list:
 ##||| * Restored missing narration after clearing Temple of Ianna
+##||| * Can now be navigated with movement keys
+##||| * Gamepad should work now properly
 ##\\\ 
 
 import Sounds
@@ -306,6 +308,13 @@ def RedefineKeys():
 	Bladex.AssocKey("Next"	,"Keyboard","Right")
 	Bladex.AssocKey("Prev"	,"Keyboard","Left")
 	Bladex.AssocKey("Select","Keyboard","Enter")
+	
+	BInput.TranslateInputFromTo("Turn Right", "Next")   # Added. Now can use movement keys (whatever they happen to be bound to) 
+	BInput.TranslateInputFromTo("Turn Left", "Prev")    # to navigate the map screen.  - LeadHead
+	
+	Bladex.AssocKey("Next"	,"Gamepad","JoyRight")          # SNEG, you muppets, you forgot to add this here!
+	Bladex.AssocKey("Prev"	,"Gamepad","JoyLeft")           # Where is your QA department?!
+	Bladex.AssocKey("Select","Gamepad","ButtonSouth")       #           -LeadHead
 
 	InputManager.SetInputActionsSet(LastOne)
 
