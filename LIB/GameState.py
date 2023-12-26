@@ -1,8 +1,11 @@
 ##///
 ##||| GAMESTATE.PY TITANIUM
 ##||| Change list:
-##||| * Values of 0 should now be correctly assigned upon loading game
+##||| * Values of 0 should now be correctly assigned upon loading game if saved
 ##||| * Spot Entity (lights) flickering now gets properly saved
+##||| * Camera will now remember its zoom level if altered by the player (Enjoy, Tomash!)
+##||| * Camera will now remember its direction 
+##||| 
 ##\\\ 
 
 
@@ -211,7 +214,9 @@ class EntityFireState(EntityState):
 
 class EntityCameraState(EntityState):
     def __init__(self,entity):
-        EntityState.__init__(self,entity)
+        EntityState.__init__(self,entity) 
+        self.SpecialProps["PViewType"]=entity.PViewType   # Added.
+        self.SpecialProps["TPos"]=entity.TPos             #          -LeadHead
 
 
 
