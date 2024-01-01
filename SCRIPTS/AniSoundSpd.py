@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Fixed spit attack sound
 ##||| * Commented out non-existant animations.
+##||| * Added death sounds for second death animation.
 ##\\\ 
 
 import Bladex
@@ -46,9 +47,12 @@ def AsignarSonidosAranita(Personaje):
 	per.AddAnimSound("Spd_walk_no", Movimiento3, 0.6500)
 	per.AddAnimSound("Spd_walk_no", Movimiento2, 0.9000)
 	
-	per.AddAnimSound("Spd_dth0", MuerteSpd, 0.1000)  
+	per.AddAnimSound("Spd_dth0", MuerteSpd, 0.2000)  
 	per.AddAnimSound("Spd_dth0", Derrite, 0.1200)  
 	
+	per.AddAnimSound("Spd_dth2", MuerteSpd, 0.2000)     # Added, was missing 
+	per.AddAnimSound("Spd_dth_fll2", Derrite, 0.1300)   #
+	per.AddAnimSound("Spd_dth_fll2", MuerteSpd, 0.600)  #                   -LeadHead
 	
 	per.AddAnimSound("Spd_attack_b", Movimiento1, 0.0534)
 	per.AddAnimSound("Spd_attack_b", Movimiento1, 0.3000)
@@ -69,7 +73,7 @@ def AsignarSonidosAranita(Personaje):
 	# per.AddAnimSound("Spd_rlx_lg", Movimiento3, 0.6500)     #
 	# per.AddAnimSound("Spd_rlx_lg", Movimiento2, 0.9000)     #
 	
-	# per.AddAnimSound("Spd_rlx.max", Movimiento1, 0.0534)    # PLAGUE: Wtf is this format?
+	# per.AddAnimSound("Spd_rlx.max", Movimiento1, 0.0534)    # PLAGUE: Wtf is it trying to load.max file?
 	# per.AddAnimSound("Spd_rlx.max", Movimiento1, 0.3000)    #
 	# per.AddAnimSound("Spd_rlx.max", Movimiento1, 0.6500)    #
 	# per.AddAnimSound("Spd_rlx.max", Movimiento1, 0.9000)    #
