@@ -5,6 +5,7 @@
 ##||| * Commented duplicate entries for dodge sounds.
 ##||| * Reworked Fire Sword special attack sounds.
 ##||| * Additional whoosh for Sharp Sword speical. 
+##||| * g_magic2 whoosh sound timing corrected
 ##\\\ 
 
 import Bladex
@@ -667,7 +668,7 @@ def AsignarSonidosCaballero(Personaje):
 	
 	NetSounds.AddAnimSound(per,'Kgt_g_magic2', ConcBladeSword2, 0.1000)
 	NetSounds.AddAnimSound(per,'Kgt_g_magic2', EsfuerzoBarbMediano, 0.3250)
-	NetSounds.AddAnimSound(per,'Kgt_g_magic2', SesgadoLargoGrave, 0.5530)
+	NetSounds.AddAnimSound(per,'Kgt_g_magic2', SesgadoLargoGrave, 0.5530)   # 0.5530 -LeadHead
 	
 	
 	# NetSounds.AddAnimSound(per,'Kgt_d_r',EsfuerzoCortoBarb, 0.2100)

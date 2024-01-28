@@ -4,7 +4,7 @@
 ##||| * Added "Woosh" for dodge attacks.
 ##||| * Special weapon attacks now use special weapon whoosh sounds (IceHammer, Venom Hammer, Fire Axe)
 ##||| * Fire Axe special attack now has a fire-y charge sound.
-##||| * 
+##||| * g_magic2 whoosh sound timing corrected
 ##\\\ 
 
 
@@ -756,7 +756,7 @@ def AsignarSonidosEnano(Personaje):
 	NetSounds.AddAnimSound(per,'Dwf_g_magic', SesgadoLargoGrave, 0.5530)
 	NetSounds.AddAnimSound(per,'Dwf_g_magic2', ConcBladeSword2, 0.1000)
 	NetSounds.AddAnimSound(per,'Dwf_g_magic2', EsfuerzoGolpeLateralDwf, 0.3250)
-	NetSounds.AddAnimSound(per,'Dwf_g_magic2', SesgadoLargoGrave, 0.5530)
+	NetSounds.AddAnimSound(per,'Dwf_g_magic2', SesgadoLargoGrave, 0.3210)   # 0.5530 -LeadHead
 	
 
 

@@ -9,6 +9,7 @@
 ##||| * Fixed Knight's and DalGurak's "g_02_new" (Speedkill anim) weapon flags lingering too long.
 ##||| * Added Dwarf specific animation events for Tomb of Ephyra cutscene.
 ##||| * Added additional Start_Weapon event for Knight's FireSword combo
+##||| * Corrected start_weapon_special timing for g_magic2 (level 19 Sword of Ianna combo)
 ##\\\ 
 
 def Init():
@@ -64,8 +65,8 @@ def Init():
     Bladex.AddAnmEvent("Amz_g_magic2","Stop_Trail",0.497)
     Bladex.AddAnmEvent("Amz_g_magic2","HitInitialItp",0.064)
     Bladex.AddAnmEvent("Amz_g_magic2","HitFinalItp",0.978)
-    Bladex.AddAnmEvent("Amz_g_magic2","Start_Weapon_Special",0.629)
-    Bladex.AddAnmEvent("Amz_g_magic2","Stop_Weapon_Special",0.724)
+    Bladex.AddAnmEvent("Amz_g_magic2","Start_Weapon_Special",0.321) # 0.629
+    Bladex.AddAnmEvent("Amz_g_magic2","Stop_Weapon_Special",0.497)  # 0.724     corrected -LeadHead
     
     Bladex.AddAnmEvent("Amz_g_bad_axe","HitInitialItp",0.078)
     Bladex.AddAnmEvent("Amz_g_bad_axe","HitFinalItp",0.951)
@@ -1027,8 +1028,8 @@ def Init():
     Bladex.AddAnmEvent("Bar_g_magic2","Stop_Trail",0.497)
     Bladex.AddAnmEvent("Bar_g_magic2","HitInitialItp",0.064)
     Bladex.AddAnmEvent("Bar_g_magic2","HitFinalItp",0.978)
-    Bladex.AddAnmEvent("Bar_g_magic2","Start_Weapon_Special",0.629)
-    Bladex.AddAnmEvent("Bar_g_magic2","Stop_Weapon_Special",0.724)
+    Bladex.AddAnmEvent("Bar_g_magic2","Start_Weapon_Special",0.321) # 0.629
+    Bladex.AddAnmEvent("Bar_g_magic2","Stop_Weapon_Special",0.497)  # 0.724     corrected -LeadHead
 
 
 
@@ -1641,8 +1642,8 @@ def Init():
     Bladex.AddAnmEvent("Kgt_g_magic2","Stop_Trail",0.497)
     Bladex.AddAnmEvent("Kgt_g_magic2","HitInitialItp",0.064)
     Bladex.AddAnmEvent("Kgt_g_magic2","HitFinalItp",0.978)
-    Bladex.AddAnmEvent("Kgt_g_magic2","Start_Weapon_Special",0.629)
-    Bladex.AddAnmEvent("Kgt_g_magic2","Stop_Weapon_Special",0.724)
+    Bladex.AddAnmEvent("Kgt_g_magic2","Start_Weapon_Special",0.321) # 0.629
+    Bladex.AddAnmEvent("Kgt_g_magic2","Stop_Weapon_Special",0.497)  # 0.724     corrected -LeadHead
 
     ### Commented out, anims don't exist -LeadHead
     # Bladex.AddAnmEvent("Kgt_g_286new","HitInitialItp",0.099)
@@ -2725,8 +2726,8 @@ def Init():
     Bladex.AddAnmEvent("Dwf_g_magic2","Stop_Trail",0.497)
     Bladex.AddAnmEvent("Dwf_g_magic2","HitInitialItp",0.064)
     Bladex.AddAnmEvent("Dwf_g_magic2","HitFinalItp",0.978)
-    Bladex.AddAnmEvent("Dwf_g_magic2","Start_Weapon_Special",0.629)
-    Bladex.AddAnmEvent("Dwf_g_magic2","Stop_Weapon_Special",0.724)
+    Bladex.AddAnmEvent("Dwf_g_magic2","Start_Weapon_Special",0.321) # 0.629
+    Bladex.AddAnmEvent("Dwf_g_magic2","Stop_Weapon_Special",0.497)  # 0.724     corrected -LeadHead
 
 
     Bladex.AddAnmEvent("Dwf_clmb_medlow_1h","Impulse_Clmb",0.2900)
