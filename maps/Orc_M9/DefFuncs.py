@@ -1,3 +1,15 @@
+##///
+##||| ORC_M9/DefFuncs.PY TITANIUM
+##||| Change list:
+##||| * DukeFix applied
+##||| * Scorer at the end is hidden only if the player is actually on the elevator
+##||| * Dungeon lock can no longer be used indefinitely until you run it outside the level boundaries and cause floating point errors
+##||| * 
+##||| * 
+##||| * 
+##||| * 
+##\\\ 
+
 import GotoMapVars
 import AbreCam
 import ScriptSkip
@@ -176,6 +188,7 @@ def AbrePuertaLlave333():
 	son_finales=("", golpemetalmediano)
 	Objects.NDisplaceObject(puerta333din, desplazamientos, vectores, vel_iniciales, vel_finales, (), son_durante, son_finales)
 	Bladex.ExeMusicEvent(Bladex.GetMusicEvent("atmosfera21"))
+	cerradurp333.OnUnLockFunc= None # Added -LeadHead
 
 
 
@@ -393,12 +406,11 @@ def MuereElPobreLordKerman (VictimName, AttackerName, WeaponName, DamageType, Da
 	en.DamageFunc = None
 	CanaMaster    = 0
 	#darfuncs.UnhideBadGuy(OrcoCabreado.Name)
-	#OrcoCabreado.Position = 18455.0322547, 50387.9289109, 24534.7211011         # This looks like was made as a failsafe in case the Duke somehow died in his cell.
+	#OrcoCabreado.Position = 18455.0322547, 50387.9289109, 24534.7211011         # This looks like was made as a failsafe in case the Duke somehow died in his cell. That or cut content.
 	#OrcoCabreado.Angle = 3.1415*3/2                                             # Dont need any of this anymore since I removed his DamageFunc until the cell is unlocked.
-	#OrcoCabreado.SetOnFloor()                                                   # -LeadHead
-	#OrcoCabreado.GoToJogging = 1
+	#OrcoCabreado.SetOnFloor()                                                   # If the Duke still somehow dies, the orc simply never spawns and the key is added to your inventory anyway.
+	#OrcoCabreado.GoToJogging = 1                                                # -LeadHead
 	#OrcoCabreado.GoTo(26351.1959878, 50388.8367659, 34333.0602338)
-	_MuereLordKerman.Play(en.Position[0], en.Position[1], en.Position[2], 0)
 	Bladex.ExeMusicEvent(Bladex.GetMusicEvent("Combate6"))
 
 
@@ -407,8 +419,8 @@ def PrisioneroX():
 	
 	pris=Bladex.CreateEntity("PPris","Knight_Traitor", 32497.973,50797.926,38294.32,"Person","Duque")
 	#pris=Bladex.CreateEntity("PPris","Knight_Traitor", 32861.268, 50855.313-250, 37521.836,"Person","Duque")
-	pris.Angle= 3.1415*6.738/180+3.1415/2
-	#EnemyTypes.EnemyDefaultFuncs(pris)
+	pris.Angle= 3.1415*6.738/180+3.1415/2       ## PLAGUE: Wtf is this angle?
+	#EnemyTypes.EnemyDefaultFuncs(pris)         # Not a good idea. Too much extra data ends up being loaded and several Funcs have to override.
 	pris.Blind = 0
 	pris.Deaf = 0
 	pris.SetTmpAnmFlags(1,1,0,0,1,1,0)
@@ -432,6 +444,8 @@ def OrcoDisfrutaMatando(x,y):
 def CortaCabezaPrisionero(x,y):
 	pris.Life = 0
 	pris.SeverLimb(1)
+	#pris.DamageFunc = None
+	_MuereLordKerman.Play(en.Position[0], en.Position[1], en.Position[2], 0)
 	ScriptSkip.SkipScriptEnd()
 
 def SeCongelaALordKerman(x=0,y=0):
@@ -513,7 +527,7 @@ def pSceneStart():
 	
 	if CanaMaster:
 		CanaMaster = 0
-		AniSound.AsignarSonidosCaballeroTraidor(pris.Name) #There has to be a better way to assign hit-sounds but I can't be bothered anymore.
+		AniSound.AsignarSonidosCaballeroTraidor(pris.Name) #There has to be a better way to assign hit-sounds but I can't be bothered anymore. -LeadHead
 		pris.DamageFunc = MuereElPobreLordKerman
 		#pris.UnFreeze()
 		#OrcoCabreado.PutToWorld()
@@ -654,6 +668,7 @@ def obBreakTabs() :
 	rugido.Play(8500,18000,41000)
 	#darfuncs.LaunchMaxCamera("Orcos_Camera_puerta_minotauro.cam",0,60)
 
+## PLAGUE: wtf is this?
 def obSceneFreeMin() :
 	#Min = Bladex.GetEntity("OBMin")
 	#JMinA.TurnOff()
@@ -1027,7 +1042,7 @@ def iSceneTrapDust():
 def iSceneTrapAnim():
 	itrap.Actor=1
 	itrap.Animation="Trampilla_orcos"
-	itrap.FPS=20.0
+	# itrap.FPS=20.0                  ## PLAGUE: Why 20fps? Commented out.
 	itrap.SendSectorMsgs=0
 	itrap.TurnOn()
 
@@ -1400,10 +1415,10 @@ def SubeElevador2():
 	son_durante=(loopelevador, loopelevador, loopelevador)
 	Objects.NDisplaceObject(plataformaelevador2movil, desplazamientos, vectores, vel_iniciales, vel_finales, son_iniciales, son_durante)
 	columnaelevador2.CloseDoor()
-	Scorer.SetVisible(0)
 
 	if (charInElevator) :		
 		Bladex.AddScheduledFunc(Bladex.GetTime()+0.5, elevadorFundido, ())	
+		Scorer.SetVisible(0)    # Moved here -LeadHead
 
 def BajaElevador2():
 
