@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Removed steps from _fire type anims where they were not needed.
 ##||| * Added steps for dth anims that were missing them.
+##||| * Removed duplicate "W2H" AnmEvents
 ##\\\ 
 
 import Bladex
@@ -968,8 +969,10 @@ def LoadBarAnimationSet(ct_name):
 	Bladex.AddAnmLStep(anm_name,0.000)
 	Bladex.AddAnmLRelease(anm_name,0.118)
 	Bladex.AddAnmLStep(anm_name,0.259)
-	Bladex.AddAnmEvent("Bar_g2h_17","W2hToLeft",0)
-	Bladex.AddAnmEvent("Bar_g2h_17","W2hToRight",1)
+	# Bladex.AddAnmEvent("Bar_g2h_17","W2hToLeft",0)
+	# Bladex.AddAnmEvent("Bar_g2h_17","W2hToRight",1)
+	Bladex.AddAnmEvent("Bar_g2h_17","W2hToLeft",0.23)      # Unused anim, but now has correct timings
+	Bladex.AddAnmEvent("Bar_g2h_17","W2hToRight",0.93)     # Will re-introduce at some later point -LeadHead
 
 
 	anm_name="Bar_g2h_22kata_6"
@@ -1033,9 +1036,12 @@ def LoadBarAnimationSet(ct_name):
 	Bladex.AddAnmLStep(anm_name,0.000)
 	Bladex.AddAnmLRelease(anm_name,0.191)
 	Bladex.AddAnmLStep(anm_name,0.318)
-	Bladex.AddAnmEvent("Bar_g2h_s1","W2hToLeft",0)
-	Bladex.AddAnmEvent("Bar_g2h_s1","W2hToRight",1)
-
+	# Bladex.AddAnmEvent("Bar_g2h_s1","W2hToLeft",0)
+	# Bladex.AddAnmEvent("Bar_g2h_s1","W2hToRight",1)
+	Bladex.AddAnmEvent("Bar_g2h_s1","W2hToLeft",0.43)      # Unused anim, but now has correct timings
+	Bladex.AddAnmEvent("Bar_g2h_s1","W2hToRight",0.73)     # Will re-introduce at some later point -LeadHead
+	
+	
 
 	anm_name="Bar_g2h_s8"
 	Bladex.LoadSampledAnimation("../../Anm/Bar_g2h_s8.BMV",anm_name,0)
@@ -1346,9 +1352,10 @@ def LoadBarAnimationSet(ct_name):
 	Bladex.AddAnmRRelease(anm_name,0.639)
 	Bladex.AddAnmRStep(anm_name,0.893)
 	Bladex.AddAnmLStep(anm_name,0.000)
-	Bladex.AddAnmEvent("Bar_g_axe34","W2hToLeft",0.22)
-	Bladex.AddAnmEvent("Bar_g_axe34","W2hToRight",0.93)
-
+	# Bladex.AddAnmEvent("Bar_g_axe34","W2hToLeft",0.22)        ## PLAGUE: Wrong animation name, which prints errors in console
+	# Bladex.AddAnmEvent("Bar_g_axe34","W2hToRight",0.93)       ## every time double edge special is
+	Bladex.AddAnmEvent(anm_name,"W2hToLeft",0.22)               # old commented out,
+	Bladex.AddAnmEvent(anm_name,"W2hToRight",0.93)              # Added -LeadHead
 
 	anm_name="Bar_g_axe_3s2"
 	Bladex.LoadSampledAnimation("../../Anm/Bar_g_axe_3s2.BMV",anm_name,0)
@@ -1362,8 +1369,10 @@ def LoadBarAnimationSet(ct_name):
 	Bladex.AddAnmLStep(anm_name,0.662)
 	Bladex.AddAnmLRelease(anm_name,0.881)
 	Bladex.AddAnmLStep(anm_name,0.944)
-	Bladex.AddAnmEvent("Bar_g_axe34","W2hToLeft",0.1)
-	Bladex.AddAnmEvent("Bar_g_axe34","W2hToRight",0.93)
+	# Bladex.AddAnmEvent("Bar_g_axe34","W2hToLeft",0.1)          ## PLAGUE: Wrong animation name, which prints errors in console
+	# Bladex.AddAnmEvent("Bar_g_axe34","W2hToRight",0.93)        ## every time double edge special is used 
+	Bladex.AddAnmEvent(anm_name,"W2hToLeft",0.1)                 # old commented out,
+	Bladex.AddAnmEvent(anm_name,"W2hToRight",0.93)               # Added -LeadHead
 #	eventos de pies heredados de la animaci�n con lanza de la amz
 
 
@@ -2981,15 +2990,15 @@ def LoadBarAnimationSet(ct_name):
 #	Bladex.AddStopTests("WlkShort_axe_Bar")
 
 
-
-	#anm_name="Bar_d_b_axe"
-	#Bladex.LoadSampledAnimation("../../Anm/Bar_d_b_axe.BMV",anm_name,0)
-	#Bladex.AddAnmRStep(anm_name,0.000)
-	#Bladex.AddAnmRRelease(anm_name,0.202)
-	#Bladex.AddAnmRStep(anm_name,0.423)
-	#Bladex.AddAnmLStep(anm_name,0.000)
-	#Bladex.AddAnmLRelease(anm_name,0.117)
-	#Bladex.AddAnmLStep(anm_name,0.412)
+    # PLAGUE: Let's see if the game even supports multiple backdodge anims.
+	# anm_name="Bar_d_b_axe"
+	# Bladex.LoadSampledAnimation("../../Anm/Bar_d_b_axe.BMV",anm_name,0)
+	# Bladex.AddAnmRStep(anm_name,0.000)
+	# Bladex.AddAnmRRelease(anm_name,0.202)
+	# Bladex.AddAnmRStep(anm_name,0.423)
+	# Bladex.AddAnmLStep(anm_name,0.000)
+	# Bladex.AddAnmLRelease(anm_name,0.117)
+	# Bladex.AddAnmLStep(anm_name,0.412)
 
 	anm_name="Bar_g_d_l_axe"
 	Bladex.LoadSampledAnimation("../../Anm/Bar_g_d_l_axe.BMV",anm_name,0)
