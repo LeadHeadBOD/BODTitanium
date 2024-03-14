@@ -11,6 +11,7 @@
 ##||| * Added JumpHandler for DodgeFix. ( # PLAGUE: Needs to be re-written to support real-time config)
 ##||| * Exiting the level with a limb in hand and nothing on back no longer crashes (See PutAllInBack)
 ##||| * Should report the message "not in reach" more correctly now.
+##||| * Character will no longer try to draw arrows from an empty quiver after picking/using items.
 ##\\\ 
 
 import Bladex
@@ -2711,12 +2712,12 @@ def CancelBowMode(EntityName):          #Added -LeadHead
         #Bladex.AddScheduledFunc(Bladex.GetTime()+BowDelayTime, CancelDelayHandler, ())
     else:
         pass
-### This feels very wrong, but I don't understand how scheduled funcs work
+### This feels very wrong, but I don't understand how scheduled funcs work -LeadHead
 def CancelDelayHandler():
     global BowCancelCalled
     if BowCancelCalled==1:
         BowCancelCalled=0
-        #print "bowing restored"
+        # print "bowing restored"
     else:
         pass
 
