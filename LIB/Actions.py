@@ -1,14 +1,16 @@
 ##///
 ##||| ACTIONS.PY TITANIUM
 ##||| Change list:
-##||| * Fixed putting away shield only to take shield and weapon from back at the same time. (See StdToggleWeapons)
+##||| * Fixed putting away shield only to take shield and weapon from back immediately after. (See StdToggleWeapons)
 ##||| * Fixed "Press F1" prompt to be correct for all weapons and hero characters.
 ##||| * Quivers on back don't disappear when picking up arrows/quivers.
 ##||| * Quivers don't disappear from hands when picking them up.
 ##||| * Quivers immediately go to back if possible.
 ##||| * Arrows are now correctly drawn after using keys.
 ##||| * Added and edited bow related functions for bow cancelling.
-##||| * Added JumpHandler for DodgeFix.
+##||| * Added JumpHandler for DodgeFix. ( # PLAGUE: Needs to be re-written to support real-time config)
+##||| * Exiting the level with a limb in hand and nothing on back no longer crashes (See PutAllInBack)
+##||| * Should report the message "not in reach" more correctly now.
 ##\\\ 
 
 import Bladex
@@ -192,7 +194,11 @@ def PutAllInBack(EntityName):
     if rightback:
         inv.LinkRightBack(rightback)
     elif not rightback and right:
-        inv.LinkRightBack(right)
+        if Bladex.GetEntity(right).Kind[:4] == "Limb":                                # Bugfix.
+            print ("ERROR - Actions.PutAllInBack -> trying to put a limb on back")    # Exiting the level with a limb in hand
+            inv.LinkRightBack("")                                                     # and nothing on back
+        else:                                                                         # should no longer crash the game.
+            inv.LinkRightBack(right)                                                  #                 - LeadHead
     elif rightback and right:
         print "ERROR - Actions.PutAllInBack -> rightback and right both diff on none!!!"
         inv.LinkRightBack(rightback)
@@ -339,16 +345,11 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 
     # Everything that follows added. We want to check what we have or haven't before selecting quivers. -LeadHead
 	inv.LinkRightHand("None")
-	if not me.InvRightBack and inv.HoldingBow:
-		#print "Actions.AddQuiver - " + me.InvRightBack + " is on back"
-		inv.SetCurrentQuiver(new_quiver_name)
-		return
-	if inv.HoldingBow:
-		print "currently holding bow"
+	if inv.HoldingBow or inv.HasBowOnBack:
 		if not me.InvRightBack:     # Check again if don't already have another kind of quiver on back just in case
-			#print "nothing on rightback"
 			inv.SetCurrentQuiver(new_quiver_name)
 			inv.LinkRightBack(new_quiver_name)
+
 
 def ExtendedTakeObject(inv,Object2TakeName):
 	global StakObjects
@@ -404,9 +405,7 @@ def TakeObject(EntityName,Object2TakeName, force_take=TRUE):
 			inv.LinkLeftHand(Object2TakeName)
 			#inv.LinkRightHand(Object2TakeName) # Esta bien ? Revisar !
 	elif object_flag == Reference.OBJ_QUIVER:
-		#if EntityName != "Player1":                 # Needs testing
-		AddQuiver(inv, Object2TakeName)              # 
-		#print "TakeObject - AddQuiver skipped!"     # -LeadHead
+		AddQuiver(inv, Object2TakeName)              # -LeadHead?
 	elif object_flag == Reference.OBJ_STANDARD:
 		if not me.InvLeftBack and not me.InvRightBack and not me.InvRight:
 			inv.LinkRightHand(Object2TakeName)
@@ -642,6 +641,8 @@ def StdUse (EntityName):
 
 	if TryWithAnother:
 		if me.Data and me.Data.selected_entity:
+			UsingFailed=0                # Added
+			TakingFailed=0               #
 			if IsValidForUsing (me.Data.selected_entity[0], EntityName):
 				object_flag= Reference.GiveObjectFlag(me.Data.selected_entity[0])
 				if object_flag!=Reference.OBJ_USEME and object_flag!=Reference.OBJ_ITEM:	# Automatics get picked up first
@@ -651,14 +652,20 @@ def StdUse (EntityName):
 					object.Data.UsedBy = EntityName
 					object.UseFunc(object.Name, USE_FROM_NEARBY)
 					return
+				else:
+					UsingFailed=1
 
 			if IsValidForTaking (me.Data.selected_entity[0]):
 				me.Data.toggle4t_clearback= FALSE
 				me.Data.stuff_onback_b4= SthOnBack(EntityName)
 				if TryToTake(EntityName, me.Data.selected_entity[0]):
 					return
+				else:
+					TakingFailed=1
+
 			else:
-				if(Bladex.IsUseMsgActive()==0):
+				# if(Bladex.IsUseMsgActive()==0):       # PLAGUE: this function literally does nothing and always returns 1. Might be a deprecated function.
+				if UsingFailed and TakingFailed and (Bladex.IsUseMsgActive()==0):       # I don't remember why I started doing this, please send help. -LeadHead
 					return
 				ReportMsg ("The selected object cannot be taken")
 		else:
@@ -679,15 +686,19 @@ def IsValidForUsing(instance_name, EntityName):
 
 	# Is it too far?
 	if dist > chartype.Reach*1.5:	# Patch because we extend our reach to use (e.g. with a torch)
+		ReportMsg ("Not in reach")  # Added -LeadHead
 		return FALSE
+
 
 	# Is it too low?
 	heightdiff = -(object.Position[1] - (me.Position[1]+me.Dist2Floor))
 	if heightdiff < chartype.MinTake:
+		ReportMsg ("Not in reach")  # Added -LeadHead
 		return FALSE
 
 	#Is it too high?
 	if heightdiff > chartype.MaxTake5:
+		ReportMsg ("Not in reach")  # Added -LeadHead
 		return FALSE
 
 	return TRUE
@@ -698,7 +709,7 @@ def has_torch (EntityName):
 	if obj_name:
 		obj = Bladex.GetEntity(obj_name)
 		if obj:
-			return obj.Kind == "Antorcha"
+			return obj.Kind == "Antorcha"       # PLAGUE: We never even check if it's lit???
 	return 0
 
 
@@ -735,9 +746,11 @@ def StdSetFireToUseFunc(ObjectName,use_from):
 		me = Bladex.GetEntity(EntityName)
 		if me:
 			if not has_torch (EntityName):
+				ReportMsg ("The selected object cannot be taken")   # Added -LeadHead
 				return 0
 			torch = Bladex.GetEntity(me.InvRight)
 			if torch.Data.torchobjdata.LightStatus==Torchs.OFF:
+				ReportMsg ("The selected object cannot be taken")   # Added -LeadHead
 				return 0
 			object.UseFunc = 0
 			object.Data.UsedBy = me.InvRight
@@ -1048,6 +1061,23 @@ def TryToTake(EntityName, ObjectName):
 	elif IsOneTooMany (EntityName, ObjectName):
 		ReportMsg ("Too many objects of this type")
 		return FALSE
+
+    # Moved armour check here -LeadHead
+	if Reference.EntitiesObjectData.has_key(ObjectName):
+		object_data = Reference.EntitiesObjectData[ObjectName]
+	else:
+		object_data = Reference.DefaultObjectData[object.Kind]
+	object_flag = object_data[0]
+
+	if object_flag==Reference.OBJ_ARMOUR:
+
+		if me.CharTypeExt<>object_data[1]:
+			ReportMsg ("Type of armour not for me")
+			print "Info is " + str(object_data[1])
+			return FALSE
+		if me.Data.armour_level>=object_data[2]:
+			ReportMsg ("Quality of armour not worthy")
+			return FALSE
 
 	# If someone have something to say, speak now or keep silence forever!
 	for f in TryToTakeCallBacks:
@@ -1602,6 +1632,10 @@ def TakeStraightRecover(EntityName):
 
 	me.Data.toggle4t_clearback= TRUE
 	if (not me.Data.stuff_onback_b4) and (SthOnBack(EntityName) or (me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)==Reference.OBJ_QUIVER)):
+		if me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)==Reference.OBJ_QUIVER:     # Bugfix
+			quiver = Bladex.GetEntity(me.InvRightBack)                                              # If we have a quiver on back, but no arrows in it, don't try to draw arrows.
+			if quiver.Data.NumberOfArrows() < 1: return                                             #       -LeadHead
+            
 		me.AddAnmEventFunc("ChangeREvent",Toggle4TakingEvent)
 		UnGraspString (EntityName,"UnGraspString")
 		me.LaunchAnmType("Chg_r")
@@ -2128,8 +2162,8 @@ def TryDropRight (EntityName):
 			#if object.TestHit:
 			#	###Reference.debugprint(EntityName+": Pre-colliding - abandoning drop")
 			#	return FALSE
-			if statR == RA_2H_OBJECT:
-				# 2 Handed Object Animation
+			if statR == RA_2H_OBJECT:                                               # PLAGUE: No 2h objects exist in game anymore, nor does the animation 
+				# 2 Handed Object Animation 
 				me.AddAnmEventFunc("Drop2HandedEvent",DropReleaseEventHandler)
 				me.LaunchAnmType("drp_2o")
 				###Reference.debugprint (me.AnimName)
@@ -2285,7 +2319,7 @@ def ToggleWEvent(pj_name,event):
 	if tmp_rback:
 		if Reference.GiveObjectFlag(tmp_rback)==Reference.OBJ_QUIVER:
 			rback_backup=me.InvRightBack ### Retarded fix -LeadHead
-			print "rback_backup is" +`rback_backup`
+			# print "rback_backup is" +`rback_backup`
 			tmp_rback=""
 
 	something_on_back= SthOnBack(pj_name)
@@ -2370,6 +2404,8 @@ def StdToggleWeapons(EntityName):
 		return FALSE
 
 	inv= me.GetInventory()
+
+	UnGraspString (EntityName,"UnGraspString")                          # Added -LeadHead
 
 	right_standard=IsRightHandStandardObject(EntityName)
 	drop_right=0
@@ -2541,7 +2577,6 @@ def BrwdUp(EntityName):
 # BowStuff
 
 # Added -LeadHead
-BowDelayTime = 0.5
 BowCancelCalled = 0
 
 def TakeArrowEventHandler(EntityName, EventName):
@@ -3265,17 +3300,17 @@ def JumpHandler (EntityName, EventName):
     me = Bladex.GetEntity(EntityName)
     
     if me.Name == "Player1":
-        RightPressed = Bladex.GetTimeActionHeld ("Turn Right")
-        LeftPressed = Bladex.GetTimeActionHeld ("Turn Left")
-        BackPressed = Bladex.GetTimeActionHeld ("Backwards")
-        ForwardPressed = Bladex.GetTimeActionHeld ("Forwards")
+        RightPressed = BInput.IsActionBeingHeld("Turn Right")
+        LeftPressed = BInput.IsActionBeingHeld("Turn Left")
+        BackPressed = BInput.IsActionBeingHeld("Backwards")
+        ForwardPressed = BInput.IsActionBeingHeld("Forwards")
         # print LeftPressed
         # print RightPressed
         if RightPressed or LeftPressed or BackPressed:
-            print "button is pressed"
+            # print "button is pressed"
             me.RaiseEvent("Dodge")
         elif ForwardPressed:
-            print "no button is pressed"
+            # print "no button is pressed"
             me.RaiseEvent("JumpWrap")
     else:
         me.RaiseEvent("JumpWrap")
