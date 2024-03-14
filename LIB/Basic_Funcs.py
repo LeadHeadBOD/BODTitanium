@@ -1,9 +1,11 @@
 ##///
 ##||| BASIC_FUNCS.PY TITANIUM
 ##||| Change list:
-##||| * Hits which deal no damage do not cause wound zones to change.
-##||| * Inventory should now remain consistently at 20 instead of reseting to 10 at load-game (# PLAGUE: Need to rework this entirely to move it to GameState)
-##||| * 
+##||| * Hits which deal no damage now do not cause wound zones to change.
+##||| * Inventory should now remain consistently at 20 instead of reseting to 10 at load-game (# PLAGUE: Need to rework this entirely to move it to GameState).
+##||| * Shield/parry reaction animations can now be cancelled by hurt animations if the previous anim is at least half-complete.
+##||| * Stamina use/recharge is much smoother now. (# PLAGUE: might cause floating point rounding errors and allow attacks that shouldn't be possible.)
+##||| * Limbs now always spawn - Thanks Sryml! ( PLAGUE: Might need to be reworked to retain full physics for as long as possible)
 ##\\\ 
 
 #
@@ -52,13 +54,16 @@ new_combo_sound.MaxDistance=20000
 
 ############################  Energy Functions  ############################
 
-RestoreEnergyTime= 1.0/20.0
+RestoreEnergyTime= 1.0/40.0 # was /20 -LeadHead
 EnergyMin= 14.0
 #RestoreEnergyRateMin= 0.005*EnergyMin
 #RestoreEnergyRateMin= 0.095*EnergyMin
 #RestoreEnergyRateMax= 0.095*EnergyMin
-RestoreEnergyRateMin= 0.005
-RestoreEnergyRateMax= 0.095
+RestoreEnergyRateMin= 0.005/2.0     # /2.0 for smoother energy restore
+RestoreEnergyRateMax= 0.095/2.0     # with minimal calc difference.     -LeadHead
+
+## PLAGUE: Maybe use EnergyTime = 1.0 / 60.0 ; RateMin = 1 / 600.0 ; RateMax =  0.95/ 60.0
+##         just an idea, will get floating point errors anyway.
 
 def RestoreEnergyFunc(EntityName):
 	Bladex.AddScheduledFunc(Bladex.GetTime()+RestoreEnergyTime, RestoreEnergyFunc,(EntityName,),"PlayerRestoreEnergy")
@@ -526,6 +531,11 @@ class PlayerPerson:
 			return
 
 		limb= Bladex.GetEntity(obj_name)
+		if limb.TestHit:                                # Added
+			limb.ExclusionGroup=1
+			limb.Move(0, -160, 0)                       # Fixes disappearing limbs
+			limb.PutToWorld()                           # PLAGUE: Needs further work to look better.
+			limb.Impulse(0,0,0)                         #    -LeadHead
 		InitDataField.Initialise(limb)
 		limb.Data.NoFXOnHit= 1
 		# print limb.Mass, node
@@ -595,7 +605,8 @@ class PlayerPerson:
 	def RelinkCamera(self):
 		cam=Bladex.GetEntity("Camera")
 		cam.SetPersonView("Player1")
-
+    
+    ## PLAGUE: Below function does effectively nothing. Only the orc death anims still use this event.
 	def UnlinkAll (self, EntityName,EventName):
 		me = Bladex.GetEntity(EntityName)
 		# Usually done on the last frame of a death animation
@@ -753,6 +764,8 @@ class PlayerPerson:
 			me.Wuea=Reference.WUEA_ENDED
 			launch_new=1
 			#print "Dth_Anim " + death_anim + " has Rsteps " + str(Bladex.AnmTypeRSteps(EntityName,death_anim)) + " and Lsteps " +str(Bladex.AnmTypeLSteps(EntityName,death_anim))
+			# PLAGUE: This is terrible and needs to be re-written from scratch. 
+			#         First, it should use bitwise operators. Second, steps are not a reliable method.
 			if (me.MutilationsMask==512 or me.MutilationsMask==256) and Bladex.AnmTypeRSteps(EntityName,death_anim)>1:
 				#print "No dth due to not having right leg!"
 				launch_new=0
@@ -939,7 +952,8 @@ class PlayerPerson:
 					me.SetWoundedZone(DamageZone, 1)
 
 				do_not_abort=0
-				if me.AnimName == "df_s_broken" or me.AnimName == "sword_broken" or me.AnimName == "sw_react" or  self.Invincibility==2:
+				# Now checks if the animation has basically already ended. Makes parrying much more viable and having your shield broken more deadly. -LeadHead
+				if (me.AnimName == "df_s_broken" and me.AnmPos<0.55) or (me.AnimName == "sword_broken"and me.AnmPos<0.55) or (me.AnimName == "sw_react" and me.AnmPos<0.7) or self.Invincibility==2:
 					do_not_abort=1
 				if do_not_abort==0:
 
