@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Removed unnecessary aditional death sound.
 ##||| * g_magic2 whoosh sound timing corrected
+##||| * "Fire Storm" more powerful attack sounds.
 ##\\\ 
 
 import Bladex
@@ -589,11 +590,23 @@ def AsignarSonidosBarbaro(Personaje):
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_7', AtaquesEspeciales2, 0.532)
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_7', EsfuerzosEspeciales1, 0.700)
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_7', AtaquesEspeciales1, 0.716)
+	
+	""" # Old "FireStorm" fire greatsword
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', EsfuerzoCorto2Barb, 0.1700)
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', SesgadoLargoAgudo, 0.1950)
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', SesgadoCorto, 0.3150)
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', SesgadoLargoGrave, 0.5290)
 	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', EsfuerzoGolpeAtrasBarb, 0.5290)
+	"""
+	
+	# New Fire Storm attack sounds  -LeadHead
+	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', EsfuerzoCorto2Barb, 0.1700)
+	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', AtaquesEspeciales4, 0.1950)
+	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', AtaquesEspeciales3, 0.3150)
+	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', AtaqueFuego1, 0.4840)
+	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', AtaquesEspeciales1, 0.5290)
+	NetSounds.AddAnimSound(per,'Bar_g2h_21_2', EsfuerzoGolpeAtrasBarb, 0.5290)
+	
 	NetSounds.AddAnimSound(per,'Bar_g2h_02kata', EsfuerzoCorto5Barb, 0.1540)
 	NetSounds.AddAnimSound(per,'Bar_g2h_02kata', EsfuerzoGolpeCabezaBarb, 0.3100)
 	NetSounds.AddAnimSound(per,'Bar_g2h_02kata', SesgadoLargoGrave, 0.3300)
