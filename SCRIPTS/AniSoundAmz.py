@@ -584,10 +584,13 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_g_kick2', EsfuerzoCorto5Amz, 0.2100)
 	NetSounds.AddAnimSound(per,'Amz_g_kick4', EsfuerzoCorto4Amz, 0.2100)
 	NetSounds.AddAnimSound(per,'Amz_g_kick5', EsfuerzoCorto3Amz, 0.2100)
+	### PLAGUE: Commented out - duplicate with above.
+	"""
 	NetSounds.AddAnimSound(per,'Amz_g_spears1', SesgadoLargoAgudo, 0.2610)
 	NetSounds.AddAnimSound(per,'Amz_g_spears1', SesgadoCortoAgudo, 0.6010)
 	NetSounds.AddAnimSound(per,'Amz_g_spears1', EsfuerzoAmzMediano, 0.1620)
 	NetSounds.AddAnimSound(per,'Amz_g_spears1', AndarAmz1, 0.1100)
+	"""
 	NetSounds.AddAnimSound(per,'Amz_g_spear26kata', SesgadoCorto, 0.1320)
 	NetSounds.AddAnimSound(per,'Amz_g_spear26kata', SesgadoLargoAgudo, 0.2260)
 	NetSounds.AddAnimSound(per,'Amz_g_spear26kata', SesgadoCortoAgudo, 0.3260)
@@ -613,9 +616,13 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_g_spear02', SesgadoCortoGrave, 0.4990)
 	NetSounds.AddAnimSound(per,'Amz_g_spear02', EsfuerzoCorto2Amz, 0.2600)
 	NetSounds.AddAnimSound(per,'Amz_g_spear02', AndarAmz1, 0.2100)
+	### PLAGUE: Commented out - duplicate with above.
+	"""
 	NetSounds.AddAnimSound(per,'Amz_g_spears6', SesgadoLargoAgudo, 0.1470)
 	NetSounds.AddAnimSound(per,'Amz_g_spears6', EsfuerzoCortoAmz, 0.1400)
 	NetSounds.AddAnimSound(per,'Amz_g_spears6', AndarAmz2, 0.1000)
+	"""
+
 	NetSounds.AddAnimSound(per,'Amz_g_spear32kata_b2', SesgadoCorto, 0.110)
 	NetSounds.AddAnimSound(per,'Amz_g_spear32kata_b2', AndarAmz2, 0.220)
 	NetSounds.AddAnimSound(per,'Amz_g_spear32kata_b2', AtaquesEspecialesAmz3, 0.256)
@@ -695,8 +702,10 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_g_spear33', EsfuerzoGolpeFrontalAmz, 0.390)
 	NetSounds.AddAnimSound(per,'Amz_g_spear33', AndarAmz1, 0.300)
 	NetSounds.AddAnimSound(per,'Amz_g_spear33', AndarAmz2, 0.700)
-	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', SesgadoLargo, 0.5000)
-	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', EsfuerzoGolpeLateralAmz, 0.2000)
+	# NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', SesgadoLargo, 0.5000)         # SteelFeather
+	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AtaquesEspecialesAmz1, 0.2300)  # Now strong whoosh
+	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AtaquesEspecialesAmz2, 0.4800)  #       -LeadHead
+	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', EsfuerzoGolpeLateralAmz, 0.1700)
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AndarAmz1, 0.3000)
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AndarAmz2, 0.7000)
 	NetSounds.AddAnimSound(per,'Amz_g_spear19', AtaquesEspecialesAmz2, 0.162)
@@ -782,6 +791,8 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_g_draw_rlx', EsfuerzoCorto6Amz, 0.3000)
 	NetSounds.AddAnimSound(per,'Amz_g_draw_rlx', SesgadoLargoGrave, 0.3280)
 	
+	### PLAGUE: Commented out - duplicate with above.
+	"""
 	NetSounds.AddAnimSound(per,'Amz_tke_r_key00',CogerLlave, 0.2069)
 	NetSounds.AddAnimSound(per,'Amz_tke_r_key01',CogerLlave, 0.3103)
 	NetSounds.AddAnimSound(per,'Amz_tke_r_key02',CogerLlave, 0.2759)
@@ -796,6 +807,7 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_tke_r_03', CogerEspada, 0.2754)
 	NetSounds.AddAnimSound(per,'Amz_tke_r_04', CogerEspada, 0.2727)
 	NetSounds.AddAnimSound(per,'Amz_tke_r_05', CogerEspada, 0.2654)
+	"""
 	
 	NetSounds.AddAnimSound(per,'Amz_1tw_h_f',AndarAmz2, 0.4000)
 	NetSounds.AddAnimSound(per,'Amz_1tw_h_f',EsfuerzoAmzMediano, 0.3000)
@@ -892,6 +904,9 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,"Amz_dth_c7", AndarAmz2, 0.6800)
 	NetSounds.AddAnimSound(per,"Amz_dth_c7", AndarAmz1, 0.6300)
 	NetSounds.AddAnimSound(per,"Amz_dth_c7", CaidaAmz3, 0.6950)
+	
+	### PLAGUE: Commented out - duplicate with above.
+	"""
 	NetSounds.AddAnimSound(per,"Amz_dth0", MuerteAmz1, 0.1100)
 	NetSounds.AddAnimSound(per,"Amz_dth0", CaidaAmz3, 0.5710)
 	NetSounds.AddAnimSound(per,"Amz_dth0", CaidaAmz4, 0.7700)
@@ -960,7 +975,7 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,"Amz_dth_rock", MuerteAplastamientoAmz1, 0.1000)
 	NetSounds.AddAnimSound(per,"Amz_dth_rock", HeridaAmz2, 0.1000)
 	
-	
+	"""
 	
 	
 	#char.LaunchAnmType("g_05")
