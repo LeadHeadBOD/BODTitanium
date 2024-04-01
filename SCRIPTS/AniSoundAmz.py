@@ -4,7 +4,7 @@
 ##||| * Ice Wand now has a more powerful shout and whoosh.
 ##||| * Fire Bo now has a more powerful whoosh and fire effect.
 ##||| * g_magic2 whoosh sound timing corrected
-##||| * 
+##||| * SteelFeather now has strong whooshes.
 ##\\\ 
 
 import Bladex
@@ -703,7 +703,7 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_g_spear33', AndarAmz1, 0.300)
 	NetSounds.AddAnimSound(per,'Amz_g_spear33', AndarAmz2, 0.700)
 	# NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', SesgadoLargo, 0.5000)         # SteelFeather
-	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AtaquesEspecialesAmz1, 0.2300)  # Now strong whoosh
+	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AtaquesEspecialesAmz1, 0.2300)  # Now 2 strong whooshes
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AtaquesEspecialesAmz2, 0.4800)  #       -LeadHead
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', EsfuerzoGolpeLateralAmz, 0.1700)
 	NetSounds.AddAnimSound(per,'Amz_g_spear19_bs1', AndarAmz1, 0.3000)
