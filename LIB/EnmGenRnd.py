@@ -18,7 +18,7 @@ import ObjStore
 import whrandom
 
 def EnemyReady(ent_name):
-	print "Borrando '"+ent_name + "quad'"
+	# print "Borrando '"+ent_name + "quad'"
 	o = Bladex.GetEntity(ent_name + "quad")
 	if o:
 		o.SubscribeToList("Pin")
