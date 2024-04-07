@@ -127,7 +127,8 @@ def ExplodeSpecialObject(obj_name, expl_imp,delta = (0,0,0)):
 	#obj.Static=1
 	#obj.RemoveFromWorld()
 
-	""" # Commented out - doesn't do what I want it to and causes weirdness with linked particles.
+	"""
+	### Commented out - doesn't do what I want it to and causes weirdness with linked particles.
 	n_child=obj.GetNChildren()                      # Added
 	for n in range(n_child):                        # Now unlinks arrows and other stuff before breaking.
 		child=Bladex.GetEntity(obj.GetChild(n))     #
@@ -180,14 +181,14 @@ def BreakSpecialObject(hit_entity, hitting_entity, xhit_point, yhit_point, zhit_
   if brkobj.hidobjname:
     brkobj.hidobj.Position=obj.Rel2AbsPoint(brkobj.hidobj.Position[0], brkobj.hidobj.Position[1], brkobj.hidobj.Position[2])
 
-	""" # Commented out - doesn't do what I want it to and causes weirdness with linked particles.
-  n_child=obj.GetNChildren()                    # Added
-  for n in range(n_child):                      # Now unlinks arrows and other stuff before breaking.
-    child=Bladex.GetEntity(obj.GetChild(n))     #
-    if child and child.Kind!="Entity Spot":     # 
-      obj.Unlink(child)                         #
-      child.Impulse(0,0,0)                      #       -LeadHead
-	""" # Commented out - doesn't do what I want it to and causes weirdness with linked particles.
+    """# Commented out - doesn't do what I want it to and causes weirdness with linked particles.
+    n_child=obj.GetNChildren()                        # Added
+    for n in range(n_child):                          # Now unlinks arrows and other stuff before breaking.
+        child=Bladex.GetEntity(obj.GetChild(n))       #
+        if child and child.Kind!="Entity Spot":       # 
+            obj.Unlink(child)                         #
+            child.Impulse(0,0,0)                      #       -LeadHead
+    """ # Commented out - doesn't do what I want it to and causes weirdness with linked particles.
 
   brkobj.sonido_rotura.Play(obj.Position[0], obj.Position[1], obj.Position[2], 0)
   if netgame.GetNetState() == 1:
