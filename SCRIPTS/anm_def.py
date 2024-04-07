@@ -10,6 +10,7 @@
 ##||| * Added Dwarf specific animation events for Tomb of Ephyra cutscene.
 ##||| * Added additional Start_Weapon event for Knight's FireSword combo
 ##||| * Corrected start_weapon_special timing for g_magic2 (level 19 Sword of Ianna combo)
+##||| * Adjusted "tke_r_key" timings for: Knigt, ...
 ##\\\ 
 
 def Init():
@@ -2006,15 +2007,18 @@ def Init():
 
 
     Bladex.AddAnmEvent("Kgt_tke_r_key02","PickupEvent",0.2759)
-    Bladex.AddAnmEvent("Kgt_tke_r_key02","Key_down",0.8621)
+    # Bladex.AddAnmEvent("Kgt_tke_r_key02","Key_down",0.8621)   # Adjusted
+    Bladex.AddAnmEvent("Kgt_tke_r_key02","Key_down",0.8071)     #   -LeadHead
     Bladex.AddAnmEvent("Kgt_tke_r_key04","PickupEvent",0.2727)
     Bladex.AddAnmEvent("Kgt_tke_r_key04","Key_down",0.6667)
     Bladex.AddAnmEvent("Kgt_tke_r_key01","PickupEvent",0.3103)
-    Bladex.AddAnmEvent("Kgt_tke_r_key01","Key_down",0.8621)
+    # Bladex.AddAnmEvent("Kgt_tke_r_key01","Key_down",0.8621)   # Adjusted
+    Bladex.AddAnmEvent("Kgt_tke_r_key01","Key_down",0.7961)     #   -LeadHead
     Bladex.AddAnmEvent("Kgt_tke_r_key03","PickupEvent",0.3103)
-    Bladex.AddAnmEvent("Kgt_tke_r_key03","Key_down",0.8966)
+    # Bladex.AddAnmEvent("Kgt_tke_r_key03","Key_down",0.8966)   # Adjusted
+    Bladex.AddAnmEvent("Kgt_tke_r_key03","Key_down",0.7966)     #   -LeadHead
     Bladex.AddAnmEvent("Kgt_tke_r_key05","PickupEvent",0.2727)
-    Bladex.AddAnmEvent("Kgt_tke_r_key05","Key_down",0.6667)
+    Bladex.AddAnmEvent("Kgt_tke_r_key05","Key_down",0.6667)     # PLAGUE: Too early?
 
     Bladex.AddAnmEvent("Kgt_tke_r_key00","PickupEvent",0.2069)
     Bladex.AddAnmEvent("Kgt_tke_r_key00","Key_down",0.6897)
@@ -3361,7 +3365,7 @@ def Init():
     Bladex.AddAnmEvent("Cos_g_01","Start_Weapon",0.0227)
     Bladex.AddAnmEvent("Cos_g_01","HitInitialItp",0.0227)
     Bladex.AddAnmEvent("Cos_g_01","HitFinalItp",0.9773)
-    Bladex.AddAnmEvent("Cos_g_02","PunctualDamage",0.9091)
+    Bladex.AddAnmEvent("Cos_g_02","PunctualDamage",0.9091)  # PLAGUE: What does this do?
 
 
     ############################################################
