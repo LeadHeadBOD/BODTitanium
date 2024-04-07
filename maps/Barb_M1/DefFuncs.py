@@ -4,7 +4,7 @@
 ##||| * Environmental animations should now be played at 60fps
 ##||| * Final cutscene can be skipped now.
 ##||| * Doors broken by liches now are better synced with their attack animation.
-##||| * 
+##||| * Changed sound events for totem cutscene.
 ##||| * 
 ##||| * 
 ##||| * 
@@ -805,7 +805,7 @@ def DeactivatePinchoOnHit (EntityName, VictimName, ImpX, ImpY, ImpZ):
 def ActivatePinchos():
 	for i in range(1,23):
 		# Activate pincho
-		print "Pinchos1_"+`i`
+		# print "Pinchos1_"+`i`     # PLAGUE: stop spamming the console ffs
 		pincho=Bladex.GetEntity("Pinchos1_"+`i`)
 		pincho.MessageEvent(Reference.MESSAGE_START_WEAPON,0,0)
 		pincho.MessageEvent(Reference.MESSAGE_SETSTATICWEPONMODE,1,0)
@@ -1091,6 +1091,21 @@ def SonidoCrujido(Crujido):
 	else:
 		soundcrujido2.Position = totem.Position
 		soundcrujido2.PlaySound(0)
+		
+def SonidoHit(Hit):
+	
+	if Hit == 0:
+		soundtotemhit.Position = -88742, -31228, 155657
+		soundtotemhit.PlaySound(0)
+	elif Hit == 1:
+		soundtotemhit2.Position = -88742, -31228, 155657
+		soundtotemhit2.PlaySound(0)
+		soundtotemhit.Position = -88742, -31228, 155657
+		soundtotemhit.PlaySound(0)
+	elif Hit == 2:
+		soundtotemhit3.Position = -88742, -31228, 155657
+		soundtotemhit3.PlaySound(0)
+	
 
 def TotemThrow(a,b):
 	totem.TurnOff()
@@ -1118,8 +1133,8 @@ def TotemHit(a,b):
 	polvareda.Velocity=0.0, -300.0, 0.0
 	polvareda.RandomVelocity=60.0
 
-	soundtotemhit.Position = -88742, -31228, 155657
-	soundtotemhit.PlaySound(0)
+	# soundtotemhit.Position = -88742, -31228, 155657
+	# soundtotemhit.PlaySound(0)
 
 
 def ThrowTotem(entity,use_from):
@@ -1131,7 +1146,7 @@ def ThrowTotem(entity,use_from):
 	if (angle > 4.35 and angle < 5.25):
 		cam = Bladex.GetEntity("Camera")
 		cam.SetMaxCamera("tot_Camera01.cam",0,194)
-		Bladex.DeactivateInput()
+		Bladex.DeactivateInput()                       # PLAGUE: need to make skippable
 
 		char.QuickFace(angle)
 
@@ -1157,8 +1172,13 @@ def ThrowTotem(entity,use_from):
 
 		Bladex.AddScheduledFunc(time + 1.1,SonidoCrujido,(1,),"SonidoCrujido1")
 		Bladex.AddScheduledFunc(time + 2.7,SonidoCrujido,(1,),"SonidoCrujido1")
-		Bladex.AddScheduledFunc(time + 5.65,SonidoCrujido,(1,),"SonidoCrujido1")
-		Bladex.AddScheduledFunc(time + 6.39,SonidoCrujido,(2,),"SonidoCrujido2")
+		Bladex.AddScheduledFunc(time + 5.65,SonidoCrujido,(2,),"SonidoCrujido2")
+		# Bladex.AddScheduledFunc(time + 6.39,SonidoCrujido,(2,),"SonidoCrujido2")
+		
+		Bladex.AddScheduledFunc(time + 7.27,SonidoHit,(1,),"SonidoHit1")
+		Bladex.AddScheduledFunc(time + 7.61,SonidoHit,(2,),"SonidoHit2")
+		Bladex.AddScheduledFunc(time + 8.16,SonidoHit,(0,),"SonidoHit3")
+		
 
 		cam.AddCameraEvent(147,TotemHit)
 		cam.AddCameraEvent(190,TotemThrow)
@@ -1350,7 +1370,7 @@ def DeactivatePinchoOnHit3 (EntityName, VictimName, ImpX, ImpY, ImpZ):
 def ActivatePinchos3():
 	for i in range(1,19):
 		# Activate pincho
-		print "Pinchos3_"+`i`
+		# print "Pinchos3_"+`i`        # PLAGUE: Stop spamming the console ffs
 		pincho=Bladex.GetEntity("Pinchos3_"+`i`)
 		pincho.MessageEvent(Reference.MESSAGE_START_WEAPON,0,0)
 		pincho.MessageEvent(Reference.MESSAGE_SETSTATICWEPONMODE,1,0)
@@ -1381,7 +1401,7 @@ def DeactivatePinchoOnHit2 (EntityName, VictimName, ImpX, ImpY, ImpZ):
 def ActivatePinchos2():
 	for i in range(3,28):
 		# Activate pincho
-		print "Pinchos2_"+`i`
+		# print "Pinchos2_"+`i`     # # PLAGUE: Stop spamming the console ffs
 		pincho=Bladex.GetEntity("Pinchos2_"+`i`)
 		pincho.MessageEvent(Reference.MESSAGE_START_WEAPON,0,0)
 		pincho.MessageEvent(Reference.MESSAGE_SETSTATICWEPONMODE,1,0)
