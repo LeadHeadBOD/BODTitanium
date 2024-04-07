@@ -1,4 +1,11 @@
+##///
+##||| AniSounGokX.PY TITANIUM
+##||| Change list:
+##||| * Added AltSounds for alert animation.
+##\\\ 
+
 import Bladex
+import whrandom
 
 # *********************************
 # *      Creacion de sonidos      *
@@ -20,9 +27,22 @@ GolpeContundenteGorco=Bladex.CreateSound('../../sounds/golpe-maza-carne.wav', 'G
 GolpeContundenteGorco.SendNotify=0
 GolpeContundenteGorco.Volume=1
 
-GokKeepStill=Bladex.CreateSound('../../sounds/insultogorco2.wav', 'GokKeepStill')
+
+GokKeepStill=Bladex.CreateSound('../../sounds/insultogorco2.wav', 'GokKeepStill1')
 GokKeepStill.MinDistance=5000
 GokKeepStill.MaxDistance=25000
+
+GokKeepStill2=Bladex.CreateSound('../../sounds/insultogorco3.wav', 'GokKeepStill2')
+GokKeepStill2.MinDistance=5000
+GokKeepStill2.MaxDistance=25000
+
+GokKeepStill3=Bladex.CreateSound('../../sounds/insultogorco4.wav', 'GokKeepStill3')
+GokKeepStill3.MinDistance=5000
+GokKeepStill3.MaxDistance=25000
+
+GokKeepStill.AddAltSound('GokKeepStill2')
+GokKeepStill.AddAltSound('GokKeepStill3')
+
 
 Enfundar=Bladex.CreateSound('../../sounds/M-DESENFUNDADING.wav', 'Enfundar')
 Enfundar.SendNotify=0

@@ -1,3 +1,11 @@
+##///
+##||| AniSoundGok.PY TITANIUM
+##||| Change list:
+##||| * Adjusted timing for alert anim - previously was eaten by transition time.
+##||| *
+##\\\ 
+
+
 import Bladex
 
 # ***********************************
@@ -21,20 +29,19 @@ def AsignarSonidosOrcoGrande(Personaje):
 	per.AddEventSound('slash', TajoCortanteGorco)
 	per.AddEventSound('mutilate', TajoMutilacionGorco)
 	per.AddEventSound('crush', GolpeContundenteGorco)
-	
+
+
 	global AsignarSonidosOrcoGrandeCalled
 	if AsignarSonidosOrcoGrandeCalled:
 		return
 	AsignarSonidosOrcoGrandeCalled=1
 	
-	
+	# Animation Alarm (We want a selection of sounds, so better link a function)
+	per.AddAnimSound('Gok_alarm01', GokKeepStill, 0.1560)	# Timing adjusted, otherwise sound didn't play -LeadHead
 	
 	# Sonidos de animaciones
 	
 	
-	# Animation Alarm (We want a selection of sounds, so better link a function)
-	per.AddAnimSound('Gok_alarm01', GokKeepStill, 0.1560)
-
 	per.AddAnimSound('Gok_attack_chg_r_l', DesenfundarGorco, 0.5000)
 	
 
