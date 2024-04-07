@@ -1,16 +1,3 @@
-##///
-##||| Damage.PY TITANIUM
-##||| Change list:
-##||| * Added mutilations for skeletons on crush damage
-##||| * Added sparks/dust for crush damage on DustDeathEntities
-##||| * Modified dwarf combo damage data to correspond with IceHammer change
-##||| * Added comments to make it easier to understand which attacks correspond to which animation
-##||| * Extra entries for InflictDamageFXData for elemental weapons
-##||| * Added AnimData for Gold and Dark Ork
-##||| * Adapted bow camera fix from HD update
-##||| * Blocking with weapons with no "brkobjdata" (special weapons) will now still cause attacker to recoil
-##\\\ 
-
 import Reference
 import Bladex
 import BCopy
@@ -23,7 +10,6 @@ import Actions
 import netgame
 import Auras
 import GenFX
-
 
 
 if netgame.GetNetState() != 0:
@@ -160,60 +146,7 @@ InflictDamageFXData['Amz_g_spear33']=(300.0, 0.8, 240, 20, 0, 2.0, None, 1.0, 1.
 InflictDamageFXData['Amz_g_spear_sb11']=(400.0, 0.9, 240, 20, 0, 2.0, None, 1.0, 1.0)
 
 
-
-######---------######
-# ELEMENTAL WEAPONS #
-######---------######
-
-### Fire
-# Maybe we don't even need this? -LeadHead
-# Nevermind, we do need this. Although aura is created on all fire attacks, light is not.
-# So let there be light.
-
-# # Fire Sword
-InflictDamageFXData['Kgt_g_s28kata_new']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
-# # Big Fire Sword
-InflictDamageFXData['Bar_g2h_earthpow']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
-# # Fire Axe
-InflictDamageFXData['Dwf_g_22']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
-# # Fire bo
-InflictDamageFXData['Amz_g_spear_b6_26']=(0, 0.9, 255, 128, 0, 2.0, None, 1.0, 1.0)
-
-
-### Ice
-# Don't create aura but we want light, since it's already done by default, leave first value at 0 -LeadHead
-
-# Ice Sword
-InflictDamageFXData['Kgt_g_12_7_s1new']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
-# Ice Axe
-InflictDamageFXData['Bar_g_axe30']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
-# Ice Hammer
-InflictDamageFXData['Dwf_g_s18_2h']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
-# Ice Wand
-InflictDamageFXData['Amz_g_spear16']=(0, 0.9, 100, 200, 240, 2.0, None, 1.0, 1.0)
-
-
-### Queensword
-# Aura data not needed since it's done by default -LeadHead
-
-#InflictDamageFXData
-#InflictDamageFXData
-#InflictDamageFXData
-#InflictDamageFXData
-
-### Venom
-# Don't create additional aura, only light?
-
-# Crush Hammer
-InflictDamageFXData['Dwf_g_s22low_new']=(0, 0.9, 10, 110, 20, 2.0, None, 1.0, 1.0)
-
-# Steel Feather
-InflictDamageFXData['Amz_g_spear19_bs1']=(0, 0.9, 10, 110, 20, 2.0, None, 1.0, 1.0)
-
-
-
-# Attacking Anim Table   (Damage Factor) ### Note that DamageFactor also determines stamina use!
-###  PLAGUE: There are multiple entries here for the same animations. This must be investiagated
+# Attacking Anim Table   (Damage Factor)
 AnimationData={}         #############
 
 ###############
@@ -224,10 +157,10 @@ AnimationData['Bar_g2h_08']=   1.0
 
 #combos arriba
 AnimationData['Bar_g2h_b6kata']=  1.25
-AnimationData['Bar_g2h_b7']=  2.8           ### PLAGUE: Duplicated - Skysmash
+AnimationData['Bar_g2h_b7']=  2.8
 
 #combos derecha
-AnimationData['Bar_g2h_s7']=  1.0           ### PLAGUE: Duplicated
+AnimationData['Bar_g2h_s7']=  1.0
 AnimationData['Bar_g2h_02kata']=  1.2
 
 #combos izquierda
@@ -246,7 +179,7 @@ AnimationData['Bar_g2h_b6']=   8.0
 
 #bigsword
 AnimationData['Bar_g2h_b29']=  10.0
-AnimationData['Bar_g2h_s7']=   1.0          ### PLAGUE: Duplicated
+AnimationData['Bar_g2h_s7']=   1.0
 AnimationData['Bar_g2h_19']=  10.0
 
 #longsword
@@ -254,12 +187,12 @@ AnimationData['Bar_g2h_13']=    7.0
 
 #alfange
 AnimationData['Bar_g2h_s8']=   6.2
-AnimationData['Bar_g2h_26']=   10.0         ### PLAGUE: Unused?
+AnimationData['Bar_g2h_26']=   10.0
 
 #flatsword
 AnimationData['Bar_g2h_28']=   10.0
-AnimationData['Bar_g2h_17']=   10.0         ### PLAGUE: Unused?
-AnimationData['Bar_g2h_b7']=   10.0         ### PLAGUE: Duplicated - Skysmash
+AnimationData['Bar_g2h_17']=   10.0
+AnimationData['Bar_g2h_b7']=   10.0
 
 #sawsword
 AnimationData['Bar_g2h_21_7']=   8.0
@@ -272,10 +205,10 @@ AnimationData['Bar_g2h_earthpow']=   60.0
 #comborapidoextra1
 AnimationData['Bar_g2h_21_6kata']=   3.0
 #comborapidoextra2
-AnimationData['Bar_g2h_26_b6']=   3.5 
+AnimationData['Bar_g2h_26_b6']=   3.5
 
 
-#sin utilizar /// or Unused in English 
+#sin utilizar
 AnimationData['Bar_g2h_02']=   10.0
 
 
@@ -286,7 +219,7 @@ AnimationData['Bar_g_axe08']=   1.0
 #arriba
 AnimationData['Bar_g_axe18']=   1.0
 AnimationData['Bar_g_axe01']=  2.6
-#AnimationData['Bar_g_axe08strong']= 1.2        ### PLAGUE: Unused, seems to be missing anmFlags to move it to left hand
+#AnimationData['Bar_g_axe08strong']= 1.2
 
 #derecha
 AnimationData['Bar_g_axe02']=   1.0
@@ -303,8 +236,8 @@ AnimationData['Bar_g_axe31']=   3.2
 
 #hacharrajada
 AnimationData['Bar_g_axe32']=  9.0
-AnimationData['Bar_g_axe_26kata']=   9.0        ### PLAGUE: Unused, one of Amazon's anims repurposed for barb?
-AnimationData['Bar_g_axe_3s2']=   9.0           ### PLAGUE: Unused, one of Amazon's anims repurposed for barb?
+AnimationData['Bar_g_axe_26kata']=   9.0
+AnimationData['Bar_g_axe_3s2']=   9.0
 
 #eclipse
 AnimationData['Bar_g_axe211']=   10.0
@@ -317,7 +250,7 @@ AnimationData['Bar_g_axe12']=  10.0
 
 #hacha2hojas
 AnimationData['Bar_g_axe34']=  8.0
-AnimationData['Bar_g_axe_32kata_b2']=   8.0     ### PLAGUE: Unused, one of Amazon's anims repurposed for barb?
+AnimationData['Bar_g_axe_32kata_b2']=   8.0
 
 #iceaxe
 AnimationData['Bar_g_axe30']=   34.0
@@ -396,13 +329,8 @@ AnimationData['Kgt_g_12_7_s1new']=   70.0
 #firesword
 AnimationData['Kgt_g_s28kata_new']=   30.0
 
-#south cross
 AnimationData['Kgt_g_3s9_6new']=  3.5
-
-#attack 180
 AnimationData['Kgt_g_back']=   1.8
-
-#clumsy
 AnimationData['Kgt_g_bad_axe']=   1.6
 AnimationData['Kgt_g_bad_sword']=   1.0
 AnimationData['Kgt_g_bad_sword2']=   1.3
@@ -410,12 +338,10 @@ AnimationData['Kgt_g_bad_sword3']=   1.5
 AnimationData['Kgt_g_bad_spear']=   1.9
 AnimationData['Kgt_g_bad_spear2']=   1.9
 
-#unarmed attacks
 AnimationData['Kgt_g_punch1']=   1.2
 AnimationData['Kgt_g_punch2']=   1.2
 AnimationData['Kgt_g_kick']=   1.2
 
-#dodge attacks
 AnimationData['Kgt_g_d_r']=   1.2
 AnimationData['Kgt_g_d_l']=   1.2
 
@@ -529,12 +455,13 @@ AnimationData['Dwf_g_02']=   1.0
 AnimationData['Dwf_g_05']=   8.0
 AnimationData['Dwf_g_06']=   1.0
 AnimationData['Dwf_g_07']=   11.0
+AnimationData['Dwf_g_09']=   38.0
 AnimationData['Dwf_g_01a']=   1.0
 AnimationData['Dwf_g_02a']=   1.0
 AnimationData['Dwf_g_05a']=   1.0
 AnimationData['Dwf_g_06a']=   1.0
 AnimationData['Dwf_g_07a']=   1.0
-
+AnimationData['Dwf_g_09a']=   1.0
 AnimationData['Dwf_g_18']=   9.2
 AnimationData['Dwf_g_15']=   6.0
 AnimationData['Dwf_g_14']=   4.5
@@ -543,28 +470,22 @@ AnimationData['Dwf_g_16']=   7.8
 AnimationData['Dwf_g_11']=   8.0
 AnimationData['Dwf_g_12']=   9.2
 AnimationData['Dwf_g_17']=   9.0
-#MAZADOBLE
 AnimationData['Dwf_g_21']=   9.0
-#DOOM HAMMER
 AnimationData['Dwf_g_22']=   70.0
 AnimationData['Dwf_g_23']=   1.5
 AnimationData['Dwf_g_26']=   1.5
 AnimationData['Dwf_g_27']=   1.5
-#MARTILLO3 (DOOMHAMMER)
 AnimationData['Dwf_g_31']=   8.0
 
 AnimationData['Dwf_g_back']=   1.0
-#ICE HAMMER 
-AnimationData['Dwf_g_s18_2h']=   38.0 # g_s18_2h was unused prior to Titanium - LeadHead
-#CRUSH HAMMER
+AnimationData['Dwf_g_s18_2h']=   1.0
+AnimationData['Dwf_g_32_5_3new']=   1.0
 AnimationData['Dwf_g_s22low_new']=   50.0
 AnimationData['Dwf_g_s3_new']=   12.0
 AnimationData['Dwf_g_27kata']=   1.0
 AnimationData['Dwf_g_12low']=   1.0
 AnimationData['Dwf_g_s11']=   1.0
-#QUEENSWORD
 AnimationData['Dwf_g_06lowkata_new']=   10.0
-#BLADESWORD
 AnimationData['Dwf_g_magic']=   37.5
 AnimationData['Dwf_g_magic2']=   21.0
 
@@ -592,15 +513,6 @@ AnimationData['Dwf_g_punch1']=   1.0
 AnimationData['Dwf_g_punch2']=   1.0
 AnimationData['Dwf_g_kick']=   1.0
 
-#Unused animations - random damage data given as placeholders unless otherwise stated, feel free to comment/uncomment and change them if you wish to -LeadHead
-#AnimationData['Dwf_g_s18']=   11.0 #Unused, added
-AnimationData['Dwf_g_09']=    1.0 #Old IceHammer attack, had damage modifier of 38.0
-#AnimationData['Dwf_g_32_5_3new']=   1.0 #Animation of "The Dream"
-#AnimationData['Dwf_g_09a']=   1.0 #Same animation as g_09 but with weird head movement at the end
-#AnimationData['Dwf_g_08a']=   1.0 #Same animation as g_08 but with weird head movement at the end
-
-
-
 
 ##########
 #  ORCO  #
@@ -620,24 +532,6 @@ AnimationData['Gok_g_06']=   1.3
 AnimationData['Gok_g_15']=   2.0
 AnimationData['Gok_g_16']=   2.5
 AnimationData['Gok_g_18']=   3.0
-###############
-#  ORCO  GOLD # -LeadHead
-###############
-AnimationData['Org_g_01']=   1.0
-AnimationData['Org_g_02']=   1.0
-AnimationData['Org_g_06']=   1.0
-AnimationData['Org_g_15']=   1.2
-AnimationData['Org_g_16']=   1.5
-AnimationData['Org_g_18']=   1.8
-###############
-# ORCO OSCURO # -LeadHead
-###############
-AnimationData['Dok_g_01']=   1.0
-AnimationData['Dok_g_02']=   1.0
-AnimationData['Dok_g_06']=   1.0
-AnimationData['Dok_g_15']=   1.2
-AnimationData['Dok_g_16']=   1.5
-AnimationData['Dok_g_18']=   1.8
 
 ###############
 #  ESQUELETO  #
@@ -989,7 +883,6 @@ def DropInvalidObjectsOnImpact(EntityName):
 			or right_type==Reference.OBJ_SPECIALKEY \
 			or right_type==Reference.OBJ_TABLET:
 				Actions.DropReleaseEventHandler (EntityName, "DropRightEvent")
-
 		if me.InvLeft:
 			left_type= Reference.GiveObjectFlag(me.InvLeft)
 			if left_type==Reference.OBJ_ITEM \
@@ -1002,8 +895,6 @@ def DropInvalidObjectsOnImpact(EntityName):
 			or left_type==Reference.OBJ_SPECIALKEY \
 			or left_type==Reference.OBJ_TABLET:
 				Actions.DropReleaseEventHandler (EntityName, "DropLeftEvent")
-        
-			
 
 
 def BreakMyShield(EntityName):
@@ -1201,7 +1092,7 @@ def CheckRightHandToDrop(EntityName):
 
 def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded):
 	#pdb.set_trace()
-    
+	
 	CheckRightHandToDrop(VictimName)
 
 	# Additive vars set to 0
@@ -1333,10 +1224,7 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 				if Reference.DefaultObjectData[kind][0] ==  Reference.OBJ_BOW:
 					bowF = Reference.DefaultObjectData[kind][1]
 	######################################################################################
-	
-    ### Bow camera fix from HD update. 
-    ### Has NOT been tested extensively, but the code seems fine.
-    
+
 	me = Bladex.GetEntity(VictimName)
 	if me.Data.AimPressed==0 and me.Aim==1:
 		Actions.EndBowMode(VictimName)
@@ -1348,11 +1236,6 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 			me.Data.LastPViewType= None
 	except:
 		pass
-
-    ### Again, the code is lifted directly from the HD update, it's unchanged.
-    ### -LeadHead
-            
-    ######################################################################################
 
 	if AttackerName and attacker and attacker.Person:
 		lvl= attacker.Level+1
@@ -1496,31 +1379,27 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 		if not blocking_with_weapon:
 			shield= Bladex.GetEntity(me.GetInventory().GetActiveShield())
 			try:
-				if shield:                                                                                                            # Bugfix pt.1
-					try:
-						if shield_breakable:
-							# Lower the resistance of the shield
-							if victimsShieldData:
-								if not Reference.EntitiesObjectData.has_key(shield.Name):
-									Reference.EntitiesObjectData[shield.Name]= BCopy.deepcopy(victimsShieldData)
-									victimsShieldData= Reference.EntitiesObjectData[shield.Name]
-								victimsShieldData[2]= victimsShieldData[2]-damage_withstood
-								
-								# Break the shield if 0 resistance
-								if victimsShieldData[2] <= 0.0:
-									victimsShieldData[2]=0.0
-									if shield.Data.brkobjdata:
-										BreakMyShield(me.Name)
-										Shielded=0
-								elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
-									if shield.Data.brkobjdata:
-										BreakMyShield(me.Name)
-										Shielded=0
-										if PrintFormula==1:
-											print "Shield Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
-					except AttributeError:                                                                                            # Bugfix pt.2
-							print "~~Damage.py~~ blockng shield "+`shield.Name`+" has no 'brkobjdata' (SPECIAL SHIELD?)"              # If weapon/shield doesn't have brkobjdata,
-							pass                                                                                                      # we still want the oppoenent to play the flinch animation. -LeadHead 
+				if shield:
+					if shield_breakable:
+						# Lower the resistance of the shield
+						if victimsShieldData:
+							if not Reference.EntitiesObjectData.has_key(shield.Name):
+								Reference.EntitiesObjectData[shield.Name]= BCopy.deepcopy(victimsShieldData)
+								victimsShieldData= Reference.EntitiesObjectData[shield.Name]
+							victimsShieldData[2]= victimsShieldData[2]-damage_withstood
+							
+							# Break the shield if 0 resistance
+							if victimsShieldData[2] <= 0.0:
+								victimsShieldData[2]=0.0
+								if shield.Data.brkobjdata:
+									BreakMyShield(me.Name)
+									Shielded=0
+							elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
+								if shield.Data.brkobjdata:
+									BreakMyShield(me.Name)
+									Shielded=0
+									if PrintFormula==1:
+										print "Shield Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
 					if Shielded:
 						#rules out cases where shield has broken
 						if (not thrown_flag) and attacker and attacker.Person and attacker.GotAnmType("sw_react"):
@@ -1535,30 +1414,26 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 			weapon= Bladex.GetEntity(me.GetInventory().GetActiveWeapon())
 			try:
 				if weapon:
-					try:                                                                                                              # Bugfix pt.3
-						if weapon.Data.brkobjdata:
-								# Lower the resistance of the shield
-								if victimsShieldData:
-									if not Reference.EntitiesObjectData.has_key(weapon.Name):
-										Reference.EntitiesObjectData[weapon.Name]= BCopy.deepcopy(victimsShieldData)
-										victimsShieldData= Reference.EntitiesObjectData[weapon.Name]
-									victimsShieldData[5][4]= victimsShieldData[5][4]-damage_withstood
-									
-									# Break the shield if 0 resistance
-									if victimsShieldData[5][4] <= 0.0:
-										victimsShieldData[5][4]=0.0
-										if weapon.Data.brkobjdata:
-											BreakMySword(me.Name)
-											Shielded=0
-									elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
-										if weapon.Data.brkobjdata:
-											BreakMySword(me.Name)
-											Shielded=0
-											if PrintFormula==1:
-												print "Weapon Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
-					except AttributeError:                                                                                            # Bugfix pt.4
-							print "~~Damage.py~~ blocked weapon "+`weapon.Name`+" has no 'brkobjdata' (SPECIAL WEAPON?)"              # If weapon/shield doesn't have brkobjdata,
-							pass                                                                                                      # we still want the oppoenent to play the flinch animation. -LeadHead
+					if weapon.Data.brkobjdata:
+						# Lower the resistance of the shield
+						if victimsShieldData:
+							if not Reference.EntitiesObjectData.has_key(weapon.Name):
+								Reference.EntitiesObjectData[weapon.Name]= BCopy.deepcopy(victimsShieldData)
+								victimsShieldData= Reference.EntitiesObjectData[weapon.Name]
+							victimsShieldData[5][4]= victimsShieldData[5][4]-damage_withstood
+							
+							# Break the shield if 0 resistance
+							if victimsShieldData[5][4] <= 0.0:
+								victimsShieldData[5][4]=0.0
+								if weapon.Data.brkobjdata:
+									BreakMySword(me.Name)
+									Shielded=0
+							elif attacker and attacker.InDestructorAttack==1 and damage_withstood > shield_breakable:
+								if weapon.Data.brkobjdata:
+									BreakMySword(me.Name)
+									Shielded=0
+									if PrintFormula==1:
+										print "Weapon Breaking in destructor attack, took: "+`damage_withstood`+", max: "+`shield_breakable`
 					if Shielded:
 						#rules out cases where shield has broken
 						if (not thrown_flag) and attacker and attacker.Person and attacker.GotAnmType("sw_react"):
@@ -1603,19 +1478,18 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	
 	if(not Shielded) and (DamageType=="Impale" or DamageType=="Slash") and Bladex.GetBloodLevel()>0:
 		me.Data.TakeBleedingImpact= effective_damage
-	elif(me.Kind in Blood.DustDeathEntities) and DamageType=="Crush": ### Sparks and dust on crushing damage -LeadHead
-		me.Data.TakeBleedingImpact= effective_damage
 	else:
 		me.Data.TakeBleedingImpact= 0
 	
 	prevLife=me.Life
 	
 	if not me.Data.Invincibility:
-		Bladex.PlayHaptic(1)
+		if me.Data.Name == "Player1":
+			Bladex.PlayHaptic(1)
 		me.Life= me.Life - effective_damage
-        
+	
 	if effective_damage>0:
-		me.Data.Mutilate= me.Life <= 0 and (DamageType=="Slash" or (DamageType=="Crush" and me.Kind=="Skeleton")) ### Skeletons now can be mutilated by crushing damage -LeadHead
+		me.Data.Mutilate= me.Life <= 0 and DamageType=="Slash"
 	else:
 		me.Data.Mutilate= 0
 		if not Shielded:
@@ -1663,10 +1537,9 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 		weapon.Stop(x, y, z)
 		# Check type of damage
 		if me and (not me.Data.Mutilate) and DamageNode!=-1 and DamageZone!=Reference.BODY_HEAD and me.Life>0.0:
-			# print "DamageNode is" +`DamageNode`+ ". DamageZone is" +`DamageZone`
 			me.LinkToNode(weapon, DamageNode)
 			sticktime= (3.0)/weapon.Mass
-			# print "object "+weapon.Name+" of kind "+weapon.Kind+" of mass "+`weapon.Mass`+" sticking for "+`sticktime`+" seconds"
+			print "object "+weapon.Name+" of kind "+weapon.Kind+" of mass "+`weapon.Mass`+" sticking for "+`sticktime`+" seconds"
 			Bladex.AddScheduledFunc (Bladex.GetTime()+sticktime, StuckWeaponFall, (weapon.Name, VictimName), weapon.Name+"_StuckWeaponFall")
 			if weapon.StickFunc:
 				weapon.StickFunc (weapon.Name, me.Name)
