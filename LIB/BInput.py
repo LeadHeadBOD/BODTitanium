@@ -288,7 +288,7 @@ def TranslateInputFromTo(origin, newAction, keyDevice="Keyboard"):
 #-------------- VARIABLE WRAPPERS ------------------
 
 def IsActionBeingHeld(actionName):
-    action= BInput.GetInputManager().GetInputActions().Find(actionName)
+    action= GetInputManager().GetInputActions().Find(actionName)
     if action and action.this!="NULL":
         return action.CurrentlyActivated()
     else:
