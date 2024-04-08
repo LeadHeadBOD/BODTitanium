@@ -14,6 +14,7 @@ Thanks to
  * MichaelBK - help with python scripts
  * Harrison - .max format BoD meshes and animations
  * Sergei Grigoriy Ivanovich - SGIMMP tool
+ * LaughingSkull - 2D map missing narration restoration idea
 
 The following people have not made any direct contributions to Titanium,
 but have nevertheless served as a great inspiration for all the work done here.
