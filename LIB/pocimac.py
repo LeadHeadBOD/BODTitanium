@@ -5,6 +5,8 @@
 ##||| * Added new function EmptyPotion (implementation needs to be redone probably, current one is way too messy)
 ##||| * Self Iluminated potions lose their luminosity as they fade
 ##||| * Added support for potion hot-keys
+##||| * Chars will no longer turn their head to empty potions or be selectable at all
+##||| * Potions will now start fading with a 5s delay.
 ##\\\ 
 
 import OnInitTake
@@ -186,8 +188,8 @@ class Pocima:
 
 def RestoreHand(entidad):
 	char = Bladex.GetEntity(entidad)
-	char.AddAnmEventFunc("ChangeREvent",Actions.ToggleWEvent)      # PLAGUE: I suspect something goes wrong here and causes the bug
-	char.LaunchAnmType("Chg_r")                                    # where player sometimes draws weapon from inv.rightback when they shouldn't.
+	char.AddAnmEventFunc("ChangeREvent",Actions.ToggleWEvent)
+	char.LaunchAnmType("Chg_r")
 
 def TakePotionUsed():
 	pass
@@ -256,8 +258,16 @@ def SoltarPocima(Entidad,Evento = 0):
 		impulse = char.Rel2AbsVector(-1000.0 * object.Mass, -1000.0 * object.Mass, 0.0)
 		object.Impulse(impulse[0],impulse[1],impulse[2])
 
+### New func - now will fade potions only when they stop moving.
+### Makes them stay on the screen longer so you have more time to witness my awful code in action. -LeadHead
+def FadeOnStop(potName):
+	Poti = Bladex.GetEntity(potName)
+	Poti.TimerFunc = Poti.Data.FadeOut
+	Poti.SubscribeToList("Timer60")
+	# print `potName` + " stopped moving, fading"
+	# Poti.OnStopFunc = None
 
-
+### PLAGUE: To do - make lights and self-ilum fade immediately after drinking, but have the mesh fade only on stop.
 
 def RestorePowerPotion(Entidad,Potion):
 	char = Bladex.GetEntity(Entidad)
@@ -274,15 +284,13 @@ def BeberPocima(Entidad,Evento):
 	Pot.Estado = POTION_STATE_USED
 
 	if os.path.exists("../../3DObjs/"+Poti.Kind+"_E.bod"):
-		EmptyPotion(Poti.Name)
-		PotE = Bladex.GetEntity(Poti.Name+"_E")
-		#print "PotE name is "+PotE.Name
+		PotE = EmptyPotion(Poti.Name)
 		char.Data.obj_used = PotE.Name
 		Poti = Bladex.GetEntity(char.Data.obj_used)
 		Pot = Poti.Data
 		#print "Potion emptied and assigned data successfully"
 	else:
-		print "potion_E not found for"+Poti.Name
+		print "potion_E not found for "+Poti.Name
 		pass
         
 	if (Pot.PowerPotion):
@@ -311,7 +319,7 @@ def BeberPocima(Entidad,Evento):
 
 		if Pot.CuresPoison:
 			char.Data.UnVenom ()
-	if (Pot.DrinkFunc <> 0):   
+	if (Pot.DrinkFunc != 0):   
 		Bladex.AddScheduledFunc(Bladex.GetTime(),Pot.DrinkFunc,Pot.DrinkFuncArguments)
 	Pot.Sonido.Play(char.Position[0],char.Position[1],char.Position[2],0)
 
@@ -319,10 +327,13 @@ def BeberPocima(Entidad,Evento):
     ### They have been moved here to fix a bug when a potion is dropped due to taking damage
     ### before the drink animation completes, creating "ghost" potions that cannot be interacted with -LeadHead
 	Poti.ExcludeHitFor(char)
-	Poti.TimerFunc = Poti.Data.FadeOut
-	Poti.SubscribeToList("Timer60")
+	if Pot.Type != POTION_TYPE_EAT:                                                  #  Now fades only when stopped moving.
+		Bladex.AddScheduledFunc(Bladex.GetTime() + 5.0, FadeOnStop,(Poti.Name,))     #        -LeadHead
+	# Poti.TimerFunc = Poti.Data.FadeOut    #
+	# Poti.SubscribeToList("Timer60")       #
 	Poti.Data.Takeable=0
-	darfuncs.SetHint(Poti,"")
+	# darfuncs.SetHint(Poti,"")
+	darfuncs.SetHint(Poti,"",0,0,0)   # Stop looking at empty potions -LeadHead
 	OnInitTake.AddOnInitTakeEvent(Poti.Name,TakePotionUsed)
 
         
@@ -344,10 +355,10 @@ def CreateMiguillas(Entidad,Evento):
 
 	Poti.Link(miguillas)
 
-	if Evento == "Bocado1Event":
-		Poti.TimerFunc = Poti.Data.FadeOut
-		Poti.SubscribeToList("Timer60")
-		Poti.Data.Takeable=0
+	if Evento == "Bocado1Event":            # PLAGUE: Useless piece of code,
+		Poti.TimerFunc = Poti.Data.FadeOut  #   because it would get executed
+		Poti.SubscribeToList("Timer60")     #   in BeberPocima() anyway???
+		Poti.Data.Takeable=0                #
 
 	#Pot.Estado = POTION_STATE_UNUSED
 
@@ -460,7 +471,7 @@ def UsePotion(NombrePocima,TipoUso):
 		Pocima.Data.Hand = 0
 		Char.Data.obj_used = NombrePocima
 
-		if (Pocima.Data.Type <> POTION_TYPE_EAT):
+		if (Pocima.Data.Type != POTION_TYPE_EAT):
 			Pocima.Data.Type = POTION_TYPE_GULP
 			Char.AnmEndedFunc=UsePotion3
 		else:
@@ -611,60 +622,30 @@ def CreateDefaultPocimac(ObjectName):
 ####
 
 def EmptyPotion(PotionName):
-    obj = Bladex.GetEntity(PotionName)
-    Char = Bladex.GetEntity(obj.Data.UsedBy)
-    inv = Char.GetInventory()
+    obj  = Bladex.GetEntity(PotionName)
+    user = Bladex.GetEntity(obj.Data.UsedBy)
+    inv  = user.GetInventory()
     
 
     newPot=Bladex.CreateEntity(obj.Name+"_E", obj.Kind+"_E", obj.Position[0], obj.Position[1], obj.Position[2],"Physic")
     newPot.Orientation = obj.Orientation
-    newPot.Scale = obj.Scale
+    newPot.Scale       = obj.Scale
     
-    Reference.EntitiesObjectData[newPot.Name] = Reference.DefaultObjectData[obj.Kind]       
-    newPot.Data = Pocima(obj)                                                               
-    newPot.UseFunc = obj.UseFunc                                                           
-    newPot.Data.Increment = obj.Data.Increment              ### PLAGUE: Why was this info duplicated?
-    newPot.Data.MaxLife = obj.Data.MaxLife
-    newPot.ExcludeHitFor(obj)
-    # newPot.Data.Type = obj.Data.Type
+    Reference.EntitiesObjectData[newPot.Name] = Reference.DefaultObjectData[obj.Kind]
+    newPot.Data           = obj.Data
+    newPot.UseFunc        = obj.UseFunc
+    newPot.FiresIntensity = obj.FiresIntensity
+    newPot.Lights         = obj.Lights
+    newPot.SelfIlum       = obj.SelfIlum
+    spot    = AuxFuncs.GetSpot(obj)
+    newSpot = AuxFuncs.GetSpot(newPot)
+    if spot and newSpot:
+        newSpot.Visible     = spot.Visible
+        newSpot.CastShadows = spot.CastShadows
+    elif newSpot:
+        newSpot.Visible     = 0    
+        newSpot.CastShadows = 0
 
-    if Reference.HealthIncrease.has_key(obj.Kind):
-        newPot.Data.Increment   = Reference.HealthIncrease[obj.Kind][0]
-        newPot.Data.CuresPoison = Reference.HealthIncrease[obj.Kind][1]
-
-    if obj.Data.PowerPotion: ### TODO: Rework this. It works, but is incredibly clumsy and probably breaks on custom potions. Deepcopy? -LeadHead
-        #newPot.Data.Sonido = Bladex.CreateSound('../../TitaniumSounds/quaddamage.wav', 'DrinkingQuad')
-        newPot.Data.Sonido = obj.Data.Sonido
-        newPot.Data.Sonido.Volume = obj.Data.Sonido.Volume
-        newPot.Data.Sonido.MinDistance = obj.Data.Sonido.MinDistance
-        newPot.Data.Sonido.MaxDistance = obj.Data.Sonido.MaxDistance
-        newPot.Data.TimePowerPotion = obj.Data.TimePowerPotion
-        newPot.Data.PowerPotion = obj.Data.PowerPotion
-        newPot.Data.FDefense = obj.Data.FDefense
-        newPot.Data.FAttack = obj.Data.FAttack
-        newPot.Data.Increment = obj.Data.Increment
-        newPot.Data.CuresPoison = obj.Data.CuresPoison
-        
-        newPotLight=Bladex.GetEntity(newPot.Name) # Attempt at fixing the lights
-        newPotLight.FiresIntensity = obj.FiresIntensity
-        newPotLight.Lights = obj.Lights
-        newPotLight.SelfIlum = obj.SelfIlum
-        spot = AuxFuncs.GetSpot(obj)
-        newSpot = AuxFuncs.GetSpot(newPot)
-        #print "Assigned powerport data"
-        if spot:
-            spot.Visible      = 0
-            spot.CastShadows  = 0
-            newSpot.Visible      = 0
-            newSpot.CastShadows  = 0
-            
-    else:
-        newPot.Data.Sonido = obj.Data.Sonido
-        newPot.Data.Sonido.Volume=obj.Data.Sonido.Volume
-        newPot.Data.Sonido.MinDistance=obj.Data.Sonido.MinDistance
-        newPot.Data.Sonido.MaxDistance=obj.Data.Sonido.MaxDistance
-        #print "potion was not deemed a power potion"
-    
     if (obj.Data.Type == POTION_TYPE_DRINK_LEFT):
         # In Combat and using left hand's second slot
         inv.LinkLeftHand2(newPot.Name)
@@ -673,9 +654,8 @@ def EmptyPotion(PotionName):
         inv.LinkRightHand(newPot.Name)
         
     inv.RemoveObject(obj.Name)
-    obj.RemoveFromWorld()
-    # print 'obj removed'
-#    return Pot=newPot.Data
+    obj.SubscribeToList("Pin")
+    return newPot
 
 
 
@@ -683,9 +663,9 @@ def EmptyPotion(PotionName):
 # Potion hotkey stuff #
 ###                ####
 # 
-# Please note that the script does NOT check whether a potion has had any of its functions altered.
-# The only thing it checks for is whether the called entity kind is located in character's iventory.
-# Try to stay true to it and use a new Kind if you are using custom potions.
+# Please note the script does NOT check whether an existing potion has had any of its functions altered.
+# The only thing it checks is whether the called entity.Kind is located in character's iventory.
+# Try to stay true to it and use a new Kind if you are using custom potions, do not edit existing ones.
 #
 ####
 
@@ -698,7 +678,6 @@ def AutoPotHandler(EntityName):
     inv=me.GetInventory()
     
 """
-import InitDataField
 USE_FROM_INV=0
 
 def QuickPot(EntityName, PotionKind):
@@ -707,11 +686,9 @@ def QuickPot(EntityName, PotionKind):
     inv = me.GetInventory()
     
     if me.Wuea==Reference.WUEA_ENDED:
-        # print "Quickpot called during an action"
         return
         
     if me.Wuea==Reference.WUEA_WAIT:
-        # print "Quickpot called during an action"
         return
 
     if not inv.nObjects:
@@ -722,7 +699,6 @@ def QuickPot(EntityName, PotionKind):
         me.AnmEndedFunc= None
         
     if me.AnmEndedFunc:
-        #print "Quickpot called during an action"
         return
     
     else:
@@ -737,13 +713,12 @@ def QuickPot(EntityName, PotionKind):
                 me = Bladex.GetEntity(EntityName)
                 object=Bladex.GetEntity(potname)
                 if not object.UseFunc:
-                    print "!ERROR! @ Actions.ForceUse - " +ItemName+ " has no UseFunc"
+                    print "!ERROR! @ pocimac.QuickPot - " +ItemName+ " has no UseFunc"
                     return
                 else:
                     me.Data.obj_used=object
-                    InitDataField.Initialise(object)
-                    object.Data.UsedBy = EntityName
-                    object.UseFunc(potname, USE_FROM_INV)
+                    try: object.Data.UsedBy = EntityName ; object.UseFunc(potname, USE_FROM_INV)
+                    except: print "!ERROR! @ pocimac.QuickPot - " +ItemName+ " has no Data"
                         
                 break
             elif i+1 >= inv.nObjects:
