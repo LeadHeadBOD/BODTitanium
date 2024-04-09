@@ -304,6 +304,10 @@ class Skeleton (Enm_Def.NPCPerson):
 		limb= Bladex.GetEntity(obj_name)
 		InitDataField.Initialise(limb)
 		limb.ExclusionGroup=1   # Ensure limbs aren't causing unneeded hit detection calls -LeadHead
+		if limb.TestHit:                                # 
+			limb.Move(0, -160, 0)                       # Fixes disappearing limbs
+			limb.PutToWorld()                           # 
+			limb.Impulse(0,0,0)                         #    -LeadHead
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoObjeto,(obj_name,100,0,))
 
         
@@ -1687,7 +1691,7 @@ class Cos (Enm_Def.NPCPerson):
 		me = Bladex.GetEntity(EntityName)
 		#print "Collisions Off in animation "+me.AnimName
 		enemy=Bladex.GetEntity(me.GetEnemyName())
-		me.ExcludeHitInAnimationFor(enemy)
+		me.ExcludeHitInAnimationFor(enemy)  # PLAGUE: This func doesn't work. After animation ends, exclusion status is never reset
 		#me.ExcludeHitFor(enemy)
 		#enemy.ExcludeHitFor(me)
 
@@ -1822,6 +1826,12 @@ class Spidersmall (Enm_Def.NPCPerson):
 	# Overide the MutilateFunc because we don't want limbs we can pick up
 	def MutilateFunc(self,EntityName,obj_name,x,y,z,nx,ny,nz,node):
 		Blood.Mutilate (EntityName,obj_name,x,y,z,nx,ny,nz,node)
+		limb = Bladex.GetEntity(obj_name)               #
+		if limb.TestHit:                                # Added
+			limb.ExclusionGroup=1                       #
+			limb.Move(0, -160, 0)                       # Fixes disappearing limbs
+			limb.PutToWorld()                           # PLAGUE: Needs further work to look better.
+			limb.Impulse(0,0,0)                         #    -LeadHead
 
 	def HitFunc (self, EntityName, WeaponName, Cx, Cy, Cz, Px, Py, Pz,wcx,wcy,wcz,wdx,wdy,wdz):
 		Enm_Def.NPCPerson.HitFunc(self, EntityName, WeaponName, Cx, Cy, Cz, Px, Py, Pz,wcx,wcy,wcz,wdx,wdy,wdz)
@@ -1829,7 +1839,7 @@ class Spidersmall (Enm_Def.NPCPerson):
 		self.HitImpulse[0]= Px*0.20;
 		self.HitImpulse[1]= Py*0.20;
 		self.HitImpulse[2]= Pz*0.20;
-		print EntityName+": Im hit"
+		# print EntityName+": Im hit"
 
 		# discourage the others from attacking
 		if me and me.Life>0:
@@ -2366,6 +2376,10 @@ class Lich (Enm_Def.NPCPerson):
         ### Disable collisions for limbs, otherwise they trigger TestHit on mutilations while still alive - LeadHead
         ### This is not a big deal, since the limbs will turn to dust in 10seconds anyway.
 		limb.ExclusionGroup=1
+		if limb.TestHit:                                
+			limb.Move(0, -160, 0)                       # Fixes disappearing limbs
+			limb.PutToWorld()                           # 
+			limb.Impulse(0,0,0)                         #    -LeadHead
 
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoObjeto,(obj_name,100,0,))
 
