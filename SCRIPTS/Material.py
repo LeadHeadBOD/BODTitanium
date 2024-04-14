@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Added empty potions to the list for default materials.
 ##||| * Added random pitch
+##||| * Added 
 ##\\\ 
 
 
@@ -21,7 +22,7 @@ def Init():
     s.SendNotify=1
     s.MinDistance=1000
     s.MaxDistance=15000
-    s.SetPitchVar(1, -8000, 8000, 0, 0)
+    s.SetPitchVar(1, -4000, 4000, 0, 0)
     mat=Bladex.CreateMaterial('madera ligera')
     mat.HitSound=s
 
@@ -176,6 +177,8 @@ def Init():
     Bladex.SetDefaultMaterial('FlechaEnvenenada', 'madera ligera')
     Bladex.SetDefaultMaterial('FlechaFuego', 'madera ligera')
     Bladex.SetDefaultMaterial('PuenteFernando', 'madera ligera')
+    Bladex.SetDefaultMaterial('PuenteAurelio', 'madera ligera')     # Added
+    Bladex.SetDefaultMaterial('Puenteau_Plano', 'madera ligera')    #       -LeadHead
     Bladex.SetDefaultMaterial('Rama1', 'madera ligera')
     Bladex.SetDefaultMaterial('Rama2', 'madera ligera')
     Bladex.SetDefaultMaterial('Silla', 'madera ligera')
