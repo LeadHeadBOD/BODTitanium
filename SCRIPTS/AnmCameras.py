@@ -29,7 +29,18 @@ def Init():
     import Bladex
 
     PI=3.14159
-    
+
+    #
+    #Golpes
+    #
+    Bladex.SetActionCameraMovement("g_back",-1.0*PI,0.25,0.8)      ### Default value 0.1,0.5
+    Bladex.SetActionCameraMovement("g2h_back",-1.0*PI,0.22,0.7)    ### Default value 0.25,1.0, was too slow in my opinion -LeadHead
+    Bladex.SetActionCameraMovement("g_spear_back",-1.0*PI,0.1,0.3) ### Added -LeadHead
+
+    #
+    #Giros 180 grados
+    #
+        
     ###
     ### The character animations are NOT equal length
     ### Dwarf's animations even turn the opposite direction in some cases
@@ -37,40 +48,17 @@ def Init():
     ### This is disorienting, so we want to check what is the character type first -LeadHead
     ###
     player = Bladex.GetEntity("Player1")
+    if player and player.Kind[0] == "D":
+        Bladex.SetActionCameraMovement("jog_turn",PI,0.35,0.9)
+        Bladex.SetActionCameraMovement("wlk_turn",-1.0*PI,0.3,0.9)
+        Bladex.SetActionCameraMovement("snk_turn",-1.0*PI,0.1,0.9)
+        Bladex.SetActionCameraMovement("rlx_turn",-1.0*PI,0.25,0.85)
     
-    ## These seem to be universal across all characters, leave them as is
-    #
-    #Golpes
-    #
-    Bladex.SetActionCameraMovement("g_back",-1.0*PI,0.25,0.8)
-    Bladex.SetActionCameraMovement("g2h_back",-1.0*PI,0.22,0.7)    ### Default value 1.0, was too slow in my opinion -LeadHead
-    Bladex.SetActionCameraMovement("g_spear_back",-1.0*PI,0.1,0.3) ### Added -LeadHead
-    
-    
-    #
-    #Giros 180 grados
-    #
-    if player: 
-        if player.Kind[0] == "D":
-            Bladex.SetActionCameraMovement("jog_turn",PI,0.35,0.9)
-            Bladex.SetActionCameraMovement("wlk_turn",-1.0*PI,0.3,0.9)
-            Bladex.SetActionCameraMovement("snk_turn",-1.0*PI,0.1,0.9)
-            Bladex.SetActionCameraMovement("rlx_turn",-1.0*PI,0.25,0.85)
-    
-        else:       ### if character is not a Dwarf
-            Bladex.SetActionCameraMovement("jog_turn",-1.0*PI,0.3,0.9)
-            Bladex.SetActionCameraMovement("wlk_turn",-1.0*PI,0.25,0.9)
-            Bladex.SetActionCameraMovement("snk_turn",-1.0*PI,0.6,0.9)
-            Bladex.SetActionCameraMovement("rlx_turn",PI,0.3,0.95)    
-
-    else:       # Failsafe in case something goes really wrong - use unedited values.
-        print "AnmCameras.PY - Player not recognized"
-        print "Assigning default AnmCameras"
-        Bladex.SetActionCameraMovement("jog_turn",-1.0*PI,0.6,0.95)
-        Bladex.SetActionCameraMovement("wlk_turn",-1.0*PI,0.6,0.95)
-        Bladex.SetActionCameraMovement("snk_turn",-1.0*PI,0.6,0.95)
-        Bladex.SetActionCameraMovement("rlx_turn",PI,0.25,0.95)    
-    
+    else:       ### if character is not a Dwarf or we fail to load a character at all
+        Bladex.SetActionCameraMovement("jog_turn",-1.0*PI,0.3,0.9)
+        Bladex.SetActionCameraMovement("wlk_turn",-1.0*PI,0.25,0.9)
+        Bladex.SetActionCameraMovement("snk_turn",-1.0*PI,0.6,0.9)
+        Bladex.SetActionCameraMovement("rlx_turn",PI,0.3,0.95)    
 
     #
     #Scripts puntuales
@@ -79,7 +67,7 @@ def Init():
 
     ########  Gay Ragnar Guy  ########
     Bladex.SetActionCameraMovement("end_ragnar",0.25*PI,0.1,0.5)
-    Bladex.SetActionCameraMovement("end_ragnar_ragnar",-0.25*PI,0.1,0.5)    ### NOTE: This animation doesn't exist? -LeadHead
+    Bladex.SetActionCameraMovement("end_ragnar_ragnar",-0.25*PI,0.1,0.5)    ### PLAGUE: This animation doesn't exist?
     Bladex.SetActionCameraMovement("inicio_ragnar",PI,0.1,0.5)
 
 
