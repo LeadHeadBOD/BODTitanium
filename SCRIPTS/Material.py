@@ -2,8 +2,12 @@
 ##||| MATERIAL.PY TITANIUM
 ##||| Change list:
 ##||| * Added empty potions to the list for default materials.
-##||| * Added random pitch
-##||| * Added 
+##||| * Added random pitch.
+##||| * Added  Barb_M1 and Orc_M9 bridges.
+##||| * Metal torch is now actually metal.
+##||| * Added reinforced boxes.
+##||| * Added missing shields (KingShield, Barbarian Shield).
+##||| * Added some other misc items to have a default material.
 ##\\\ 
 
 
@@ -177,8 +181,6 @@ def Init():
     Bladex.SetDefaultMaterial('FlechaEnvenenada', 'madera ligera')
     Bladex.SetDefaultMaterial('FlechaFuego', 'madera ligera')
     Bladex.SetDefaultMaterial('PuenteFernando', 'madera ligera')
-    Bladex.SetDefaultMaterial('PuenteAurelio', 'madera ligera')     # Added
-    Bladex.SetDefaultMaterial('Puenteau_Plano', 'madera ligera')    #       -LeadHead
     Bladex.SetDefaultMaterial('Rama1', 'madera ligera')
     Bladex.SetDefaultMaterial('Rama2', 'madera ligera')
     Bladex.SetDefaultMaterial('Silla', 'madera ligera')
@@ -192,7 +194,6 @@ def Init():
     Bladex.SetDefaultMaterial('Astillas1', 'madera mediana')
     Bladex.SetDefaultMaterial('Astillas2', 'madera mediana')
     Bladex.SetDefaultMaterial('Astillas3', 'madera mediana')
-    Bladex.SetDefaultMaterial('Antorchaenpared', 'madera mediana')
     Bladex.SetDefaultMaterial('BarrilPieza1', 'madera mediana')
     Bladex.SetDefaultMaterial('BarrilPieza2', 'madera mediana')
     Bladex.SetDefaultMaterial('BarrilPieza3', 'madera mediana')
@@ -249,12 +250,14 @@ def Init():
     Bladex.SetDefaultMaterial('Palanca2', 'madera mediana')
     Bladex.SetDefaultMaterial('Taburete', 'madera mediana')
     Bladex.SetDefaultMaterial('Timon', 'madera mediana')
+    Bladex.SetDefaultMaterial('Escudo9', 'madera mediana')      # Added -LeadHead
 
 
 
     # *** Madera pesada  ***
     Bladex.SetDefaultMaterial('Arbolseco', 'madera pesada')
     Bladex.SetDefaultMaterial('Arbolseco2', 'madera pesada')
+    Bladex.SetDefaultMaterial('ArbolNevado2', 'madera pesada')      # Added -LeadHead
     Bladex.SetDefaultMaterial('Armero', 'madera pesada')
     Bladex.SetDefaultMaterial('Barril', 'madera pesada')
     Bladex.SetDefaultMaterial('Cajama', 'madera pesada')
@@ -264,6 +267,10 @@ def Init():
     Bladex.SetDefaultMaterial('Mesa', 'madera pesada')
     Bladex.SetDefaultMaterial('Meson', 'madera pesada')
     Bladex.SetDefaultMaterial('RhinoClub', 'madera pesada')
+    Bladex.SetDefaultMaterial('Caja_i_i', 'madera pesada')          # Added
+    Bladex.SetDefaultMaterial('Caja_i_r', 'madera pesada')          # 
+    Bladex.SetDefaultMaterial('PuenteAurelio', 'madera pesada')     # 
+    Bladex.SetDefaultMaterial('Puenteau_Plano', 'madera pesada')    #       -LeadHead
 
 
 
@@ -295,10 +302,15 @@ def Init():
     Bladex.SetDefaultMaterial('Llavecob', 'metal ligero')
     Bladex.SetDefaultMaterial('Llavecobox', 'metal ligero')
     Bladex.SetDefaultMaterial('Llavecutre', 'metal ligero')
+    Bladex.SetDefaultMaterial('Llavedor', 'metal ligero')       # Added
+    Bladex.SetDefaultMaterial('Llavepla', 'metal ligero')       #       -LeadHead
     Bladex.SetDefaultMaterial('Llavemaz', 'metal ligero')
     Bladex.SetDefaultMaterial('LlaveAmarilla', 'metal ligero')
     Bladex.SetDefaultMaterial('MartilloForja', 'metal ligero')
     Bladex.SetDefaultMaterial('Suriken', 'metal ligero')
+    Bladex.SetDefaultMaterial('Candelpeque', 'metal ligero')   # Added
+    Bladex.SetDefaultMaterial('Tacita', 'metal ligero')        #
+    Bladex.SetDefaultMaterial('Cazo', 'metal ligero')          #        -LeadHead
 
 
 
@@ -306,6 +318,8 @@ def Init():
 
 
     # *** Metal  mediano ***
+    Bladex.SetDefaultMaterial('Antorchaenpared', 'metal mediano')   # Moved to metal from wood
+    Bladex.SetDefaultMaterial('Candelabro', 'metal mediano')        # Added         -LeadHead
     Bladex.SetDefaultMaterial('Alabarda', 'metal mediano')
     Bladex.SetDefaultMaterial('Bloodbol', 'metal mediano')
     Bladex.SetDefaultMaterial('Brasero1', 'metal mediano')
@@ -335,6 +349,7 @@ def Init():
     Bladex.SetDefaultMaterial('Escudo6', 'metal mediano')
     Bladex.SetDefaultMaterial('Escudo7', 'metal mediano')
     Bladex.SetDefaultMaterial('Escudo8', 'metal mediano')
+    Bladex.SetDefaultMaterial('KingShield', 'metal mediano')    # Added     -LeadHead
     Bladex.SetDefaultMaterial('FireAxe', 'metal mediano')
     Bladex.SetDefaultMaterial('FireBo', 'metal mediano')
     Bladex.SetDefaultMaterial('Gancholamp', 'metal mediano')
@@ -370,6 +385,7 @@ def Init():
     Bladex.SetDefaultMaterial('Ninjato', 'metal mediano')
     Bladex.SetDefaultMaterial('Orksword', 'metal mediano')
     Bladex.SetDefaultMaterial('QueenSword', 'metal mediano')
+    Bladex.SetDefaultMaterial('KingSword', 'metal mediano')     # Added -LeadHead
     Bladex.SetDefaultMaterial('Reja', 'metal mediano')
     Bladex.SetDefaultMaterial('Rastrillo', 'metal mediano')
     Bladex.SetDefaultMaterial('Semipuxero', 'metal mediano')
@@ -430,7 +446,6 @@ def Init():
     Bladex.SetDefaultMaterial('Cabezon', 'piedra pesada')
     Bladex.SetDefaultMaterial('Cebolla', 'piedra pesada')
     Bladex.SetDefaultMaterial('Columna', 'piedra pesada')
-    Bladex.SetDefaultMaterial('Columna', 'piedra pesada')
     Bladex.SetDefaultMaterial('Columnaestrecha', 'piedra pesada')
     Bladex.SetDefaultMaterial('Halcon', 'piedra pesada')
     Bladex.SetDefaultMaterial('Halcon2', 'piedra pesada')
@@ -477,7 +492,13 @@ def Init():
     Bladex.SetDefaultMaterial('PocimaTodo_E', 'cristal')
     Bladex.SetDefaultMaterial('PowerPotion_E', 'cristal')    
     
-
+    
+    
+    # *** Ceramica ligera***
+    # Even though the material was created, it was completely unused -LeadHead
+    Bladex.SetDefaultMaterial('Jarra', 'ceramica ligera')
+    
+    
     # *** Ceramica mediana***
 
     Bladex.SetDefaultMaterial('Mortero', 'ceramica mediana')
@@ -487,6 +508,8 @@ def Init():
     Bladex.SetDefaultMaterial('TinajaPieza3', 'ceramica mediana')
     Bladex.SetDefaultMaterial('TinajaPieza4', 'ceramica mediana')
     Bladex.SetDefaultMaterial('TinajaPieza5', 'ceramica mediana')
+    
+    # *** Ceramica pesada***
     Bladex.SetDefaultMaterial('Tinaja', 'ceramica pesada')
 
 
@@ -499,4 +522,7 @@ def Init():
     Bladex.SetDefaultMaterial('Alforjas', 'generico2')
     Bladex.SetDefaultMaterial('Cirio', 'generico2')
     Bladex.SetDefaultMaterial('Libro', 'generico2')
+    Bladex.SetDefaultMaterial('Libro2', 'generico2')    # Added
+    Bladex.SetDefaultMaterial('Libro3', 'generico2')    #       -LeadHead
     Bladex.SetDefaultMaterial('Saquito', 'generico2')
+    Bladex.SetDefaultMaterial('RollodeCuerda', 'generico2')     # Added

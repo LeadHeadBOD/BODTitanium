@@ -7,6 +7,8 @@
 ##||| * Added sounds for falling in water and lava.
 ##||| * All enemies should now have a default step sound for any material that it's not assigned to by default.
 ##||| * Traitor knight and other "armoured" opponents now have woodenboard step sounds.
+##||| * Entity materials "madera pesada" and "madera ligera" will now properly use step sounds.
+##||| * Non-defined material will now play step sounds when sneaking
 ##\\\ 
 
 
@@ -2231,7 +2233,8 @@ def Init():
     # TIPOS DE PASOS
     #************************************************************************************
 
-    Bladex.AddMaterialStepSound("default","default","default")                  ### This seems to not actually do anything unless a biped is not assigned anything at all -LeadHead
+    Bladex.AddMaterialStepSound("default","default","default")                  ### PLAGUE: This seems to not actually do anything unless a biped is not assigned anything at all 
+    Bladex.AddMaterialStepSound("PisadaSigilo","default","SigiloSobrePiedra")   # Added -LeadHead
     Bladex.AddMaterialStepSound("PisadaSigilo","Piedra","SigiloSobrePiedra")
     Bladex.AddMaterialStepSound("default","Piedra","Piedra")
     Bladex.AddMaterialStepSound("PisadaSigilo","Metal","SigiloSobreMetal")
@@ -2258,8 +2261,10 @@ def Init():
     Bladex.AddMaterialStepSound("PisadaSigilo","Water","SigiloSobreAgua")
     Bladex.AddMaterialStepSound("default","madera ligera","Madera")
     Bladex.AddMaterialStepSound("PisadaSigilo","madera ligera","SigiloSobreMadera")
+    Bladex.AddMaterialStepSound("default","madera pesada","MaderaPodrida")                  ## Added
+    Bladex.AddMaterialStepSound("PisadaSigilo","madera pesada","SigiloSobreMaderaPodrida")  ##      -LeadHead
     
-    Bladex.AddMaterialStepSound("PisadaEsqueleto","default","PiedraEsqueleto")      ### This fixes bug that skeletons have no step sounds when stepping on a non-defined material. -LeadHead
+    Bladex.AddMaterialStepSound("PisadaEsqueleto","default","PiedraEsqueleto")      ### fixes skeletons having no step sounds on a non-defined material. -LeadHead
     Bladex.AddMaterialStepSound("PisadaEsqueleto","Hierba","HierbaEsqueleto")
     Bladex.AddMaterialStepSound("PisadaEsqueleto","MaderaTablas","MaderaEsqueleto") ### Was previously missing. Need unique sounds probably tho -LeadHead
     Bladex.AddMaterialStepSound("PisadaEsqueleto","Madera","MaderaEsqueleto")
@@ -2281,6 +2286,8 @@ def Init():
     Bladex.AddMaterialStepSound("PisadaEnemigos","Agua","AguaEnemigos")
     Bladex.AddMaterialStepSound("PisadaEnemigos","Nieve","NieveEnemigos")
     Bladex.AddMaterialStepSound("PisadaEnemigos","Barro","BarroEnemigos")
+    Bladex.AddMaterialStepSound("PisadaEnemigos","madera ligera","MaderaEnemigos")          ## Added
+    Bladex.AddMaterialStepSound("PisadaEnemigos","madera pesada","MaderaPodridaEnemigos")   ##     -LeadHead
 
 
     Bladex.AddMaterialStepSound("PisadaArmadura","default","PasoPiedraArmadura")  ### Added -LeadHead
@@ -2296,6 +2303,8 @@ def Init():
     Bladex.AddMaterialStepSound("PisadaArmadura","Agua","PasoAguaArmadura")
     Bladex.AddMaterialStepSound("PisadaArmadura","Nieve","PasoNieveArmadura")
     Bladex.AddMaterialStepSound("PisadaArmadura","Barro","PasoBarroArmadura")
+    Bladex.AddMaterialStepSound("PisadaArmadura","madera ligera","PasoMaderaArmadura")          ## Added
+    Bladex.AddMaterialStepSound("PisadaArmadura","madera pesada","PasoAstilladoArmadura")   ##     -LeadHead
     
     Bladex.AddMaterialStepSound("PisadaLavaGolem","default","PasoLavaGolem")    
     Bladex.AddMaterialStepSound("PisadaBarroGolem","default","PasoBarroGolem")
@@ -2357,8 +2366,10 @@ def Init():
         #   "Rlx_f_no"
         #   "Rlx_f_s"
         #
-        #   As a safety measure, because this doesn't seem to be fully working
-        #   There's some uncertainty whether it's actually using anm names or BAction names
+        #   As a safety measure, because this doesn't seem to be fully working step timings had to be adjusted
+        #   I have also included "walk back" events, because otherwise there's no way to walk back silently
+        #
+        #   There's also some uncertainty whether it's actually using anm names or BAction names
         #
         #   "Rlx_f"
         #
