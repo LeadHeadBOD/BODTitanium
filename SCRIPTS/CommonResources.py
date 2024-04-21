@@ -2,8 +2,7 @@
 ##||| CommonResources.PY TITANIUM
 ##||| Change list:
 ##||| * pocimas_e.mmp to make sure empty potions work
-##||| * Added generic texture for armero-pieza, 
-##|||   alternative was to modify the material in the respective models, I can't be bothered.
+##||| * Fixed armero missing piece textures. No idea why they are in 3dChars folder.
 ##\\\ 
 
 
@@ -18,7 +17,7 @@ def Init():
     BBLib.ReadMMP('../../3dobjs/weapons.mmp')
     BBLib.ReadMMP('../../3dobjs/genericos.mmp')
     BBLib.ReadMMP('../../3dobjs/pocimas_e.mmp') # Added -LeadHead
-    BBLib.ReadMMP('../../3dobjs/armeropie.mmp') # generic texture for armero pieza -LeadHead
+    BBLIB.ReadMMP('../../3dChars/roturas.mmp')  # Added. Contains missing armero piece texture, etc. -LeadHead
 
     
     Bladex.BodInspector()
