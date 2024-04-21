@@ -17,7 +17,7 @@ def Init():
     BBLib.ReadMMP('../../3dobjs/weapons.mmp')
     BBLib.ReadMMP('../../3dobjs/genericos.mmp')
     BBLib.ReadMMP('../../3dobjs/pocimas_e.mmp') # Added -LeadHead
-    BBLIB.ReadMMP('../../3dChars/roturas.mmp')  # Added. Contains missing armero piece texture, etc. -LeadHead
+    BBLib.ReadMMP('../../3dChars/roturas.mmp')  # Added. Contains missing armero piece texture, etc. -LeadHead
 
     
     Bladex.BodInspector()
@@ -31,3 +31,6 @@ def Init():
     BBLib.LoadBOD('Pocima200_E')
     BBLib.LoadBOD('PocimaTodo_E')
     BBLib.LoadBOD('PowerPotion_E')
+    
+    
+    
