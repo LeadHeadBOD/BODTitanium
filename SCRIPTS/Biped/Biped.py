@@ -1,4 +1,10 @@
-
+##///
+##||| BIPED.PY TITANIUM
+##||| Change list:
+##||| * Added Ice Golem
+##||| * Added Gold Ork
+##||| 
+##\\\ 
 
 import Bladex
 import DefAnims
@@ -233,20 +239,34 @@ def Dark_OrkWhenFirst():
 	import BBLib
 	BBLib.LoadResourceToMemory(BBLib.B_CID_BMP, "OrkDarkIcon")	
 
-
+#
+# Gold ork
+#
 def Gold_OrkWhenFirst():
 	Bladex.CreateBipedData("Org","Gold_Ork")
+	print "Biped.py Gold_Ork CreateBipedData... Success!"    
 	exitsPak=Bladex.LoadAnmRaceData("../../AnmPak/Org.dat")
+	print "Biped.py Gold_Ork check if AnmPak data exists... Success!"    
 	import OrkAnimationSet
+	print "Biped.py Gold_Ork Import OrkAnimationSet... Success!"
 	OrkAnimationSet.LoadOrkAnimationSet("Org")
+	print "Biped.py Gold_Ork LoadOrkAnimationSet... Success!"
 	import OrgBAct
+	print "Biped.py Gold_Ork Import OrgBAct... Success!"
 	import LinkTables
 	LinkTables.LinkMe("Org")
+	print "Biped.py Gold_Ork Import and link LinkTables... Success!"
 	import OrgCombos
+	print "Biped.py Gold_Ork Import OrgCombos... Success!"
 	import AnmFact
+	print "Biped.py Gold_Ork Import AnmFact... Success!"
 	AnmFact.AnmFactOrk()
+	print "Biped.py Gold_Ork AnmFact assigning... Success!"
 	if not exitsPak:
-		Bladex.SaveAnmRaceData("../../AnmPak/Ork.dat","Org")
+		Bladex.SaveAnmRaceData("../../AnmPak/Org.dat","Org")
+		print "Biped.py Gold_Ork Org.dat not found, saving... Success!"
+	else:
+		print "Biped.py Gold_Ork Org.dat found, proceeding as usual"
 	if dir(DefAnims).count("Org"):
 		DefAnims.Org()
 	Bladex.AddFloorCTolerance("slip",10)
@@ -739,17 +759,38 @@ def Troll_DarkWhenFirst():
 	import AnmFact
 	AnmFact.AnmFactTroll()	
 	#...
+
 	race=Bladex.GetCharType("Troll_snow","Trl")
 	race.Biped="Trl"
+	# race.BBLib.LoadResourceToMemory(BBLib.B_CID_BMP, "TrollSnowIcon")
 	if not exitsPak:
 		Bladex.SaveAnmRaceData("../../AnmPak/Trl.dat","Trl")
 	if dir(DefAnims).count("Trl"):
 		DefAnims.Trl()
 	import BBLib
-	BBLib.LoadResourceToMemory(BBLib.B_CID_BMP, "TrollIcon")	
+	BBLib.LoadResourceToMemory(BBLib.B_CID_BMP, "TrollDarkIcon")	
 
 
-
+#
+# Troll Snow
+#
+# def Troll_SnowWhenFirst():                           
+	# Bladex.CreateBipedData("Trl_sn","Troll_Snow")
+	# exitsPak=Bladex.LoadAnmRaceData("../../AnmPak/Trl_sn.dat")
+	# import TrlAnimationSet
+	# TrlAnimationSet.LoadTrlAnimationSet("Trl_sn")      
+	# import Trl_snBAct
+	# import LinkTables
+	# LinkTables.LinkMe("Trl_sn")                        
+	# import Trl_snCombos
+	# import AnmFact
+	# AnmFact.AnmFactTroll()	
+	# if not exitsPak:
+		# Bladex.SaveAnmRaceData("../../AnmPak/Trl_sn.dat","Trl_sn")
+	# if dir(DefAnims).count("Trl_sn"):
+		# DefAnims.Trl_sn()
+	# import BBLib
+	# BBLib.LoadResourceToMemory(BBLib.B_CID_BMP, "TrollSnowIcon")	
 
 
 
@@ -925,6 +966,26 @@ def Golem_metalWhenFirst():
 
 
 
+def Golem_iceWhenFirst():                               ### Added -LeadHead
+	Bladex.CreateBipedData("Glm_ic","Golem_ice")
+	exitsPak=Bladex.LoadAnmRaceData("../../AnmPak/Glm_ic.dat")
+	import GlmAnimationSet
+	GlmAnimationSet.LoadGlmAnimationSet("Glm_ic")
+	import Glm_icBAct
+	import LinkTables
+	LinkTables.LinkMe("Glm_ic")
+	import Glm_icCombos
+	import AnmFact
+	AnmFact.AnmFactGolem()
+	if not exitsPak:
+		Bladex.SaveAnmRaceData("../../AnmPak/Glm_ic.dat","Glm_ic")
+	if dir(DefAnims).count("Glm_ic"):
+		DefAnims.Glm_ic()
+	Bladex.AddFloorCTolerance("slip",10)
+	import BBLib
+	BBLib.LoadBOD('Piedra_Glm_ic')
+	BBLib.LoadResourceToMemory(BBLib.B_CID_BMP, "IceGolemIcon")	
+
 
 
 
@@ -956,7 +1017,7 @@ def Init():
 	race=Bladex.GetCharType("Dark_Ork","Dok")
 	race.OnFirst=Dark_OrkWhenFirst
 
-	race=Bladex.GetCharType("Gold_Ork","Org")
+	race=Bladex.GetCharType("Gold_Ork","Org")           #Added -LeadHead
 	race.OnFirst=Gold_OrkWhenFirst
 
 	race=Bladex.GetCharType("Great_Ork","Gok")
@@ -1019,7 +1080,7 @@ def Init():
 	race=Bladex.GetCharType("Troll_Dark","Trl")
 	race.OnFirst=Troll_DarkWhenFirst
 
-	race=Bladex.GetCharType("Troll_snow","Trl")
+	race=Bladex.GetCharType("Troll_snow","Trl")          
 	race.OnFirst=Troll_DarkWhenFirst                     #Para que cree bipedo ,para que carge sus animaciones
 
 	race=Bladex.GetCharType("Spidersmall","Spd")
@@ -1041,7 +1102,10 @@ def Init():
 	race.OnFirst=Golem_lavaWhenFirst
 	
 	race=Bladex.GetCharType("Golem_metal","Glm")
-	race.OnFirst=Golem_metalWhenFirst
+	race.OnFirst=Golem_metalWhenFirst	
+    
+	race=Bladex.GetCharType("Golem_ice","Glm")          #They forgot about you
+	race.OnFirst=Golem_iceWhenFirst                     # -LeadHead
 
 
 
