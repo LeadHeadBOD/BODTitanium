@@ -244,29 +244,18 @@ def Dark_OrkWhenFirst():
 #
 def Gold_OrkWhenFirst():
 	Bladex.CreateBipedData("Org","Gold_Ork")
-	print "Biped.py Gold_Ork CreateBipedData... Success!"    
 	exitsPak=Bladex.LoadAnmRaceData("../../AnmPak/Org.dat")
-	print "Biped.py Gold_Ork check if AnmPak data exists... Success!"    
 	import OrkAnimationSet
-	print "Biped.py Gold_Ork Import OrkAnimationSet... Success!"
 	OrkAnimationSet.LoadOrkAnimationSet("Org")
-	print "Biped.py Gold_Ork LoadOrkAnimationSet... Success!"
 	import OrgBAct
-	print "Biped.py Gold_Ork Import OrgBAct... Success!"
 	import LinkTables
 	LinkTables.LinkMe("Org")
-	print "Biped.py Gold_Ork Import and link LinkTables... Success!"
 	import OrgCombos
-	print "Biped.py Gold_Ork Import OrgCombos... Success!"
 	import AnmFact
-	print "Biped.py Gold_Ork Import AnmFact... Success!"
 	AnmFact.AnmFactOrk()
-	print "Biped.py Gold_Ork AnmFact assigning... Success!"
 	if not exitsPak:
 		Bladex.SaveAnmRaceData("../../AnmPak/Org.dat","Org")
-		print "Biped.py Gold_Ork Org.dat not found, saving... Success!"
 	else:
-		print "Biped.py Gold_Ork Org.dat found, proceeding as usual"
 	if dir(DefAnims).count("Org"):
 		DefAnims.Org()
 	Bladex.AddFloorCTolerance("slip",10)

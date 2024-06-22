@@ -1,3 +1,10 @@
+##///
+##||| ACTIONTABLES.PY TITANIUM
+##||| Change list:
+##||| * Jump now goes to Actions.JumpHandler to work around mouse movement causing dodges.
+##||| * Sneak can now be initiated when already moving in combat.
+##\\\ 
+
 ####################################################################################
 #
 #
@@ -40,17 +47,6 @@ def Init():
     print "Creating tables for the bipeds..."
     import Bladex
     import Actions
-    
-    ## Titanium Config Fuctions ##
-    TiCfgFound=0
-    try:
-        import TitaniumConfig
-        TiCfgFound=1
-    except:
-        print "ActionTables.py --- Could not find Titanium Configurator"
-        
-    ## - - - - - - - - - - - - - ##
-    
     ####################################################################################
     #
     # Relax .
@@ -60,15 +56,9 @@ def Init():
 
     Bladex.SetEventTableFunc("Rlx","InstantAttack",Actions.InstantAttackSlow)
     Bladex.SetEventTableFuncC("Rlx","ActionEnd","RlxCycle")
-    #Bladex.SetEventTableFuncC("Rlx","Jump","TestJump")                     ###
-    if TiCfgFound and (TitaniumConfig.TitaniumSetting("DodgeFix") == 1):    ###
-        Bladex.SetEventTableFunc("Rlx","Jump",Actions.JumpHandler)          ### Changed 
-        Bladex.SetEventTableFuncC("Rlx","Dodge","TestDodge")                ###
-        Bladex.SetEventTableFuncC("Rlx","JumpWrap","TestJump")              ###
-        print "~~~ DODGE FIX ENABLED ~~~"                                   ###
-    else:                                                                   ###
-        Bladex.SetEventTableFuncC("Rlx","Jump","TestJump")                  ###
-        print "~~~ Titanium DodgeFix disabled ~~~"                          ###     -LeadHead
+    Bladex.SetEventTableFunc("Rlx","Jump",Actions.JumpHandler)      ## Changed
+    Bladex.SetEventTableFuncC("Rlx","JumpWrap","TestJump")          ## and Added
+    Bladex.SetEventTableFuncC("Rlx","Dodge","TestDodge")            ##      -LeadHead
     Bladex.SetEventTableFuncC("Rlx","ToggleFacing","ToggleFacing")
     Bladex.SetEventTableFuncC("Rlx","StartBlock","StartBlockAndUpdate")
     Bladex.SetEventTableFuncC("Rlx","StopBlock","StopBlockAndUpdate")

@@ -1,17 +1,18 @@
 ##///
 ##||| ACTIONS.PY TITANIUM
 ##||| Change list:
-##||| * Fixed putting away shield only to take shield and weapon from back immediately after. (See StdToggleWeapons)
+##||| * StdToggleWeapons() completely rewritten
+##||| * ToggleWEvent() heavily modified
 ##||| * Fixed "Press F1" prompt to be correct for all weapons and hero characters.
 ##||| * Quivers on back don't disappear when picking up arrows/quivers.
 ##||| * Quivers don't disappear from hands when picking them up.
 ##||| * Quivers immediately go to back if possible.
-##||| * Arrows are now correctly drawn after using keys.
 ##||| * Added and edited bow related functions for bow cancelling.
 ##||| * Added JumpHandler for DodgeFix. ( # PLAGUE: Needs to be re-written to support real-time config)
 ##||| * Exiting the level with a limb in hand and nothing on back no longer crashes (See PutAllInBack)
 ##||| * Should report the message "not in reach" more correctly now.
 ##||| * Character will no longer try to draw arrows from an empty quiver after picking/using items.
+##||| * No longer will draw shield when have a two-handed weapon on InstanAttack
 ##\\\ 
 
 import Bladex
@@ -480,6 +481,16 @@ def IsRightHandWeaponObject(EntityName):
 	# Get object type
 	object_flag= Reference.GiveObjectFlag(me.InvRight)
 	return object_flag == Reference.OBJ_WEAPON or object_flag == Reference.OBJ_BOW # Do not include bow ?
+
+# Func to detect if the weapon is 2 handed
+# 
+#   -LeadHead
+def IsWeapon2Handed(WepName):
+    wep_Flag = Reference.GiveWeaponFlag(WepName)
+    if wep_Flag == Reference.W_FLAG_2W or wep_Flag == Reference.W_FLAG_AXE or wep_Flag == W_FLAG_SP:
+        return TRUE
+    else:
+        return FALSE
 
 
 #
@@ -2264,7 +2275,7 @@ def TwoHandedWeaponOnBack(EntityName):
 		back_object_flag= Reference.GiveObjectFlag(me.InvRightBack)
 		if back_object_flag==Reference.OBJ_WEAPON:
 			w_flag=Reference.GiveWeaponFlag(me.InvRightBack)
-			if w_flag<>Reference.W_FLAG_1H:
+			if w_flag!=Reference.W_FLAG_1H:
 				return TRUE
 	return FALSE
 
@@ -2283,9 +2294,9 @@ def Left2BackEvent(pj_name,event):
 		inv.LinkLeftBack(me.InvLeft)
 
 
-###
-### 
-###
+### Func heavily modified. 
+### Fixes multiple weird interactions.
+###                     -LeadHead
 def ToggleWEvent(pj_name,event):
 	me=Bladex.GetEntity(pj_name)
 
@@ -2294,7 +2305,7 @@ def ToggleWEvent(pj_name,event):
 	#
 	# So the standard obnject that could NOT ve dropped at the beggining ( cause inside B_world ) , do NOT dissapear!
 	#
-	if IsRightHandStandardObject(pj_name):
+	if IsRightHandStandardObject(pj_name) and not event=="ChangeLEvent":        # Added "not LEvent"    -LeadHead
 		#print "TryDropRight is ok"
 		DropReleaseEventHandler(pj_name, "DropRightEvent")
 		if me.InvRight:
@@ -2317,10 +2328,10 @@ def ToggleWEvent(pj_name,event):
 	inv=me.GetInventory()
 	tmp_rback=me.InvRightBack
 	tmp_lback=me.InvLeftBack
+	rback_backup=0                       ### Start of retarded fix -LeadHead
 	if tmp_rback:
 		if Reference.GiveObjectFlag(tmp_rback)==Reference.OBJ_QUIVER:
 			rback_backup=me.InvRightBack ### Retarded fix -LeadHead
-			# print "rback_backup is" +`rback_backup`
 			tmp_rback=""
 
 	something_on_back= SthOnBack(pj_name)
@@ -2341,7 +2352,7 @@ def ToggleWEvent(pj_name,event):
 			add_quiver=1
 
 
-	if event=="ChangeRLEvent" or event=="ChangeREvent": #PLAGUE: This is part of the problem - too much reliance on RLEvent and REvent at the same time.
+	if event=="ChangeRLEvent" or event=="ChangeREvent":
 		if me.InvRight:
 			if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW and me.InvRight and Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_ARROW:
 				SheatheArrow(inv, me.InvRight)	# We must be carrying an arrow in the right hand, lets sheathe it           
@@ -2365,28 +2376,207 @@ def ToggleWEvent(pj_name,event):
 			inv.LinkRightHand("None")
 		elif not ArrowDrawn:
 			inv.LinkRightHand(tmp_rback)
-			tmp_rback=""
-		else:
-			pass
+			# tmp_rback=""      # PlAGUE: Is this even necessary?
 
 	if event=="ChangeRLEvent" or event=="ChangeLEvent":
 		#inv.LinkBack("None")
-		if tmp_rback:
-			print "Pseudo bug? ERROR , MIRAR"
-			inv.LinkBack(tmp_rback)
+		# if tmp_rback:                             # PLAGUE: Not sure if this was supposed to fix something at some point
+			# print "Pseudo bug? ERROR , MIRAR"     #         but after my code changes it only causes problems
+			# inv.LinkBack(tmp_rback)               #         commented out for now.
 		if me.InvLeft:
-			inv.LinkBack(me.InvLeft)
+			if tmp_rback:
+				if Reference.GiveWeaponFlag(tmp_rback) in [Reference.W_FLAG_2W, Reference.W_FLAG_AXE, Reference.W_FLAG_SP]:     # Added check for 2handed weapon
+					inv.LinkBack("None")                                                                                        #        -LeadHead
+			else: 
+				inv.LinkBack(me.InvLeft)
 		if not tmp_lback:
 			inv.LinkLeftHand("None")
 		else:
 			inv.LinkLeftHand(tmp_lback)
+		if rback_backup:                    # Added, fixes bug with disappearing quiver
+			inv.LinkBack(rback_backup)      # when drawing bow and have empty quiver on back    -LeadHead
 
 	if add_quiver:
 		UnSheatheArrow(inv)
 
 
 
+### Following function has been re-written. Refer to LegacyToggleWeapons() for the original. -LeadHead
+# Fixes the following:
+#   - Locking on to an opponent with shield in hand and weapon on back no longer puts shield away before drawing both
+#   - No longer tries to draw arrows from empty quivers
+#   - No longer possible to fool the game into having a two handed weapon with a shield
+#   - No longer draws arrow and puts bow on back when have only bow on left hand.
+#   - No longer loses an arrow when already have one in hand and trying to draw bow
+#   - Fixes bug where putting sword on back with shield already on back makes the sword disappear
+#   - Easier to debug (subjective, but whatever)
+ReworkedWepSwitch = 1
+
 def StdToggleWeapons(EntityName):
+    
+	if ReworkedWepSwitch != 1:
+		LegacyToggleWeapons(EntityName)
+		return
+
+	me=Bladex.GetEntity(EntityName)
+	#If in combat, abort and return
+	if me.ActiveEnemy:
+		me.SetActiveEnemy("")
+		me.Data.time_deactive_enemy=Bladex.GetTime()
+		return
+
+	if me.OnFloor==0 and me.AnimName!="JOG" and me.AnimName!="WBK_JOG" and me.AnimName!="WLK" and me.AnimName!="WBK":
+		return
+
+	if me.AnmEndedFunc:
+		return FALSE
+
+	inv= me.GetInventory()
+
+	UnGraspString (EntityName,"UnGraspString")
+	right_standard=IsRightHandStandardObject(EntityName)
+	drop_right=0
+	# Bow related crap
+	QuiverOnBack = me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)==Reference.OBJ_QUIVER
+	QuiverOnBackEmpty = QuiverOnBack and Bladex.GetEntity(me.InvRightBack).Data.NumberOfArrows() < 1
+		
+	### We start by checking which hand is full and which is empty.
+	if me.InvLeft and me.InvRight:
+		if Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW:
+			me.AddAnmEventFunc("ChangeRLEvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r_l")
+			return
+		elif right_standard:
+			# drop_right=1
+			## drop whatever stupid item you have and draw thing from back
+				if TwoHandedWeaponOnBack(EntityName):
+					drop_right=1
+				elif not me.InvRightBack:
+					drop_right=3
+				else:
+					drop_right=2
+		else:
+			me.AddAnmEventFunc("ChangeRLEvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r_l")
+			return
+			
+			
+	elif me.InvLeft and not me.InvRight:
+		if Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW:     # We don't care if we have a quiver on back or not
+			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)           # If we want to shoot, we will press Attack
+			me.LaunchAnmType("Chg_l")                                   # If not, we always prioritize putting bow away
+			return
+		elif TwoHandedWeaponOnBack(EntityName):
+			me.AddAnmEventFunc("ChangeRLEvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r_l")
+			return
+		elif not me.InvRightBack:
+			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)
+			me.LaunchAnmType("Chg_l")                        
+			return
+		else:
+			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r")
+			return
+		
+		### PLAGUE: might need to rework this condition
+	elif me.InvRight and not me.InvLeft:
+		if not me.InvRightBack and not me.InvLeftBack:
+			if right_standard:
+				return
+			else:
+				me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
+				me.LaunchAnmType("Chg_r")
+				return
+		elif inv.HasBowOnBack:
+			if Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_ARROW:
+				me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
+				me.LaunchAnmType("Chg_l")
+				return
+			elif right_standard and QuiverOnBack and not QuiverOnBackEmpty:
+				drop_right=1
+			elif right_standard and (QuiverOnBackEmpty or not me.InvRightBack):
+				drop_right=3
+				
+		elif right_standard and not inv.HasBowOnBack:
+			if me.InvRightBack and me.InvLeftBack:
+				drop_right=1
+			elif me.InvRightBack and not me.InvLeftBack:
+				drop_right=2
+			elif me.InvLeftBack and not me.InvRightBack:
+				me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
+				me.LaunchAnmType("Chg_l")
+				return
+		elif Reference.GiveWeaponFlag(me.InvRight) in [Reference.W_FLAG_2W, Reference.W_FLAG_AXE, Reference.W_FLAG_SP]:
+			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r")
+			return
+	
+
+	### If we had a standard item in hand, set up necessary drop event
+	if drop_right!=0:
+		if TryDropRight(EntityName):
+			DropReleaseEventHandler(EntityName, "DropRightEvent")
+		me.Wuea=Reference.WUEA_ENDED
+
+		if drop_right==1:
+			me.AddAnmEventFunc("ChangeRLEvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r_l")
+			return
+		elif drop_right==2:
+			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r")
+			return
+		elif drop_right==3:
+			me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_l")
+			return
+		else:
+			print "!!! ERROR @ StdToggleWeapons - unexpected drop_right event !!! "
+
+	
+	
+	### Getting this far means our hands are empty,
+	### so we start another loop depending on what we have on our back
+	### and don't conncern ourselves with hands
+	if me.InvLeftBack and me.InvRightBack:
+		if inv.HasBowOnBack and QuiverOnBack:
+			if QuiverOnBackEmpty:
+				me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
+				me.LaunchAnmType("Chg_l")
+				return
+			else:
+				me.AddAnmEventFunc("ChangeRLEvent",ToggleWEvent)
+				me.LaunchAnmType("Chg_r_l")
+				return
+		elif TwoHandedWeaponOnBack(EntityName):
+			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r")
+			return
+		else:
+			me.AddAnmEventFunc("ChangeRLEvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r_l")
+			return
+	
+	elif me.InvLeftBack and not me.InvRightBack:
+		me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
+		me.LaunchAnmType("Chg_l")
+		return
+		
+	elif me.InvRightBack and not me.InvLeftBack:
+		me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
+		me.LaunchAnmType("Chg_r")
+		return
+	
+	else:
+		# print "Nothing to draw or sheath"
+		return
+	
+    ### If we got here, we have failed our mission spectacularly
+	print "ERROR - ToggleW"
+
+		
+def LegacyToggleWeapons(EntityName):
 
 	me=Bladex.GetEntity(EntityName)
 
@@ -2406,20 +2596,18 @@ def StdToggleWeapons(EntityName):
 
 	inv= me.GetInventory()
 
-	UnGraspString (EntityName,"UnGraspString")                          # Added -LeadHead
-
 	right_standard=IsRightHandStandardObject(EntityName)
 	drop_right=0
 	#pdb.set_trace()
-	if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)<>Reference.OBJ_BOW and me.InvRightBack: #and (not me.Attack and not me.Block):
-		if not me.Attack and not me.Block:                              # the two following events have been switched places. 
-			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)             #This is to prioritize drawing weapon over putting away shield when trying to start combat 
-			me.LaunchAnmType("Chg_r")                                   #
-			return                                                      #
-		else:                                                           #
-			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)           #
-			me.LaunchAnmType("Chg_l")                                   #           -LeadHead
-			return                                                      #
+	if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)<>Reference.OBJ_BOW and me.InvRightBack: 
+		if not me.Attack and not me.Block:                      # PLAGUE: This is practically impossible to call because me.Attack requires 
+			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)   #         to be already locked on and nobody tries to draw weapon holding block.
+			me.LaunchAnmType("Chg_l")
+			return
+		else:
+			me.AddAnmEventFunc("ChangeREvent",ToggleWEvent)
+			me.LaunchAnmType("Chg_r")
+			return
 	elif ((me.InvRight and right_standard==1)) and (me.InvLeft or me.InvLeftBack) and me.InvRightBack and not inv.HasBowOnBack:
 		me.AddAnmEventFunc("ChangeLEvent",ToggleWEvent)
 		me.LaunchAnmType("Chg_l")
@@ -2501,8 +2689,8 @@ def FreeBothHands(EntityName,CallBack=None,Params=(),ForceNow = 1):
 			me.LaunchAnmType("rlx")
 			me.Wuea=Reference.WUEA_ENDED
 			me.SetTmpAnmFlags(1,1,1,0,5,1,0)
-		StdToggleWeapons(EntityName)
-
+		# StdToggleWeapons(EntityName)
+		LegacyToggleWeapons(EntityName)     # Placeholder - "Legacy" code prioritizes putting stuff away. -LeadHead
 
 		if CallBack:
 			Bladex.AddScheduledFunc(Bladex.GetTime()+2.0, CallBack,Params)
@@ -2512,7 +2700,7 @@ def FreeBothHands(EntityName,CallBack=None,Params=(),ForceNow = 1):
 	return 1
 
 
-def RelaxTurn180(EntityName):
+def RelaxTurn180(EntityName):           # PLAGUE: this func is unused
 	me=Bladex.GetEntity(EntityName)
 	me.LaunchAnmType("rlx_turn")
 
@@ -2621,7 +2809,6 @@ def TestDrawBow(EntityName):
 	me= Bladex.GetEntity(EntityName)
 	if BowCancelCalled==1:     # Added -LeadHead
 		if EntityName=="Player1":
-			#print "Trying to draw bow while in canceldelay"
 			return
 	#print EntityName+" TestDrawBow"
 	#pdb.set_trace()
@@ -2709,17 +2896,12 @@ def CancelBowMode(EntityName):          #Added -LeadHead
                 me.Data.LastReturns= None
         except AttributeError:
             pass
-        #Bladex.AddScheduledFunc(Bladex.GetTime()+BowDelayTime, CancelDelayHandler, ())
-    else:
-        pass
-### This feels very wrong, but I don't understand how scheduled funcs work -LeadHead
+
+
 def CancelDelayHandler():
     global BowCancelCalled
     if BowCancelCalled==1:
         BowCancelCalled=0
-        # print "bowing restored"
-    else:
-        pass
 
 def TestReleaseArrow(EntityName):
 	me= Bladex.GetEntity(EntityName)
@@ -3068,7 +3250,7 @@ def ToggleIAttackRight(EntityName,event):
 
 def ToggleIAttackLeft(EntityName,event):
 	me = Bladex.GetEntity(EntityName)
-	if not me.InvLeftBack or me.InvLeftBack=="":
+	if not me.InvLeftBack or me.InvLeftBack=="" or TwoHandedWeaponOnBack(EntityName):       # Added check for TwoHandedWeapons -LeadHead
 		return
 
 	inv= me.GetInventory()
@@ -3293,25 +3475,41 @@ def ForceUse (EntityName, ItemName):
 # It will cause conflicts if called out of place, so DON'T DO IT
 # StdUse still exists for a good reason.
 #######
+
+
+    ## Titanium Config Fuctions ##
+    TiCfgFound=0
+    try:
+        import TitaniumConfig
+        TiCfgFound=1
+    except:
+        print "ActionTables.py --- Could not find Titanium Configurator"
+        
+        
+    if TitaniumConfig.TitaniumSetting("DodgeFix") == 1:
+        DodgeFix = 1
+    else:
+        DodgeFix = 0
+    ## - - - - - - - - - - - - - ##
 """
+
+## PLAGUE: make configurable
+DodgeFix = 1
 
 ### JumpHandler for relaxed state dodging fix.
 def JumpHandler (EntityName, EventName):
     # print "Calling Actions.JumpHandler"
     me = Bladex.GetEntity(EntityName)
     
-    if me.Name == "Player1":
+    if me.Name == "Player1" and DodgeFix:
         RightPressed = BInput.IsActionBeingHeld("Turn Right")
         LeftPressed = BInput.IsActionBeingHeld("Turn Left")
         BackPressed = BInput.IsActionBeingHeld("Backwards")
         ForwardPressed = BInput.IsActionBeingHeld("Forwards")
-        # print LeftPressed
-        # print RightPressed
         if RightPressed or LeftPressed or BackPressed:
-            # print "button is pressed"
             me.RaiseEvent("Dodge")
         elif ForwardPressed:
-            # print "no button is pressed"
             me.RaiseEvent("JumpWrap")
+
     else:
         me.RaiseEvent("JumpWrap")
