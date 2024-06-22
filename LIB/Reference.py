@@ -1,3 +1,12 @@
+##///
+##||| REFERENCE.PY TITANIUM
+##||| Change list:
+##||| * Barbarian Shield (Escudo9) now makes wooden hit sound
+##||| * Rhino Club now makes wooden hit sound
+##||| * Added IceGolem attack data
+##||| * Added Zombie Knight attack data 
+##\\\ 
+
 import Bladex
 import math
 import netgame
@@ -348,7 +357,7 @@ DefaultObjectData['Gemapurpura']=        [OBJ_ITEM]
 DefaultObjectData['Gema']=               [OBJ_ITEM]
 DefaultObjectData['Pergamino2']=         [OBJ_ITEM]
 
-#shields
+#shields   
 
 GolpeArmaEscudoMetal=Bladex.CreateSound('../../Sounds/golpe-arma-escudo.wav', 'GolpeArmaEscudoMetal')
 GolpeArmaEscudoMetal.SendNotify=1
@@ -404,8 +413,8 @@ GolpeArmaEscudoMadera.SendNotify=1
 #
 ##########################################################################################################
 """
-Escudo vampiro	42.33�
-kingshield	56.68�
+Escudo vampiro	42.33º
+kingshield	56.68º
 Escudo dalgurak	62.84
 Escudo 9	64.5
 Escudo 8	69.63
@@ -438,7 +447,7 @@ DefaultObjectData['Escudo5']=            [OBJ_SHIELD,   0, 20, GolpeArmaEscudoMe
 DefaultObjectData['Escudo6']=            [OBJ_SHIELD,-1.5,8000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  5]
 DefaultObjectData['Escudo7']=            [OBJ_SHIELD,-0.5,5000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  5]
 DefaultObjectData['Escudo8']=            [OBJ_SHIELD,-0.5,3000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750, 10]
-DefaultObjectData['Escudo9']=            [OBJ_SHIELD,  -1,2000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750, 10]
+DefaultObjectData['Escudo9']=            [OBJ_SHIELD,  -1,2000, GolpeArmaEscudoMadera, 180.0*DEG2RADS,   2000,  750, 10]     # Was GolpeArmaEscudoMetal  -LeadHead
 DefaultObjectData['Escudon']=            [OBJ_SHIELD,-0.5, 30, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   3000, 1250, 10]
 DefaultObjectData['VampShield']=         [OBJ_SHIELD,-0.5,1500, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750, 10]
 DefaultObjectData['DalShield']=          [OBJ_SHIELD,-1.5,5000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  0]
@@ -451,6 +460,7 @@ DefaultObjectData['MagicShield']=        [OBJ_SHIELD,-0.5,6000, GolpeArmaEscudoM
 # Naturally attacking races
 DefaultObjectData['Cos']=                [OBJ_WEAPON,   3,  0, 1.0,  THR_SPINNING, []]
 DefaultObjectData['Lich']=               [OBJ_WEAPON,   4,  0, 1.0,  THR_SPINNING, []]
+DefaultObjectData['Knight_Zombie']=      [OBJ_WEAPON,   4,  0, 1.0,  THR_SPINNING, []]  # Added -LeadHead
 DefaultObjectData['Spidersmall']=        [OBJ_WEAPON,   2,  0, 1.0,  THR_SPINNING, []]
 DefaultObjectData['Little_Demon']=       [OBJ_WEAPON,   8,  0, 1.0,  THR_SPINNING, []]
 DefaultObjectData['Salamander']=         [OBJ_WEAPON,  55,  0, 1.0,  THR_SPINNING, []]
@@ -507,7 +517,7 @@ DefaultObjectData['FlatSword']=          [OBJ_WEAPON,180, -50, 1.0,  THR_SPINNIN
 DefaultObjectData['Eclipse']=            [OBJ_WEAPON, 20, -5, 3.0,  THR_SPINNING, [W_FLAG_AXE,PI,2000,750,400,400,GolpeArmaEscudoMetal]]
 DefaultObjectData['Guadanya']=           [OBJ_WEAPON, 60, -20, 1.3,  THR_SPINNING, [W_FLAG_AXE,PI,2000,750,2000,2000,GolpeArmaEscudoMetal]]
 DefaultObjectData['Hacha2hojas']=        [OBJ_WEAPON,140, -60, 4.0,  THR_SPINNING, [W_FLAG_AXE,PI,2000,750,8000,8000,GolpeArmaEscudoMetal]]
-DefaultObjectData['RhinoClub']=          [OBJ_WEAPON,300, -80, 4.0,  THR_SPINNING, [W_FLAG_AXE,PI,2000,750,12000,12000,GolpeArmaEscudoMetal]]
+DefaultObjectData['RhinoClub']=          [OBJ_WEAPON,300, -80, 4.0,  THR_SPINNING, [W_FLAG_AXE,PI,2000,750,12000,12000,GolpeArmaEscudoMadera]]  # Was GolpeArmaEscudoMetal
 DefaultObjectData['Hacharrajada']=       [OBJ_WEAPON,500, -120, 4.0,  THR_SPINNING, [W_FLAG_AXE,PI,2000,750,14000,14000,GolpeArmaEscudoMetal]]
 
 
