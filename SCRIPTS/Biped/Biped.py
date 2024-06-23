@@ -255,7 +255,6 @@ def Gold_OrkWhenFirst():
 	AnmFact.AnmFactOrk()
 	if not exitsPak:
 		Bladex.SaveAnmRaceData("../../AnmPak/Org.dat","Org")
-	else:
 	if dir(DefAnims).count("Org"):
 		DefAnims.Org()
 	Bladex.AddFloorCTolerance("slip",10)

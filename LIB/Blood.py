@@ -11,6 +11,7 @@ import InitDataField
 ## Titanium Config Fuctions ##
 import TitaniumConfig
 TiCfgFound= TitaniumConfig.TitaniumSetting("BloodOptimization") == 1    # PLAGUE: This is terrible -LeadHead
+checkRadius = 200
 
 
 Evaporation      = 0      #  no evaporation avail  >:-(
@@ -18,10 +19,7 @@ AfterCreateBlood = None   # CARLOS! PLEAS DON'T SAVE THIS VALUE...
 
 def BloodPrtlHit(prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
 	global Evaporation
-    
-	global TiCfgFound
-	if TiCfgFound: #and (TitaniumConfig.TitaniumSetting("BloodOptimization") == 1):
-		checkRadius = 200
+	if TiCfgFound:
 		for p in Bladex.GetEntitiesAt(x,y,z,checkRadius):
 			ent = Bladex.GetEntity(p)
 			if ent.Kind == 'Entity Pool':
@@ -45,7 +43,15 @@ def BloodPrtlHit(prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
 	
 def GreenBloodPrtlHit(prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
 	global Evaporation
-	p=Bladex.CreateEntity("BloodPool","Entity Pool",x,y,z)
+	if TiCfgFound:
+		for p in Bladex.GetEntitiesAt(x,y,z,checkRadius):
+			ent = Bladex.GetEntity(p)
+			if ent.Kind == 'Entity Pool':
+				# print "~Blood.py~ Pool found within "+`checkRadius`
+				return
+		p = Bladex.CreateEntity("BloodPool","Entity Pool",x,y,z)
+	else:
+		p = Bladex.CreateEntity("BloodPool","Entity Pool",x,y,z)
 	p.Color = (96,192,96)
 	p.DeepColor = (64,128,64)
 	if Evaporation:
@@ -63,7 +69,15 @@ def GreenBloodPrtlHit(prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wd
 
 def GreyBloodPrtlHit(prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):	
 	global Evaporation
-	p=Bladex.CreateEntity("BloodPool","Entity Pool",x,y,z)
+	if TiCfgFound:
+		for p in Bladex.GetEntitiesAt(x,y,z,checkRadius):
+			ent = Bladex.GetEntity(p)
+			if ent.Kind == 'Entity Pool':
+				# print "~Blood.py~ Pool found within "+`checkRadius`
+				return
+		p = Bladex.CreateEntity("BloodPool","Entity Pool",x,y,z)
+	else:
+		p = Bladex.CreateEntity("BloodPool","Entity Pool",x,y,z)
 	p.Color = (96,96,96)
 	p.DeepColor = (80,80,80)
 	if Evaporation:
