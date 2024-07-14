@@ -26,6 +26,7 @@ If you are one of them, it's likely you have never spoken to me or are aware of 
  * coroner @ G6S
  * Matthew Davis
  * Various people from FOnline 2238 back in the day
+ * Brad "Carnevil" Carney
 
 Special thanks:
  * Adrian "Arohk's Twin" Smith - for keeping the BoD subforum alive over at Arokh's Lair
