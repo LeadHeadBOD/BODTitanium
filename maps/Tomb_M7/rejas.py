@@ -2,7 +2,7 @@
 ##||| TOMB_M7/REJAS.PY TITANIUM
 ##||| Change list:
 ##||| * Added missing sparks for some of the "rejas"
-##||| * 
+##||| * Added missing sparks for some "Varilla" in the tower with iron key
 ##\\\ 
 
 import Sparks
@@ -21,8 +21,16 @@ Sparks.SetMetalSparkling("reja11")
 Sparks.SetMetalSparkling("reja12")
 Sparks.SetMetalSparkling("reja13")
 Sparks.SetMetalSparkling("reja14")
-Sparks.SetMetalSparkling("reja15")  #Added
-Sparks.SetMetalSparkling("reja16")  # -LeadHead
+Sparks.SetMetalSparkling("reja15")      # Added
+Sparks.SetMetalSparkling("reja16")      # 
+
+Sparks.SetMetalSparkling("NoName294")   #
+Sparks.SetMetalSparkling("NoName295")   #
+Sparks.SetMetalSparkling("NoName296")   #
+Sparks.SetMetalSparkling("NoName297")   #   -LeadHead
+
+
+
 
 #Sparks.SetSparkling("rastrillo1")
 #Sparks.SetSparkling("rastrillo2")
@@ -42,7 +50,7 @@ Sparks.SetStoneSparkling("LAPI6")
 Sparks.SetStoneSparkling("LAPI7")
 Sparks.SetStoneSparkling("LAPI8")
 
-
+Sparks.SetStoneSparkling("Columna0")    # Added
 
 
 Sparks.SetWoodenSparkling("madero1")
