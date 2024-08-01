@@ -1,3 +1,14 @@
+##///
+##||| ITEMTYPES.PY TITANIUM
+##||| Change list:
+##||| * BladeSwords now have a less annoying idle sound.
+##||| * 
+##||| * 
+##||| * 
+##||| * 
+##\\\ 
+
+
 import Bladex
 import Sparks
 import CharStats
@@ -118,7 +129,7 @@ class ActivateableSpecialWeapon(PersistantItemType):
 			if not anim_duration:
 				anim_duration= 1.0
 			anm_pos= parent.AnmPos
-			time2finish= time+(1.0-anm_pos)*anim_duration
+			time2finish= time+(1.0-anm_pos)*anim_duration   # PLAGUE: bug - we never check if the user is still in the same anim. Special damage can be transferred across attacks if cancelled.
 		else:
 			time2finish= time+2.0
 		Bladex.AddScheduledFunc (time2finish, self.Stop_Weapon_Special, (EntityParentName,"Stop_Weapon_Special", self.SpecialWeaponActivatedKey) , self.Stop_Weapon_Special.__name__)
@@ -2045,7 +2056,7 @@ class BladeSword2(ActivateableSpecialWeapon):
 		self.ImpactSound.MinDistance=5000
 		self.ImpactSound.MaxDistance=30000
 
-		Actions.LinkContinuosSound(me.Name,"../../Sounds/powerpotion-loop.wav")
+		Actions.LinkContinuosSound(me.Name,"../../Sounds/powerpotion-loop.wav")     # Changed -LeadHead
 		me.OnStopFunc=self.StartBackToPlayer
 		self.OwnerName="Player1"
 
@@ -3169,7 +3180,7 @@ class ItemOfProtection:
 
 	def UseEnd (self,ObjectName, UserName):
 		self.Resistances= {}
-		self.nUses= self.nUses-1
+		self.nUses= self.nUses-1                # PLAGUE: Why is this being reduced only after the effect wears off?
 		if self.nUses<1:
 			user= Bladex.GetEntity(UserName)
 			if user:
