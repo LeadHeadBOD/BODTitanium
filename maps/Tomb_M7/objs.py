@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Renamed some "reja"
 ##||| * Normalized FiresIntensity in some places.
+##||| * Removed gravestone selectiondata to not interfere with anything.
 ##\\\ 
 
 import Reference
@@ -88,6 +89,7 @@ o.Lights=[ (2.078927,0.090000,(255,159,53)) ]
 o=Bladex.CreateEntity("LAPI3","Lapida",71897.125000,5246.332000,-3445.447000,Reference.ObjType("Lapida"))
 o.Scale=1.488864
 o.Orientation=0.500000,0.500000,0.500000,-0.500000
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -95,6 +97,7 @@ o.Orientation=0.500000,0.500000,0.500000,-0.500000
 o=Bladex.CreateEntity("LAPI2","Lapida",73659.861000,5380.273000,6649.635000,Reference.ObjType("Lapida"))
 o.Scale=1.402577
 o.Orientation=0.572061,0.508650,0.415627,-0.491198
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -102,6 +105,7 @@ o.Orientation=0.572061,0.508650,0.415627,-0.491198
 o=Bladex.CreateEntity("LAPI6","Lapida",59736.515000,5170.197000,-2744.217000,Reference.ObjType("Lapida"))
 o.Scale=1.661078
 o.Orientation=0.549525,0.491198,0.444997,-0.508650
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -109,6 +113,7 @@ o.Orientation=0.549525,0.491198,0.444997,-0.508650
 o=Bladex.CreateEntity("LAPI1","Obelisco",75523.970000,4393.305000,745.748000,Reference.ObjType("Obelisco"))
 o.Scale=3.609585
 o.Orientation=0.688355,0.725374,0.000000,0.000000
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -116,6 +121,7 @@ o.Orientation=0.688355,0.725374,0.000000,0.000000
 o=Bladex.CreateEntity("LAPI4","Lapida3",69233.364000,5268.334000,2911.317000,Reference.ObjType("Lapida3"))
 o.Scale=1.580459
 o.Orientation=0.477714,0.430459,0.521334,-0.560986
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -123,6 +129,7 @@ o.Orientation=0.477714,0.430459,0.521334,-0.560986
 o=Bladex.CreateEntity("LAPI5","Lapida3",63927.933000,5137.633000,767.402000,Reference.ObjType("Lapida3"))
 o.Scale=1.816697
 o.Orientation=0.454519,0.454519,0.541675,-0.541675
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -130,6 +137,7 @@ o.Orientation=0.454519,0.454519,0.541675,-0.541675
 o=Bladex.CreateEntity("LAPI8","Lapida3",53246.168000,5127.131000,-3448.750000,Reference.ObjType("Lapida3"))
 o.Scale=1.518790
 o.Orientation=0.459229,0.459229,0.537688,-0.537688
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -382,6 +390,7 @@ o.Orientation=0.541675,0.541675,0.454519,-0.454519
 o=Bladex.CreateEntity("LAPI7","Lapida",54313.694000,5097.977000,2451.177000,Reference.ObjType("Lapida"))
 o.Scale=1.780901
 o.Orientation=0.508650,0.508650,0.491198,-0.491198
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -1281,7 +1290,7 @@ o.Orientation=0.707107,0.707107,0.000000,0.000000
 #o.Scripts=?  En la siguiente versión
 
 
-o=Bladex.CreateEntity("NoName0","Columna",97862.623000,2296.689000,12070.646000,Reference.ObjType("Columna"))
+o=Bladex.CreateEntity("Columna0","Columna",97862.623000,2296.689000,12070.646000,Reference.ObjType("Columna"))  #
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 #o.NodesOrientation=?  En la siguiente versión
