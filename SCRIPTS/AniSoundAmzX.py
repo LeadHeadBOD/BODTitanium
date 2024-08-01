@@ -2,7 +2,7 @@
 ##||| ANISOUNDAMZX.PY TITANIUM
 ##||| Change list:
 ##||| * Normalized "draw weapon" sound for all 4 characters.
-##||| * Added fire sound for Fire Axe special attack.
+##||| * Added fire sound for Fire Bo special attack.
 ##\\\ 
 
 import Bladex
@@ -275,7 +275,8 @@ AndarAmz2=Bladex.CreateSound('../../sounds/Mov-Amazona-2.wav', 'AndarAmz2')
 AndarAmz2.SendNotify=0
 AndarAmz2.Volume=0.3
 
-
+#PLAGUE: "Caida" sounds are incredibly inconsistent.
+#         Must normalize across all chars.
 CaidaAmz1=Bladex.CreateSound('../../sounds/caida-pie.wav', 'CaidaAmz1')
 CaidaAmz1.SendNotify=1
 CaidaAmz1.Volume=1
@@ -320,6 +321,9 @@ EsfuerzoCorto7Amz.Volume=1
 EsfuerzoCorto7Amz.MinDistance=1000
 EsfuerzoCorto7Amz.MaxDistance=25000
 
+
+# PLAGUE: Below MinDistance for Barb is 3000 and MaxDist for everyone else is 2500.
+#         must normalize across characters.
 AtaquesEspecialesAmz1=Bladex.CreateSound('../../sounds/sesgado-especial-largo.wav', 'AtaquesEspecialesAmz1')
 AtaquesEspecialesAmz1.SendNotify=1
 AtaquesEspecialesAmz1.Volume=1.0
