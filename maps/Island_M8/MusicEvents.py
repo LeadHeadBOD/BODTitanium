@@ -1,3 +1,9 @@
+##///
+##||| ISLAND_M8/MusicEvents.PY TITANIUM
+##||| Change list:
+##||| * Replaced low quality .wavs with .mp3/.ogg where applicable
+##\\\ 
+
 import Bladex
 import DMusic
 import string
@@ -38,7 +44,7 @@ Bladex.AddMusicEventWAV("sorpresa1a","../../Sounds/SORPRESA1a.wav",      1.0, 1.
 Bladex.AddMusicEventWAV("sorpresa1b","../../Sounds/SORPRESA1b.wav",      1.0, 1.0, 1.0, 500, 0, 0 )
 Bladex.AddMusicEventWAV("incomb33","../../Sounds/INICIOCOMBATE3.wav",    0.1, 0.1, 1.0, 500, 0, 0 )
 Bladex.AddMusicEventWAV("incomb4","../../Sounds/INICIOCOMBATE4.wav",     0.1, 0.1, 1.0, 500, 0, 0 )
-Bladex.AddMusicEventWAV("incomb6","../../Sounds/INICIOCOMBATE6.wav",     0.1, 0.1, 1.0, 500, 0, 0 )
+Bladex.AddMusicEventWAV("incomb6","../../Sounds/INICIOCOMBATE6.wav",     0.1, 0.1, 1.0, 500, 0, 0 )     # PLAGUE: the other troublemaker
 
 Bladex.AddMusicEventWAV("inicc","../../Sounds/ATMOSFERA32.wav",     0.1, 0.1, 1.0, 500, 0, 0 )
 Bladex.AddMusicEventWAV("comb2","../../Sounds/COMBATE2.wav",        1.0, 1.0, 1.0, 500, 0, -1 )
@@ -74,12 +80,12 @@ Bladex.AddMusicEventMP3  ( "atm7","../../Sounds/ATMOSFERA7.mp3"   , 1.0, 1.0, 1.
 Bladex.AddMusicEventMP3  ( "atm8","../../Sounds/ATMOSFERA8.mp3"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
 Bladex.AddMusicEventMP3  ( "atm9","../../Sounds/ATMOSFERA9.mp3"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
 Bladex.AddMusicEventMP3  ( "atm10","../../Sounds/ATMOSFERA10.mp3"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
-Bladex.AddMusicEventMP3  ( "atm11","../../Sounds/ATMOSFERA11.mp3"   , 1.0, 3.0, 1.0, 100  , 1,  0 )
+Bladex.AddMusicEventMP3  ( "atm11","../../Sounds/ATMOSFERA11.mp3"   , 1.0, 3.0, 1.0, 100  , 1,  0 ) # PLAGUE: Stupid troublesome ear-rape
 Bladex.AddMusicEventADPCM( "incomb1","../../Sounds/INICIOCOMBATE1.wav"   , 1.0, 3.0, 1.0, 100  , 1,  0 )
 Bladex.AddMusicEventMP3  ( "atm12","../../Sounds/ATMOSFERA12.mp3"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
 Bladex.AddMusicEventADPCM( "atm16","../../Sounds/ATMOSFERA31.wav"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
 Bladex.AddMusicEventADPCM( "atm17","../../Sounds/ATMOSFERA17.wav"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
-Bladex.AddMusicEventMP3  ( "atm18","../../Sounds/ATMOSFERA8.mp3"   , 1.0, 1.0, 0.7, 1  , 1, -1 )   # Double check if dev didn't actually mean Atmosfera18 as internal name suggests
+Bladex.AddMusicEventMP3  ( "atm18","../../Sounds/ATMOSFERA8.mp3"   , 1.0, 1.0, 0.7, 1  , 1, -1 )   # PLAGUE: Double check if dev didn't actually mean Atmosfera18 as internal name suggests
 Bladex.AddMusicEventMP3  ( "atm19","../../Sounds/ATMOSFERA19.mp3"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
 Bladex.AddMusicEventMP3  ( "atm20","../../Sounds/ATMOSFERA20.mp3"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
 Bladex.AddMusicEventMP3  ( "atm21","../../Sounds/ATMOSFERA21.mp3"   , 1.0, 1.0, 1.0, 1  , 1, -1 )
