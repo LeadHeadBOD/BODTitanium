@@ -1004,6 +1004,9 @@ def DropInvalidObjectsOnImpact(EntityName):
 			or left_type==Reference.OBJ_SPECIALKEY \
 			or left_type==Reference.OBJ_TABLET:
 				Actions.DropReleaseEventHandler (EntityName, "DropLeftEvent")
+            ### Added below - fixes delayed attack_drink potion dropping        -LeadHead
+		if me.InvLeft2:
+			Actions.DropReleaseEventHandler (EntityName, "DropLeft2Event")
         
 			
 

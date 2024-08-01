@@ -13,6 +13,7 @@
 ##||| * Should report the message "not in reach" more correctly now.
 ##||| * Character will no longer try to draw arrows from an empty quiver after picking/using items.
 ##||| * No longer will draw shield when have a two-handed weapon on InstanAttack
+##||| * DropRelease --> added "DropLeft2Event", called from Damage.
 ##\\\ 
 
 import Bladex
@@ -2223,6 +2224,8 @@ def DropReleaseEventHandler(EntityName, EventName, TestHit=TRUE):
 
 	if EventName == "DropLeftEvent":
 		object = Bladex.GetEntity(me.InvLeft)
+	elif EventName == "DropLeft2Event":         # Added, fixes delayed attack_drink potion dropping     -LeadHead
+		object = Bladex.GetEntity(me.InvLeft2)
 	else:
 		object = Bladex.GetEntity(me.InvRight)
 
