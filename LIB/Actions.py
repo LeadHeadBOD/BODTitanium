@@ -1773,7 +1773,13 @@ def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 					char = Bladex.GetEntity("Player1")
 
 					import Scorer
-
+					"""
+					#############
+					#   All of this is absolutely stupid. Instead of checking whether a weapon we picked up belongs to our char.Kind,
+					#   it checks if the weapon is not in any other character's list. What mad man does something like this?
+					#   It also parses 3 separate lists which is slow and non-aligned weapons end up triggering the script. 
+					#############
+					
 					if char.Kind == "Barbarian_N":
 						if  (
 							(not AmazonWeaps.count(WeaponName)) and
@@ -1805,6 +1811,22 @@ def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 							(not   BarbWeaps.count(WeaponName))
 							):
 							Scorer.SlideTBS(0)
+							"""
+						### Re-written in a sensible manner -LeadHead
+					if char.Kind[:9]=="Barbarian":
+						if BarbWeaps.count(WeaponName):
+							Scorer.SlideTBS(0)
+					elif char.Kind[:6]=="Knight":
+						if KnightWeaps.count(WeaponName):
+							Scorer.SlideTBS(0)
+					elif char.Kind[:6]=="Amazon":
+						if AmazonWeaps.count(WeaponName):
+							Scorer.SlideTBS(0)
+					elif char.Kind[:5]=="Dwarf":
+						if DwarfWeaps.count(WeaponName):
+							Scorer.SlideTBS(0)
+					else:
+						print ("!!ERROR @ ACTIONS.PY!! - Couldn't parse char.Kind!")
 
 		inv.LinkRightHand (object_name)
 
