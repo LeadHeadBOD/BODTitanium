@@ -521,6 +521,15 @@ class PlayerPerson:
 	def MutilateFunc(self,EntityName,obj_name,x,y,z,nx,ny,nz,node):
 		# print EntityName+": MutilateFunc"
 		me = Bladex.GetEntity(EntityName)
+		# mut = me.MutilationsMask
+		limb = Bladex.GetEntity(obj_name)                # Moved to before entity Kind exceptions
+
+		if limb.TestHit:                                #
+			limb.ExclusionGroup=1                       # Added
+			limb.Move(0, -160, 0)                       # Fixes disappearing limbs
+			limb.PutToWorld()                           # PLAGUE: Needs further work to look better.
+			limb.Impulse(0,0,0)                         #    -LeadHead
+			
 		if me and me.Kind[0:7]!="Skeleton":
 			Blood.Mutilate (EntityName,obj_name,x,y,z,nx,ny,nz,node)
 
@@ -529,13 +538,7 @@ class PlayerPerson:
 
 		if me.Kind=="Minotaur" and node!=Reference.BODY_HEAD:
 			return
-
-		limb= Bladex.GetEntity(obj_name)
-		if limb.TestHit:                                # Added
-			limb.ExclusionGroup=1
-			limb.Move(0, -160, 0)                       # Fixes disappearing limbs
-			limb.PutToWorld()                           # PLAGUE: Needs further work to look better.
-			limb.Impulse(0,0,0)                         #    -LeadHead
+		
 		InitDataField.Initialise(limb)
 		limb.Data.NoFXOnHit= 1
 		# print limb.Mass, node
