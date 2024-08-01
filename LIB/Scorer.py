@@ -2,6 +2,7 @@
 ##||| SCORER.PY TITANIUM
 ##||| Change list:
 ##||| * Added TrueEnergyBar
+##||| * Will no longer show "Press F1" on Tutorial level, which is confusing.
 ##||| 
 ##\\\ 
 
@@ -60,6 +61,13 @@ def ReorderEnemies(me,enemies,FacedName):
 
 		if math.fabs(angle) < math.fabs(Result[2][1]):
 			Result[2] = (ename,angle)
+		""" # PLAGUE: HD update uses the following "try". Why? Should I do it as well? What does it even do?
+		try:
+			if math.fabs(angle) < math.fabs(Result[2][1]):
+				Result[2] = (ename,angle)
+		except:
+			pass
+		"""
 
 	for ename in range(len(enemies)):
 
@@ -264,6 +272,8 @@ TBS.MinDistance=1000000.0
 TBS.MaxDistance=2000000
 
 def SlideTBS(dir,time = 0):
+	if Bladex.GetCurrentMap() == "Tutorial":    # Stolen from HD update
+		return                                  #       -LeadHead
 	TBS.PlayStereo()
 	SlideTBS2(dir,time)
 
