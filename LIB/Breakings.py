@@ -5,6 +5,10 @@
 ##||| * Added new brkobj parameter - piezaRot[X,Y,Z]
 ##||| * Adjusted brkobj positions for: Escudo1, Escudo2, Escudo3 Escudo4, Escudo5, 
 ##|||                                  Escudo6, VampShield
+##|||                      (weapons) - Chaosword, Naginata, Tridente, Ninjato, Martillo2
+##|||                                  Martillo, Katana, MazaPiedra, Hachacarnicero
+##|||                                  Martillo3, IceHammer, Naginata2
+##||| * Removed wrong duplicate entry: Gladius, Naginata
 ##\\\ 
 
 import Bladex
@@ -357,15 +361,19 @@ def GetBreakingData(obj):
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="MesonPieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
-#  elif obj.Kind=="Tabla_xl":
+#  elif obj.Kind=="Tabla_xl":                                   ## PLAGUE: Why is this commneted?
 #    brkobj.piezaposrel=[(-125.775, 0, 0), (446.675, 0, 0)]
+#    brkobj.piezaposrel=[(446.675, 0, 0), (-125.775, 0, 0)]     ## Original values inverted
 #    brkobj.pieza=[0, 0]
 #    brkobj.piezapos=[0, 0]
 #    brkobj.piezavector=[0, 0]
 #    brkobj.piezanoborrada=[0, 0]
+#    brkobj.piezaRotX=[0.0, 0.0]                 # 
+#    brkobj.piezaRotY=[0.0, 0.0]                 # Added
+#    brkobj.piezaRotZ=[3.14159, 3.14159]         #   -LeadHead
 #    brkobj.n_piezas=(0, 1)
-#    brkobj.tipo_pieza="Tabla_xlPieza"
-#    fichero_sonido="../../Sounds/rotura-madera.wav"
+#    brkobj.tipo_pieza="Tabla_xlPieza"                   ## This is why it was commented out. "pieza1" has a filename error.
+#    fichero_sonido="../../Sounds/rotura-madera.wav"     ## if this filename error is fixed, it can be restored just fine -LeadHead
   elif obj.Kind=="Alabarda":
     brkobj.piezaposrel=[(-239.138,-0.061,992.281), (87.891,-0.044,855.715), (-62.253,-0.044,-276.193)]
     brkobj.pieza=[0, 0, 0]
@@ -419,7 +427,7 @@ def GetBreakingData(obj):
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="EspadaromanaPieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
-  elif obj.Kind=="Gladius":
+  elif obj.Kind=="Gladius":                                 ## PLAGUE: These are the correct ones
     brkobj.piezaposrel=[(0,0,252.933), (0,0,-204.365)]
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
@@ -437,15 +445,15 @@ def GetBreakingData(obj):
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="LanzaPieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
-#  elif obj.Kind=="Naginata":
-#    brkobj.piezaposrel=[(.135,617.232,-16.631), (.135,-389.267,17.343)]
-#    brkobj.pieza=[0, 0]
-#    brkobj.piezapos=[0, 0]
-#    brkobj.piezavector=[0, 0]
-#    brkobj.piezanoborrada=[0, 0]
-#    brkobj.n_piezas=(0, 1)
-#    brkobj.tipo_pieza="NaginataPieza"
-#    fichero_sonido="../../Sounds/rotura-madera.wav"
+  elif obj.Kind=="Naginata":                                               ## Un-commented. Values were correct
+    brkobj.piezaposrel=[(0.135,617.232,-16.631), (0.135,-389.267,17.343)]  ## not sure why this line was commented out  -LeadHead
+    brkobj.pieza=[0, 0]
+    brkobj.piezapos=[0, 0]
+    brkobj.piezavector=[0, 0]
+    brkobj.piezanoborrada=[0, 0]
+    brkobj.n_piezas=(0, 1)
+    brkobj.tipo_pieza="NaginataPieza"
+    fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Silla":
     brkobj.piezaposrel=[(0,322.592,299.363),(0,-4.161,-124.623),(-195.632,-230.832,-426.122),(199.562,-230.832,-426.122),(-198.548,268.085,-426.123), (199.562,268.085,-426.123)]
     brkobj.pieza=[0, 0 ,0 ,0 ,0 ,0]
@@ -465,11 +473,15 @@ def GetBreakingData(obj):
     brkobj.tipo_pieza="TaburetePieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Chaosword":
-    brkobj.piezaposrel=[(0,446.07,-0.39), (0,-303.205,17.343)]
+    # brkobj.piezaposrel=[(0,446.07,-0.39), (0,-303.205,17.343)]
+    brkobj.piezaposrel=[(0,-257.113,0), (0,489.65,0)]     # Changed -LeadHead
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
     brkobj.piezanoborrada=[0, 0]
+    # brkobj.piezaRotX=[0.0, 0.0]               # 
+    # brkobj.piezaRotY=[0.0, 0.0]               # Added
+    brkobj.piezaRotZ=[3.14159, 3.14159]         #   -LeadHead
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="ChaoswordPieza"
     fichero_sonido="../../Sounds/golpe-metal-mediano.wav"
@@ -651,15 +663,15 @@ def GetBreakingData(obj):
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="GarrotePieza"
     fichero_sonido="../../Sounds/golpe-metal-mediano.wav"
-  elif obj.Kind=="Gladius":
-    brkobj.piezaposrel=[(0.0,-19.655,-254.188), (0.00,-19.655,177.446)]
-    brkobj.pieza=[0, 0]
-    brkobj.piezapos=[0, 0]
-    brkobj.piezavector=[0, 0]
-    brkobj.piezanoborrada=[0, 0]
-    brkobj.n_piezas=(0, 1)
-    brkobj.tipo_pieza="GladiusPieza"
-    fichero_sonido="../../Sounds/golpe-metal-mediano.wav"
+  # elif obj.Kind=="Gladius":                                               ## Wtf, duplicate entry, wrong offsets
+    # brkobj.piezaposrel=[(0.0,-19.655,-254.188), (0.00,-19.655,177.446)]   ## commented out        -LeadHead
+    # brkobj.pieza=[0, 0]
+    # brkobj.piezapos=[0, 0]
+    # brkobj.piezavector=[0, 0]
+    # brkobj.piezanoborrada=[0, 0]
+    # brkobj.n_piezas=(0, 1)
+    # brkobj.tipo_pieza="GladiusPieza"
+    # fichero_sonido="../../Sounds/golpe-metal-mediano.wav"
   elif obj.Kind=="Garrote2":
     brkobj.piezaposrel=[(53.797,36.284,-202.901), (0.0,21.664,304.433)]
     brkobj.pieza=[0, 0]
@@ -724,12 +736,13 @@ def GetBreakingData(obj):
     brkobj.tipo_pieza="Hacha6Pieza"
     fichero_sonido="../../Sounds/golpe-metal-mediano.wav"
   elif obj.Kind=="Hachacuchilla":
-    brkobj.piezaposrel=[(0,0,0), (0,0,0)]
+    # brkobj.piezaposrel=[(0,0,0), (0,0,0)]
+    brkobj.piezaposrel=[(0,0,-352.84), (0,0,405.12)]    ## Changed -LeadHead
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
     brkobj.piezanoborrada=[0, 0]
-    brkobj.n_piezas=(0, 1)
+    brkobj.n_piezas=(0, 1)                              ## PLAGUE: from the mesh, it looks like it's missing piece nr3
     brkobj.tipo_pieza="HachacuchillaPieza"
     fichero_sonido="../../Sounds/golpe-metal-mediano.wav"
   elif obj.Kind=="MartilloForja":
@@ -742,7 +755,8 @@ def GetBreakingData(obj):
     brkobj.tipo_pieza="MartilloForjaPieza"
     fichero_sonido="../../Sounds/golpe-metal-mediano.wav"
   elif obj.Kind=="Tridente":
-    brkobj.piezaposrel=[(-8.059,-94.044,307.664), (-7.811,-93.962,913.814)]
+    # brkobj.piezaposrel=[(-8.059,-94.044,307.664), (-7.811,-93.962,913.814)]
+    brkobj.piezaposrel=[(-8.059,-14.044,-676.66), (-7.811,1.962,522.104)]     ## Changed -LeadHead
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
@@ -751,7 +765,8 @@ def GetBreakingData(obj):
     brkobj.tipo_pieza="TridentePieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Ninjato":
-    brkobj.piezaposrel=[(0.412,0.341,-685.041), (0.412,0.341,485.074)]
+    # brkobj.piezaposrel=[(0.412,0.341,-685.041), (0.412,0.341,485.074)]
+    brkobj.piezaposrel=[(0.412,24.2,-324.86), (0.412,0.341,297.95)]      ## Changed -LeadHead
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
@@ -759,17 +774,17 @@ def GetBreakingData(obj):
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="NinjatoPieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
-  elif obj.Kind=="Naginata":
-    brkobj.piezaposrel=[(0.135,-389.267,18.622), (0.135,424.167,-16.631)]
-    brkobj.pieza=[0, 0]
-    brkobj.piezapos=[0, 0]
-    brkobj.piezavector=[0, 0]
-    brkobj.piezanoborrada=[0, 0]
-    brkobj.n_piezas=(0, 1)
-    brkobj.tipo_pieza="NaginataPieza"
-    fichero_sonido="../../Sounds/rotura-madera.wav"
-  elif obj.Kind=="Maza3":
-    brkobj.piezaposrel=[(0.0,-0.01,-255.693), (0.0,0,129.948)]
+  # elif obj.Kind=="Naginata":                                                  ## Original offsets were wrong
+    # brkobj.piezaposrel=[(0.135,-389.267,18.622), (0.135,424.167,-16.631)]     ## There is a duplicate entry, which was commented out with correct ones -LeadHead
+    # brkobj.pieza=[0, 0]
+    # brkobj.piezapos=[0, 0]
+    # brkobj.piezavector=[0, 0]
+    # brkobj.piezanoborrada=[0, 0]
+    # brkobj.n_piezas=(0, 1)
+    # brkobj.tipo_pieza="NaginataPieza"
+    # fichero_sonido="../../Sounds/rotura-madera.wav"
+  elif obj.Kind=="Maza3":                                           ## PLAGUE: Offsets are wrong, need to rotate 90deg
+    brkobj.piezaposrel=[(0.0,-0.01,-255.693), (0.0,0,129.948)]      ##         can't be bothered right now.
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
@@ -787,7 +802,7 @@ def GetBreakingData(obj):
     brkobj.tipo_pieza="Maza2Pieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Maza":
-    brkobj.piezaposrel=[(0.0,0.0,0.0), (0.0,0.0,0.0)]
+    brkobj.piezaposrel=[(0.0,0.0,-17.2), (0.0,0.0,0.0)]
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
@@ -801,20 +816,28 @@ def GetBreakingData(obj):
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
     brkobj.piezanoborrada=[0, 0]
+    brkobj.piezaRotX=[-1.5708, -1.5708]                  # 
+    # brkobj.piezaRotY=[1.5708, 1.5708]                  # Added
+    brkobj.piezaRotZ=[1.5708, 1.5708]                    #   -LeadHead
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="Martillo2Pieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Martillo":
-    brkobj.piezaposrel=[(0.0,0.0,0.0), (0.0,0.0,0.0)]
+    # brkobj.piezaposrel=[(0.0,0.0,0.0), (0.0,0.0,0.0)]
+    brkobj.piezaposrel=[(117.511,-358.075,-2.66), (0.0,212.74,0.0)]     ## Changed -LeadHead
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
     brkobj.piezanoborrada=[0, 0]
+    brkobj.piezaRotX=[-1.5708, -1.5708]                  # 
+    # brkobj.piezaRotY=[1.5708, 1.5708]                  # Added
+    brkobj.piezaRotZ=[1.5708, 1.5708]                    #   -LeadHead
     brkobj.n_piezas=(0, 1)
     brkobj.tipo_pieza="MartilloPieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Katana":
-    brkobj.piezaposrel=[(0.0,0.0,0.0), (0.0,0.0,0.0)]
+    # brkobj.piezaposrel=[(0.0,0.0,0.0), (0.0,0.0,0.0)]
+    brkobj.piezaposrel=[(25.69,0.0,-614.60), (25.81,0.0,-523.97)]     ## Changed  -LeadHead
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
@@ -917,7 +940,8 @@ def GetBreakingData(obj):
     brkobj.tipo_pieza="PhurbhuPieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Mazapiedra":
-    brkobj.piezaposrel=[(0.0,62.47,620.34), (-8.51,-73.87,-193.72), (65.78,173.94,308.63)]
+    # brkobj.piezaposrel=[(0.0,62.47,620.34), (-8.51,-73.87,-193.72), (65.78,173.94,308.63)]
+    brkobj.piezaposrel=[(0.0,62.47,1567.04), (-8.51,-73.87,-756.57), (76.51,253.34,1282.77)]          ## Changed -LeadHead
     brkobj.pieza=[0, 0, 0]
     brkobj.piezapos=[0, 0, 0]
     brkobj.piezavector=[0, 0, 0]
@@ -1052,7 +1076,8 @@ def GetBreakingData(obj):
     brkobj.tipo_pieza="KatarPieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
   elif obj.Kind=="Hachacarnicero":
-    brkobj.piezaposrel=[(4.86,10.51,289.41), (180.65,11.68,182.09), (150.1,-51.7,-129.0), (143.94,8.36,-514.07)]
+    # brkobj.piezaposrel=[(4.86,10.51,289.41), (180.65,11.68,182.09), (150.1,-51.7,-129.0), (143.94,8.36,-514.07)]
+    brkobj.piezaposrel=[(-38.033,10.51,911.64), (147.61,11.68,804.51), (109.01,-61.4,493.97), (108.26,10.27,104.37)]        ## Changed -LeadHead
     brkobj.pieza=[0, 0, 0, 0]
     brkobj.piezapos=[0, 0, 0, 0]
     brkobj.piezavector=[0, 0, 0, 0]
@@ -1130,7 +1155,8 @@ def GetBreakingData(obj):
     fichero_sonido="../../Sounds/rotura-madera.wav"
 
   elif obj.Kind=="Martillo3":
-    brkobj.piezaposrel=[(0,0,325.566), (0,0.319,0)]
+    # brkobj.piezaposrel=[(0,0,325.566), (0,0.319,0)]
+    brkobj.piezaposrel=[(0,0,325.566), (0,0.319,-280.03)]       ## Changed -LeadHead
     brkobj.pieza=[0, 0]
     brkobj.piezapos=[0, 0]
     brkobj.piezavector=[0, 0]
@@ -1230,7 +1256,8 @@ def GetBreakingData(obj):
     fichero_sonido="../../Sounds/rotura-madera.wav"
 
   elif obj.Kind=="IceHammer":
-    brkobj.piezaposrel=[(0,0,573.752), (179.492,-58.747,444.756), (179.494,0,413.737), (-179.494,58.747,444.756), (0,0,318.22), (0,0,0)]
+    # brkobj.piezaposrel=[(0,0,573.752), (179.492,-58.747,444.756), (179.494,0,413.737), (-179.494,58.747,444.756), (0,0,318.22), (0,0,0)]
+    brkobj.piezaposrel=[(-176.01,0,413.108), (179.492,-58.747,444.756), (179.494,0,413.737), (-179.494,58.747,444.756), (0,0,318.22), (0,0,0)]      ## Changed -LeadHead
     brkobj.pieza=[0, 0, 0, 0, 0, 0]
     brkobj.piezapos=[0, 0, 0, 0, 0, 0]
     brkobj.piezavector=[0, 0, 0, 0, 0, 0]
@@ -1310,11 +1337,15 @@ def GetBreakingData(obj):
     fichero_sonido="../../Sounds/rotura-madera.wav"
 
   elif obj.Kind=="Naginata2":
-    brkobj.piezaposrel=[(0,1.383,814.593), (54.263,1.383,424.016), (38.07,1.429,-512.302)]
+    # brkobj.piezaposrel=[(0,1.383,814.593), (54.263,1.383,424.016), (38.07,1.429,-512.302)]
+    brkobj.piezaposrel=[(0,1.383,814.593), (1.38,54.26,419.86), (1.43,31.01,-512.302)]      ## Changed -LeadHead
     brkobj.pieza=[0, 0, 0]
     brkobj.piezapos=[0, 0, 0]
     brkobj.piezavector=[0, 0, 0]
     brkobj.piezanoborrada=[0, 0, 0]
+    # brkobj.piezaRotX=[0.0, 0.0]                 # 
+    # brkobj.piezaRotY=[1.5708, 1.5708]           # Added
+    brkobj.piezaRotZ=[1.5708, 1.5708]             #   -LeadHead
     brkobj.n_piezas=(0, 1, 2)
     brkobj.tipo_pieza="Naginata2Pieza"
     fichero_sonido="../../Sounds/rotura-madera.wav"
