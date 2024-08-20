@@ -3,8 +3,8 @@ Modification of Blade of Darkness aimed at improving the vanilla experience.
 
 
 ## Credits:
-Vast majority of the work, whether it be code or otherwise, done for Titanium is almost entirely done by me, LeadHead, 
-however the project could under no circumstances have been completed by myself alone.
+Vast majority of the work, whether it be code or otherwise, done for Titanium is almost entirely done by LeadHead, 
+however the project could under no circumstances have been completed alone.
 
 Thanks to 
  * Tomash        - help with python scripts, extensive knowledge of the game, feedback and ideas
