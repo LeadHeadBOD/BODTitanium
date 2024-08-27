@@ -72,9 +72,9 @@ def ShowLabelEntity2(Ent):
 
 vused = 0
 
-def ContRot(Ent):                                                                # Old rotation speed was 2 radians per second
-	Ent.RotateRel(0,0,0,  0,0,1,  0.033)                                         # at a framerate of 20FPS
-	Bladex.AddScheduledFunc(Bladex.GetTime() + 1/animFPS,  ContRot,(Ent,))       # Rotation speed (almost) unchanged, but made it 60FPS -LeadHead
+def ContRot(Ent):                                                                      # Old rotation speed was 2 radians per second
+	Ent.RotateRel(0,0,0,  0,0,1,  2.0/animFPS)                                         # at a framerate of 20FPS
+	Bladex.AddScheduledFunc(Bladex.GetTime() + 1.0/animFPS,  ContRot,(Ent,))           # Rotation speed (almost) unchanged, but made it 60FPS -LeadHead
 
 def SetShields():
 	global GoodShield

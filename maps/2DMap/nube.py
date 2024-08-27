@@ -15,7 +15,7 @@ def MueveNube(e_name, time):
 		o.Move(o.Data,0,0)
 		if o.Position[0] < -161921.112873:
 			o.Position = 133678.887127, 12742.333308, whrandom.randint(-45752,54247)
-			o.Data        = whrandom.randint(-500,-50)
+			o.Data        = whrandom.randint(-250,-50)		# Was -500,-50 -LeadHead
 			o.Alpha       = whrandom.random()/0.6
 			o.Scale=10.467530 - whrandom.random()*3.5
 			
