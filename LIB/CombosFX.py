@@ -215,6 +215,25 @@ def Kgt_g_s28kata_new_FX(EntityName, EventName):
 		GenFX.ModifyParticles(ComboFX_prtlsys, 1000, 200, 0, 0.2, 20, 0.2)
 		#GenFX.ModifyParticles(ComboFX_prtlsys2, 1000, 90, 300, 0.2, 25, 0.2)
 
+#"Kgt_g_s28kata_new"  ICESWORD -LeadHead
+def Kgt_g_12_7_s1new_FX(EntityName, EventName):
+	global ComboFX_prtlsys
+	step=int(EventName[len(EventName)-1:])
+	if step==1:
+		pers=Bladex.GetEntity(EntityName)
+		inv=pers.GetInventory()
+		ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "WhiteTrail", 850, 4, 0, 0.1, 20, 1.5) 
+	elif step==2:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 50, 2, 0, 0.5, 20, 0.2)
+	elif step==3:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 850, 4, 0, 0.1, 20, 1.5)
+	elif step==4:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 50, 2, 0, 0.2, 20, 0.8)
+	elif step==5:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 1200, 1, -2, 0.01, 32, 2.2)
+	elif step==6:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 900, 95, 2, 0.2, 25, 0.2, -1800)
+
 
 #BARBARO
 #"Bar_g2h_b6" CHAOSWORD
@@ -881,6 +900,13 @@ def KgtCombosFX(pers_name):
 	pers.AddAnmEventFunc("Kgt_g_s28kata_new_2", Kgt_g_s28kata_new_FX)    # 
 	pers.AddAnmEventFunc("Kgt_g_s28kata_new_3", Kgt_g_s28kata_new_FX)    # 
 	pers.AddAnmEventFunc("Kgt_g_s28kata_new_4", Kgt_g_s28kata_new_FX)	 #      -LeadHead
+	
+	pers.AddAnmEventFunc("Kgt_g_12_7_s1new_1", Kgt_g_12_7_s1new_FX)    # Added
+	pers.AddAnmEventFunc("Kgt_g_12_7_s1new_2", Kgt_g_12_7_s1new_FX)    # 
+	pers.AddAnmEventFunc("Kgt_g_12_7_s1new_3", Kgt_g_12_7_s1new_FX)    # 
+	pers.AddAnmEventFunc("Kgt_g_12_7_s1new_4", Kgt_g_12_7_s1new_FX)	   #
+	pers.AddAnmEventFunc("Kgt_g_12_7_s1new_5", Kgt_g_12_7_s1new_FX)	   #
+	pers.AddAnmEventFunc("Kgt_g_12_7_s1new_6", Kgt_g_12_7_s1new_FX)	   #      -LeadHead
 
 
 def AmzCombosFX(pers_name):

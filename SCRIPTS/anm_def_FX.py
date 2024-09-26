@@ -57,9 +57,16 @@ Bladex.AddAnmEvent("Kgt_g_magic2","Kgt_g_magic2_2",0.1600)
 Bladex.AddAnmEvent("Kgt_g_magic2","Kgt_g_magic2_3",0.3200)
 
 Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_1",0.0800)             # Added
-Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_2",0.3200)             #
+Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_2",0.3200)             #  Fire Sword
 Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_3",0.4200)             #
-Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_4",0.6800)             #          -LeadHead
+Bladex.AddAnmEvent("Kgt_g_s28kata_new","Kgt_g_s28kata_new_4",0.6800)             #
+Bladex.AddAnmEvent("Kgt_g_12_7_s1new","Kgt_g_12_7_s1new_1",0.0800)               #  Ice Sword
+Bladex.AddAnmEvent("Kgt_g_12_7_s1new","Kgt_g_12_7_s1new_2",0.1570)               #
+Bladex.AddAnmEvent("Kgt_g_12_7_s1new","Kgt_g_12_7_s1new_3",0.1920)               #
+Bladex.AddAnmEvent("Kgt_g_12_7_s1new","Kgt_g_12_7_s1new_4",0.2450)               #
+Bladex.AddAnmEvent("Kgt_g_12_7_s1new","Kgt_g_12_7_s1new_5",0.4480)               #
+Bladex.AddAnmEvent("Kgt_g_12_7_s1new","Kgt_g_12_7_s1new_6",0.5590)               #          -LeadHead
+
 
 Bladex.AddAnmEvent("Bar_g2h_b6","Bar_g2h_b6_1",0.3700)
 Bladex.AddAnmEvent("Bar_g_axe211","Bar_g_axe211_1",0.3160)
