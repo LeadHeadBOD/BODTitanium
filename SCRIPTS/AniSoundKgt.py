@@ -504,7 +504,7 @@ def AsignarSonidosCaballero(Personaje):
 	# NetSounds.AddAnimSound(per,'Kgt_g_12_7_s1new', SesgadoCortoAgudo, 0.2000)
 	NetSounds.AddAnimSound(per,'Kgt_g_12_7_s1new', EsfuerzoGolpeLateralBarb, 0.4000)
 	NetSounds.AddAnimSound(per,'Kgt_g_12_7_s1new', AndarKgt2, 0.5000)
-	NetSounds.AddAnimSound(per,'Kgt_g_12_7_s1new', SesgadoEspecialCorto2, 0.1000	# Heavier woosh sound
+	NetSounds.AddAnimSound(per,'Kgt_g_12_7_s1new', SesgadoEspecialCorto2, 0.1000)	# Heavier woosh sound
 	NetSounds.AddAnimSound(per,'Kgt_g_12_7_s1new', SesgadoEspecialCorto1, 0.2000)	# IceSword
 	NetSounds.AddAnimSound(per,'Kgt_g_12_7_s1new', SesgadoEspecialLargo2, 0.4900)	#		-LeadHead
 
