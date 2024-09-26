@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Added automatic default spark-type parser.
 ##||| * Added dirt for grass and earth impacts on world.
+##||| * Wood shields will now throw wood sparks.
 ##||| 
 ##\\\ 
 
@@ -225,11 +226,16 @@ def ThrowSparksShield(hit_entity, hitting_entity, xhit_point, yhit_point, zhit_p
 	try:
 		if hitting_ent.Data.NoFXOnHit:
 			skip_sparks=1
+			
 	except: pass
+	hit_ent=Bladex.GetEntity(hit_entity)
 	if not skip_sparks:
 		sparkdir=B3DLib.Normalize((-ximpulse, -yimpulse, -zimpulse))
-		chispa=Bladex.CreateSpark("Chispa", xhit_point, yhit_point, zhit_point, sparkdir[0], sparkdir[1], sparkdir[2],0.5,3000,2000,0,100, 160, 120, 40, 30, 24, 0,800,10.0/60.0,1.0/60.0,1)
-	hit_ent=Bladex.GetEntity(hit_entity)
+		if hit_ent.Material[0:6]=="madera":     ## If blocking item is made of wood, throw wood sparks instead.     -LeadHead
+			chispa=Bladex.CreateSpark("Wood", xhit_point, yhit_point, zhit_point, sparkdir[0], sparkdir[1], sparkdir[2],    0.75,2000,60,0,80,   75,46,21,   6,3,2,    900,15.0/60.0,1.0/60.0,0)
+		else:
+			chispa=Bladex.CreateSpark("Chispa", xhit_point, yhit_point, zhit_point, sparkdir[0], sparkdir[1], sparkdir[2],0.5,3000,2000,0,100, 160, 120, 40, 30, 24, 0,800,10.0/60.0,1.0/60.0,1)
+
 
 	datos_esc=Reference.DefaultObjectData[hit_ent.Kind]
 	if datos_esc[0]==Reference.OBJ_SHIELD:
