@@ -2342,184 +2342,32 @@ def Init():
         #   Combat stance idle (relax) animations were not originally included, which meant that even if you sneak while locked on,
         #   the combat stance idle animation would use default volume step sounds as soon as you release any movement key.
         #
-        #   All player characters should now have the correct sneak stepsounds for the following BipedActions:   
-        #   "SNK_b"
-        #   "SNK_no"
-        #   "SNK_s",
-        #   "SNK_1h"
-        #   "SNK_2h"
-        #   "SNK_sp"
-        #   "SNK_2w"
-        #   "SNK_axe"
-        #   "snk_turn"
-        #   "Rlx_no"
-        #   "Rlx_1h"
-        #   "Rlx_b"
-        #   "Rlx_2h"
-        #   "Rlx_s"
-        #   "Rlx_2w"
-        #   "Rlx_axe"
-        #   "Rlx_sp"
-        #   "Rlx_f_axe"
-        #   "Rlx_f_sp"
-        #   "Rlx_f_2w"
-        #   "Rlx_f_no"
-        #   "Rlx_f_s"
-        #
         #   As a safety measure, because this doesn't seem to be fully working step timings had to be adjusted
         #   I have also included "walk back" events, because otherwise there's no way to walk back silently
+        #   
+        #   Misc actions like pushing buttons, taking items, etc. have also been added.
         #
         #   There's also some uncertainty whether it's actually using anm names or BAction names
-        #
-        #   "Rlx_f"
         #
         #               - LeadHead
         #
         #********************************************************************
         
-    Bladex.AddActionStepSound("Knight","SNK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","SNK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","SNK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","SNK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","SNK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","SNK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","SNK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","SNK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","snk_turn","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_f","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_f_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_f_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_f_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_f_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Rlx_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","WBK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Attack_rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Attack_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","Attack_b_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Knight","default","default")
+    # All player char entriees have been unified in a single loop to prevent copy-paste accidents
+    playerChars = ("Knight", "Bar", "Dwf", "Amz")
+    sneakActs   = ("SNK_b", "SNK_no", "SNK_s", "SNK_1h", "SNK_2h", "SNK_sp", "SNK_axe", "snk_turn", "rlx_turn", "Rlx_no", "Rlx_1h", "SNK_2w", 
+                   "Rlx_b", "Rlx_2h", "Rlx_s", "Rlx_2w", "Rlx_axe", "Rlx_sp", "Rlx_f_axe", "Rlx_f_sp", "Rlx_f_2w", "Rlx_f_no", "Rlx_f_s",
+                   "Rlx_f", "WBK_2w", "WBK_2h", "WBK_no", "WBK_1h", "WBK_sp", "WBK_axe", "WBK_b", "WBK_s", "Attack_rlx_s", "Attack_f_s", 
+                   "Attack_b_s", "Rlx_block", "Rlx_f_1h", "Rlx_f_2h", "Shattack_rlx_2h", "Shattack_rlx_s", "key", "pulsador", "lvr_d", "lvr_u",
+                   "fire0", "fire1", "fire2", "fire3", "fire_g", "tke_r_01", "tke_r_02", "tke_r_03", "tke_r_04", "tke_r_05", "tke_r_key00", 
+                   "tke_r_key01", "tke_r_key02", "tke_r_key03", "tke_r_key04")
     
-    Bladex.AddActionStepSound("Bar","SNK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","SNK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","SNK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","SNK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","SNK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","SNK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","SNK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","SNK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","snk_turn","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_f","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_f_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_f_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_f_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_f_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Rlx_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","WBK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Attack_rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Attack_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","Attack_b_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Bar","default","default")
-    
-    Bladex.AddActionStepSound("Dwf","SNK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","SNK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","SNK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","SNK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","SNK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","SNK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","SNK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","SNK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","snk_turn","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_f","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_f_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_f_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_f_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_f_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Rlx_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","WBK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Attack_rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Attack_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","Attack_b_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Dwf","default","default")
-    
-    Bladex.AddActionStepSound("Amz","SNK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","SNK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","SNK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","SNK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","SNK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","SNK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","SNK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","SNK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","snk_turn","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_f","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_f_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_f_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_f_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_f_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Rlx_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_2w","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_2h","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_no","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_1h","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_sp","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_axe","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_b","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","WBK_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Attack_rlx_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Attack_f_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","Attack_b_s","PisadaSigilo")
-    Bladex.AddActionStepSound("Amz","default","default")
+    for p in playerChars:
+        for i in sneakActs:
+            Bladex.AddActionStepSound(p, i, "PisadaSigilo") # Assign all sneaky action steps
+        Bladex.AddActionStepSound(p, "default","default")   # Assign rest of default stepsounds
+        
+    # NPCs
     
     Bladex.AddActionStepSound("default","default","default")
     
