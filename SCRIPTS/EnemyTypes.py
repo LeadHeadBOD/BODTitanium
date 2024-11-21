@@ -283,7 +283,10 @@ class Skeleton (Enm_Def.NPCPerson):
 			me_pos = me.Position
 
 			for limb_id in (1, 2, 3, 4, 5, 6, 8):
-				limb = me.SeverLimb(limb_id)
+				try: 
+					limb = me.SeverLimb(limb_id)
+				except:
+					pass
 				# print "severing "+`limb_id`
 				# limb.Position = (limb.Position[0], limb.Position[1]-200, limb.Position[2])    # move the limb higher so it doesn't trigger TestHit.
 				# print `limb_id`+" position set"
@@ -293,6 +296,7 @@ class Skeleton (Enm_Def.NPCPerson):
 					OutImpulse = B3DLib.Normalize ((limb_pos[0]-me_pos[0], limb_pos[1]-me_pos[1], limb_pos[2]-me_pos[2]))
 					OutImpulse = B3DLib.Scale (OutImpulse, 4000.0)
 					limb.Impulse(OutImpulse[0], OutImpulse[1], OutImpulse[2])
+					limb.AngularVelocity = whrandom.uniform(-10, 10), whrandom.uniform(-10, 10), whrandom.uniform(-10, 10)
 					# print `limb_id`+" OutImpulse applied"
 					# limb.Impulse(self.dHitImpulse[0], self.dHitImpulse[1], self.dHitImpulse[2])
 					# print `limb_id`+" pHitImpulse applied"
