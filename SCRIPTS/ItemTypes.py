@@ -2,8 +2,8 @@
 ##||| ITEMTYPES.PY TITANIUM
 ##||| Change list:
 ##||| * BladeSwords now have a less annoying idle sound.
-##||| * 
-##||| * 
+##||| * BladeSword no longer returns to player if player is dead.
+##||| * Dark Lord large seeking sphere now properly ends looping sound if it hits world.
 ##||| * 
 ##||| * 
 ##\\\ 
@@ -154,7 +154,7 @@ class ActivateableSpecialWeapon(PersistantItemType):
 #
 class TaiSword:
 	def __init__ (self, me):
-		GenFX.AddWeaponFX(me.Name, self)
+		GenFX.AddWeaponFX(me.Name, self)	# PLAGUE: Does not exist for TaiSword
 
 
 #
@@ -1023,6 +1023,8 @@ class BolaRayos(PersistantItemType):
 		impactlight.Flick=0
 		impactlight.Visible=0
 		AuxFuncs.SpotIntensityVariation(impactlight.Name, 4.0, 0.0, 1.8, 1)
+		if self.MissileWhileSound: self.MissileWhileSound.StopSound()							# Moved here to prevent infinite looping sound
+		if self.MissileImpactSound: self.MissileImpactSound.PlaySound(0)						#		-LeadHead
 		invball=Bladex.GetEntity(self.InvBallName)
 		invball.Position=x, y, z
 		impactps=Bladex.CreateEntity(ball_name+"ImpactPS", "Entity Particle System Dobj", 0, 0, 0)
@@ -1052,7 +1054,7 @@ class BolaRayos(PersistantItemType):
 		#else:
 		#	print EntityName+" hitting world"
 
-	def CreateTestParticle(self, fireball_name, period):
+	def CreateTestParticle(self, fireball_name, period):		# PLAGUE: This is awful. Do not use particles for hit detection. Rewrite to use generic missile or the entity itself
 		fireball=Bladex.GetEntity(fireball_name)
 		if(fireball and not self.Hit):
 			prtl1=fireball.GetParticleEntity()
@@ -1072,8 +1074,6 @@ class BolaRayos(PersistantItemType):
 					if victim.Person:
 						Bladex.RemoveScheduledFunc("PostFunc"+self.Name)
 						ball.Alpha=0.99
-						if self.MissileWhileSound: self.MissileWhileSound.StopSound()
-						if self.MissileImpactSound: self.MissileImpactSound.PlaySound(0)
 						victim.DamageFunc(hit_entity, "", self.DamageEntityName, "Fire", 1, -1, x, y, z, 0)
 						# Override hurt anim
 						if victim.Life>0:
@@ -2139,6 +2139,9 @@ class BladeSword2(ActivateableSpecialWeapon):
 
 	def StartBackToPlayer(self, EntityName):
 		weapon= Bladex.GetEntity(self.Name)
+		if Bladex.GetEntity(self.OwnerName).Life < 1:	
+			print self.OwnerName + " is dead, no sword for you" # Do not return to player hand
+			return										        # if dead		-LeadHead
 		if not weapon:
 			return
 		AuxFuncs.FadeObject(weapon.Name, weapon.Alpha, 0.01, self.FadeTime)
