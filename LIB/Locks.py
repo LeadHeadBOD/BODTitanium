@@ -94,7 +94,7 @@ def LockUseFunc(lock_name,use_from):
 		import Scorer
 		Scorer.wLogFrame.SetVisible(0)
 	else:
-		GameText.WriteTextAux(MenuText.GetMenuText("I don't have the key"),2.0,255,255,255,[],None,1)
+		Actions.ReportMsg("I don't have the key") 	# Should prevent stuttery fades -LeadHead
 
 
 def LockUseFunc2(EntityName):

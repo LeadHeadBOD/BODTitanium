@@ -408,10 +408,12 @@ def TryToUsePotion(me, object):
 def CanIUseThePotion(me, object):
 	if CharStats.GetCharMaxLife(me.Kind,me.Level) <= me.Life:
 		if me.Name == "Player1":
-			import GameText
-			import MenuText
-
-			GameText.WriteTextAux(MenuText.GetMenuText("I don't need it yet"),2.0,255,255,255,[],None,1)
+			# import GameText
+			# import MenuText
+			
+			# GameText.WriteTextAux(MenuText.GetMenuText("I don't need it yet"),2.0,255,255,255,[],None,1)
+			
+			Actions.ReportMsg("I don't need it yet")	# Optimization		-LeadHead
 		return 0
 	else:
 		return 1
@@ -431,10 +433,11 @@ def UsePotion(NombrePocima,TipoUso):
 		try:
 			if Pocima.Data.PowerPotion and Char.Data.PowerPotion:
 				if Char.Name == "Player1":
-					import GameText
-					import MenuText
+					# import GameText
+					# import MenuText
 
-					GameText.WriteTextAux(MenuText.GetMenuText("I don't need it yet"),2.0,255,255,255,[],None,1)
+					# GameText.WriteTextAux(MenuText.GetMenuText("I don't need it yet"),2.0,255,255,255,[],None,1)
+					Actions.ReportMsg("I don't need it yet")	# Optimization		-LeadHead
 				return
 		except AttributError: pass
 

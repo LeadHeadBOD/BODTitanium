@@ -6,6 +6,7 @@
 ##||| * Shield/parry reaction animations can now be cancelled by hurt animations if the previous anim is at least half-complete.
 ##||| * Stamina use/recharge is much smoother now. (# PLAGUE: might cause floating point rounding errors and allow attacks that shouldn't be possible.)
 ##||| * Limbs now always spawn - Thanks Sryml! ( PLAGUE: Might need to be reworked to retain full physics for as long as possible)
+##||| * Combo text should now fade properly when something was already written.
 ##\\\ 
 
 #
@@ -523,12 +524,13 @@ class PlayerPerson:
 		me = Bladex.GetEntity(EntityName)
 		# mut = me.MutilationsMask
 		limb = Bladex.GetEntity(obj_name)                # Moved to before entity Kind exceptions
-
-		if limb.TestHit:                                #
-			limb.ExclusionGroup=1                       # Added
-			limb.Move(0, -160, 0)                       # Fixes disappearing limbs
-			limb.PutToWorld()                           # PLAGUE: Needs further work to look better.
-			limb.Impulse(0,0,0)                         #    -LeadHead
+		
+		limb.ExclusionGroup=1337 					 	 # Added
+		if limb.TestHit:                                 #
+			limb.ExclusionGroup=1                        # 
+			limb.Move(0, -160, 0)                        # Fixes disappearing limbs
+			limb.PutToWorld()                            # PLAGUE: Needs further work to look better.
+			limb.Impulse(0,0,0)                          #    -LeadHead
 			
 		if me and me.Kind[0:7]!="Skeleton":
 			Blood.Mutilate (EntityName,obj_name,x,y,z,nx,ny,nz,node)
@@ -545,6 +547,8 @@ class PlayerPerson:
 		if limb.Mass > 1.5 and limb.Mass < 7.0:
 			Reference.EntitiesSelectionData[obj_name]= Reference.DefaultSelectionData["Limb"]
 			Reference.EntitiesObjectData[obj_name]= Reference.DefaultObjectData['Limb']
+		# elif limb.Mass < 1.5:						# Added			-LeadHead
+			# limb.ExclusionGroup = 1					# If the limb is too small, just exclude it from collisions completely
 
 	def TakeFunc (self, MyName):
 		Actions.StdUse (MyName)
@@ -822,6 +826,7 @@ class PlayerPerson:
 							object = Bladex.GetEntity(me.InvLeft)
 							if me.InvLeft and object and not object.TestHit:
 								Actions.RemoveFromInventory (me, object,"DropLeftEvent")
+								object.ExclusionGroup=1337  ## Added -LeadHead
 								object.Impulse(0.0, 0.0, 0.0)
 						except AttributeError:
 							pass
@@ -830,6 +835,7 @@ class PlayerPerson:
 							object = Bladex.GetEntity(me.InvRight)
 							if me.InvRight and object and not object.TestHit:
 								Actions.RemoveFromInventory (me, object,"DropRightEvent")
+								object.ExclusionGroup=1337  ## Added -LeadHead
 								object.Impulse(0.0, 0.0, 0.0)
 						except AttributeError:
 							pass
@@ -1082,10 +1088,9 @@ class PlayerPerson:
 
 			ComboTXT = GameText.GetComboName(EntityName,ComboName)
 			if ComboTXT:
-				GameText.WriteTextAux(MenuText.GetMenuText("New Attack")+": "+ ComboTXT,2.0,255,255,255,[],None,1)
+				Actions.ReportMsg(("New Attack")+": "+ ComboTXT)	# Changed to ReportMsg 	-LeadHead
 
 				new_combo_sound.Stop()
-				#new_combo_sound.Play(me.Position[0],me.Position[1],me.Position[2],0);
 				new_combo_sound.PlayStereo()
 
 
