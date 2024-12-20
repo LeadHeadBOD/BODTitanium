@@ -214,10 +214,10 @@ InflictDamageFXData['Amz_g_spear19_bs1']=(0, 0.9, 10, 110, 20, 2.0, None, 1.0, 1
 
 
 # Attacking Anim Table   (Damage Factor) ### Note that DamageFactor also determines stamina use!
-###  PLAGUE: There are multiple entries here for the same animations. This must be investiagated
-###          Some entries have been switched places to better match their actual combos.
+#  PLAGUE: There are multiple entries here for the same animations. This must be investiagated
+#          Some entries have been switched places to better match their actual combos.
 AnimationData={}         #############
-
+StaminaData={}		# Added, allows to separate damage from stamina use 	-LeadHead
 ###############
 #   BARBARO   #
 ###############
@@ -560,7 +560,10 @@ AnimationData['Dwf_g_back']=   1.0
 AnimationData['Dwf_g_s18_2h']=   38.0 # g_s18_2h was unused prior to Titanium - LeadHead
 #CRUSH HAMMER
 AnimationData['Dwf_g_s22low_new']=   50.0
+#KILLER AXE
 AnimationData['Dwf_g_s3_new']=   12.0
+StaminaData['Dwf_g_s3_new']=	 10.8
+
 AnimationData['Dwf_g_27kata']=   1.0
 AnimationData['Dwf_g_12low']=   1.0
 AnimationData['Dwf_g_s11']=   1.0
@@ -1132,6 +1135,9 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 				animF = AnimationData[me.AnimFullName]
 			elif AnimationData.has_key(me.AnimName):
 				animF = AnimationData[me.AnimName]
+			if StaminaData.has_key(me.AnimFullName):	# Added, allows for de-coupling stamina use from damage multiplier
+				animF = StaminaData[me.AnimFullName]	#				-LeadHead
+				if PrintFatigue: print "found StaminaData for " + me.AnimFullName
 			
 			######################################################################################
 			
