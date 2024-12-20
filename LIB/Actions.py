@@ -1451,6 +1451,9 @@ def RemoveRightHandler(EntityName, EventName):
 			me.Data.obj2left= None
 		except AttributeError:
 			pass
+		if me.InvLeftBack and Reference.GiveObjectFlag(me.InvLeftBack)==Reference.OBJ_SHIELD and (not me.InvRightBack):		# Added
+			if Reference.GiveWeaponFlag(object_name)==Reference.W_FLAG_1H:													#
+				inv.LinkRightBack(object_name)																				#	-LeadHead
 
 
 
