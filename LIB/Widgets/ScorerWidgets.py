@@ -3,10 +3,11 @@
 ##||| Change list:
 ##||| * Small key icons next to key names should now properly scale.
 ##||| * Venom icon 
+##||| * Support for translated POW and DEF string
+##||| * Fixed "sticky" inventory when cycled on fadeout
+##||| * PLAGUE: Do not visually scroll inventory if there is only 1 element in category
+##||| * PLAGUE: Implement FadeIn func for inventory controller
 ##||| * PLAGUE: Rework enemy icons to be in an independent frame so they can be properly centered.
-##||| * 
-##||| * 
-##||| * 
 ##\\\ 
 
 
@@ -310,7 +311,7 @@ if netgame.GetNetState() == 0:
           rw, rh = Raster.GetSize()                                                                # 
           rwu, rhw = Raster.GetUnscaledSize()                                                      # 
           rscale = rwu*1.0/rw                                                                      # We need scaling for proper widescreen support
-          xoffset = 16                                                                             # To anyone at FireFalcom/General Arcade/Sneg - yes, line 306 WAS used  
+          xoffset = 16                                                                             # To anyone at FireFalcom/General Arcade/Sneg - yes, line 301 WAS used  
           yoffset = 8                                                                              # 
           Bladex.DrawBOD(key.Kind,(x+xoffset)*rscale,(y+yoffset)*rscale+i*32,0,0,self.Scale,1)     #  -LeadHead
           self.SetText(Select.GetSelectionData(key.Name)[2])
@@ -800,7 +801,7 @@ if netgame.GetNetState() == 0:
       self.wAltPowText.SetVisible(0)
       self.wResText.SetVisible(0)
 
-      def_text= `defence`+' DEF '
+      def_text= `defence` + " " +  MenuText.GetMenuText("DEF")
       if defence>=0:
         def_text= '+'+def_text
         self.wDefText.SetColor(0,160,221)
@@ -808,7 +809,7 @@ if netgame.GetNetState() == 0:
         self.wDefText.SetColor(255,0,0)
       self.wDefText.SetText(def_text)
 
-      power_text= `power`+' POW'
+      power_text= `power` + " " + MenuText.GetMenuText("POW")
       if power>=0:
         power_text= '+'+power_text
         self.wPowText.SetColor(0,160,221)
@@ -941,7 +942,7 @@ if netgame.GetNetState() == 0:
 
 
 
-
+  LanguageDifferentAlphabet = ["Chinese", "Russian", "Korean", "Japanese"]
 
   import pdb
   class InvControl:
@@ -1133,7 +1134,7 @@ if netgame.GetNetState() == 0:
         return
 
       object=Bladex.GetEntity(quiver)
-      if Language.Current != "Chinese" and Language.Current != "Russian":
+      if Language.Current not in LanguageDifferentAlphabet:
         self.wNameText.SetText(Reference.GetObjectFriendlyName(object.Data.ArrowType)+"s")
       else:
         self.wNameText.SetText(Reference.GetObjectFriendlyName(object.Data.ArrowType))
@@ -1333,5 +1334,6 @@ if netgame.GetNetState() == 0:
         elif self.view_status==3:
           #self.view_status=1
           #Bladex.AddScheduledFunc(Bladex.GetTime()+0.1,self.FadeIn,())
-          print "Not implemented"
+          self.char.Data.InventoryActive = 0    # Added -LeadHead
+          # print "Not implemented"
         self.view_time=time
