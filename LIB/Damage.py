@@ -10,6 +10,7 @@
 ##||| * Adapted bow camera fix from HD update
 ##||| * Blocking with weapons with no "brkobjdata" (special weapons) will now still cause attacker to recoil
 ##||| * Having a 2handed weapon broken will now remove child entities (for example arrows) before being destroyed
+##||| * 
 ##\\\ 
 
 import Reference
@@ -233,7 +234,7 @@ AnimationData['Bar_g2h_11']=   1.0
 AnimationData['Bar_g2h_02kata']=  1.2      
 
 #combos izquierda
-AnimationData['Bar_g2h_s7']=  1.0           ### PLAGUE: Duplicated
+AnimationData['Bar_g2h_s7']=  1.0
 AnimationData['Bar_g2h_01']=   1.8
 
 #combos bajo
@@ -248,7 +249,6 @@ AnimationData['Bar_g2h_b6']=   8.0
 
 #bigsword
 AnimationData['Bar_g2h_b29']=  10.0
-AnimationData['Bar_g2h_s7']=   1.0          ### PLAGUE: Duplicated
 AnimationData['Bar_g2h_19']=  10.0
 
 #longsword
@@ -256,11 +256,9 @@ AnimationData['Bar_g2h_13']=    7.0
 
 #alfange
 AnimationData['Bar_g2h_s8']=   6.2
-AnimationData['Bar_g2h_26']=   10.0         ### PLAGUE: Unused?
 
 #flatsword
 AnimationData['Bar_g2h_28']=   10.0
-AnimationData['Bar_g2h_17']=   10.0         ### PLAGUE: Unused?
 AnimationData['Bar_g2h_b7']=   10.0         ### PLAGUE: Duplicated - Skysmash. This one overrides the previous one.
 
 #sawsword
@@ -278,7 +276,9 @@ AnimationData['Bar_g2h_26_b6']=   3.5
 
 
 #sin utilizar /// or "Unused" in English 
-AnimationData['Bar_g2h_02']=   10.0
+AnimationData['Bar_g2h_02']=   10.0		### Beta regular right-attack
+AnimationData['Bar_g2h_17']=   10.0		### Needs animation adjustments for right hand, originally under "flatsword"
+AnimationData['Bar_g2h_26']=   10.0		### Missing all events, originally under "alfange"
 
 
 # HACHAS #
@@ -598,11 +598,9 @@ AnimationData['Dwf_g_punch2']=   1.0
 AnimationData['Dwf_g_kick']=   1.0
 
 #Unused animations - random damage data given as placeholders unless otherwise stated, feel free to comment/uncomment and change them if you wish to -LeadHead
-#AnimationData['Dwf_g_s18']=   11.0 #Unused, added
-AnimationData['Dwf_g_09']=    1.0 #Old IceHammer attack, had damage modifier of 38.0
+#AnimationData['Dwf_g_s18']=   11.0      #Unused, added
+AnimationData['Dwf_g_09']=    1.0 		 #Old IceHammer attack, had damage modifier of 38.0
 #AnimationData['Dwf_g_32_5_3new']=   1.0 #Animation of "The Dream"
-#AnimationData['Dwf_g_09a']=   1.0 #Same animation as g_09 but with weird head movement at the end
-#AnimationData['Dwf_g_08a']=   1.0 #Same animation as g_08 but with weird head movement at the end
 
 
 
@@ -1135,13 +1133,13 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 				animF = AnimationData[me.AnimFullName]
 			elif AnimationData.has_key(me.AnimName):
 				animF = AnimationData[me.AnimName]
-			if StaminaData.has_key(me.AnimFullName):	# Added, allows for de-coupling stamina use from damage multiplier
-				animF = StaminaData[me.AnimFullName]	#				-LeadHead
-				if PrintFatigue: print "found StaminaData for " + me.AnimFullName
+			if StaminaData.has_key(me.AnimFullName):								# Added, 
+				animF = StaminaData[me.AnimFullName]								# allows for de-coupling stamina use from damage multiplier
+				if PrintFatigue: print "found StaminaData for " + me.AnimFullName	# -LeadHead
 			
 			######################################################################################
 			
-			lvl= me.Level+1     # PLAGUE: This variable is literally never called in this function???
+			lvl= me.Level+1     # PLAGUE: This var is literally never called in this function???
 			energy_cost= max((charF + weaponF) * animF, 0.0)+me.Data.Energy2Lose
 			if me.Data.FAttack>1.0:
 				# during powerup, do not lose energy ### PLAGUE: This is a stupid way to do it - there is char.Data.PowerPotion, why not use that instead?
@@ -1632,52 +1630,6 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	if not me.Data.Invincibility:
 		Bladex.PlayHaptic(1)
 		me.Life= me.Life - effective_damage
-
-	"""
-	### Mutilation constants ###
-	#       -LeadHead
-	# missing head = ( mut & 2 )
-	# 
-	mut = me.MutilationsMask
-	RightFoot= 512
-	RightLeg= 256
-	LeftFoot= 128
-	LeftLeg= 64
-	RightHand= 32
-	RightArm= 16
-	LeftHand= 8
-	LeftArm= 4
-	Head= 2
-	
-	RArm = RightArm | RightHand
-	LArm = LeftArm | LeftHand
-	RLeg = RightLeg | RightFoot
-	LLeg = LeftLeg | LeftFoot   
-	
-	CanMutilate = 1
-    
-	if effective_damage>0:
-		if me.MeshName == "Great_Ork":
-			print `me.Name` + " is a Great Ork"
-			RArm = Head | RightArm | RightHand
-		
-		if (DamageZone == (Reference.BODY_FRONT or Reference.BODY_BACK)):
-			CanMutilate = 0
-		if (DamageZone == (Reference.BODY_RARM or Reference.BODY_RHAND)) and (mut & RArm):
-			CanMutilate = 0
-			print "Mutilation blocked due to Right Arm"
-		elif (DamageZone == (Reference.BODY_LARM or Reference.BODY_LHAND)) and (mut & LArm):
-			CanMutilate = 0
-			print "Mutilation blocked due to Left Arm"
-		elif (DamageZone == (Reference.BODY_RLEG or Reference.BODY_RFOOT)) and (mut & RLeg):
-			CanMutilate = 0
-			print "Mutilation blocked due to Right Leg"
-		elif (DamageZone == (Reference.BODY_LLEG or Reference.BODY_LFOOT)) and (mut & LLeg):
-			CanMutilate = 0
-			print "Mutilation blocked due to Left Leg"
-
-		me.Data.Mutilate=  me.Life <= 0 and (DamageType=="Slash" or (DamageType=="Crush" and me.Kind=="Skeleton")) and CanMutilate ### Skeletons now can be mutilated by crushing damage -LeadHead
-		"""
 			
 	if effective_damage>0:
 		me.Data.Mutilate=  me.Life <= 0 and (DamageType=="Slash" or (DamageType=="Crush" and me.Kind=="Skeleton")) ### Skeletons now can be mutilated by crushing damage -LeadHead

@@ -7,6 +7,7 @@
 ##||| * Stamina use/recharge is much smoother now. (# PLAGUE: might cause floating point rounding errors and allow attacks that shouldn't be possible.)
 ##||| * Limbs now always spawn - Thanks Sryml! ( PLAGUE: Might need to be reworked to retain full physics for as long as possible)
 ##||| * Combo text should now fade properly when something was already written.
+##||| * Fixed "hurt jog" animation playing if not locked on enemy and using shield.
 ##\\\ 
 
 #
@@ -48,7 +49,23 @@ new_combo_sound.Volume=1.0
 new_combo_sound.MinDistance=5000
 new_combo_sound.MaxDistance=20000
 
+"""
+### Mutilation constants
+RightFoot= 512
+RightLeg= 256
+LeftFoot= 128
+LeftLeg= 64
+RightHand= 32
+RightArm= 16
+LeftHand= 8
+LeftArm= 4
+Head= 2
 
+RArm = RightArm | RightHand
+LArm = LeftArm | LeftHand
+RLeg = RightLeg | RightFoot
+LLeg = LeftLeg | LeftFoot   
+"""
 
 
 # Useful general functions
@@ -520,10 +537,45 @@ class PlayerPerson:
 	# Define our functions                    #
 	#_________________________________________#
 	def MutilateFunc(self,EntityName,obj_name,x,y,z,nx,ny,nz,node):
+
+		
 		# print EntityName+": MutilateFunc"
 		me = Bladex.GetEntity(EntityName)
-		# mut = me.MutilationsMask
-		limb = Bladex.GetEntity(obj_name)                # Moved to before entity Kind exceptions
+		limb = Bladex.GetEntity(obj_name)
+		
+		""" ## For now disabled this code. It sort of works, but has various inconsistencies across enemy Kinds
+		# global LArm
+		# global RArm
+		# global LLeg
+		# global RLeg
+		
+		mut = me.MutilationsMask
+		
+		isGrork = 0
+		if me.MeshName == "Great_Ork":
+			isGrork = 1
+			RArm = Head | RightArm | RightHand
+			
+
+		
+		### Remove duplicated limbs from world.
+		noMutil = 0
+		if (node == me.GetNodeIndex("L_Hand") or node == me.GetNodeIndex("L_Forearm") or node == me.GetNodeIndex("L_Elbow") or node == me.GetNodeIndex("L_Wrist")) and (mut & LArm):
+			noMutil = 1
+		elif isGrork:
+			if (node == me.GetNodeIndex("R_Hand") or node == me.GetNodeIndex("R_Forearm") or node == me.GetNodeIndex("R_Elbow") or node == me.GetNodeIndex("R_Wrist") or node == me.GetNodeIndex("R_Shoulder") or node == me.GetNodeIndex("R_Arm"))	and (mut & RArm):
+				noMutil = 1
+		elif (node == me.GetNodeIndex("R_Hand") or node == me.GetNodeIndex("R_Forearm") or node == me.GetNodeIndex("R_Elbow") or node == me.GetNodeIndex("R_Wrist")) and (mut & RArm):
+			noMutil = 1
+		elif (node == me.GetNodeIndex("L_Boot") or node == me.GetNodeIndex("L_Knee") or node == me.GetNodeIndex("L_Foot")) and (mut & LLeg):
+			noMutil = 1
+		elif (node == me.GetNodeIndex("R_Boot") or node == me.GetNodeIndex("R_Knee") or node == me.GetNodeIndex("R_Foot")) and (mut & RLeg):
+			noMutil = 1
+		if noMutil:
+			print "mutilation for " +EntityName+ " blocked"
+			limb.SubscribeToList("Pin")
+			return
+		"""
 		
 		limb.ExclusionGroup=1337 					 	 # Added
 		if limb.TestHit:                                 #
@@ -532,13 +584,13 @@ class PlayerPerson:
 			limb.PutToWorld()                            # PLAGUE: Needs further work to look better.
 			limb.Impulse(0,0,0)                          #    -LeadHead
 			
-		if me and me.Kind[0:7]!="Skeleton":
+		if me and me.Kind[0:7]!="Skeleton":		# This check makes no sense, since the skeletons override this func anyway.
 			Blood.Mutilate (EntityName,obj_name,x,y,z,nx,ny,nz,node)
 
 		if me.Kind=="Golem_lava":
 			return
 
-		if me.Kind=="Minotaur" and node!=Reference.BODY_HEAD:
+		if me.Kind=="Minotaur" and node!=Reference.BODY_HEAD:		# This check also makes no sense, it is trying to compare skeletonnode to damagezone
 			return
 		
 		InitDataField.Initialise(limb)
@@ -547,8 +599,6 @@ class PlayerPerson:
 		if limb.Mass > 1.5 and limb.Mass < 7.0:
 			Reference.EntitiesSelectionData[obj_name]= Reference.DefaultSelectionData["Limb"]
 			Reference.EntitiesObjectData[obj_name]= Reference.DefaultObjectData['Limb']
-		# elif limb.Mass < 1.5:						# Added			-LeadHead
-			# limb.ExclusionGroup = 1					# If the limb is too small, just exclude it from collisions completely
 
 	def TakeFunc (self, MyName):
 		Actions.StdUse (MyName)
@@ -613,13 +663,13 @@ class PlayerPerson:
 		cam=Bladex.GetEntity("Camera")
 		cam.SetPersonView("Player1")
     
-    ## PLAGUE: Below function does effectively nothing. Only the orc death anims still use this event.
+    ## PLAGUE: Below function does effectively nothing. Only the orc death anims have this event.
 	def UnlinkAll (self, EntityName,EventName):
 		me = Bladex.GetEntity(EntityName)
 		# Usually done on the last frame of a death animation
 		if me:
-				# should also remove objects from inventory slots, hands, and give impulse
-				me.UnlinkChildren()
+			# should also remove objects from inventory slots, hands, and give impulse
+			me.UnlinkChildren()
 
 	def GetResistance(self, DamageType):
 		if self.Resistances.has_key(DamageType): resistance= self.Resistances[DamageType]
@@ -732,7 +782,7 @@ class PlayerPerson:
 
 		if already_death==0:
 			death_anim="dth0"
-			if me.MutilationsMask==2:
+			if me.MutilationsMask==2:					# PLAGUE: Should be a bitwise operation just to be safe
 				dth_prob=whrandom.uniform(0.0, 1.0)
 				if (dth_prob<0.142):
 					death_anim="dth_c1"
@@ -946,6 +996,8 @@ class PlayerPerson:
 	# These animations are for a standard human skeleton.  Replace this func for other race types.
 	def RespondToHit(self, EntityName, AttackerName, DamagePoints, DamageType, DamageZone, Shielded):
 		me = Bladex.GetEntity(EntityName)
+		
+
 
 		weapon_flag=Reference.W_FLAG_1H
 		if me.InvRight:
@@ -953,6 +1005,17 @@ class PlayerPerson:
 
 		if DamagePoints<=0 and Shielded and me.GetInventory().GetMagicShield():
 			return
+			
+		""" ### "armoured" attacks like you'd see in fighters. The code works and is fine, but currently disabled until I decide whether I want it to work.
+			### the visual effect is a placeholder -LeadHead
+		armouredAttacks = ["Bar_g2h_earthpow", "Bar_g2h_b6kata"]
+		if me.AnimFullName in armouredAttacks:
+			time=Bladex.GetTime()
+			shine = Auras.MakeAura(EntityName,0.8,   (1  , 0.01, 1.0, 0, 0, 1), (), (), (2,  0.8, 0.6, 0.0, 0.6, 0.2  ,  0.8, 0.1, 0.0, 0.0, 0.8))
+			shine.Data.AddEvent(time+0.15,         (100, 1.0 , 1.0, 0, 0, 1), (), (), (2,  0.8, 0.6, 0.0, 0.6, 0.2  ,  0.8, 0.1, 0.0, 0.0, 0.8))
+			shine.Data.AddEvent(time+0.8,          (160, 0.01, 1.0, 0, 0, 1), (), (), (2,  0.8, 0.1, 0.0, 0.6, 0.2  ,  0.8, 0.0, 0.0, 0.0, 0.8))
+			return
+		"""
 		if me and me.Life > 0:
 			damage_factor = DamagePoints / (me.Life+DamagePoints)
 
@@ -962,7 +1025,7 @@ class PlayerPerson:
 
 				do_not_abort=0
 				# Now checks if the animation has basically already ended. Makes parrying much more viable and having your shield broken more deadly. -LeadHead
-				if (me.AnimName == "df_s_broken" and me.AnmPos<0.55) or (me.AnimName == "sword_broken"and me.AnmPos<0.55) or (me.AnimName == "sw_react" and me.AnmPos<0.7) or self.Invincibility==2:
+				if (me.AnimName == "df_s_broken" and me.AnmPos<0.55) or (me.AnimName == "sword_broken" and me.AnmPos<0.55) or (me.AnimName == "sw_react" and me.AnmPos<0.55) or self.Invincibility==2:
 					do_not_abort=1
 				if do_not_abort==0:
 
@@ -1022,7 +1085,7 @@ class PlayerPerson:
 								Reference.debugprint("Launching .hurt_f_l_leg")
 								me.LaunchAnmType("hurt_f_l_leg")
 					else:
-						if me.Run:
+						if me.Run and not Shielded:		# Added "and not Shielded"	-LeadHead
 							Reference.debugprint("Launching .hurt_jog")
 							me.LaunchAnmType("hurt_jog")
 						else:
