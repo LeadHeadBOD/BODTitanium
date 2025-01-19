@@ -306,6 +306,26 @@ def Bar_g_axe34_FX(EntityName, EventName):
 	elif step==3:
 		GenFX.ModifyParticles(ComboFX_prtlsys, 4000, 4, 0, 0.1, 10, 0.6)
 
+#"Bar_g_axe30" ICEAXE	added by LeadHead
+
+def Bar_g_axe30_FX(EntityName, EventName):
+	global ComboFX_prtlsys
+	step=int(EventName[len(EventName)-1:])
+	if step==1:
+		pers=Bladex.GetEntity(EntityName)	
+		inv=pers.GetInventory()
+		ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "WhiteTrail", 1400, 4, 0, 0.1, 20, 1.5) 
+	elif step==2:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 50, 2, 0, 0.5, 20, 0.2)
+	elif step==3:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 1400, 4, 0, 0.1, 20, 1.5)
+	elif step==4:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 50, 2, 0, 0.2, 20, 0.8)
+	elif step==5:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 1800, 1, -2, 0.01, 32, 2.2)
+	elif step==6:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 600, 95, 2, 0.2, 25, 0.2, -1800)
+
 #"Bar_g2h_28" FLATSWORD
 
 def Bar_g2h_28_FX(EntityName, EventName):
@@ -983,6 +1003,15 @@ def BarCombosFX(pers_name):
 	pers.AddAnmEventFunc("Bar_g_axe34_1", Bar_g_axe34_FX)
 	pers.AddAnmEventFunc("Bar_g_axe34_2", Bar_g_axe34_FX)
 	pers.AddAnmEventFunc("Bar_g_axe34_3", Bar_g_axe34_FX)
+	
+	### Added - Ice Axe particle events
+	#  								-LeadHead
+	pers.AddAnmEventFunc("Bar_g_axe30_1", Bar_g_axe30_FX)
+	pers.AddAnmEventFunc("Bar_g_axe30_2", Bar_g_axe30_FX)
+	pers.AddAnmEventFunc("Bar_g_axe30_3", Bar_g_axe30_FX)
+	pers.AddAnmEventFunc("Bar_g_axe30_4", Bar_g_axe30_FX)
+	pers.AddAnmEventFunc("Bar_g_axe30_5", Bar_g_axe30_FX)
+	pers.AddAnmEventFunc("Bar_g_axe30_6", Bar_g_axe30_FX)
 
 	pers.AddAnmEventFunc("Bar_g2h_28_1", Bar_g2h_28_FX)
 

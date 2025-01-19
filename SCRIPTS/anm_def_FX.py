@@ -8,6 +8,7 @@
 ##||| * Added effect events for Fire Axe
 ##||| * Added effect events for Ice Hammer
 ##||| * Added effect events for Fire Sword
+##||| * Added effect events for Ice Axe
 ##\\\ 
 
 import Bladex
@@ -77,9 +78,18 @@ Bladex.AddAnmEvent("Bar_g2h_s8","Bar_g2h_s8_1",0.3450)
 Bladex.AddAnmEvent("Bar_g_axe34","Bar_g_axe34_1",0.1000)
 Bladex.AddAnmEvent("Bar_g_axe34","Bar_g_axe34_2",0.2420)
 Bladex.AddAnmEvent("Bar_g_axe34","Bar_g_axe34_3",0.4130)
-Bladex.AddAnmEvent("Bar_g2h_28","Bar_g2h_28_1",0.4370)
-Bladex.AddAnmEvent("Bar_g2h_b29","Bar_g2h_b29_1",0.3040)
-Bladex.AddAnmEvent("Bar_g_axe12","Bar_g_axe12_1",0.2360)
+
+
+Bladex.AddAnmEvent("Bar_g_axe30","Bar_g_axe30_1",0.1110)    # Added
+Bladex.AddAnmEvent("Bar_g_axe30","Bar_g_axe30_2",0.2230)    # Ice Axe
+Bladex.AddAnmEvent("Bar_g_axe30","Bar_g_axe30_3",0.2780)    #
+Bladex.AddAnmEvent("Bar_g_axe30","Bar_g_axe30_4",0.3830)    #
+Bladex.AddAnmEvent("Bar_g_axe30","Bar_g_axe30_5",0.5490)    #       -LeadHead 
+Bladex.AddAnmEvent("Bar_g_axe30","Bar_g_axe30_6",0.7790)    #
+
+Bladex.AddAnmEvent("Bar_g2h_28","Bar_g2h_28_1",0.4370)      
+Bladex.AddAnmEvent("Bar_g2h_b29","Bar_g2h_b29_1",0.3040)    
+Bladex.AddAnmEvent("Bar_g_axe12","Bar_g_axe12_1",0.2360)    
 Bladex.AddAnmEvent("Bar_g_axe32","Bar_g_axe32_1",0.4490)
 Bladex.AddAnmEvent("Bar_g2h_21_7","Bar_g2h_21_7_1",0.5320)
 Bladex.AddAnmEvent("Bar_g2h_21_7","Bar_g2h_21_7_2",0.7160)
