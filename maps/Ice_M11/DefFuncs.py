@@ -1,3 +1,12 @@
+##///
+##||| Ice_M11/DefFuncs.PY TITANIUM
+##||| Change list:
+##||| * Final crystal key animation 60fps (camera and key movement)
+##||| * Medallion recesses now have proper light fade on insert
+##||| * 
+##\\\ 
+
+
 import def_class
 import Bladex
 import EnemyTypes
@@ -113,7 +122,7 @@ def HitSnow():
 	PlaySound(soundhitplayer,"Player1")
 
 
-def SelectSoundEsfuerzo(kind):
+def SelectSoundEsfuerzo(kind):      ### PLAGUE: wtf is this shit
 	global soundesfuerzo
 
 	if (kind[0] != 'A'):
@@ -239,6 +248,7 @@ def PlaySoundMino(sound):
 		sound.PlaySound(0)
 
 def FinAnimWake(entity):
+    ### PLAGUE: This is very bad. Do not ever overwrite funcs like this
 	Mino.DamageFunc = Damage.CalculateDamage
 	Mino.AnmEndedFunc = ""
 	Actions.QuickTurnToFaceEntity ("MinoEat","Player1")
@@ -398,26 +408,37 @@ def SndCristalonazo(ent,Time):
 def SndCristalero(ent,Time):
 	_SndCristalero.Play(char.Position[0], char.Position[1], char.Position[2], 0)
 
+### STEP VARS FOR TIMER ###
+# They are original values multiplied by 3 (original FPS = 20, new target = 60)
+camRotStep = 0.02/3.0
+cStep1 = 20 * 3
+cStep2 = 66 * 3
+cStep3 = 160 * 3
+cStep4 = 185 * 3
+cStep5 = cStep4 + 3
+cStep6 = 230 * 3
+cStep7 = 254 * 3
+
 def MueveTimer(e_name, time):
   global Contador
   Contador = Contador+1
 
-  darfuncs.GiraCamara(0.02)
+  darfuncs.GiraCamara(0.02/3.0)
 
   lg = Bladex.GetEntity("STAR")
   luzta = Bladex.GetEntity("LuzSTAR")
-  if (Contador>=20) and (Contador<=66):
-    lg.Move(0,1700/(20-66),0)
-    lg.Rotate(0, 0, 1,0.06532)
+  if (Contador>=cStep1) and (Contador<=cStep2):
+    lg.Move(0,1700/(cStep1-cStep2),0)
+    lg.Rotate(0, 0, 1,0.06532/3.0)
 
-  elif (Contador>=160) and (Contador<=185):
+  elif (Contador>=cStep3) and (Contador<=cStep4):
 
-    iTick = (1.0-(Contador-160.0)/(185.0-160.0))
+    iTick = (1.0-(Contador-cStep3)/(555.0-480.0))
     lg.Alpha                 =  iTick
     luzta.Intensity          =  10.0*iTick
     luzta.SizeFactor         =   2.0*iTick
 
-  elif (Contador==186):
+  elif (Contador==cStep5):
     StarFlare                =Bladex.CreateEntity("aTablillaBrillos", "Entity Particle System D2", char.Position[0], char.Position[1], char.Position[2])
     StarFlare.D1             = lg.Position[0]-StarFlare.Position[0],lg.Position[1]-StarFlare.Position[1],lg.Position[2]-StarFlare.Position[2]
     StarFlare.ParticleType   = "Estrellitas"
@@ -428,7 +449,7 @@ def MueveTimer(e_name, time):
     StarFlare.Time2Live      = 64
     StarFlare.DeathTime      = Bladex.GetTime()+1.5
     StarFlare.RandomVelocity = 20
-  elif (Contador==230):
+  elif (Contador==cStep6):
     StarFlare=Bladex.CreateEntity("aTablillaBrillos", "Entity Particle System D1", char.Position[0], char.Position[1], char.Position[2])
     StarFlare.ParticleType   = "Estrellitas"
     StarFlare.YGravity       = 1000
@@ -438,7 +459,7 @@ def MueveTimer(e_name, time):
     StarFlare.Time2Live      = 64
     StarFlare.DeathTime      = Bladex.GetTime()+2.0
     StarFlare.RandomVelocity = 50
-  elif (Contador>=254):
+  elif (Contador>=cStep7):
     lg.RemoveFromList("LlaveTimer")
     lg.TimerFunc          = ""
     luzta.SubscribeToList("Pin")
@@ -446,6 +467,7 @@ def MueveTimer(e_name, time):
 
     cam = Bladex.GetEntity("Camera")
     cam.SetPersonView("Player1")
+    cam.PViewType = Bladex.GetEntity("Player1").Data.lastCam        # Added -LeadHead
 
 
 def musicayte():
@@ -479,6 +501,7 @@ def PickUpLaLlave():
   Bladex.DeactivateInput()
   Actions.FreeBothHands("Player1")
   cam = Bladex.GetEntity("Camera")
+  Bladex.GetEntity("Player1").Data.lastCam = cam.PViewType      # Add -LeadHead
   cam.PViewType = 0
   Bladex.AddScheduledFunc(Bladex.GetTime()+1.5,IniciaCoger,())
 
@@ -487,12 +510,12 @@ def RotaTimer(e_name, time):
    global Contador
 
    lg = Bladex.GetEntity("STAR")
-   lg.Rotate(0, 0, 1,0.06532)
+   lg.Rotate(0, 0, 1,0.06532/3.0)
 
-   lg.Move(0,0.5*(5-(Contador%11)),0)
+   lg.Move(0,(0.5*(5-(Contador%11)))/3.0,0)
    Contador=Contador+1
 
-   if Contador > 75 :
+   if Contador > 225 :
           lg.Impulse( 0, -2000, 0 )
           Bladex.ActivateInput()
           lg.RemoveFromList("LlaveTimer")
@@ -1143,7 +1166,7 @@ def Barrilada():
 	Breakings.ExplodeSpecialObject (Barrilazos[1].Name, 3500.0)
 
 def CierraPuertaLlave3(sectorindex,entityname):
-	puerta3.CloseDoor()
+	puerta3.CloseDoor()     ### PLAGUE: Super secret room 
 
 def puertablade_closed(sld_name):
 	Doors.EndCloseFunc(sld_name)
