@@ -6,7 +6,9 @@
 ##||| * Self Iluminated potions lose their luminosity as they fade
 ##||| * Added support for potion hot-keys
 ##||| * Chars will no longer turn their head to empty potions or be selectable at all
-##||| * Potions will now start fading with a 5s delay.
+##||| * Potions will now start fading with a 5s delay
+##||| * Fixed a bug which would cause drawing right item from back (AND ONLY THE RIGHT) after drinking a potion
+##||| * Using a potion from inventory while a standard object is in hand will properly make you drink the potion now
 ##\\\ 
 
 import OnInitTake
@@ -448,6 +450,7 @@ def UsePotion(NombrePocima,TipoUso):
 		# Use from inventory
 		Pocima.Data.Type = 1
 		if not Char.InvRight:
+			Char.Data.stuff_onback_b4 = Char.InvRightBack	# Added -LeadHead
 			UsePotion2(NombrePocima)
 		else:
 			if Char.InCombat:
@@ -462,7 +465,9 @@ def UsePotion(NombrePocima,TipoUso):
 				if Actions.TryDropRight(Char.Name):
 					Actions.DropReleaseEventHandler(Char.Name, "DropRightEvent")
 				if not Char.InvRight:
-					UsePotion2(NombrePocima)
+					# UsePotion2(NombrePocima)		# This did nothing, now should work.
+					Char.AnmEndedFunc=UsePotion3	#			-LeadHead
+
 			else:
 				Char.AddAnmEventFunc("ChangeREvent",Actions.ToggleWEvent)
 				Char.LaunchAnmType("Chg_r")
