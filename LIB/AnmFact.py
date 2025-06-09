@@ -4,6 +4,7 @@
 ##||| * Added b3 transitions for Tkn
 ##||| * Added transitions for Org and Dok
 ##||| * Commented out prisoner transition times, they only spam the console 
+##||| * Sped up misc anims: LowFall, drink
 ##\\\ 
 
 
@@ -184,6 +185,9 @@ def AnmFactBarbarian():
 	Bladex.SetAnimationFactor("Bar_d_b_2w",1.2)
 	Bladex.SetAnimationFactor("Bar_g2h_d_l",3.5)
 	Bladex.SetAnimationFactor("Bar_g2h_d_r",3.5)
+	
+	Bladex.SetAnimationFactor("FallLow_Bar",1.8) ### Added -LeadHead
+	Bladex.SetAnimationFactor("Bar_drink",1.3)
 
 
 	#
@@ -447,7 +451,8 @@ def AnmFactKnight():
 	Bladex.SetAnimationFactor("Kgt_attack_f_s",1.5)
 	Bladex.SetAnimationFactor("Kgt_attack_b_s",1.5)
 
-
+	Bladex.SetAnimationFactor("FallLow_Kgt",1.8) ### Added -LeadHead
+	Bladex.SetAnimationFactor("Kgt_drink",1.3)
 
 	#
 	# TRANSICIONES DEL CABALLERO
@@ -692,6 +697,9 @@ def AnmFactAmazon():
 	Bladex.SetAnimationFactor("Amz_drp_r",1.60)
 	Bladex.SetAnimationFactor("Amz_drp_l",1.60)
 	Bladex.SetAnimationFactor("Amz_tke_r_01",1.60)
+	
+	Bladex.SetAnimationFactor("FallLow_Amz",1.8) ### Added -LeadHead
+	Bladex.SetAnimationFactor("Amz_drink",1.3)
 
 
 
@@ -883,6 +891,9 @@ def AnmFactDwarf():
 	Bladex.SetAnimationFactor("Dwf_jmp_no",1.25)
 	Bladex.SetAnimationFactor("Dwf_jmp_1h",1.25)
 	Bladex.SetAnimationFactor("Dwf_jmph0_no",1.25)
+	
+	Bladex.SetAnimationFactor("FallLow_Dwf",1.8) ### Added -LeadHead
+	Bladex.SetAnimationFactor("Dwf_drink",1.5)
 
 
 
