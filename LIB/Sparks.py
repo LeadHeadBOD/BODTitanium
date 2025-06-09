@@ -225,16 +225,17 @@ def ThrowSparksShield(hit_entity, hitting_entity, xhit_point, yhit_point, zhit_p
 	skip_sparks=0
 	try:
 		if hitting_ent.Data.NoFXOnHit:
+            
 			skip_sparks=1
 			
 	except: pass
 	hit_ent=Bladex.GetEntity(hit_entity)
 	if not skip_sparks:
 		sparkdir=B3DLib.Normalize((-ximpulse, -yimpulse, -zimpulse))
-		if hit_ent.Material[0:6]=="madera":     ## If blocking item is made of wood, throw wood sparks instead.     -LeadHead
-			chispa=Bladex.CreateSpark("Wood", xhit_point, yhit_point, zhit_point, sparkdir[0], sparkdir[1], sparkdir[2],    0.75,2000,60,0,80,   75,46,21,   6,3,2,    900,15.0/60.0,1.0/60.0,0)
+		if hit_ent.Material[0:6]=="madera":     ## If blocking item is made of wood, throw wood chips instead.     -LeadHead
+			chispa=Bladex.CreateSpark("Wood",   xhit_point, yhit_point, zhit_point, sparkdir[0], sparkdir[1], sparkdir[2],0.75,2000,  60,0, 80,  75,  46, 21,  6,  3, 2,900,15.0/60.0,1.0/60.0,0)
 		else:
-			chispa=Bladex.CreateSpark("Chispa", xhit_point, yhit_point, zhit_point, sparkdir[0], sparkdir[1], sparkdir[2],0.5,3000,2000,0,100, 160, 120, 40, 30, 24, 0,800,10.0/60.0,1.0/60.0,1)
+			chispa=Bladex.CreateSpark("Chispa", xhit_point, yhit_point, zhit_point, sparkdir[0], sparkdir[1], sparkdir[2], 0.5,3000,2000,0,100, 160, 120, 40, 30, 24, 0,800,10.0/60.0,1.0/60.0,1)
 
 
 	datos_esc=Reference.DefaultObjectData[hit_ent.Kind]
@@ -282,7 +283,7 @@ def ThrowSparksShield(hit_entity, hitting_entity, xhit_point, yhit_point, zhit_p
 			hitting_ent.StickFunc (hitting_entity, hit_entity)
 
 
-def SetShieldArea(obj_name, cone, height, radius):
+def SetShieldArea(obj_name, cone, height, radius):      ## PLAGUE: Unused
 	esc=Bladex.GetEntity(obj_name)
 	if not esc.Weapon:
 		esc.Static=1
@@ -521,11 +522,11 @@ def SetSectorOnHitFuncs():
 	GolpeHierba= Bladex.CreateSound('../../Sounds/golpe_hierba2.wav', 'GolpeHierba')
 	GolpeHierba.SetPitchVar(1, -8000, 8000, 0, 0)
 
-	GolpeMaderaTablas= Bladex.CreateSound('../../Sounds/golpe_maderamed.wav', 'GolpeMaderaTablas')
+	GolpeMaderaTablas= Bladex.CreateSound('../../Sounds/golpe_maderamed.wav', 'GolpeMaderaTablas')      ### PLAGUE: Duplicated wtf?
 	GolpeMaderaTablas.SetPitchVar(1, -8000, 8000, 0, 0)
 
-	GolpeMaderaTablas= Bladex.CreateSound('../../Sounds/golpe_maderamed.wav', 'GolpeMaderaTablas')
-	GolpeMaderaTablas.SetPitchVar(1, -8000, 8000, 0, 0)
+	# GolpeMaderaTablas= Bladex.CreateSound('../../Sounds/golpe_maderamed.wav', 'GolpeMaderaTablas')
+	# GolpeMaderaTablas.SetPitchVar(1, -8000, 8000, 0, 0)
 
 	GolpeMadera= Bladex.CreateSound('../../Sounds/M-GOLPESHEAVY4.wav', 'GolpeMadera')
 	GolpeMadera.SetPitchVar(1, -8000, 8000, 0, 0)
@@ -537,20 +538,21 @@ def SetSectorOnHitFuncs():
 	GolpeCristal.SetPitchVar(1, -8000, 8000, 0, 0)
 
 
-	Reference.MaterialOnHitInfo['default']= [GolpeGrava, SectorThrowSparks]
+	Reference.MaterialOnHitInfo['default']=      [GolpeGrava, SectorThrowSparks]
 
-	Reference.MaterialOnHitInfo['Grava']=       [GolpeGrava, SectorThrowSparks]
-	Reference.MaterialOnHitInfo['Piedra']=      [GolpeGrava, SectorThrowSparks]
-	Reference.MaterialOnHitInfo['Nieve']=       [GolpeNieve, SectorThrowSnow]
-	Reference.MaterialOnHitInfo['Hierba']=      [GolpeHierba, SectorThrowDirt]
-	Reference.MaterialOnHitInfo['Tierra']=      [GolpeTierra, SectorThrowDirt]
+	Reference.MaterialOnHitInfo['Grava']=        [GolpeGrava, SectorThrowSparks]
+	Reference.MaterialOnHitInfo['Piedra']=       [GolpeGrava, SectorThrowSparks]
+	Reference.MaterialOnHitInfo['Nieve']=        [GolpeNieve, SectorThrowSnow]
+	Reference.MaterialOnHitInfo['Hierba']=       [GolpeHierba, SectorThrowDirt]
+	Reference.MaterialOnHitInfo['Tierra']=       [GolpeTierra, SectorThrowDirt]
 
-	Reference.MaterialOnHitInfo['Madera']=      [GolpeMadera, SectorThrowWood]
-	Reference.MaterialOnHitInfo['MaderaTablas']=[GolpeMaderaTablas, SectorThrowWood]
-	Reference.MaterialOnHitInfo['Barro']=       [None, None]
-	Reference.MaterialOnHitInfo['Water']=       [GolpeAgua, SectorThrowWater]
-	Reference.MaterialOnHitInfo['Metal']=       [GolpeMetal, SectorThrowSparks]
-	Reference.MaterialOnHitInfo['Cristal']=     [GolpeCristal, None]
+	Reference.MaterialOnHitInfo['Madera']=       [GolpeMadera, SectorThrowWood]
+	Reference.MaterialOnHitInfo['MaderaTablas']= [GolpeMaderaTablas, SectorThrowWood]
+	Reference.MaterialOnHitInfo['MaderaPodrida']=[GolpeMadera, SectorThrowWood]          ### Added -LeadHead
+	Reference.MaterialOnHitInfo['Barro']=        [None, None]
+	Reference.MaterialOnHitInfo['Water']=        [GolpeAgua, SectorThrowWater]
+	Reference.MaterialOnHitInfo['Metal']=        [GolpeMetal, SectorThrowSparks]
+	Reference.MaterialOnHitInfo['Cristal']=      [GolpeCristal, None]
 
 	if netgame.GetNetState() == 0:
 		for i in range (Bladex.nSectors()):
