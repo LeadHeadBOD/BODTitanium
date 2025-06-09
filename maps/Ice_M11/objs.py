@@ -15,73 +15,73 @@ import Bladex
 import Breakings
 import OnOff
 
-o=Bladex.CreateEntity("NoName4","Monjespada",9351.773000,-9580.000000,-9085.21200,Reference.ObjType("Monjespada"))
+o=Bladex.CreateEntity("NoName4","Monjespada",9351.773000,-9542.042000, -9092.173000,Reference.ObjType("Monjespada"))
 
 o.Scale=1.661078
-o.Orientation=0.707804,0.706318,0.008019,-0.008002
+o.Orientation=0.714371,0.699745,-0.004024,0.003941
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName5","Monjecaliz",7387.265000,-9570.980000,-9188.06500,Reference.ObjType("Monjecaliz"))
+o=Bladex.CreateEntity("NoName5","Monjecaliz",7387.265000,-9542.042000, -9092.173000,Reference.ObjType("Monjecaliz"))
 
 o.Scale=1.644632
 o.Orientation=0.704386,0.709727,0.007934,-0.007994
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName6","Monjecaliz",11397.485000,-9585.296000,-9157.34600,Reference.ObjType("Monjecaliz"))
+o=Bladex.CreateEntity("NoName6","Monjecaliz",11397.485000,-9542.042000, -9092.173000,Reference.ObjType("Monjecaliz"))
 
 o.Scale=1.644632
-o.Orientation=0.704462,0.709742,-0.000075,0.000076
+o.Orientation=0.704386,0.709727,0.007934,-0.007994
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName7","Monjecaliz",32390.795000,-9569.575000,-9197.83700,Reference.ObjType("Monjecaliz"))
+o=Bladex.CreateEntity("NoName7","Monjecaliz",32390.795000,-9542.042000, -9092.173000,Reference.ObjType("Monjecaliz"))
 
 o.Scale=1.661078
-o.Orientation=0.710256,0.703944,-0.000441,0.000437
+o.Orientation=0.704386,0.709727,0.007934,-0.007994
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName8","Monjespada",30326.619000,-9628.499000,-9228.39100,Reference.ObjType("Monjespada"))
+o=Bladex.CreateEntity("NoName8","Monjespada",30326.619000,-9542.042000, -9092.173000,Reference.ObjType("Monjespada"))
 
 o.Scale=1.644632
-o.Orientation=0.708227,0.705985,-0.000537,0.000535
+o.Orientation=0.714371,0.699745,-0.004024,0.003941
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName9","Monjespada",26389.980000,-9660.428000,-9105.28900,Reference.ObjType("Monjespada"))
+o=Bladex.CreateEntity("NoName9","Monjespada",26389.980000,-9542.042000, -9092.173000,Reference.ObjType("Monjespada"))
 
 o.Scale=1.644632
-o.Orientation=0.700561,0.713496,-0.008246,0.008398
+o.Orientation=0.714371,0.699745,-0.004024,0.003941
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName10","Monjecaliz",28347.130000,-9620.000000,-9170.60600,Reference.ObjType("Monjecaliz"))
+o=Bladex.CreateEntity("NoName10","Monjecaliz",28347.130000,-9542.042000, -9092.173000,Reference.ObjType("Monjecaliz"))
 
 o.Scale=1.694466
-o.Orientation=0.717384,0.696654,0.004156,-0.004036
+o.Orientation=0.704386,0.709727,0.007934,-0.007994
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName11","Monjespada",34396.981000,-9593.629000,-9124.13400,Reference.ObjType("Monjespada"))
+o=Bladex.CreateEntity("NoName11","Monjespada",34396.981000,-9542.042000, -9092.173000,Reference.ObjType("Monjespada"))
 
 o.Scale=1.677689
-o.Orientation=0.691291,0.722576,0.000125,-0.000131
+o.Orientation=0.714371,0.699745,-0.004024,0.003941
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName12","Monjespada",5357.124000,-9512.122000,-9304.67900,Reference.ObjType("Monjespada"))
+o=Bladex.CreateEntity("NoName12","Monjespada",5357.124000,-9542.042000, -9092.173000,Reference.ObjType("Monjespada"))
 
 o.Scale=1.612226
 o.Orientation=0.714371,0.699745,-0.004024,0.003941
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("NoName13","Monjecaliz",3350.963000,-9572.042000,-9192.17300,Reference.ObjType("Monjecaliz"))
+o=Bladex.CreateEntity("NoName13","Monjecaliz",3350.963000,-9542.042000, -9092.173000,Reference.ObjType("Monjecaliz"))
 
 o.Scale=1.677689
-o.Orientation=0.695620,0.718388,0.003920,-0.004048
+o.Orientation=0.704386,0.709727,0.007934,-0.007994
 Sparks.SetStoneSparkling(o.Name)
 
 
