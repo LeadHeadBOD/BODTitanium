@@ -3,6 +3,8 @@
 ##||| Change list:
 ##||| * Added TrueEnergyBar
 ##||| * Will no longer show "Press F1" on Tutorial level, which is confusing.
+##||| * LifeBar no longer goes beyond its limits
+##||| * LifeBar now properly goes to 0 if health is zero or less.
 ##||| 
 ##\\\ 
 
@@ -878,7 +880,14 @@ def SetLifeValue(v,maxvalue,poisoned):
   #Bldb.set_trace()
   if (last_lifeValue!=v) or (last_MaxLifeValue!=maxvalue):
     doit = 1
-    wLifeBar.SetPositionPercentage(v/maxvalue*(6.5/8.0))
+    ### Changed - now the lifebar does not go into weird lengths if health value is negative or above maxlife   -LeadHead
+    percentageFormula = v/maxvalue*(6.5/8.0)
+    if percentageFormula >= 0.8125:
+        wLifeBar.SetPositionPercentage(0.8125)
+    elif percentageFormula <= 0.0:
+        wLifeBar.SetPositionPercentage(0.0)
+    else:
+        wLifeBar.SetPositionPercentage(percentageFormula)
     wLifeLabel.SetText(str(int(v))+"/"+str(maxvalue))
     last_lifeValue = v
     last_MaxLifeValue = maxvalue
