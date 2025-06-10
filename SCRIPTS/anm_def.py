@@ -10,7 +10,7 @@
 ##||| * Added Dwarf specific animation events for Tomb of Ephyra cutscene.
 ##||| * Added additional Start_Weapon event for Knight's FireSword combo
 ##||| * Corrected start_weapon_special timing for g_magic2 (level 19 Sword of Ianna combo)
-##||| * Adjusted "tke_r_key" timings for: Knigt, ...
+##||| * Adjusted "tke_r_key" timings for: Knight, Barbarian, Amazon
 ##\\\ 
 
 def Init():
@@ -303,8 +303,8 @@ def Init():
     Bladex.AddAnmEvent("Amz_tke_r_03","PickupEvent",0.5500)
     Bladex.AddAnmEvent("Amz_tke_r_04","PickupEvent",0.5500)
     Bladex.AddAnmEvent("Amz_tke_r_05","PickupEvent",0.5500)
-    Bladex.AddAnmEvent("Amz_tke_r_key00","PickupEvent",0.2069)
-    Bladex.AddAnmEvent("Amz_tke_r_key00","Key_down",0.6897)
+    # Bladex.AddAnmEvent("Amz_tke_r_key00","PickupEvent",0.2069)        ### PLAGUE: Duplicated, commented out
+    # Bladex.AddAnmEvent("Amz_tke_r_key00","Key_down",0.6897)           ###
 
     Bladex.AddAnmEvent("Amz_g_spear02low","HitInitialItp",0.103)
     Bladex.AddAnmEvent("Amz_g_spear02low","HitFinalItp",0.770)
@@ -532,7 +532,7 @@ def Init():
     Bladex.AddAnmEvent("Amz_g_spear_back","Stop_Trail",0.458)
     Bladex.AddAnmEvent("Amz_g_spear_back","Start_Weapon",0.272)
     Bladex.AddAnmEvent("Amz_g_spear_back","Stop_Weapon",0.458)
-    Bladex.AddAnmEvent("Amz_g_spear_back","Swap180",0.95)           # Added. -LeadHead
+    Bladex.AddAnmEvent("Amz_g_spear_back","Swap180",0.90)           # Added. -LeadHead
 
 
 
@@ -1144,7 +1144,7 @@ def Init():
     Bladex.AddAnmEvent("Bar_tke_r_key00","PickupEvent",0.2069)
     Bladex.AddAnmEvent("Bar_tke_r_key00","Key_down",0.6897)
     Bladex.AddAnmEvent("Bar_tke_r_key03","PickupEvent",0.316)
-    Bladex.AddAnmEvent("Bar_tke_r_key03","Key_down",0.943)
+    Bladex.AddAnmEvent("Bar_tke_r_key03","Key_down",0.783) # was 0.943
     Bladex.AddAnmEvent("Bar_tke_r_key05","PickupEvent",0.220)
     Bladex.AddAnmEvent("Bar_tke_r_key05","Key_down",0.680)
     Bladex.AddAnmEvent("Bar_tke_r_key01","PickupEvent",0.221)
@@ -1930,7 +1930,7 @@ def Init():
 
 
     """
-    # PLAGUE: Look like beta content. Commenting out to prevent unnecessary memory use.
+    # PLAGUE: Look like beta content. Commenting out to prevent unnecessary calls.
     # Also references non-existant animations.
     Bladex.AddAnmEvent("Kgt_dth_n00","scream_kgt",0.0179)
     Bladex.AddAnmEvent("Kgt_dth_n01","scream_kgt",0.0526)
@@ -2007,16 +2007,13 @@ def Init():
 
 
     Bladex.AddAnmEvent("Kgt_tke_r_key02","PickupEvent",0.2759)
-    # Bladex.AddAnmEvent("Kgt_tke_r_key02","Key_down",0.8621)   # Adjusted
-    Bladex.AddAnmEvent("Kgt_tke_r_key02","Key_down",0.8071)     #   -LeadHead
+    Bladex.AddAnmEvent("Kgt_tke_r_key02","Key_down",0.7781)     # was 0.8621  -LeadHead
     Bladex.AddAnmEvent("Kgt_tke_r_key04","PickupEvent",0.2727)
     Bladex.AddAnmEvent("Kgt_tke_r_key04","Key_down",0.6667)
     Bladex.AddAnmEvent("Kgt_tke_r_key01","PickupEvent",0.3103)
-    # Bladex.AddAnmEvent("Kgt_tke_r_key01","Key_down",0.8621)   # Adjusted
-    Bladex.AddAnmEvent("Kgt_tke_r_key01","Key_down",0.7961)     #   -LeadHead
+    Bladex.AddAnmEvent("Kgt_tke_r_key01","Key_down",0.7961)     # was 0.8621  -LeadHead
     Bladex.AddAnmEvent("Kgt_tke_r_key03","PickupEvent",0.3103)
-    # Bladex.AddAnmEvent("Kgt_tke_r_key03","Key_down",0.8966)   # Adjusted
-    Bladex.AddAnmEvent("Kgt_tke_r_key03","Key_down",0.7966)     #   -LeadHead
+    Bladex.AddAnmEvent("Kgt_tke_r_key03","Key_down",0.7966)     # was 0.8966  -LeadHead
     Bladex.AddAnmEvent("Kgt_tke_r_key05","PickupEvent",0.2727)
     Bladex.AddAnmEvent("Kgt_tke_r_key05","Key_down",0.6667)     # PLAGUE: Too early?
 
@@ -2364,8 +2361,8 @@ def Init():
     Bladex.AddAnmEvent("Dwf_drp_r","DropRightEvent",0.4074)
     Bladex.AddAnmEvent("Dwf_drp_l","DropLeftEvent",0.543)
 
-    Bladex.AddAnmEvent("Dwf_tke_r_key00","PickupEvent",0.2069)
-    Bladex.AddAnmEvent("Dwf_tke_r_key00","Key_down",0.6897)
+    # Bladex.AddAnmEvent("Dwf_tke_r_key00","PickupEvent",0.2069)  ### PLAGUE: duplicate below
+    # Bladex.AddAnmEvent("Dwf_tke_r_key00","Key_down",0.6897)     ###
     Bladex.AddAnmEvent("Dwf_tke_r_key03","PickupEvent",0.316)
     Bladex.AddAnmEvent("Dwf_tke_r_key03","Key_down",0.943)
     Bladex.AddAnmEvent("Dwf_tke_r_key05","PickupEvent",0.220)
@@ -2384,7 +2381,7 @@ def Init():
     Bladex.AddAnmEvent("Dwf_pulsador","Activate",0.3333)  
 
 
-    Bladex.AddAnmEvent("Dwf_tke_r_01","PickupEvent",0.5882)
+    # Bladex.AddAnmEvent("Dwf_tke_r_01","PickupEvent",0.5882)       ### PLAGUE: duplicate above
     Bladex.AddAnmEvent("Dwf_tke_r_02","PickupEvent",0.382)
     Bladex.AddAnmEvent("Dwf_tke_r_03","PickupEvent",0.297)
     Bladex.AddAnmEvent("Dwf_tke_r_04","PickupEvent",0.407)
@@ -2747,7 +2744,7 @@ def Init():
     Bladex.AddAnmEvent("Dwf_fire2","UnGraspString",0.05)
     Bladex.AddAnmEvent("Dwf_fire3","UnGraspString",0.05)
     
-    Bladex.AddAnmEvent("Dwf_read_shield_a","RightPickupShield",0.1579)   # Added.
+    Bladex.AddAnmEvent("Dwf_read_shield_a","RightPickupShield",0.1579)   # Added
     Bladex.AddAnmEvent("Dwf_read_shield_a","RightStoreShield",0.9240)    #
     Bladex.AddAnmEvent("Dwf_read_shield_a","StartRead",0.3509)           #
     Bladex.AddAnmEvent("Dwf_read_shield_a","EndRead",0.8187)             #      -LeadHead
@@ -3899,15 +3896,15 @@ def Init():
     Bladex.AddAnmEvent("Amz_bag","ChangeREvent",0.556)
 
     Bladex.AddAnmEvent("Amz_tke_r_key02","PickupEvent",0.2759)
-    Bladex.AddAnmEvent("Amz_tke_r_key02","Key_down",0.8621)
+    Bladex.AddAnmEvent("Amz_tke_r_key02","Key_down",0.7781)     # was 0.8621
     Bladex.AddAnmEvent("Amz_tke_r_key04","PickupEvent",0.2727)
     Bladex.AddAnmEvent("Amz_tke_r_key04","Key_down",0.6667)
     Bladex.AddAnmEvent("Amz_tke_r_key01","PickupEvent",0.3103)
-    Bladex.AddAnmEvent("Amz_tke_r_key01","Key_down",0.8621)
+    Bladex.AddAnmEvent("Amz_tke_r_key01","Key_down",0.7961)     # was 0.8621
     Bladex.AddAnmEvent("Amz_tke_r_key03","PickupEvent",0.3103)
-    Bladex.AddAnmEvent("Amz_tke_r_key03","Key_down",0.8966)
+    Bladex.AddAnmEvent("Amz_tke_r_key03","Key_down",0.7966)     # was 0.8966
     Bladex.AddAnmEvent("Amz_tke_r_key05","PickupEvent",0.2727)
-    Bladex.AddAnmEvent("Amz_tke_r_key05","Key_down",0.6667)
+    Bladex.AddAnmEvent("Amz_tke_r_key05","Key_down",0.6667)     # PLAGUE: Too early?
 
     Bladex.AddAnmEvent("Amz_tke_r_key00","PickupEvent",0.2069)
     Bladex.AddAnmEvent("Amz_tke_r_key00","Key_down",0.6897)
