@@ -8,7 +8,7 @@
 ##||| * Restored spider spitting.
 ##||| * Fixed Knight's and DalGurak's "g_02_new" (Speedkill anim) weapon flags lingering too long.
 ##||| * Added Dwarf specific animation events for Tomb of Ephyra cutscene.
-##||| * Added additional Start_Weapon event for Knight's FireSword combo
+##||| * Following attacks now hit twice - FireSword combo, FireAxe combo, FireBo combo
 ##||| * Corrected start_weapon_special timing for g_magic2 (level 19 Sword of Ianna combo)
 ##||| * Adjusted "tke_r_key" timings for: Knight, Barbarian, Amazon
 ##\\\ 
@@ -361,8 +361,10 @@ def Init():
     Bladex.AddAnmEvent("Amz_g_spear_b6_26","HitFinalItp",0.794)
     Bladex.AddAnmEvent("Amz_g_spear_b6_26","Start_Trail",0.448)
     Bladex.AddAnmEvent("Amz_g_spear_b6_26","Stop_Trail",0.699)
-    Bladex.AddAnmEvent("Amz_g_spear_b6_26","Start_Weapon",0.448)
-    Bladex.AddAnmEvent("Amz_g_spear_b6_26","Stop_Weapon",0.699)
+    Bladex.AddAnmEvent("Amz_g_spear_b6_26","Start_Weapon",0.448)    # Now hits twice
+    Bladex.AddAnmEvent("Amz_g_spear_b6_26","Stop_Weapon",0.521)     #
+    Bladex.AddAnmEvent("Amz_g_spear_b6_26","Start_Weapon",0.525)    #
+    Bladex.AddAnmEvent("Amz_g_spear_b6_26","Stop_Weapon",0.699)     #       -LeadHead
     Bladex.AddAnmEvent("Amz_g_spear_b6_26","Start_Weapon_Special",0.448)
     Bladex.AddAnmEvent("Amz_g_spear_b6_26","Stop_Weapon_Special",0.699)
     
@@ -2512,8 +2514,10 @@ def Init():
     Bladex.AddAnmEvent("Dwf_g_22","HitFinalItp",0.789)
     Bladex.AddAnmEvent("Dwf_g_22","Start_Trail",0.454)
     Bladex.AddAnmEvent("Dwf_g_22","Stop_Trail",0.677)
-    Bladex.AddAnmEvent("Dwf_g_22","Start_Weapon",0.454)
-    Bladex.AddAnmEvent("Dwf_g_22","Stop_Weapon",0.677)
+    Bladex.AddAnmEvent("Dwf_g_22","Start_Weapon",0.454)     # Now hits twice
+    Bladex.AddAnmEvent("Dwf_g_22","Stop_Weapon",0.522)      #
+    Bladex.AddAnmEvent("Dwf_g_22","Start_Weapon",0.525)     #
+    Bladex.AddAnmEvent("Dwf_g_22","Stop_Weapon",0.677)      #       -LeadHead
     Bladex.AddAnmEvent("Dwf_g_22","Start_Weapon_Special",0.454)
     Bladex.AddAnmEvent("Dwf_g_22","Stop_Weapon_Special",0.677)
     
