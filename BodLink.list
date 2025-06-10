@@ -1304,6 +1304,10 @@ HookSwordPieza4
 Hornacina
 ../../3dobjs\IceAxe.BOD
 IceAxe
+../../3dobjs\IceAxePart1.BOD
+IceAxePart1
+../../3dobjs\IceAxePart2.BOD
+IceAxePart2
 ../../3dobjs\IceAxePieza1.BOD
 IceAxePieza1
 ../../3dobjs\IceAxePieza2.BOD
@@ -1330,6 +1334,10 @@ IceHammerPieza5
 IceHammerPieza6
 ../../3dobjs\icesword.BOD
 IceSword
+../../3dobjs\IceSwordPart1.BOD
+IceSwordPart1
+../../3dobjs\IceSwordPart2.BOD
+IceSwordPart2
 ../../3dobjs\iceswordPieza1.BOD
 IceSwordPieza1
 ../../3dobjs\iceswordPieza2.BOD
@@ -1338,6 +1346,10 @@ IceSwordPieza2
 IceSwordPieza3
 ../../3dobjs\iceswordPieza4.BOD
 IceSwordPieza4
+../../3dobjs\IceWandPart1.BOD
+IceWandPart1
+../../3dobjs\IceWandPart2.BOD
+IceWandPart2
 ../../3dobjs\icewandpieza1.BOD
 IceWandPieza1
 ../../3dobjs\icewandpieza2.BOD

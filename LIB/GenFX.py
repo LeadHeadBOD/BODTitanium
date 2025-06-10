@@ -257,13 +257,15 @@ def AddWeaponFX(WeaponName, data):
 		lightdata=(1.0, (255, 120, 0), 1)
 		weapon.SelfIlum=0.8
 	elif weapon.Kind in ("IceAxe", "IceHammer", "IceSword", "IceWand"):
-		auraparams=(10, 1, 1, 0, 0, 1)
+		auraparams=(15, 0.8, 1, 0, 1, 0)
 		auragradient=(2, 0.9, 1.0, 1.0, 0.2, 0.1, 0.4, 0.8, 1.0, 0.2, 1.0)
 		prtldata=("Vaho", 20, (0.0, 0.0, 0.0), 0.0, 1.0, 150.0, 0.02, 0.0, 60)
 		lightdata=()
-		weapon.SelfIlum=0.2
-		weapon.Alpha=0.99
-		weapon.RasterMode="AdditiveAlpha"
+		# weapon.SelfIlum=0.2
+		weapon.Alpha=0.0
+		# weapon.RasterMode="AdditiveAlpha"
+		CreateMultiParts(WeaponName)
+		
 	elif weapon.Kind in ("BladeSword2", "BladeSword2Barbarian"):
 		auraparams=(80, 1, 1, 0, 0, 1)
 		auragradient=(2, 0.8, 0.9, 1.0, 0.6, 0.0, 0.3, 0.4, 0.9, 0.0, 0.6)
@@ -275,6 +277,62 @@ def AddWeaponFX(WeaponName, data):
 		return
 	data.WeaponFX=WeaponFX(WeaponName, auraparams, auragradient, prtldata, lightdata)
 
+###			 	  ###
+# Multi-part object #
+#					#
+###				  ###
+def CreateMultiParts(objName):
+	obj    = Bladex.GetEntity(objName)
+	kind   = obj.Kind
+	oldPos = obj.Position
+	oldOri = obj.Orientation
+	obj.Position = 0.0, 0.0, 0.0
+	obj.Orientation = (1.0, 0.0, 0.0, 0.0)
+
+	# x,y,z = 1.0 / obj.Position[0] , 1.0 / obj.Position[1], 1.0 / obj.Position[2]
+	if kind == ("IceHammer"):
+		type_part = kind+"Pieza"
+		partposrel= [(-176.01,0,413.108), (179.492,-58.747,444.756), (179.494,0,413.737), (-179.494,58.747,444.756), (0,0,318.22), (0,0,0)]
+		n_parts   = (0, 1, 2, 3, 4, 5)
+		partsAlph = (0.7, 0.7, 0.7, 0.7, 0.7, 1.0)
+		partsIlum = (0.2, 0.2, 0.2, 0.2, 0.2, 0.0)
+	elif kind == ("IceSword"):
+		type_part = kind+"Part"
+		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
+		n_parts   = (0, 1)
+		partsAlph = (1.0, 0.7)
+		partsIlum = (0.0, 0.2)
+	elif kind == ("IceWand"):
+		type_part = kind+"Part"
+		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
+		n_parts   = (0, 1)
+		partsAlph = (1.0, 0.7)
+		partsIlum = (0.0, 0.2)
+	elif kind == ("IceAxe"):
+		type_part = kind+"Part"
+		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
+		n_parts   = (0, 1)
+		partsAlph = (1.0, 0.7)
+		partsIlum = (0.0, 0.2)
+	else: 
+		print "error in GenFX.CreateMultiParts() - invalid kind!"
+		obj.Position    = oldPos
+		obj.Orientation = oldOri
+		return
+        
+	for n in n_parts:
+		int_obj_name=objName+"Part"+`n+1`
+		part=Bladex.CreateEntity(int_obj_name, type_part+`n+1`, 0.0, 0.0, 0.0)
+		part.Solid=0
+		part.CastShadows=0
+		part.Alpha=partsAlph[n]
+		part.SelfIlum=partsIlum[n]
+		partpos=obj.Rel2AbsPoint(partposrel[n][0], partposrel[n][1], partposrel[n][2])
+		part.Position=partpos[0], partpos[1], partpos[2]
+		obj.Link(part)
+	obj.Position = oldPos
+	obj.Orientation = oldOri
+		
 
 
 #############################################
