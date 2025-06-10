@@ -8,6 +8,7 @@
 ##||| * Added reinforced boxes.
 ##||| * Added missing shields (KingShield, Barbarian Shield).
 ##||| * Added some other misc items to have a default material.
+##||| * Added all missing weapons (amazon stuff, some special weapons, etc.)
 ##\\\ 
 
 
@@ -251,6 +252,7 @@ def Init():
     Bladex.SetDefaultMaterial('Taburete', 'madera mediana')
     Bladex.SetDefaultMaterial('Timon', 'madera mediana')
     Bladex.SetDefaultMaterial('Escudo9', 'madera mediana')      # Added -LeadHead
+    Bladex.SetDefaultMaterial('Bichero', 'madera mediana')      #
 
 
 
@@ -290,6 +292,7 @@ def Init():
     Bladex.SetDefaultMaterial('Corona', 'metal ligero')
     Bladex.SetDefaultMaterial('Cincel', 'metal ligero')
     Bladex.SetDefaultMaterial('Cuchillo', 'metal ligero')
+    Bladex.SetDefaultMaterial('Crosspear', 'metal ligero')       # Added
     Bladex.SetDefaultMaterial('Daga', 'metal ligero')
     Bladex.SetDefaultMaterial('Dagarrojar', 'metal ligero')
     Bladex.SetDefaultMaterial('Farol', 'metal ligero')
@@ -311,7 +314,12 @@ def Init():
     Bladex.SetDefaultMaterial('Candelpeque', 'metal ligero')   # Added
     Bladex.SetDefaultMaterial('Tacita', 'metal ligero')        #
     Bladex.SetDefaultMaterial('Cazo', 'metal ligero')          #        -LeadHead
-
+    Bladex.SetDefaultMaterial('Chakram', 'metal ligero')       #
+    Bladex.SetDefaultMaterial('Chakram2', 'metal ligero')      #
+    Bladex.SetDefaultMaterial('DeathKatar', 'metal ligero')    #
+    Bladex.SetDefaultMaterial('Katar', 'metal ligero')         #
+    Bladex.SetDefaultMaterial('KatarDoble', 'metal ligero')    #
+    Bladex.SetDefaultMaterial('KatarMoon', 'metal ligero')     #
 
 
 
@@ -319,10 +327,16 @@ def Init():
 
     # *** Metal  mediano ***
     Bladex.SetDefaultMaterial('Antorchaenpared', 'metal mediano')   # Moved to metal from wood
+    Bladex.SetDefaultMaterial('Axpear', 'metal mediano')            #
+    Bladex.SetDefaultMaterial('Arpon', 'metal mediano')             #
     Bladex.SetDefaultMaterial('Candelabro', 'metal mediano')        # Added         -LeadHead
     Bladex.SetDefaultMaterial('Alabarda', 'metal mediano')
     Bladex.SetDefaultMaterial('Bloodbol', 'metal mediano')
     Bladex.SetDefaultMaterial('Brasero1', 'metal mediano')
+    Bladex.SetDefaultMaterial('BladeSword', 'metal mediano')        # Added
+    Bladex.SetDefaultMaterial('BladeSword2', 'metal mediano')        # Added
+    Bladex.SetDefaultMaterial('BladeSwordBarbarian', 'metal mediano')        # Added
+    Bladex.SetDefaultMaterial('BladeSword2Barbarian', 'metal mediano')        # Added
     Bladex.SetDefaultMaterial('CandilAurelio', 'metal mediano')
     Bladex.SetDefaultMaterial('Candil2', 'metal mediano')
     Bladex.SetDefaultMaterial('Cimitarra', 'metal mediano')
@@ -333,6 +347,7 @@ def Init():
     Bladex.SetDefaultMaterial('Dagesse', 'metal mediano')
     Bladex.SetDefaultMaterial('DeathBo', 'metal mediano')
     Bladex.SetDefaultMaterial('DoubleSword', 'metal mediano')
+    Bladex.SetDefaultMaterial('DalShield', 'metal mediano')         # Added
     Bladex.SetDefaultMaterial('Espada', 'metal mediano')
     Bladex.SetDefaultMaterial('EgyptSword', 'metal mediano')
     Bladex.SetDefaultMaterial('Espadafilo', 'metal mediano')
@@ -351,6 +366,7 @@ def Init():
     Bladex.SetDefaultMaterial('Escudo8', 'metal mediano')
     Bladex.SetDefaultMaterial('KingShield', 'metal mediano')    # Added     -LeadHead
     Bladex.SetDefaultMaterial('FireAxe', 'metal mediano')
+    Bladex.SetDefaultMaterial('FireSword', 'metal mediano')     # Added
     Bladex.SetDefaultMaterial('FireBo', 'metal mediano')
     Bladex.SetDefaultMaterial('Gancholamp', 'metal mediano')
     Bladex.SetDefaultMaterial('Gladius', 'metal mediano')
@@ -372,6 +388,7 @@ def Init():
     Bladex.SetDefaultMaterial('LamparaAurelio', 'metal mediano')
     Bladex.SetDefaultMaterial('Lampcolg', 'metal mediano')
     Bladex.SetDefaultMaterial('Lanza', 'metal mediano')
+    Bladex.SetDefaultMaterial('LanzaAncha', 'metal mediano')    # Added
     Bladex.SetDefaultMaterial('LightEdge', 'metal mediano')
     Bladex.SetDefaultMaterial('Martillo', 'metal mediano')
     Bladex.SetDefaultMaterial('Martillo2', 'metal mediano')
@@ -427,6 +444,7 @@ def Init():
     Bladex.SetDefaultMaterial('Sablazo', 'metal pesado')
     Bladex.SetDefaultMaterial('SawSword', 'metal pesado')
     Bladex.SetDefaultMaterial('Yunque', 'metal pesado')
+    Bladex.SetDefaultMaterial('Escudon', 'metal pesado')        # Added 
 
 
 
@@ -475,6 +493,7 @@ def Init():
     Bladex.SetDefaultMaterial('Botella', 'cristal')
     Bladex.SetDefaultMaterial('Botella2', 'cristal')
     Bladex.SetDefaultMaterial('BotellaVerde', 'cristal')
+    Bladex.SetDefaultMaterial('IceWand', 'cristal')   ### Added -LeadHead
     Bladex.SetDefaultMaterial('IceAxe', 'cristal')
     Bladex.SetDefaultMaterial('IceHammer', 'cristal')
     Bladex.SetDefaultMaterial('IceSword', 'cristal')
@@ -485,6 +504,9 @@ def Init():
     Bladex.SetDefaultMaterial('PocimaTodo', 'cristal')
     Bladex.SetDefaultMaterial('PowerPotion', 'cristal')
     
+    Bladex.SetDefaultMaterial('Antidoto', 'cristal')
+    Bladex.SetDefaultMaterial('LlaveBlanca', 'cristal')
+    
     Bladex.SetDefaultMaterial('Pocima25_E', 'cristal') ### Empty potions -LeadHead
     Bladex.SetDefaultMaterial('Pocima50_E', 'cristal')
     Bladex.SetDefaultMaterial('Pocima100_E', 'cristal')
@@ -494,9 +516,10 @@ def Init():
     
     
     
-    # *** Ceramica ligera***
+    # *** Ceramica ligera***    
     # Even though the material was created, it was completely unused -LeadHead
     Bladex.SetDefaultMaterial('Jarra', 'ceramica ligera')
+    Bladex.SetDefaultMaterial('BotellaSagrada', 'ceramica ligera') # Added -LeadHead
     
     
     # *** Ceramica mediana***
@@ -526,3 +549,4 @@ def Init():
     Bladex.SetDefaultMaterial('Libro3', 'generico2')    #       -LeadHead
     Bladex.SetDefaultMaterial('Saquito', 'generico2')
     Bladex.SetDefaultMaterial('RollodeCuerda', 'generico2')     # Added
+    Bladex.SetDefaultMaterial('Cantimplora','generico2')        #
