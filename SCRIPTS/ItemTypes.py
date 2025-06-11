@@ -1987,6 +1987,9 @@ class BladeSword(PersistantItemType):
 	def BackToPlayer(self):
 		weapon= Bladex.GetEntity(self.Name)
 		owner= Bladex.GetEntity(self.OwnerName)
+		if Bladex.GetEntity(self.OwnerName).Life < 1:	
+			print self.OwnerName + " is dead, no sword for you" # Do not return to player hand
+			return										        # if dead		-LeadHead
 		if owner and weapon:
 			if not owner.InvRight:
 				AuxFuncs.FadeObject(weapon.Name, weapon.Alpha, 1.0, self.FadeTime)
