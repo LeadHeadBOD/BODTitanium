@@ -590,7 +590,9 @@ def Amz_g_spear16_FX(EntityName, EventName):
     if step==1:
         pers=Bladex.GetEntity(EntityName)
         inv=pers.GetInventory()
-        ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "BlueTrail", 2000, 15, 0, 0.1, 10, 1.6)
+        ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "WhiteTrail", 3500, 1, -2, 0.3, 24, 0.6,-30)
+    if step==2:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 2500, 30, 15, 0.1, 12, 1.1,0)
 
 #"Amz_g_spear19_bs1" STEELFEATHER
 def Amz_g_spear19_bs1_FX(EntityName, EventName):
@@ -599,7 +601,13 @@ def Amz_g_spear19_bs1_FX(EntityName, EventName):
     if step==1:
         pers=Bladex.GetEntity(EntityName)
         inv=pers.GetInventory()
-        ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "YellowTrail", 2000, 5, 0, 0.1, 10, 1.6)
+        ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "YellowTrail", 3000, 5, 0, 0.1, 18, 0.8)
+    elif step==2:
+        GenFX.ModifyParticles(ComboFX_prtlsys, 2000, 3, 0, 0.01, 10, 0.4)
+    elif step==3:
+        GenFX.ModifyParticles(ComboFX_prtlsys, 4500, 2, -3, 0.01, 24, 0.8)
+    elif step==4:
+        GenFX.ModifyParticles(ComboFX_prtlsys, 2000, 3, 0, 0.01, 10, 1.2)
 
 #"Amz_g_spear19_bs1" FIREBO
 def Amz_g_spear_b6_26_FX(EntityName, EventName):
@@ -804,7 +812,11 @@ def Dwf_g_s18_2h_FX(EntityName, EventName):
 	if step==1:
 		pers=Bladex.GetEntity(EntityName)
 		inv=pers.GetInventory()
-		ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "WhiteTrail", 2000, 3, 0, 0.1, 20, 1.3)
+		ComboFX_prtlsys=GenFX.AddParticles(inv.GetActiveWeapon(), "WhiteTrail", 2000, 3, -5, 0.1, 15, 0.6)
+	if step==2:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 5000, 50, 50, 0.1, 40, 0.3,-15)
+	if step==3:
+		GenFX.ModifyParticles(ComboFX_prtlsys, 1500, 20, 2, 0.1, 8, 1.3,1)
     # PLAGUE: the trail needs minor adjustment 
 
 
@@ -977,8 +989,12 @@ def AmzCombosFX(pers_name):
     # Added below for Ice Wand, Steel Feather and Fire Bo
     
 	pers.AddAnmEventFunc("Amz_g_spear16_1", Amz_g_spear16_FX)
+	pers.AddAnmEventFunc("Amz_g_spear16_2", Amz_g_spear16_FX)
     
 	pers.AddAnmEventFunc("Amz_g_spear19_bs1_1", Amz_g_spear19_bs1_FX)
+	pers.AddAnmEventFunc("Amz_g_spear19_bs1_2", Amz_g_spear19_bs1_FX)
+	pers.AddAnmEventFunc("Amz_g_spear19_bs1_3", Amz_g_spear19_bs1_FX)
+	pers.AddAnmEventFunc("Amz_g_spear19_bs1_4", Amz_g_spear19_bs1_FX)
 	
 	pers.AddAnmEventFunc("Amz_g_spear_b6_26_1", Amz_g_spear_b6_26_FX)
 	pers.AddAnmEventFunc("Amz_g_spear_b6_26_2", Amz_g_spear_b6_26_FX)
@@ -1078,6 +1094,8 @@ def DwfCombosFX(pers_name):
 	pers.AddAnmEventFunc("Dwf_g_s22low_new_1", Dwf_g_s22low_new_FX)
     
 	pers.AddAnmEventFunc("Dwf_g_s18_2h_1", Dwf_g_s18_2h_FX)
+	pers.AddAnmEventFunc("Dwf_g_s18_2h_2", Dwf_g_s18_2h_FX)
+	pers.AddAnmEventFunc("Dwf_g_s18_2h_3", Dwf_g_s18_2h_FX)
 
 	pers.AddAnmEventFunc("Dwf_g_22_1", Dwf_g_22_FX)
 	pers.AddAnmEventFunc("Dwf_g_22_2", Dwf_g_22_FX)

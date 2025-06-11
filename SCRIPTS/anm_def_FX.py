@@ -133,8 +133,12 @@ Bladex.AddAnmEvent("Amz_g_magic","Amz_g_magic_5",0.5670)
 Bladex.AddAnmEvent("Amz_g_magic2","Amz_g_magic2_1",0.0900)
 Bladex.AddAnmEvent("Amz_g_magic2","Amz_g_magic2_2",0.1600)
 Bladex.AddAnmEvent("Amz_g_magic2","Amz_g_magic2_3",0.3200)
-Bladex.AddAnmEvent("Amz_g_spear16","Amz_g_spear16_1",0.4330)                # Added
-Bladex.AddAnmEvent("Amz_g_spear19_bs1","Amz_g_spear19_bs1_1",0.1750)        #       
+Bladex.AddAnmEvent("Amz_g_spear16","Amz_g_spear16_1",0.2340)                # Added
+Bladex.AddAnmEvent("Amz_g_spear16","Amz_g_spear16_2",0.4690)                # 
+Bladex.AddAnmEvent("Amz_g_spear19_bs1","Amz_g_spear19_bs1_1",0.1480)        #    
+Bladex.AddAnmEvent("Amz_g_spear19_bs1","Amz_g_spear19_bs1_2",0.2960)        #    
+Bladex.AddAnmEvent("Amz_g_spear19_bs1","Amz_g_spear19_bs1_3",0.3940)        #    
+Bladex.AddAnmEvent("Amz_g_spear19_bs1","Amz_g_spear19_bs1_4",0.5680)        #    
 Bladex.AddAnmEvent("Amz_g_spear_b6_26","Amz_g_spear_b6_26_1",0.1590)        #
 Bladex.AddAnmEvent("Amz_g_spear_b6_26","Amz_g_spear_b6_26_2",0.4540)        #       -LeadHead
 
@@ -154,6 +158,8 @@ Bladex.AddAnmEvent("Dwf_g_31","Dwf_g_31_1",0.2910)
 Bladex.AddAnmEvent("Dwf_g_31","Dwf_g_31_2",0.4350)
 Bladex.AddAnmEvent("Dwf_g_s22low_new","Dwf_g_s22low_new_1",0.2550)      # Added
 Bladex.AddAnmEvent("Dwf_g_s18_2h","Dwf_g_s18_2h_1",0.2780)              #       
+Bladex.AddAnmEvent("Dwf_g_s18_2h","Dwf_g_s18_2h_2",0.6430)              #       
+Bladex.AddAnmEvent("Dwf_g_s18_2h","Dwf_g_s18_2h_3",0.7320)              #       
 Bladex.AddAnmEvent("Dwf_g_22","Dwf_g_22_1",0.1580)                      #
 Bladex.AddAnmEvent("Dwf_g_22","Dwf_g_22_2",0.4540)                      #       -LeadHead
 Bladex.AddAnmEvent("Dwf_g_magic","Dwf_g_magic_1",0.1200)

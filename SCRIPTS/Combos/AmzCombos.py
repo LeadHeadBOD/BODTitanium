@@ -279,7 +279,7 @@ amz.AddLevels("Amz_g_spear_b29",16,40)
 #GOLPE STEELFEATHER
 amz.AddAttack("GM34_SP","Amz_g_spear19_bs1")
 amz.AttackWindow("Amz_g_spear19_bs1",0.020,0.900,"GM34_SP_Window")
-amz.AssignTrail("GM34_SP","","EstelaRoja1")
+amz.AssignTrail("GM34_SP","","EstelaAmarilla1")                     #Was "EstelaRoja1"
 amz.AddLevels("Amz_g_spear19_bs1",17,40)
 
 #GOLPE ICEWAND
