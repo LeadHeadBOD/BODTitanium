@@ -1143,18 +1143,18 @@ def ThrowTotem(entity,use_from):
 
 	angle = B3DLib.GetEntity2EntityAngle ("Player1","Totem")
 
-	if (angle > 4.35 and angle < 5.25):
+	if (angle > 4.35 and angle < 5.25):				   # PLAGUE: this is not intuitive at all
 		cam = Bladex.GetEntity("Camera")
 		cam.SetMaxCamera("tot_Camera01.cam",0,194)
 		Bladex.DeactivateInput()                       # PLAGUE: need to make skippable
 
-		char.QuickFace(angle)
+		# char.QuickFace(angle)
 
 		totem.Orientation = (0.707388281822, 0.706825196743, 0.0, 0.0)
 		totem.Actor = 1
 		totem.Animation="Totem2"
 		totem.SendSectorMsgs=0
-		totem.FPS=60.0              # Was 20 -LeadHead
+		# totem.FPS=60.0              # Was 20 -LeadHead
 		totem.TurnOn()
 
 		char = Bladex.GetEntity("Player1")
