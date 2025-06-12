@@ -1,10 +1,10 @@
 ##///
-##||| PALACE_M15/DefFuncs.PY TITANIUM
+##||| PALACE_back/DefFuncs.PY TITANIUM
 ##||| Change list:
 ##||| * Orcs in the invasion cutscene will now use weapons and meshes of real orcs
 ##||| * maxWeapons fix for non-standard weapon amounts
 ##||| * Attempt at getting 60fps final cutscene
-##||| * 
+##||| * Probably need to clean some of this stuff up - no need to load all these funcs
 ##||| * 
 ##||| * 
 ##\\\ 
@@ -144,42 +144,24 @@ def essBreakDoor() :
 	darfuncs.EnterSecEvent(-24358.3619395, -2105.52315802, 149607.745315,Atacaminorx)
 
 def essSceneBCreateX():
-	orkB_n = Bladex.GetEntity("01ORC")
-	orkBA_K = orkB_n.Kind ; orkBA_R = Bladex.GetEntity(orkB_n.InvRight).Kind ; orkBA_L = Bladex.GetEntity(orkB_n.InvLeft).Kind
-	
-	orkB_n = Bladex.GetEntity("02ORC")
-	orkBB_K = orkB_n.Kind ; orkBB_R = Bladex.GetEntity(orkB_n.InvRight).Kind ; orkBB_L = Bladex.GetEntity(orkB_n.InvLeft).Kind
-	
-	orkB_n = Bladex.GetEntity("PalaceArq1")
-	orkBC_K = orkB_n.Kind ; orkBC_R = Bladex.GetEntity(orkB_n.InvRight).Kind ; orkBC_L = Bladex.GetEntity(orkB_n.InvLeft).Kind
-
-	orkB_n = Bladex.GetEntity("3ORC")
-	orkBD_K = orkB_n.Kind ; orkBD_R = Bladex.GetEntity(orkB_n.InvRight).Kind ; orkBD_L = Bladex.GetEntity(orkB_n.InvLeft).Kind
-	
-	orkB_n = Bladex.GetEntity("2ORC")
-	orkBE_K = orkB_n.Kind ; orkBE_R = Bladex.GetEntity(orkB_n.InvRight).Kind ; orkBE_L = Bladex.GetEntity(orkB_n.InvLeft).Kind
-	
-	orkB_n = Bladex.GetEntity("5ORC")
-	orkBF_K = orkB_n.Kind ; orkBF_R = Bladex.GetEntity(orkB_n.InvRight).Kind ; orkBF_L = Bladex.GetEntity(orkB_n.InvLeft).Kind
-	
-	essOrkB_A=Bladex.CreateEntity( "essOrk_B_A", orkBA_K		, -23392.016 ,  -1953.069, 153216.797  )
-	essOrkB_B=Bladex.CreateEntity( "essOrk_B_B", orkBB_K	, -25309.123 ,  -1956.263, 154473.672  )
-	essOrkB_C=Bladex.CreateEntity( "essOrk_B_C", orkBC_K	, -24701.467 ,  -1284.725, 155565.922  )
-	essOrkB_D=Bladex.CreateEntity( "essOrk_B_D", orkBD_K		, -23356.531 ,  -1668.392, 155305.594  )
-	essOrkB_E=Bladex.CreateEntity( "essOrk_B_E", orkBE_K	, -32007.924 , -2053.556, 107844.641  )
-	essOrkB_F=Bladex.CreateEntity( "essOrk_B_F", orkBF_K	, -21189.088 , -2053.556, 107272.547  )
+	essOrkB_A=Bladex.CreateEntity( "essOrk_B_A","Ork"		, -23392.016 ,  -1953.069, 153216.797  )
+	essOrkB_B=Bladex.CreateEntity( "essOrk_B_B","Ork"		, -25309.123 ,  -1956.263, 154473.672  )
+	essOrkB_C=Bladex.CreateEntity( "essOrk_B_C","Ork"		, -24701.467 ,  -1284.725, 155565.922  )
+	essOrkB_D=Bladex.CreateEntity( "essOrk_B_D","Great_Ork"		, -23356.531 ,  -1668.392, 155305.594  )
+	essOrkB_E=Bladex.CreateEntity( "essOrk_B_E","Ork"		, -32007.924 , -2053.556, 107844.641  )
+	essOrkB_F=Bladex.CreateEntity( "essOrk_B_F","Ork"		, -21189.088 , -2053.556, 107272.547  )
 	essOrkB_A.Person=1; essOrkB_A.Angle=3.14
 	essOrkB_B.Person=1; essOrkB_B.Angle=3.14
 	essOrkB_C.Person=1; essOrkB_C.Angle=3.14
 	essOrkB_D.Person=1; essOrkB_D.Angle=3.14
 	essOrkB_E.Person=1; essOrkB_E.Angle=3.14
 	essOrkB_F.Person=1; essOrkB_F.Angle=3.14
-	essOrkB_Asw=Bladex.CreateEntity( "essOrk_B_Asw",orkBA_R, 0,0,0 ) ; essOrkB_Ash=Bladex.CreateEntity( "essOrk_B_Ash",orkBA_L, 0,0,0 ) ;
-	essOrkB_Bsw=Bladex.CreateEntity( "essOrk_B_Bsw",orkBB_R, 0,0,0 ) ; essOrkB_Bsh=Bladex.CreateEntity( "essOrk_B_Bsh",orkBB_L, 0,0,0 ) ;
-	essOrkB_Csw=Bladex.CreateEntity( "essOrk_B_Csw","Arco2",  0,0,0) ; essOrkB_Csh=Bladex.CreateEntity( "essOrk_B_Csh","Flecha", 0,0,0) ;
-	essOrkB_Dsw=Bladex.CreateEntity( "essOrk_B_Dsw",orkBD_R, 0,0,0 ) ; essOrkB_Dsh=Bladex.CreateEntity( "essOrk_B_Dsh",orkBD_L, 0,0,0 ) ;
-	essOrkB_Esw=Bladex.CreateEntity( "essOrk_B_Esw",orkBE_R, 0,0,0 ) ; essOrkB_Esh=Bladex.CreateEntity( "essOrk_B_Esh",orkBE_L, 0,0,0 ) ;
-	essOrkB_Fsw=Bladex.CreateEntity( "essOrk_B_Fsw",orkBF_R, 0,0,0 ) ; essOrkB_Fsh=Bladex.CreateEntity( "essOrk_B_Fsh",orkBF_L, 0,0,0 ) ;
+	essOrkB_Asw=Bladex.CreateEntity( "essOrk_B_Asw","Espadaromana", 0,0,0 ) ; essOrkB_Ash=Bladex.CreateEntity( "essOrk_B_Ash","Escudo1", 0,0,0 ) ;
+	essOrkB_Bsw=Bladex.CreateEntity( "essOrk_B_Bsw","Espadaromana", 0,0,0 ) ; essOrkB_Bsh=Bladex.CreateEntity( "essOrk_B_Bsh","Escudo1", 0,0,0 ) ;
+	essOrkB_Csw=Bladex.CreateEntity( "essOrk_B_Csw","Arco2",        0,0,0) ; essOrkB_Csh=Bladex.CreateEntity( "essOrk_B_Csh","Flecha", 0,0,0) ;
+	essOrkB_Dsw=Bladex.CreateEntity( "essOrk_B_Dsw","Espadaromana", 0,0,0 ) ; essOrkB_Dsh=Bladex.CreateEntity( "essOrk_B_Dsh","Escudo1", 0,0,0 ) ;
+	essOrkB_Esw=Bladex.CreateEntity( "essOrk_B_Esw","Espadaromana", 0,0,0 ) ; essOrkB_Esh=Bladex.CreateEntity( "essOrk_B_Esh","Escudo1", 0,0,0 ) ;
+	essOrkB_Fsw=Bladex.CreateEntity( "essOrk_B_Fsw","Espadaromana", 0,0,0 ) ; essOrkB_Fsh=Bladex.CreateEntity( "essOrk_B_Fsh","Escudo1", 0,0,0 ) ;
 	Actions.TakeObject(essOrkB_A.Name,"essOrk_B_Ash") ; Actions.TakeObject(essOrkB_A.Name,"essOrk_B_Asw")
 	Actions.TakeObject(essOrkB_B.Name,"essOrk_B_Bsh") ; Actions.TakeObject(essOrkB_B.Name,"essOrk_B_Bsw")
 	essOrkB_C.GetInventory().LinkRightHand("essOrk_B_Csh") ;essOrkB_C.GetInventory().LinkLeftHand("essOrk_B_Csw")
@@ -227,8 +209,8 @@ def essSceneBAnim() :
 	essOrkB_B=Bladex.GetEntity( "essOrk_B_B")
 	essOrkB_C=Bladex.GetEntity( "essOrk_B_C")
 	essOrkB_D=Bladex.GetEntity( "essOrk_B_D")
-	# essOrkB_E=Bladex.GetEntity( "essOrk_B_E")
-	# essOrkB_F=Bladex.GetEntity( "essOrk_B_F")
+	essOrkB_E=Bladex.GetEntity( "essOrk_B_E")
+	essOrkB_F=Bladex.GetEntity( "essOrk_B_F")
 	essOrkB_A.SetTmpAnmFlags(1,1,1,0,5,1,0); essOrkB_A.LaunchAnimation("Ork_ejer1")
 	essOrkB_B.SetTmpAnmFlags(1,1,1,0,5,1,0); essOrkB_B.LaunchAnimation("Ork_ejer2")
 	essOrkB_C.SetTmpAnmFlags(1,1,1,0,5,1,0); essOrkB_C.LaunchAnimation("Ork_ejer_bow")
@@ -305,43 +287,15 @@ def essSceneBLaunch(index, ent):
 #*************************************************************************************************
 
 def essSceneACreateX():
-	
-	orkA_n=Bladex.GetEntity("4ORC")
-	orkAA_K = orkA_n.Kind ; orkAA_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAA_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-	
-	orkA_n=Bladex.GetEntity("6ORC")
-	orkAB_K = orkA_n.Kind ; orkAB_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAB_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-	
-	orkA_n=Bladex.GetEntity("9ORC")
-	orkAC_K = orkA_n.Kind ; orkAC_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAC_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-
-	orkA_n=Bladex.GetEntity("10ORC")
-	orkAD_K = orkA_n.Kind ; orkAD_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAD_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-	
-	orkA_n=Bladex.GetEntity("PalaceArq10")	# PLAGUE: replace - spawns with bow
-	orkAE_K = orkA_n.Kind ; orkAE_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAE_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-	
-	orkA_n=Bladex.GetEntity("PalaceArq9")   # PLAGUE: replace - spawns with bow
-	orkAF_K = orkA_n.Kind ; orkAF_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAF_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-	
-	orkA_n=Bladex.GetEntity("PalaceArq2")
-	orkAG_K = orkA_n.Kind ; orkAG_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAG_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-
-	orkA_n=Bladex.GetEntity("11ORC")
-	orkAH_K = orkA_n.Kind ; orkAH_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAH_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-	
-	orkA_n=Bladex.GetEntity("12ORC")
-	orkAI_K = orkA_n.Kind ; orkAI_R = Bladex.GetEntity(orkA_n.InvRight).Kind ; orkAI_L = Bladex.GetEntity(orkA_n.InvLeft).Kind
-	
-	essOrkA_A=Bladex.CreateEntity( "essOrk__A_A",orkAA_K	,  79728.023 , 2407.449 , 37312.367 )
-	essOrkA_B=Bladex.CreateEntity( "essOrk__A_B",orkAB_K		,  77420.219 , 2407.45  , 36685.434 )
-	essOrkA_C=Bladex.CreateEntity( "essOrk__A_C",orkAC_K		,  77204.703 , 2411.432 , 36725.395 )
-	essOrkA_D=Bladex.CreateEntity( "essOrk__A_D",orkAD_K		,  78226.961 , 2468.622 , 37222.082 )
-	essOrkA_E=Bladex.CreateEntity( "essOrk__A_E",orkAE_K		,  77266.875 , 2392.445 , 39831.25  )
-	essOrkA_F=Bladex.CreateEntity( "essOrk__A_F",orkAF_K		,  79941.445 , 2356.285 , 40694.676 )
-	essOrkA_G=Bladex.CreateEntity( "essOrk__A_G",orkAG_K		,  78638.953 , 2392.445 , 42531.988 )
-	essOrkA_H=Bladex.CreateEntity( "essOrk__A_H",orkAH_K	,  76806.891 , 2515.893 , 41689.875 )
-	essOrkA_I=Bladex.CreateEntity( "essOrk__A_I",orkAI_K	,  69787.844 , 2356.285 , 42143.176 )
+	essOrkA_A=Bladex.CreateEntity( "essOrk__A_A","Great_Ork"	,  79728.023 , 2407.449 , 37312.367 )
+	essOrkA_B=Bladex.CreateEntity( "essOrk__A_B","Ork"		,  77420.219 , 2407.45  , 36685.434 )
+	essOrkA_C=Bladex.CreateEntity( "essOrk__A_C","Ork"		,  77204.703 , 2411.432 , 36725.395 )
+	essOrkA_D=Bladex.CreateEntity( "essOrk__A_D","Ork"		,  78226.961 , 2468.622 , 37222.082 )
+	essOrkA_E=Bladex.CreateEntity( "essOrk__A_E","Ork"		,  77266.875 , 2392.445 , 39831.25  )
+	essOrkA_F=Bladex.CreateEntity( "essOrk__A_F","Ork"		,  79941.445 , 2356.285 , 40694.676 )
+	essOrkA_G=Bladex.CreateEntity( "essOrk__A_G","Ork"		,  78638.953 , 2392.445 , 42531.988 )
+	essOrkA_H=Bladex.CreateEntity( "essOrk__A_H","Great_Ork"	,  76806.891 , 2515.893 , 41689.875 )
+	essOrkA_I=Bladex.CreateEntity( "essOrk__A_I","Great_Ork"	,  69787.844 , 2356.285 , 42143.176 )
 	essOrkA_A.Person=1; essOrkA_A.Angle=0
 	essOrkA_B.Person=1; essOrkA_B.Angle=0
 	essOrkA_C.Person=1; essOrkA_C.Angle=0
@@ -351,15 +305,15 @@ def essSceneACreateX():
 	essOrkA_G.Person=1; essOrkA_G.Angle=0
 	essOrkA_H.Person=1; essOrkA_H.Angle=0
 	essOrkA_I.Person=1; essOrkA_I.Angle = 3.14*1.5
-	essOrkA_Asw=Bladex.CreateEntity( "essOrk__A_Asw",orkAA_R, 0,0,0 ) ; essOrkA_Ash=Bladex.CreateEntity( "essOrk__A_Ash",orkAA_L, 0,0,0 ) ;
-	essOrkA_Bsw=Bladex.CreateEntity( "essOrk__A_Bsw",orkAB_R, 0,0,0 ) ; essOrkA_Bsh=Bladex.CreateEntity( "essOrk__A_Bsh",orkAB_L, 0,0,0 ) ;
-	essOrkA_Csw=Bladex.CreateEntity( "essOrk__A_Csw",orkAC_R, 0,0,0 ) ; essOrkA_Csh=Bladex.CreateEntity( "essOrk__A_Csh",orkAC_L, 0,0,0 ) ;
-	essOrkA_Dsw=Bladex.CreateEntity( "essOrk__A_Dsw",orkAD_R, 0,0,0 ) ; essOrkA_Dsh=Bladex.CreateEntity( "essOrk__A_Dsh",orkAD_L, 0,0,0 ) ;
-	essOrkA_Esw=Bladex.CreateEntity( "essOrk__A_Esw",orkAE_R, 0,0,0 ) ; essOrkA_Esh=Bladex.CreateEntity( "essOrk__A_Esh",orkAE_L, 0,0,0 ) ;
-	essOrkA_Fsw=Bladex.CreateEntity( "essOrk__A_Fsw",orkAF_R, 0,0,0 ) ; essOrkA_Fsh=Bladex.CreateEntity( "essOrk__A_Fsh",orkAF_L, 0,0,0 ) ;
-	essOrkA_Gsw=Bladex.CreateEntity( "essOrk__A_Gsw",orkAG_R, 0,0,0 ) ; essOrkA_Gsh=Bladex.CreateEntity( "essOrk__A_Gsh",orkAG_L, 0,0,0 ) ;
-	essOrkA_Hsw=Bladex.CreateEntity( "essOrk__A_Hsw",orkAH_R, 0,0,0 ) ; essOrkA_Hsh=Bladex.CreateEntity( "essOrk__A_Hsh",orkAH_L, 0,0,0 ) ;
-	essOrkA_Isw=Bladex.CreateEntity( "essOrk__A_Isw",orkAI_R, 0,0,0 ) ; essOrkA_Ish=Bladex.CreateEntity( "essOrk__A_Ish",orkAI_L, 0,0,0 ) ;
+	essOrkA_Asw=Bladex.CreateEntity( "essOrk__A_Asw","Espadaromana", 0,0,0 ) ; essOrkA_Ash=Bladex.CreateEntity( "essOrk__A_Ash","Escudo1", 0,0,0 ) ;
+	essOrkA_Bsw=Bladex.CreateEntity( "essOrk__A_Bsw","Espadaromana", 0,0,0 ) ; essOrkA_Bsh=Bladex.CreateEntity( "essOrk__A_Bsh","Escudo1", 0,0,0 ) ;
+	essOrkA_Csw=Bladex.CreateEntity( "essOrk__A_Csw","Espadaromana", 0,0,0 ) ; essOrkA_Csh=Bladex.CreateEntity( "essOrk__A_Csh","Escudo1", 0,0,0 ) ;
+	essOrkA_Dsw=Bladex.CreateEntity( "essOrk__A_Dsw","Espadaromana", 0,0,0 ) ; essOrkA_Dsh=Bladex.CreateEntity( "essOrk__A_Dsh","Escudo1", 0,0,0 ) ;
+	essOrkA_Esw=Bladex.CreateEntity( "essOrk__A_Esw","Espadaromana", 0,0,0 ) ; essOrkA_Esh=Bladex.CreateEntity( "essOrk__A_Esh","Escudo1", 0,0,0 ) ;
+	essOrkA_Fsw=Bladex.CreateEntity( "essOrk__A_Fsw","Espadaromana", 0,0,0 ) ; essOrkA_Fsh=Bladex.CreateEntity( "essOrk__A_Fsh","Escudo1", 0,0,0 ) ;
+	essOrkA_Gsw=Bladex.CreateEntity( "essOrk__A_Gsw","Espadaromana", 0,0,0 ) ; essOrkA_Gsh=Bladex.CreateEntity( "essOrk__A_Gsh","Escudo1", 0,0,0 ) ;
+	essOrkA_Hsw=Bladex.CreateEntity( "essOrk__A_Hsw","Espadaromana", 0,0,0 ) ; essOrkA_Hsh=Bladex.CreateEntity( "essOrk__A_Hsh","Escudo1", 0,0,0 ) ;
+	essOrkA_Isw=Bladex.CreateEntity( "essOrk__A_Isw","Espadaromana", 0,0,0 ) ; essOrkA_Ish=Bladex.CreateEntity( "essOrk__A_Ish","Escudo1", 0,0,0 ) ;
 	Actions.TakeObject(essOrkA_A.Name,"essOrk__A_Ash") ; Actions.TakeObject(essOrkA_A.Name,"essOrk__A_Asw")
 	Actions.TakeObject(essOrkA_B.Name,"essOrk__A_Bsh") ; Actions.TakeObject(essOrkA_B.Name,"essOrk__A_Bsw")
 	Actions.TakeObject(essOrkA_C.Name,"essOrk__A_Csh") ; Actions.TakeObject(essOrkA_C.Name,"essOrk__A_Csw")
@@ -837,8 +791,6 @@ def EndConcentrationEffect():
 	luzB.SubscribeToList("Pin")
 
 	Bladex.GetEntity("Player1").GetInventory().RemoveSpecialKey(key.Name)
-
-	Reference.EntitiesSelectionData[key.Name]=(0,0,"")
 
 	soundenergy.StopSound()
 
@@ -1552,13 +1504,15 @@ def BorraFlecha(Name):
 	global InsideTrapArrow
 	ent = Bladex.GetEntity(Name)
 
-	if (ent.Parent==None) | (ent.Parent == ""):
-		if(ent.Kind == __FLECHA_KIND__):
-			ent.SubscribeToList("Pin")
+	if (ent.Parent):
+		parent=Bladex.GetEntity(ent.Parent)
+		if parent:
+			parent.Unlink(ent)
 
+	if(ent.Kind == __FLECHA_KIND__):
+		ent.SubscribeToList("Pin")
 	if InsideTrapArrow:
 		DropArrow()
-
 
 def Entrampa(sectorindex,entityname):
 	global InsideTrapArrow
@@ -1602,7 +1556,7 @@ def DropArrow():
 	o.Scale=0.7
 	o.MessageEvent(Reference.MESSAGE_START_WEAPON,0,0)
 	o.MessageEvent(Reference.MESSAGE_START_TRAIL, 0,0)
-	o.Gravity = 0,9800,0
+	o.Gravity = 0,0,0
 
 	vx = char.Position[0]-o.Position[0]
 	vz = char.Position[2]-o.Position[2]
@@ -1610,7 +1564,7 @@ def DropArrow():
 	vx = vx/dist
 	vz = vz/dist
 
-	o.Fly(vx,1000,vz)
+	o.Fly(vx,0,vz)
 	Bladex.AddScheduledFunc(Bladex.GetTime()+1.0, BorraFlecha,(o.Name,))
 	return o
 
@@ -2291,8 +2245,7 @@ def ChispasTakeSwordBlade(chngtime, dthtime):
 def PickUpSwordBladeTrue(EntityName, EventName):
 	# Here increase the number of weapons carryable by 1
 	inv = Bladex.GetEntity("Player1").GetInventory()
-	# inv.maxWeapons= 5
-	inv.maxWeapons = inv.maxWeapons + 1		## do this instead in case mods change maxweap amount
+	inv.maxWeapons= 5	# PLAGUE: Do we need to increase weapon carry limit by 1 again?
 	Actions.TakeObject("Player1", bladesword.Name)
 	inv.LinkRightHand(bladesword.Name)
 	#inv.LinkBack("None")
@@ -3365,7 +3318,6 @@ def ChaosDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone, Da
 	chaos = Bladex.GetEntity(VictimName)
 	Damage.CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded)
 	if chaos.Life < 800:
-		Bladex.AddScheduledFunc(Bladex.GetTime()+0.1, Bladex.TriggerEvent, (36,))
 		Bladex.GetEntity("Player1").SetActiveEnemy("")
 		chaos.ImDeadFunc(VictimName)
 		chaos.DamageFunc = ""
