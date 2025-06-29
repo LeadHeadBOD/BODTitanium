@@ -1,3 +1,9 @@
+##///
+##||| Volcano_M14/Enemigos.PY TITANIUM
+##||| Change list:
+##||| * OrkController 
+##\\\ 
+
 from math import pow
 import EnemyTypes
 import AniSound
@@ -17,6 +23,13 @@ lvl_control= LevelFuncs.EnemyLevelControl (expected_player_lvl_min, expected_pla
 # pers.Level= lvl_control.GiveLevel(0, 4)
 #
 
+### Orc controller
+import OrkController
+darkOrk_thresh = 14
+goldOrk_thresh = 17
+Orkk = OrkController.MinorOrk(darkOrk_thresh,goldOrk_thresh)
+#
+
 # principio hasta escalera rota orkos
 
 #1
@@ -31,7 +44,7 @@ potion.Solid=1
 potion.Scale=1.220190
 pocimac.CreatePotion("PotionO1")
 
-pers=Bladex.CreateEntity("1ORC","Ork",42710.4822829, -5951.5160849, 18948.8821268,"Person")
+pers=Bladex.CreateEntity("1ORC",Orkk,42710.4822829, -5951.5160849, 18948.8821268,"Person")
 pers.Level=lvl_control.GiveLevel(8,13)
 pers.Angle=4.65575807943
 Actions.TakeObject(pers.Name,"VolcanoEspada1")
@@ -73,7 +86,7 @@ o=Bladex.CreateEntity("VolcanoEspada3","Orksword",0,0,0,"Weapon")
 ItemTypes.ItemDefaultFuncs(o)
 o=Bladex.CreateEntity("VolcanoEscudo3","Escudo1",0,0,0,"Weapon")
 ItemTypes.ItemDefaultFuncs(o)
-pers=Bladex.CreateEntity("3ORC","Ork",37912.4352487, -1196.98165208, 16105.2259272,"Person")
+pers=Bladex.CreateEntity("3ORC",Orkk,37912.4352487, -1196.98165208, 16105.2259272,"Person")
 pers.Level=lvl_control.GiveLevel(8,10)
 pers.Angle=1.54139175589
 Actions.TakeObject(pers.Name,"VolcanoEspada3")
@@ -90,7 +103,7 @@ o=Bladex.CreateEntity("VolcanoEspada4","Maza2",0,0,0,"Weapon")
 ItemTypes.ItemDefaultFuncs(o)
 o=Bladex.CreateEntity("VolcanoEscudo4","Escudo1",0,0,0,"Weapon")
 ItemTypes.ItemDefaultFuncs(o)
-pers=Bladex.CreateEntity("4ORC","Ork",38065.2751479, -1117.80986226, 7516.78939648,"Person")
+pers=Bladex.CreateEntity("4ORC",Orkk,38065.2751479, -1117.80986226, 7516.78939648,"Person")
 pers.Level=lvl_control.GiveLevel(9,11)
 pers.Angle=1.51864960281
 Actions.TakeObject(pers.Name,"VolcanoEspada4")
@@ -136,7 +149,7 @@ ItemTypes.ItemDefaultFuncs(o)
 o=Bladex.CreateEntity("VolcanoEscudo6","Escudo1",0,0,0,"Weapon")
 ItemTypes.ItemDefaultFuncs(o)
 
-orc6=Bladex.CreateEntity("ORC6","Ork",29780.4308624, 657.884173577, 38247.6237586,"Person")
+orc6=Bladex.CreateEntity("ORC6",Orkk,29780.4308624, 657.884173577, 38247.6237586,"Person")
 orc6.Level=lvl_control.GiveLevel(8,14)
 orc6.Angle=5.36291533172
 Actions.TakeObject(orc6.Name,"VolcanoEspada6")
