@@ -2,7 +2,7 @@
 ##||| Desert_M13/DEFFUNCS.PY TITANIUM
 ##||| Change list:
 ##||| * Amber key cutscene now plays at 60fps.
-##||| * 
+##||| * Breakable walls can no longer be broken when already broken
 ##||| * 
 ##||| * 
 ##\\\ 
@@ -66,6 +66,7 @@ def revientaPuertaA(sector_index, entity_name, px, py, pz,ximpulse=0,yimpulse=0,
 
 		break_sound.Position = px,py,pz
 		break_sound.PlaySound(0)
+		bgateA.OnHit = ""
 	else:		
 		hit_sound[n_hit_sound].Position = px,py,pz		
 		hit_sound[n_hit_sound].PlaySound(0)
@@ -98,6 +99,7 @@ def revientaPuertaB(sector_index, entity_name, px, py, pz,ximpulse=0,yimpulse=0,
 
 		break_sound.Position = px,py,pz
 		break_sound.PlaySound(0)
+		bgateB.OnHit = ""
 	else:
 		hit_sound[n_hit_sound].Position = px,py,pz
 		hit_sound[n_hit_sound].PlaySound(0)
@@ -125,6 +127,7 @@ def revientaPuertaC(sector_index, entity_name, px, py, pz,ximpulse=0,yimpulse=0,
 
 	break_sound.Position = px,py,pz
 	break_sound.PlaySound(0)
+	bgateC.OnHit = ""
 
 def revientaPuertaD(sector_index, entity_name, px, py, pz,ximpulse=0,yimpulse=0,zimpulse=0,x_norm=0,y_norm=0,z_norm=0,material=""):
 	global n_hit_sound
@@ -144,6 +147,7 @@ def revientaPuertaD(sector_index, entity_name, px, py, pz,ximpulse=0,yimpulse=0,
 	
 	break_sound.Position = px,py,pz
 	break_sound.PlaySound(0)
+	bgateD.OnHit = ""
 			
 ###############################################################################
 ###                     chorritos.py
