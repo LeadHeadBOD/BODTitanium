@@ -2,6 +2,21 @@
 Modification of Blade of Darkness aimed at improving the vanilla experience.
 
 
+
+## Installation
+Current version of Titanium (0.4) is an experiment at getting something publicly out there. As such, there is no elegant installation yet, BODLoader is not an option,
+since it does not work well for multiple folders containing same file names.
+
+To install the mod you will need to:
+ 1. Revert to v109.
+ 2. Create a backup of the original game just in case.
+ 3. Extract all the files in the BoD v109 while preserving the folder structure.
+ 4. Launch the game.
+
+
+There's tons of stuff to do, millions of things I'd still like to get done, etc., so this is far from a full release.
+
+
 ## Credits:
 Vast majority of the work, whether it be code or otherwise, done for Titanium is almost entirely done by LeadHead, 
 however the project could under no circumstances have been completed alone.
