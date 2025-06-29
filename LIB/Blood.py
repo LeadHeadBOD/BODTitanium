@@ -11,7 +11,7 @@ import InitDataField
 ## Titanium Config Fuctions ##
 import TitaniumConfig
 TiCfgFound= TitaniumConfig.TitaniumSetting("BloodOptimization") == 1    # PLAGUE: This is terrible -LeadHead
-checkRadius = 200
+checkRadius = 150
 
 
 Evaporation      = 0      #  no evaporation avail  >:-(
