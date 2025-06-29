@@ -295,25 +295,30 @@ def CreateMultiParts(objName):
 		partposrel= [(-176.01,0,413.108), (179.492,-58.747,444.756), (179.494,0,413.737), (-179.494,58.747,444.756), (0,0,318.22), (0,0,0)]
 		n_parts   = (0, 1, 2, 3, 4, 5)
 		partsAlph = (0.7, 0.7, 0.7, 0.7, 0.7, 1.0)
-		partsIlum = (0.2, 0.2, 0.2, 0.2, 0.2, 0.0)
+		partsIlum = (0.2, 0.2, 0.2, 0.2, 0.2, 0.05)
 	elif kind == ("IceSword"):
 		type_part = kind+"Part"
 		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
 		n_parts   = (0, 1)
 		partsAlph = (1.0, 0.7)
-		partsIlum = (0.0, 0.2)
+		partsIlum = (0.05, 0.2)
 	elif kind == ("IceWand"):
 		type_part = kind+"Part"
 		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
 		n_parts   = (0, 1)
 		partsAlph = (1.0, 0.7)
-		partsIlum = (0.0, 0.2)
+		partsIlum = (0.05, 0.2)
 	elif kind == ("IceAxe"):
 		type_part = kind+"Part"
 		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
 		n_parts   = (0, 1)
 		partsAlph = (1.0, 0.7)
-		partsIlum = (0.0, 0.2)
+		partsIlum = (0.05, 0.2)
+	elif kind in ("TaiSword", "Baston3","Varita2","Varita5"):
+		print "error in GenFX.CreateMultiParts() - kind not implement!"
+		obj.Position    = oldPos
+		obj.Orientation = oldOri
+		return
 	else: 
 		print "error in GenFX.CreateMultiParts() - invalid kind!"
 		obj.Position    = oldPos
@@ -329,11 +334,16 @@ def CreateMultiParts(objName):
 		part.SelfIlum=partsIlum[n]
 		partpos=obj.Rel2AbsPoint(partposrel[n][0], partposrel[n][1], partposrel[n][2])
 		part.Position=partpos[0], partpos[1], partpos[2]
+		part.SendSectorMsgs = 0
 		obj.Link(part)
 	obj.Position = oldPos
 	obj.Orientation = oldOri
 		
-
+# All of this will have to be reworked at some point for a couple reasons.
+# * need a way to callback individual parts for scripting
+# * shadow control over individual parts (for example torches and "Baston3")
+# * do not send sector messages on the parts
+###
 
 #############################################
 #     Efectos visuales de algunos items     #
