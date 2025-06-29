@@ -1,3 +1,11 @@
+##///
+##||| ORLOK_M10/Golem.PY TITANIUM
+##||| Change list:
+##||| * Ice golem now collapses like all other golems
+##||| * Now uses unique ice golem kind
+##\\\ 
+
+
 import Bladex
 import AuxFuncs
 import EnemyTypes
@@ -96,6 +104,7 @@ ag.SetAuraGradient(2, 0.9, 1.0, 1.0, 0.2, 0.1, 0.4, 0.8, 1.0, 0.0, 0.8)
 golem.Link(ag)
 ag.SetAuraActive(1)"""
 
+golem.Data.OldDeadFunc = golem.ImDeadFunc
 golem.ImDeadFunc=BajaTroncos
 golem.Freeze()
 golem.RemoveFromWorld()

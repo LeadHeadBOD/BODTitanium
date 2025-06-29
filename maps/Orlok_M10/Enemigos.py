@@ -1,3 +1,11 @@
+##///
+##||| ORLOK_M10/Enemigos.PY TITANIUM
+##||| Change list:
+##||| * OrkController 
+##||| * Now spawns actual snow trolls
+##\\\ 
+
+
 import Bladex
 import EnemyTypes
 import Sparks
@@ -16,7 +24,12 @@ lvl_control= LevelFuncs.EnemyLevelControl (expected_player_lvl_min, expected_pla
 # pers.Level= lvl_control.GiveLevel(0, 4)
 #
 
-
+### Orc controller
+import OrkController
+darkOrk_thresh = 14
+goldOrk_thresh = 17
+Orkk = OrkController.MinorOrk(darkOrk_thresh,goldOrk_thresh)
+#
 
 
 #############################
@@ -30,7 +43,7 @@ arma=Bladex.CreateEntity("OrlokArmaOrcoEncrucijada", "Hacha4", 0.0, 0.0, 0.0, "W
 escudo=Bladex.CreateEntity("OrlokEscudoOrcoEncrucijada","Escudo1", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
 ItemTypes.ItemDefaultFuncs(escudo)
-enemigo=Bladex.CreateEntity("OrlokOrcoEncrucijada", "Ork", -43000, -31500, -21500, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoEncrucijada", Orkk, -43000, -31500, -21500, "Person")
 enemigo.Angle=0.0
 enemigo.Level=lvl_control.GiveLevel(6,10)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -43,7 +56,7 @@ enemigo.SetOnFloor()
 
 arma=Bladex.CreateEntity("OrlokArmaOrcoBalcon", "Maza2", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
-enemigo=Bladex.CreateEntity("OrlokOrcoBalcon", "Ork", -21500, -31500, 8000, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoBalcon", Orkk, -21500, -31500, 8000, "Person")
 enemigo.Angle=3.14159/2.0
 enemigo.Level=lvl_control.GiveLevel(7,13)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -57,7 +70,7 @@ enemigo.SetOnFloor()
 
 arma=Bladex.CreateEntity("OrlokArmaOrcoTunel", "Martillo", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
-enemigo=Bladex.CreateEntity("OrlokOrcoTunel", "Ork", 2500, -33500, 31000, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoTunel", Orkk, 2500, -33500, 31000, "Person")
 enemigo.Angle=0.0
 enemigo.Level=lvl_control.GiveLevel(6,12)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -110,7 +123,7 @@ arma=Bladex.CreateEntity("OrlokArmaOrcoGargantaIzq", "Martillo", 0.0, 0.0, 0.0, 
 escudo=Bladex.CreateEntity("OrlokEscudoOrcoGargantaIzq","Escudo1", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
 ItemTypes.ItemDefaultFuncs(escudo)
-enemigo=Bladex.CreateEntity("OrlokOrcoGargantaIzq", "Ork", -76500, -35500, -32500, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoGargantaIzq", Orkk, -76500, -35500, -32500, "Person")
 enemigo.Angle=3.14159/2.0
 enemigo.Level=lvl_control.GiveLevel(8,13)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -126,7 +139,7 @@ enemigo.SetOnFloor()
 
 arma=Bladex.CreateEntity("OrlokArmaOrcoCercaBalcon", "Maza2", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
-enemigo=Bladex.CreateEntity("OrlokOrcoCercaBalcon", "Ork", -27000, -35500, 12000, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoCercaBalcon", Orkk, -27000, -35500, 12000, "Person")
 enemigo.Angle=3.14159/2.0
 enemigo.Level=lvl_control.GiveLevel(7,12)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -167,7 +180,7 @@ pocimac.CreatePotion("SaquitoOrcEntValle")
 
 arma=Bladex.CreateEntity("OrlokArmaOrco1EmbValle1", "Orksword", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
-enemigo=Bladex.CreateEntity("OrlokOrco1EmbValle1", "Ork", -85124, -32576, -1045, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrco1EmbValle1", Orkk, -85124, -32576, -1045, "Person")
 enemigo.Angle=4.2037
 enemigo.Level=lvl_control.GiveLevel(7,13)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -183,7 +196,7 @@ enemigo.SetOnFloor()
 
 arma=Bladex.CreateEntity("OrlokArmaOrco2EmbValle1", "Martillo", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
-enemigo=Bladex.CreateEntity("OrlokOrco2EmbValle1", "Ork", -49536, -32090, -18651, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrco2EmbValle1", Orkk, -49536, -32090, -18651, "Person")
 enemigo.Angle=0.6291
 enemigo.Level=lvl_control.GiveLevel(9,13)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -245,7 +258,7 @@ arma=Bladex.CreateEntity("OrlokArmaOrcoValle2", "Martillo", 0.0, 0.0, 0.0, "Weap
 escudo=Bladex.CreateEntity("OrlokEscudoOrcoValle2","Escudo2", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
 ItemTypes.ItemDefaultFuncs(escudo)
-enemigo=Bladex.CreateEntity("OrlokOrcoValle2", "Ork", -46033, -35544, 27000, "Person") # 25484, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoValle2", Orkk, -46033, -35544, 27000, "Person") # 25484, "Person")
 enemigo.Angle=3.14159/2.0 # 0.2683
 enemigo.Level=lvl_control.GiveLevel(9,13)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -338,7 +351,7 @@ enemigo.SetOnFloor()
 
 arma=Bladex.CreateEntity("OrlokArmaOrcoTejadoNorte", "Hacha3", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
-enemigo=Bladex.CreateEntity("OrlokOrcoTejadoNorte", "Ork", 19000, -46000, 75500, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoTejadoNorte", Orkk, 19000, -46000, 75500, "Person")
 enemigo.Angle=3.14159
 enemigo.Level=lvl_control.GiveLevel(9,12)
 Actions.TakeObject(enemigo.Name, arma.Name)
@@ -363,7 +376,7 @@ enemigo.SetOnFloor()
 
 arma=Bladex.CreateEntity("OrlokArmaOrcoTejadoSur", "Hacha4", 0.0, 0.0, 0.0, "Weapon")
 ItemTypes.ItemDefaultFuncs(arma)
-enemigo=Bladex.CreateEntity("OrlokOrcoTejadoSur", "Ork", 31000, -46000, 62500, "Person")
+enemigo=Bladex.CreateEntity("OrlokOrcoTejadoSur", Orkk, 31000, -46000, 62500, "Person")
 enemigo.Angle=3.14159
 enemigo.Level=lvl_control.GiveLevel(6,10)
 Actions.TakeObject(enemigo.Name, arma.Name)
