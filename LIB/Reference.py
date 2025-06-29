@@ -439,16 +439,16 @@ DefaultObjectData['ArmaduraEnanoLigera']=       [OBJ_ARMOUR,  "Dwf", 1 , 15]
 DefaultObjectData['ArmaduraEnanoMedia']=        [OBJ_ARMOUR,  "Dwf", 2 , 35]
 
 #                 #bod                    #type      #POW #RES  #Sound              #cone             #height #rad #Brk
-DefaultObjectData['Escudo1']=            [OBJ_SHIELD,   0,300, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  6]
-DefaultObjectData['Escudo2']=            [OBJ_SHIELD,   0, 80, GolpeArmaEscudoMadera,180.0*DEG2RADS,   2000,  750,  3]
+DefaultObjectData['Escudo1']=            [OBJ_SHIELD,   0, 300, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  6]
+DefaultObjectData['Escudo2']=            [OBJ_SHIELD,   0,  80, GolpeArmaEscudoMadera,180.0*DEG2RADS,   2000,  750,  3]
 DefaultObjectData['Escudo3']=            [OBJ_SHIELD,-1.2,4000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  7]
 DefaultObjectData['Escudo4']=            [OBJ_SHIELD,   0,2500, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  5]
-DefaultObjectData['Escudo5']=            [OBJ_SHIELD,   0, 20, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  5]
+DefaultObjectData['Escudo5']=            [OBJ_SHIELD,   0,  20, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  5]
 DefaultObjectData['Escudo6']=            [OBJ_SHIELD,-1.5,8000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  5]
 DefaultObjectData['Escudo7']=            [OBJ_SHIELD,-0.5,5000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  5]
 DefaultObjectData['Escudo8']=            [OBJ_SHIELD,-0.5,3000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750, 10]
-DefaultObjectData['Escudo9']=            [OBJ_SHIELD,  -1,2000, GolpeArmaEscudoMadera, 180.0*DEG2RADS,   2000,  750, 10]     # Was GolpeArmaEscudoMetal  -LeadHead
-DefaultObjectData['Escudon']=            [OBJ_SHIELD,-0.5, 30, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   3000, 1250, 10]
+DefaultObjectData['Escudo9']=            [OBJ_SHIELD,  -1,2000, GolpeArmaEscudoMadera,180.0*DEG2RADS,   2000,  750, 10]     # Was GolpeArmaEscudoMetal  -LeadHead
+DefaultObjectData['Escudon']=            [OBJ_SHIELD,-0.5,  30, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   3000, 1250, 10]     # PLAGUE: because it's just 30RES, the shield breaks immediately
 DefaultObjectData['VampShield']=         [OBJ_SHIELD,-0.5,1500, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750, 10]
 DefaultObjectData['DalShield']=          [OBJ_SHIELD,-1.5,5000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  0]
 DefaultObjectData['KingShield']=         [OBJ_SHIELD,   1,1000, GolpeArmaEscudoMetal, 180.0*DEG2RADS,   2000,  750,  6]
@@ -488,7 +488,7 @@ DefaultObjectData['EsferaNegra']=        [OBJ_WEAPON,  100,  0, 1.0,  THR_STRAIG
 DefaultObjectData['BolaDalGurak']=       [OBJ_WEAPON,  500,  0, 1.0,  THR_STRAIGHT, []]
 DefaultObjectData['EsferaOrbital']=      [OBJ_WEAPON,  500,  0, 1.0,  THR_STRAIGHT, []]
 DefaultObjectData['HalfmoonTrail']=      [OBJ_WEAPON, 5000,  0, 1.0,  THR_SPINNING, []]
-DefaultObjectData['FireRing']=      [OBJ_WEAPON,  0,  0, 1.0,  THR_SPINNING, [], ['Fire', +500.0]]
+DefaultObjectData['FireRing']=           [OBJ_WEAPON,    0,  0, 1.0,  THR_SPINNING, [], ['Fire', +500.0]]
 
 
 
@@ -523,18 +523,18 @@ DefaultObjectData['Hacharrajada']=       [OBJ_WEAPON,500, -120, 4.0,  THR_SPINNI
 
 # ARMAS DEL ENANO
 
-DefaultObjectData['CrushHammer']=   	 [OBJ_WEAPON, 50, -90, 2.8,  THR_SPINNING, [W_FLAG_1H,],["Venom",+1.0]]
+DefaultObjectData['CrushHammer']=   	 [OBJ_WEAPON, 50,  -90, 2.8,  THR_SPINNING, [W_FLAG_1H,],["Venom",+1.0]]
 DefaultObjectData['FireAxe']=            [OBJ_WEAPON, 40, -100, 3.5,  THR_SPINNING, [W_FLAG_1H,], ["Fire", +10.0]]
-DefaultObjectData['IceHammer']=          [OBJ_WEAPON, 25, -50, 3.0,  THR_SPINNING, [W_FLAG_1H,], ["Ice", +10.0]]
+DefaultObjectData['IceHammer']=          [OBJ_WEAPON, 25,  -50, 3.0,  THR_SPINNING, [W_FLAG_1H,], ["Ice", +10.0]]
 
-DefaultObjectData['Hacha']=              [OBJ_WEAPON,  4, 0, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['Hacha']=              [OBJ_WEAPON,  4,   0, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Hacha5']=             [OBJ_WEAPON, 18, -10, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Hacha4']=             [OBJ_WEAPON, 55, -40, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Hacha3']=             [OBJ_WEAPON, 75, -45, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Hacha6']=             [OBJ_WEAPON,290, -50, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Hacha2']=             [OBJ_WEAPON,480, -85, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 
-DefaultObjectData['Garrote']=            [OBJ_WEAPON,  2, 0, 2.3,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['Garrote']=            [OBJ_WEAPON,  2,   0, 2.3,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Martillo']=           [OBJ_WEAPON, 95, -30, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Martillo2']=          [OBJ_WEAPON,135, -35, 2.8,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Garropin']=           [OBJ_WEAPON, 45, -30, 2.8,  THR_SPINNING, [W_FLAG_1H,]]
@@ -549,18 +549,18 @@ DefaultObjectData['QueenSword']=         [OBJ_WEAPON, 85, -35, 2.4,  THR_SPINNIN
 DefaultObjectData['IceSword']=           [OBJ_WEAPON, 45, -15, 4.0,  THR_SPINNING, [W_FLAG_1H,], ["Ice", +10.0]]
 DefaultObjectData['FireSword']=          [OBJ_WEAPON, 35, -25, 3.3,  THR_SPINNING, [W_FLAG_1H,], ["Fire", +10.0]]
 
-DefaultObjectData['Gladius']=            [OBJ_WEAPON,  3, 0, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
-DefaultObjectData['Orksword']=           [OBJ_WEAPON, 30, 0, 2.3,  THR_SPINNING, [W_FLAG_1H,],["Venom",+1.0]]
+DefaultObjectData['Gladius']=            [OBJ_WEAPON,  3,   0, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['Orksword']=           [OBJ_WEAPON, 30,   0, 2.3,  THR_SPINNING, [W_FLAG_1H,],["Venom",+1.0]]
 DefaultObjectData['Espadaelfica']=       [OBJ_WEAPON, 50, -25, 2.4,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Espadaromana']=       [OBJ_WEAPON, 35, -20, 2.4,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Espadacurva']=        [OBJ_WEAPON,120, -25, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Dagesse']=            [OBJ_WEAPON,150, -30, 2.4,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Cimitarra']=          [OBJ_WEAPON,210, -45, 2.3,  THR_SPINNING, [W_FLAG_1H,]]
-DefaultObjectData['EgyptSword']=         [OBJ_WEAPON,100, 0, 2.3,  THR_SPINNING, [W_FLAG_1H,],["Venom",+4.0]]
+DefaultObjectData['EgyptSword']=         [OBJ_WEAPON,100,   0, 2.3,  THR_SPINNING, [W_FLAG_1H,],["Venom",+4.0]]
 DefaultObjectData['Espadafilo']=         [OBJ_WEAPON,470, -50, 2.3,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Espada']=             [OBJ_WEAPON,780, -80, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 
-DefaultObjectData['Maza']=               [OBJ_WEAPON, 15, -5, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['Maza']=               [OBJ_WEAPON, 15,  -5, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Maza2']=              [OBJ_WEAPON, 70, -30, 2.3,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Maza3']=              [OBJ_WEAPON,290, -55, 2.4,  THR_SPINNING, [W_FLAG_1H,]]
 
@@ -572,7 +572,7 @@ DefaultObjectData['SteelFeather']=       [OBJ_WEAPON, 60, -50, 3.0,  THR_SPINNIN
 DefaultObjectData['FireBo']=             [OBJ_WEAPON, 50, -30, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,4500,4500,GolpeArmaEscudoMetal],["Fire", +10.0]]
 
 
-DefaultObjectData['Bo']=                 [OBJ_WEAPON,  3, 0, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,100,100,GolpeArmaEscudoMetal]]
+DefaultObjectData['Bo']=                 [OBJ_WEAPON,  3,   0, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,100,100,GolpeArmaEscudoMadera]]  # Was GolpeArmaEscudoMetal
 DefaultObjectData['Lanza']=              [OBJ_WEAPON, 35, -10, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,600,600,GolpeArmaEscudoMetal]]
 DefaultObjectData['Naginata']=           [OBJ_WEAPON, 50, -20, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,2000,2000,GolpeArmaEscudoMetal]]
 DefaultObjectData['Tridente']=           [OBJ_WEAPON, 75, -30, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,4000,4000,GolpeArmaEscudoMetal]]
@@ -583,7 +583,7 @@ DefaultObjectData['CrushBo']=            [OBJ_WEAPON,300, -60, 3.0,  THR_SPINNIN
 DefaultObjectData['LanzaAncha']=         [OBJ_WEAPON,760, -90, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,16000,16000,GolpeArmaEscudoMetal]]
 DefaultObjectData['Axpear']=             [OBJ_WEAPON, 95, -40, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,6000,6000,GolpeArmaEscudoMetal]]
 DefaultObjectData['Arpon']=              [OBJ_WEAPON,390, -70, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,12000,12000,GolpeArmaEscudoMetal]]
-DefaultObjectData['Bichero']=            [OBJ_WEAPON, 16, -5, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,400,400,GolpeArmaEscudoMetal]]
+DefaultObjectData['Bichero']=            [OBJ_WEAPON, 16,  -5, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,400,400,GolpeArmaEscudoMadera]]  # Was GolpeArmaEscudoMetal
 DefaultObjectData['Crosspear']=          [OBJ_WEAPON,160, -45, 3.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,8000,8000,GolpeArmaEscudoMetal]]
 
 
@@ -622,13 +622,13 @@ DefaultObjectData['Baston3']=            [OBJ_STANDARD, 100,  -5, 1.0,  THR_SPIN
 ######### ARMAS DE ATAQUE A DISTANCIA
 
 
-DefaultObjectData['Arco']=               [OBJ_BOW,     5, -5, 1.0,  THR_STRAIGHT, []]
-DefaultObjectData['Arco3']=              [OBJ_BOW,    10, -5, 1.0,  THR_STRAIGHT, []]
-DefaultObjectData['Arco2']=              [OBJ_BOW,    20, -5, 1.0,  THR_STRAIGHT, []]
-DefaultObjectData['Arco_Amz_seleccion']= [OBJ_BOW,    20, -5, 1.0,  THR_STRAIGHT, []]
-DefaultObjectData['Flecha']=             [OBJ_ARROW,  100, -5, 1.0,  THR_STRAIGHT, []]
-DefaultObjectData['FlechaEnvenenada']=   [OBJ_ARROW,  100, -5, 1.0,  THR_STRAIGHT, [], ["Venom",+5.0]]
-DefaultObjectData['FlechaFuego']=        [OBJ_ARROW,  100, -5, 1.0,  THR_STRAIGHT, [], ["Fire", +200.0]]
+DefaultObjectData['Arco']=               [OBJ_BOW,        5, -5, 1.0,  THR_STRAIGHT, []]
+DefaultObjectData['Arco3']=              [OBJ_BOW,       10, -5, 1.0,  THR_STRAIGHT, []]
+DefaultObjectData['Arco2']=              [OBJ_BOW,       20, -5, 1.0,  THR_STRAIGHT, []]
+DefaultObjectData['Arco_Amz_seleccion']= [OBJ_BOW,       20, -5, 1.0,  THR_STRAIGHT, []]
+DefaultObjectData['Flecha']=             [OBJ_ARROW,    100, -5, 1.0,  THR_STRAIGHT, []]
+DefaultObjectData['FlechaEnvenenada']=   [OBJ_ARROW,    100, -5, 1.0,  THR_STRAIGHT, [], ["Venom",+5.0]]
+DefaultObjectData['FlechaFuego']=        [OBJ_ARROW,    100, -5, 1.0,  THR_STRAIGHT, [], ["Fire", +200.0]]
 DefaultObjectData['Suriken']=            [OBJ_STANDARD,  20,  0, 2.0,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Dagarrojar']=         [OBJ_STANDARD,  30,  0, 2.0,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Canica']=             [OBJ_STANDARD,  30,  0, 2.0,  THR_SPINNING, [W_FLAG_1H,]]
@@ -1254,4 +1254,4 @@ if netgame.GetNetState() == 1:
 	DefaultObjectData['Chaosword']=          [OBJ_WEAPON, 12 , 0, 2.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,100,100,GolpeArmaEscudoMetal]]
 	DefaultObjectData['Hacha']=              [OBJ_WEAPON, 11 , 0, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
 	DefaultObjectData['Gladius']=            [OBJ_WEAPON, 10, 0, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
-	DefaultObjectData['Bo']=                 [OBJ_WEAPON, 10,   0, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,100,100,GolpeArmaEscudoMetal]]
+	DefaultObjectData['Bo']=                 [OBJ_WEAPON, 10,   0, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,100,100,GolpeArmaEscudoMadera]]  # Was GolpeArmaEscudoMetal
