@@ -35,6 +35,8 @@
 import Bladex
 import CharStats
 
+DEBUG_ORK_CONTROLLER = 0
+
 BBLib.ReadMMP('../../3dChars/Ork.mmp')    ### Need to load these manually, otherwise most orks will have incorrect textures.
 BBLib.ReadMMP('../../3dChars/Dork.mmp')
 BBLib.ReadMMP('../../3dchars/Org.mmp')
@@ -43,25 +45,25 @@ player=Bladex.GetEntity("Player1")
 OrkLimit=1.0*CharStats.GetCharExperienceCost(player.CharType, player.Level)     ## We are retrieving level-up progress (experience) and then rounding the number up/down
 ork_adjusted_lvl= round(player.Level + player.PartialLevel/OrkLimit)            ## If a player is close to leveling up, they might still trigger the threshold
 
-print "player name is "+player.Name+" and their actual level is "+`ork_adjusted_lvl`
+if DEBUG_ORK_CONTROLLER: print "player name is "+player.Name+" and their actual level is "+`ork_adjusted_lvl`
 
 def MinorOrk(DokThreshold, OrgThreshold):
 
     try:
         if ork_adjusted_lvl>=OrgThreshold:
-            print "player level is "+`ork_adjusted_lvl`+" and so we spawn GOLD ork"
+            if DEBUG_ORK_CONTROLLER: print "player level is "+`ork_adjusted_lvl`+" and so we spawn GOLD ork"
             return "Gold_Ork"
         elif ork_adjusted_lvl>=DokThreshold:
-            print "player level is "+`ork_adjusted_lvl`+" and so we spawn DARK ork"
+            if DEBUG_ORK_CONTROLLER: print "player level is "+`ork_adjusted_lvl`+" and so we spawn DARK ork"
             return "Dark_Ork"
         else:
-            print "player is weak so we spawn your average neighborhood ork"
+            if DEBUG_ORK_CONTROLLER: print "player is weak so we spawn your average neighborhood ork"
             return "Ork"                                    ### If neither threshold is reached, spawn a regular orc
     except:
         print "!ERROR! in OrkController - Player1 may not be accessible"
         return "Ork"
 
-def AnyOrk(AnyGo,Threshold, AnyDokThreshold, AnyOrgThreshold):   ### TO DO 
+def AnyOrk(AnyGoThreshold, AnyDokThreshold, AnyOrgThreshold):   ### TO DO 
     return "Ork"
     print "!~WARNING~! in OrkController - AnyOrk called, not implemented yet"
 
