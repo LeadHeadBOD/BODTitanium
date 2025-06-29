@@ -2,7 +2,7 @@
 ##||| Btomb_M12/DEFFUNCS.PY TITANIUM
 ##||| Change list:
 ##||| * Fixed error with broken walking introduced in re-release at the end of the level
-##||| * 
+##||| * Better visual effects for breakable walls/pillars.
 ##\\\ 
 
 import def_class
@@ -38,35 +38,84 @@ import CharStats
 #*************************************************************************************************
 #*************************************************************************************************
 
+### 
+def dustTriangle (name,p1,p2,p3):
+	dust=Bladex.CreateEntity(name, "Entity Particle System D3", p3[0],p3[1],p3[2] )
+	dust.D1= p1[0]-p3[0] ,p1[1]-p3[1] ,p1[2]-p3[2]
+	dust.D2= p2[0]-p3[0] ,p2[1]-p3[1] ,p2[2]-p3[2]
+ 	dust.ParticleType="MediumDust"
+	dust.YGravity=30.0
+	dust.Friction=0.2
+	dust.PPS=412*2
+	dust.Velocity=0.0, -410.0, 0.0
+	dust.RandomVelocity=40.0
+	dust.Time2Live=10
+	dust.DeathTime=Bladex.GetTime()+29.0/60.0
+
+### Optimized below func 
+### and added dust particles on breaking
+###             -LeadHead
+
 def RompeMuroFalso(sector_index, entity_name, px, py, pz,a=0,b=0,c=0,d=0,e=0,f=0,g=0,h=0,i=0,j=0,k=0):
 	print sector_index,"rompete",px,py,pz
-	if ((sectorrompebarrote.Index == sector_index) and (pz!=0)):
-		sonidoroturamurofalso.Play(340000,1000,-157000, 0)
-		sectorbarrote.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		sectorrompebarrote.OnHit=""
+	if (pz!=0):
+		if (sector_index in sectorGroupBarrote):
+			sonidoroturamurofalso.Play(340000,1000,-157000, 0)
+			sectorbarrote.DoBreak((600.0, -50.0, -100.0), (30000,-1000,0), (0.0, 0.0, 0.0))
+			sectorrompebarrote.OnHit=""
+			sectorrompebarroteb.OnHit=""
+			sectorrompebarrotec.OnHit=""
+            
+			p0 = (339867.0, -932.0, -156476.0)
+			p1 = (339867.0, 2608.0, -156476.0)
+			p2 = (339727.0, -932.0, -157566.0)
+			p3 = (339727.0, 2708.0, -157566.0)
+			
+			dustTriangle("breakDustBarrote1",p0,p1,p2)
+			dustTriangle("breakDustBarrote2",p1,p2,p3)
 
-	if ((sectorrompebarroteb.Index == sector_index) and (pz!=0)):
-		sonidoroturamurofalso.Play(340000,1000,-157000, 0)
-		sectorbarrote.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		sectorrompebarroteb.OnHit=""
+		"""
+		if ((sectorrompebarroteb.Index == sector_index) and (pz!=0)):
+			sonidoroturamurofalso.Play(340000,1000,-157000, 0)
+			sectorbarrote.DoBreak((600.0, -50.0, -100.0), (30000,-1000,0), (0.0, 0.0, 0.0))
+			sectorrompebarroteb.OnHit=""
 
-	if ((sectorrompebarrotec.Index == sector_index) and (pz!=0)):
-		sonidoroturamurofalso.Play(340000,1000,-157000, 0)
-		sectorbarrote.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		sectorrompebarrotec.OnHit=""
+		if ((sectorrompebarrotec.Index == sector_index) and (pz!=0)):
+			sonidoroturamurofalso.Play(340000,1000,-157000, 0)
+			sectorbarrote.DoBreak((600.0, -50.0, -100.0), (30000,-1000,0), (0.0, 0.0, 0.0))
+			sectorrompebarrotec.OnHit=""
+		"""
 
 
+		if (sectorrompesecreto.Index == sector_index):
+			sonidoroturamurofalso.Play(342000,0,-148000, 0)
+			sectorsecreto.DoBreak((950.0, -20.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
+   	     
+			p0 = (342000.0, -725.0, -146880.0)
+			p1 = (342000.0, -1830.0, -150480.0)
+			p2 = (342000.0, 2170.0, -150480.0)
+			p3 = (342000.0, 2170.0, -146880.0)
+			
+			dustTriangle("breakDustSecreto1",p0,p1,p2)
+			dustTriangle("breakDustSecreto2",p0,p2,p3)
+			sectorrompesecreto.OnHit=""
 
-	if ((sectorrompesecreto.Index == sector_index) and (pz!=0)):
-		sonidoroturamurofalso.Play(342000,0,-148000, 0)
-		sectorsecreto.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		sectorrompesecreto.OnHit=""
+		if (sector_index in sectorGroupBarrote2):
+			sonidoroturamurofalso.Play(329100,0,-181500, 0)
+			sectorbarrote2.DoBreak((650.0, -70.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
+			sectorrompebarrote2.OnHit=""
+			sectorrompebarrote2b.OnHit=""
+			sectorrompebarrote2c.OnHit=""
+            
+			p0 = (329263.0, -2012.0, -181235.0)
+			p1 = (329263.0, -2012.0, -181985.0)
+			p2 = (329248.0, 988.0, -181985.0)
+			p3 = (329263.0, 988.0, -181235.0)
+            
+			dustTriangle("breakDustBarrote21",p0,p1,p2)
+			dustTriangle("breakDustBarrote22",p0,p2,p3)
 
-	if ((sectorrompebarrote2.Index == sector_index) and (pz!=0)):
-		sonidoroturamurofalso.Play(329100,0,-181500, 0)
-		sectorbarrote2.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		sectorrompebarrote2.OnHit=""
-
+		"""
 	if ((sectorrompebarrote2b.Index == sector_index) and (pz!=0)):
 		sonidoroturamurofalso.Play(329100,0,-181500, 0)
 		sectorbarrote2.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
@@ -76,7 +125,7 @@ def RompeMuroFalso(sector_index, entity_name, px, py, pz,a=0,b=0,c=0,d=0,e=0,f=0
 		sonidoroturamurofalso.Play(329100,0,-181500, 0)
 		sectorbarrote2.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
 		sectorrompebarrote2c.OnHit=""
-
+		"""
 
 	#if ((sectorrompebarrote4.Index == sector_index) and (pz!=0)):
 		#sonidoroturamurofalso.Play(333100,0,-183000)
