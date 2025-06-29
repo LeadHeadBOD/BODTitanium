@@ -35,6 +35,10 @@
 import Bladex
 import CharStats
 
+BBLib.ReadMMP('../../3dChars/Ork.mmp')    ### Need to load these manually, otherwise most orks will have incorrect textures.
+BBLib.ReadMMP('../../3dChars/Dork.mmp')
+BBLib.ReadMMP('../../3dchars/Org.mmp')
+
 player=Bladex.GetEntity("Player1")
 OrkLimit=1.0*CharStats.GetCharExperienceCost(player.CharType, player.Level)     ## We are retrieving level-up progress (experience) and then rounding the number up/down
 ork_adjusted_lvl= round(player.Level + player.PartialLevel/OrkLimit)            ## If a player is close to leveling up, they might still trigger the threshold
