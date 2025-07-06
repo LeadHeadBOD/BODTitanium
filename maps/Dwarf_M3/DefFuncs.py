@@ -23,8 +23,8 @@ import ReadGSFile
 import Actions
 import Reference
 import Sounds
-import stone
-import heavyObjects
+# import stone			### PLAGUE: not actually ever used???
+import heavyObjects		### PLAGUE: Whhhyyyy???
 import Room
 import Button
 import GotoMapVars
@@ -1063,7 +1063,7 @@ def StopCameraInicio(Camera,frame):
 
 	Scorer.SetVisible(1)
 	ScriptSkip.SkipScriptEnd()      # Re-enabled -LeadHead
-	Bladex.ActivateInput()
+	# Bladex.ActivateInput()
 
 	#DeleteComplements()
 	shieldini.Mass        =  shieldini.Data.Massa
@@ -1177,7 +1177,7 @@ def LaunchStones(Root,Start,End):
 		else:
 			stone2 = Bladex.CreateEntity("NewStone"+`i`,stone.Kind,0,0,0)
 			stone2.Static = 0
-			stone.Alpha = 1.0
+			stone.Alpha = 0.0	# was 1.0, left floating stones in the original cutscene	-LeadHead
 
 		stone2.Orientation = stone.Orientation
 		stone2.Position = stone.Position
@@ -1232,7 +1232,7 @@ def RunAbreCam():
 	Bladex.AddScheduledFunc(Bladex.GetTime()+0.0, DwarfInicio,())
   	
 	
-	#LaunchStones("Stone",0,10)
+	# LaunchStones("Stone",0,10)
 	if not char.InvRight:
 		#inv.AddWeapon(weaponini.Name)
 		inv.LinkRightHand(weaponini.Name)
