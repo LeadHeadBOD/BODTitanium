@@ -1632,7 +1632,8 @@ def TakeMainAnm(EntityName):
 		###Reference.debugprint (me.AnimName)
 
 	if Reference.GiveObjectFlag(object_name)==Reference.OBJ_ARMOUR:
-		return
+		# return
+		pass
 
 	if obj2inv:
 		me.AnmEndedFunc=TakeStraightRecover
@@ -2155,7 +2156,7 @@ def ThrowReleaseEventHandler(EntityName, EventName):
 			axis= object.GetDummyAxis("1H_R", 0.0, 1.0, 0.0)
 			mass= object.Mass
 			#print mass
-			scale = TWOPI*10/mass
+			scale = (TWOPI*10/mass) * me.Data.ThrowForce						### Added scaling of angular velocity with throwforce -LeadHead
 			object.AngularVelocity=axis[0]*scale,axis[1]*scale,axis[2]*scale
 		object.MessageEvent(MESSAGE_START_WEAPON,0,0)
 		object.MessageEvent(MESSAGE_START_TRAIL,0,0)
