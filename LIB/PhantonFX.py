@@ -74,7 +74,7 @@ def Disappears(e_name, time):
      
 
    val    = esq.Alpha - OnDisappears[e_name][1]   
-   if val <= 0.0 :
+   if val <= 0.001:
      esq.TimerFunc  = ""
      esq.RemoveFromList("AlphaTimer")
      if esq.Person: esq.Life       = 0     
@@ -83,6 +83,7 @@ def Disappears(e_name, time):
      if OnDisappears[e_name][0] <>"":
        OnDisappears[e_name][0](e_name)
        del OnDisappears[e_name]
+     return
 
    esq.Alpha        = val
    if Der:

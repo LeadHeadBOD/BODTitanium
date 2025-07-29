@@ -1632,8 +1632,7 @@ def TakeMainAnm(EntityName):
 		###Reference.debugprint (me.AnimName)
 
 	if Reference.GiveObjectFlag(object_name)==Reference.OBJ_ARMOUR:
-		# return
-		pass
+		return
 
 	if obj2inv:
 		me.AnmEndedFunc=TakeStraightRecover
@@ -1760,7 +1759,7 @@ def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 					# Race-Ordered Weapons, originals were wrong. Should be fixed now -LeadHead
 					KnightWeaps = [	"QueenSword","IceSword","FireSword","Gladius","Espadaelfica" ,
 									"Espadaromana","Espadacurva","Dagesse","Cimitarra","Espadafilo",
-									"Espada","Maza","Maza2","Maza3","HookSword","DoubleSword",]
+									"Espada","Maza","Maza2","Maza3","HookSword","DoubleSword"]
 
 					DwarfWeaps = [	"QueenSword","CrushHammer","FireAxe","IceHammer","Hacha","Hacha5","Hacha4","Hacha3",
 									"Hacha6","Hacha2","Garrote","Martillo","Martillo2","Garropin","MazaDoble",

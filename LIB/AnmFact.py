@@ -892,8 +892,8 @@ def AnmFactDwarf():
 	Bladex.SetAnimationFactor("Dwf_jmp_1h",1.25)
 	Bladex.SetAnimationFactor("Dwf_jmph0_no",1.25)
 	
-	Bladex.SetAnimationFactor("FallLow_Dwf",1.8) ### Added -LeadHead
-	Bladex.SetAnimationFactor("Dwf_drink",1.5)
+	Bladex.SetAnimationFactor("FallLow_Dwf",1.8) ### Added 
+	Bladex.SetAnimationFactor("Dwf_drink",1.45)	 ### 	-LeadHead
 
 
 
@@ -948,6 +948,9 @@ def AnmFactDwarf():
 	Bladex.AddTranTime("Dwf","","D_r",0.15)
 	Bladex.AddTranTime("Dwf","","Rlx_vt",0.75)
 	Bladex.AddTranTime("Dwf","Rlx_vt","",0.25,0)
+	
+	### Attack anim experiments
+	# Bladex.AddTranTime("Dwf","g_26","g_22",0.3)
 
 
 
