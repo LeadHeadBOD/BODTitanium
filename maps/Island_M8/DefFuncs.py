@@ -5,7 +5,7 @@
 ##||| * Opening sequence drawbridge animation now plays at 60fps
 ##||| * Fixed ear-rape at skeleton surprise
 ##||| * Re-stored prisoners begging for their demise
-##||| * 
+##||| * Wyvern screams synchronized better
 ##||| * 
 ##||| * 
 ##\\\ 
@@ -1268,9 +1268,9 @@ def WyvScene2():
 
 	time = Bladex.GetTime()		
 
-	Bladex.AddScheduledFunc(time + 101.0/30.0,ScreamWyv2,(0,0))
-	Bladex.AddScheduledFunc(time + 397.0/30.0,ScreamWyv2,(0,0))
-	Bladex.AddScheduledFunc(time + 676.0/30.0,ScreamWyv2,(0,0))
+	Bladex.AddScheduledFunc(time + 101.0/20.0,ScreamWyv2,(0,0))
+	Bladex.AddScheduledFunc(time + 397.0/20.0,ScreamWyv2,(0,0))
+	Bladex.AddScheduledFunc(time + 673.0/20.0,ScreamWyv2,(0,0))
 	Bladex.AddScheduledFunc(time + 1075.0/30.0,WyvScene3a,())
 
 def WyvCiclica(sector,entity):
