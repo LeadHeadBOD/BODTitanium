@@ -1,3 +1,14 @@
+##///
+##||| AniSoundDknX.PY TITANIUM
+##||| Change list:
+##||| * Removed duplicate entry for alert sound
+##||| * Changed alert sound variable name, to prevent the Tkn sound overriding Dkn sound
+##||| * 
+##||| * 
+##||| *
+##||| *
+##\\\ 
+
 import Bladex
 import Language
 # *********************************
@@ -20,12 +31,13 @@ GolpeContundenteDkn=Bladex.CreateSound('../../sounds/golpe-maza-arm.wav', 'Golpe
 GolpeContundenteDkn.SendNotify=1
 
 
-DKnightKeepStill=Bladex.CreateSound('../../sounds/'+language+'/InsultoDkn1.wav', 'DKnightKeepStill')
+DKnightKeepStill=Bladex.CreateSound('../../sounds/'+language+'/InsultoDkn1.wav', 'DKnightKeepStill')    # Changed variable name not to conflict with Tkn -LeadHead
 DKnightKeepStill.MinDistance=1000
 DKnightKeepStill.MaxDistance=25000
-DKnightKeepStill=Bladex.CreateSound('../../sounds/'+language+'/InsultoDkn1.wav', 'DKnightKeepStill')
-DKnightKeepStill.MinDistance=1000
-DKnightKeepStill.MaxDistance=25000
+# Dupe, commented out
+# DKnightKeepStill=Bladex.CreateSound('../../sounds/'+language+'/InsultoDkn1.wav', 'DKnightKeepStill')    
+# DKnightKeepStill.MinDistance=1000
+# DKnightKeepStill.MaxDistance=25000
 
 
 
@@ -90,13 +102,12 @@ EsfuerzoGolpeArribaDkn.SendNotify=1
 
 MuerteDkn1=Bladex.CreateSound('../../sounds/MuerteDkn1.wav', 'MuerteDkn1')
 MuerteDkn1.SendNotify=1
-
 MuerteDkn2=Bladex.CreateSound('../../sounds/MuerteDkn2.wav', 'MuerteDkn2')
 MuerteDkn2.SendNotify=1
-MuerteDkn3=Bladex.CreateSound('../../sounds/MuerteDkn1.wav', 'MuerteDkn3')
-MuerteDkn3.SendNotify=1
-MuerteDkn4=Bladex.CreateSound('../../sounds/MuerteDkn2.wav', 'MuerteDkn4')
-MuerteDkn4.SendNotify=1
+MuerteDkn3=Bladex.CreateSound('../../sounds/MuerteDkn1.wav', 'MuerteDkn3')  # PLAGUE: These are effectively dupes
+MuerteDkn3.SendNotify=1                                                     #         of Muerte1 and 2
+MuerteDkn4=Bladex.CreateSound('../../sounds/MuerteDkn2.wav', 'MuerteDkn4')  #
+MuerteDkn4.SendNotify=1                                                     #
 
 HeridaDkn1=Bladex.CreateSound('../../sounds/HeridaDkn1.wav', 'HeridaTraidor1')
 HeridaDkn1.SendNotify=1

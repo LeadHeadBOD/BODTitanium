@@ -1,3 +1,14 @@
+##///
+##||| AniSoundDkn.PY TITANIUM
+##||| Change list:
+##||| * Commented out non-existant anims
+##||| * Changed alert sound variable name, to prevent the Tkn sound overriding Dkn sound
+##||| * 
+##||| * 
+##||| *
+##||| *
+##\\\ 
+
 import Bladex
 
 # ***********************************
@@ -32,8 +43,8 @@ def AsignarSonidosCaballeroOscuro(Personaje):
 	# Sonidos de animaciones
 
 	# Animation Alarm (We want a selection of sounds, so better link a function)
-	per.AddAnimSound('Tkn_alarm01', DKnightKeepStill, 0.3300)
-	per.AddAnimSound('Tkn_alarm02', DKnightKeepStill, 0.5500)
+	per.AddAnimSound('Tkn_alarm01', DKnightKeepStill, 0.3300)	# Now uses DK specific sounds always
+	per.AddAnimSound('Tkn_alarm02', DKnightKeepStill, 0.5500)	#			-LeadHead
 	
 	per.AddAnimSound('Tkn_chg_r', Enfundar, 0.5000)
 	per.AddAnimSound('Tkn_chg_r_l', Enfundar, 0.5000)
@@ -131,10 +142,10 @@ def AsignarSonidosCaballeroOscuro(Personaje):
       
 	per.AddAnimSound("Tkn_dth0", MuerteDkn1, 0.1130)
 	per.AddAnimSound("Tkn_dth0", CaidaDkn1, 0.8900)
-	per.AddAnimSound("Tkn_dth_i1", MuerteDkn1, 0.1130)
-	per.AddAnimSound("Tkn_dth_i2", MuerteDkn4, 0.1130)
-	per.AddAnimSound("Tkn_dth_bl1", MuerteDkn2, 0.1130)
-	per.AddAnimSound("Tkn_dth_bl2", MuerteDkn1, 0.1130)
+	# per.AddAnimSound("Tkn_dth_i1", MuerteDkn1, 0.1130)		# These anims do not exist
+	# per.AddAnimSound("Tkn_dth_i2", MuerteDkn4, 0.1130)		#
+	# per.AddAnimSound("Tkn_dth_bl1", MuerteDkn2, 0.1130)		#
+	# per.AddAnimSound("Tkn_dth_bl2", MuerteDkn1, 0.1130)		#		-LeadHead
 	per.AddAnimSound("Tkn_dth_rock", MuerteDkn3, 0.1130)
 	per.AddAnimSound("Tkn_dth_n00", CaidaDkn1, 0.8000)
 	per.AddAnimSound("Tkn_dth_n01", MuerteDkn2, 0.1100)
