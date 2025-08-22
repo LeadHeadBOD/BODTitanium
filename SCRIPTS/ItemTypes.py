@@ -2843,6 +2843,7 @@ class HalfmoonTrail(PersistantItemType):
 	def __init__(self, me, ownerName):
 		PersistantItemType.__init__(self, me)
 		# Create a particle system around the object as it appears
+		me.CastShadows = 0	# Added
 		me.Weapon=1
 		me.Alpha= 0.0
 		self.Name= me.Name
@@ -2885,7 +2886,7 @@ class HalfmoonTrail(PersistantItemType):
 		self.loopsound= Bladex.CreateEntity (me.Name+"LoopSound", "Entity Sound", 0, 0, 0)
 		self.loopsound.SetSound (SoundName)
 		self.loopsound.MinDistance=500
-		self.loopsound.MaxDistance=20000
+		self.loopsound.MaxDistance=30000
 		me.Link(self.loopsound)
 
 	def __getstate__(self):
