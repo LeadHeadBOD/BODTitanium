@@ -6,6 +6,7 @@
 ##||| * Torture spike wheel thing now sparks, no longer floats and is static
 ##||| * Torch no longer falls off the wall.
 ##||| * Grates now sparky.
+##||| * Several light parameters adjusted to better cast shadows.
 ##\\\ 
 
 import pocimac
@@ -132,7 +133,7 @@ o=Bladex.CreateEntity("NoName7","Lamparatecho",39311.966000,-14419.898000,13921.
 o.Scale=2.678033
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (15.000000,1.000000,(255,137,6)) ]
+o.Lights=[ (15.000000,0.200000,(255,137,6)) ]	# changed
 
 
 
@@ -210,7 +211,7 @@ o=Bladex.CreateEntity("NoName29","Lampcolg",32687.559000,-15498.957000,35086.340
 o.Scale=1.871744
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (25.031855,0.531250,(251,136,32)) ]
+o.Lights=[ (25.031855,0.431250,(251,136,32)) ]	# Changed
 
 
 
@@ -262,7 +263,7 @@ o=Bladex.CreateEntity("NoName45","Lampcolg",-17193.527000,-16099.524000,11567.11
 o.Scale=1.890462
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (15.000000,0.500000,(255,166,68)) ]
+o.Lights=[ (15.500000,0.200000,(255,166,68)) ]		# Changed
 
 
 
@@ -347,7 +348,7 @@ o.Lights=[ (4.116130,0.231250,(255,138,9)) ]
 o=Bladex.CreateEntity("NoName64","LamparaNegra",73874.904000,-3103.269000,29204.224000,"Physic")
 o.Scale=1.000000
 o.Orientation=0.049325,0.049325,0.705384,-0.705384
-o.FiresIntensity=[ 3 ]
+o.FiresIntensity=[ 5 ]							# Changed
 o.Lights=[ (5.000000,0.031250,(232,121,0)) ]
 
 
@@ -355,23 +356,23 @@ o.Lights=[ (5.000000,0.031250,(232,121,0)) ]
 o=Bladex.CreateEntity("NoName65","LamparaNegra",73926.857000,-3190.990000,14181.661000,"Physic")
 o.Scale=1.000000
 o.Orientation=0.031112,0.030573,0.700242,-0.712572
-o.FiresIntensity=[ 3 ]
-o.Lights=[ (0.242946,0.031250,(221,88,0)) ]
+o.FiresIntensity=[ 6 ]							# Changed
+o.Lights=[ (1.742946,0.031250,(221,88,0)) ]		#
 
 
 
 o=Bladex.CreateEntity("NoName66","LamparaNegra",73902.130000,-3138.628000,9149.028000,"Physic")
 o.Scale=1.000000
 o.Orientation=0.012342,0.012341,0.706999,-0.706999
-o.FiresIntensity=[ 3 ]
-o.Lights=[ (1.215502,0.031250,(255,149,32)) ]
+o.FiresIntensity=[ 6 ]							# Changed
+o.Lights=[ (2.215502,0.031250,(255,149,32)) ]	#
 
 
 
 o=Bladex.CreateEntity("NoName67","LamparaNegra",73884.689000,-3232.030000,-5828.639000,"Physic")
 o.Scale=1.000000
 o.Orientation=0.037007,0.037007,0.706138,-0.706138
-o.FiresIntensity=[ 3 ]
+o.FiresIntensity=[ 5 ]							# Changed
 o.Lights=[ (6.000000,0.031250,(249,131,0)) ]
 
 
@@ -412,7 +413,7 @@ o=Bladex.CreateEntity("NoName79","LamparaNegra",46100.122000,-6556.212000,16844.
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (20.000000,0.212500,(255,141,15)) ]
+o.Lights=[ (20.000000,0.112500,(255,141,15)) ]		#
 
 
 
@@ -542,7 +543,7 @@ o=Bladex.CreateEntity("NoName113","Antorchaenpared",-39262.152000,5995.188000,11
 o.Scale=1.000000
 o.Orientation=0.024683,-0.037008,0.706676,-0.706138
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.431250,(255,145,21)) ]
+o.Lights=[ (8.000000,0.081250,(255,145,21)) ]		# Changed
 
 
 
@@ -558,7 +559,7 @@ o=Bladex.CreateEntity("NoName120","LamparaNegra",67020.818000,-2927.467000,14130
 o.Scale=1.000000
 o.Orientation=0.006275,0.006062,-0.694632,0.719312
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (4.538023,0.212500,(255,146,26)) ]
+o.Lights=[ (4.538023,0.142500,(255,146,26)) ]	# Changed
 
 
 
@@ -566,7 +567,7 @@ o=Bladex.CreateEntity("NoName122","Antorchaenpared",-12297.668000,-2330.330000,3
 o.Scale=1.000000
 o.Orientation=0.073913,0.147016,-0.703233,0.691655
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.704739,0.300000,(253,133,0)) ]
+o.Lights=[ (10.704739,0.145000,(253,133,0)) ]	# Changed
 
 
 
@@ -582,7 +583,7 @@ o=Bladex.CreateEntity("NoName125","Antorchaenpared",-9722.708000,3268.480000,603
 o.Scale=1.000000
 o.Orientation=0.482246,0.482246,0.517145,-0.517145
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (9.000000,0.531250,(236,124,0)) ]
+o.Lights=[ (4.000000,0.171250,(236,124,0)) ]	# Changed
 
 
 
@@ -710,7 +711,7 @@ o=Bladex.CreateEntity("NoName156","Antorchaenpared",36796.806000,181.930000,-265
 o.Scale=1.000000
 o.Orientation=0.508650,0.508650,0.491198,-0.491198
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.309560,(202,86,9)) ]
+o.Lights=[ (10.000000,0.289560,(202,86,9)) ]	# Changed
 
 
 
@@ -807,7 +808,7 @@ o=Bladex.CreateEntity("NoName185","Antorchaenpared",-16226.648000,-20248.674000,
 o.Scale=1.000000
 o.Orientation=0.545621,0.545621,0.449775,-0.449775
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (4.764942,0.457362,(248,113,22)) ]
+o.Lights=[ (5.0, 0.197362,(248,113,22)) ]		# Changed
 
 
 
@@ -915,7 +916,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",-16704.584000,-17875.056000,-1
 o.Scale=1.000000
 o.Orientation=0.395409,0.395409,0.586218,-0.586218
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (7.000000,0.312500,(255,183,102)) ]
+o.Lights=[ (7.000000,0.172500,(255,183,102)) ]	# Changed
 
 
 
@@ -923,7 +924,7 @@ o=Bladex.CreateEntity("NoName3","LamparaNegra",-44532.960000,1424.466000,-14221.
 o.Scale=1.000000
 o.Orientation=0.504344,0.504344,-0.495618,0.495618
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (20.000000,0.531250,(245,97,7)) ]
+o.Lights=[ (16.000000,0.221250,(245,97,7)) ]	# Changed
 
 
 
@@ -931,7 +932,7 @@ o=Bladex.CreateEntity("NoName4","LamparaNegra",-49775.975000,6024.161000,-27018.
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.331250,(255,141,15)) ]
+o.Lights=[ (11.000000,0.221250,(255,141,15)) ]
 
 
 
@@ -1013,8 +1014,7 @@ o=Bladex.CreateEntity("NoName0","Lamparatecho",28918.317000,-9033.636000,13893.2
 o.Scale=2.548057
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (30.000000,0.412500,(255,157,49)) ]
-
+o.Lights=[ (30.000000,0.392500,(255,157,49)) ]	#
 
 
 o=Bladex.CreateEntity("NoName0","Vigaro1",4501.518000,4025.496000,45638.762000,"Physic")
@@ -1071,7 +1071,7 @@ o=Bladex.CreateEntity("NoName1","Antorchaenpared",-10124.983000,2709.976000,1554
 o.Scale=1.000000
 o.Orientation=0.449775,0.449775,0.545621,-0.545621
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (11.000000,0.531250,(255,142,17)) ]
+o.Lights=[ (4.000000,0.081250,(255,142,17)) ]	# Changed
 
 
 
@@ -1147,7 +1147,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",-23280.090000,6793.661000,5999
 o.Scale=1.126825
 o.Orientation=0.420603,0.420603,0.568413,-0.568413
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (4.000000,0.312500,(255,136,4)) ]
+o.Lights=[ (4.000000,0.212500,(255,136,4)) ]	# Changed
 
 
 
@@ -1169,7 +1169,7 @@ o=Bladex.CreateEntity("NoName4","Lampcolg",16605.939000,-15894.519000,37789.9160
 o.Scale=1.388690
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 8 ]
-o.Lights=[ (6.000000,0.331250,(240,126,0)) ]
+o.Lights=[ (6.500000,0.221250,(240,126,0)) ]	# Changed
 
 
 
@@ -1465,14 +1465,15 @@ o=Bladex.CreateEntity("NoName11","Antorchaenpared",53890.635000,2932.906000,3994
 o.Scale=1.000000
 o.Orientation=0.705788,0.705788,-0.043168,-0.043168
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (5.000000,0.312500,(255,140,13)) ]
+o.Lights=[ (7.000000,0.212500,(255,140,13)) ]	# changed
 
 
 
 o=Bladex.CreateEntity("NoName0","Columna",-36239.588000,-2819.702000,21304.391000,"Physic")
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
-
+Sparks.SetStoneSparkling(o.Name)	# Add
+o.Static = 1						#
 
 
 o=Bladex.CreateEntity("NoName3","Armero",-26835.194000,7164.692000,8740.926000,"Physic")
@@ -1593,7 +1594,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",-25923.886000,6818.168000,1119
 o.Scale=1.000000
 o.Orientation=0.030843,-0.128860,0.706434,-0.695266
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (10.000000,0.312500,(255,128,0)) ]
+o.Lights=[ (9.000000,0.102500,(255,128,0)) ]	# Changed
 
 
 
