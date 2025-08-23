@@ -2,6 +2,7 @@
 ##||| Barb_M1/OBJETOS.PY TITANIUM
 ##||| Change list:
 ##||| * added sparks for stones
+##||| * Changed some light sources for more consistent shadows
 ##\\\
 
 ##############	PUENTE ROTO EN LAS ROCAS
@@ -72,7 +73,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",13253.047000,-23297.152000,521
 o.Scale=1.000000
 o.Orientation=0.691655,0.691655,-0.147016,0.147016
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (4.000000,0.070000,(255,153,40)) ]
+o.Lights=[ (4.000000,0.060000,(255,153,40)) ]   # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 

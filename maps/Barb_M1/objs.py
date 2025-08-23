@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * added sparks for misc items
 ##||| * removed selection data from some misc stuff
+##||| * Changed some light sources for more consistent shadows
 ##\\\
 
 import Reference
@@ -555,7 +556,7 @@ o=Bladex.CreateEntity("NoName0","Hoguera",-155738.238000,-19728.198000,163978.26
 o.Scale=1.196147
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (9.000000,0.100000,(255,148,30)) ]
+o.Lights=[ (9.000000,0.0790000,(255,148,30)) ]      # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -702,7 +703,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",-73321.110000,-37464.618000,15
 o.Scale=1.000000
 o.Orientation=0.281958,0.259155,0.648459,-0.657905
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (5.000000,0.090000,(255,174,85)) ]
+o.Lights=[ (5.000000,0.060000,(255,174,85)) ]   # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
