@@ -7,6 +7,7 @@
 ##||| * Torch no longer falls off the wall.
 ##||| * Grates now sparky.
 ##||| * Several light parameters adjusted to better cast shadows.
+##||| * Added invisible stone blocks at the platforming segment on rocks to make it less prone to physics bugs
 ##\\\ 
 
 import pocimac
@@ -1045,7 +1046,7 @@ o=Bladex.CreateEntity("NoName2","Lampcolg",9646.326000,-1695.826000,30600.051000
 o.Scale=1.308209
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (15.000000,0.400000,(255,142,17)) ]
+o.Lights=[ (15.000000,0.200000,(255,142,17)) ]		# Changed
 
 
 
@@ -1117,15 +1118,16 @@ o=Bladex.CreateEntity("NoName1","Antorchaenpared",40900.724000,6592.029000,23838
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (10.000000,0.512500,(234,123,0)) ]
+o.Lights= [(10.0, 0.13, (234, 123, 0))]		# Changed
 
 
 
-o=Bladex.CreateEntity("NoName1","Antorchaenpared",35656.896000,-10560.005000,-30131.235000,"Physic")
+
+o=Bladex.CreateEntity("NoName1","Antorchaenpared",35656.896000,-10660.005000,-30131.235000,"Physic")
 o.Scale=1.000000
 o.Orientation=0.006164,0.006171,0.707080,-0.707080
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (5.000000,0.031250,(255,134,0)) ]
+o.Lights=[ (10.000000,0.031250,(255,134,0)) ]
 
 
 
@@ -1465,7 +1467,7 @@ o=Bladex.CreateEntity("NoName11","Antorchaenpared",53890.635000,2932.906000,3994
 o.Scale=1.000000
 o.Orientation=0.705788,0.705788,-0.043168,-0.043168
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (7.000000,0.212500,(255,140,13)) ]	# changed
+o.Lights=[ (7.000000,0.062500,(255,140,13)) ]	# changed
 
 
 
@@ -1849,3 +1851,34 @@ o=Bladex.CreateEntity("NoName2","Reja",-31162.966007,7387.998977,18701.262291)
 o.Scale=1.374941
 o.Orientation=0.706999,-0.012341,0.012341,-0.706999
 Sparks.SetMetalSparkling(o.Name)
+
+
+### Added
+o=Bladex.CreateEntity("TiReja1","Reja",-25340.574877, 7773.692784, 12199.862654,"Physic")
+o.Scale=1.45
+o.Orientation=0.707080,-0.006171,0.006171,-0.707080
+Sparks.SetMetalSparkling(o.Name)
+
+o=Bladex.CreateEntity("TiReja2","Reja",-25340.574877, 7773.692784, 15199.862654,"Physic")
+o.Scale=1.45
+o.Orientation=0.707080,-0.006171,0.006171,-0.707080
+Sparks.SetMetalSparkling(o.Name)
+
+
+o=Bladex.CreateEntity("TiBlock1","Bloque",22293.1657062, 10086.0175981, 32653.7071071)
+o.Scale=3.9
+o.Orientation=(0.780868768692, 0.0, 0.624695062637, 0.0)
+o.Alpha=0.0
+o.CastShadows=0
+
+o=Bladex.CreateEntity("TiBlock2","Bloque",24013.1657062, 10586.0175981, 28663.7071071)
+o.Scale=3.6
+o.Orientation=(0.780868768692, 0.0, 0.624695062637, 0.0)
+o.Alpha=0.0
+o.CastShadows=0
+
+o=Bladex.CreateEntity("TiBlock3","Bloque",25333.1657062, 9946.0175981, 25063.7071071)
+o.Scale=3.8
+o.Orientation=(0.413802921772, 0.0, 0.910366475582, 0.0)
+o.Alpha=0.0
+o.CastShadows=0
