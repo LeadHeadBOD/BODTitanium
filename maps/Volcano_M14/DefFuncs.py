@@ -3,7 +3,7 @@
 ##||| Change list:
 ##||| * Final door to fire golem fight can no longer be triggered multiple times.
 ##||| * Fire statue trap now checks for fire resistance.
-##||| * 
+##||| * Added sounds for sectors breaking in great fire sword area (arrowPuz).
 ##\\\ 
 
 import def_class
@@ -785,7 +785,23 @@ def gfireHit(name,hit_entity,x,y,z,vx,vy,vz,a9=0,a10=0,a11=0,a12=0,a13=0,a14=0,a
 				char.Life = 0
 				Actions.FireDeath("Player1")
 		else:
-			char.Life= char.Life- (GARGULUS_FIRE_DAMAGE * res)
+			ttlDamage = (GARGULUS_FIRE_DAMAGE * res)
+			
+			# If resistance does not counteract all damage, also generate smoke
+			if ttlDamage:
+				char.Life= char.Life - ttlDamage
+				# print "inflicting " + `ttlDamage`
+				
+				smoke=Bladex.CreateEntity("FireballSmoke", "Entity Particle System D1", x, y, z)
+				smoke.ParticleType="DarkSmoke"
+				smoke.YGravity=-3000.0
+				smoke.Friction=0.05
+				smoke.PPS=12
+				smoke.Velocity=0.0, -90.0, 0.0
+				smoke.RandomVelocity=7.0
+				smoke.DeathTime=Bladex.GetTime()+0.5
+				node= 0
+				char.LinkToNode(smoke,node)
 
 
 ##################################### lanzamiento de una llama a partir de una posicion y un destino #############
@@ -1916,32 +1932,43 @@ def apDust(name,p1,p2,p3):
 def apBreakSectorA(sector,entity):
 	global apSectorABroken
 	if (apSectorABroken) : return
-	if (entity<>"Player1") : return
+	if (entity!="Player1") : return
 	print("abBreakSectorA(trsector,entity)")
 	apSectorA.DoBreak((0,2,0),(-56000,10000,-34750),(0,100,0))
 	apSectorABroken=1
 
-	a = -54500,9500,-35750
-	b = -57000,9500,-35750
-	c = -54750,9500,-33750
-	d = -57000,9500,-33750
+	# Coordinates have been adjusted, original was tiny -LeadHead
+	a = -53900.0, 9500.0, -36420.0
+	b = -58230.0, 9500.0, -36100.0
+	c = -54050.0, 9500.0, -33050.0
+	d = -58230.0, 9500.0, -33010.0
 	apDust("apDustA1",a,b,c)
 	apDust("apDustA2",d,b,c)
+	
+	# Add sound -LeadHead
+	SoundBreakA.Position = -56000,10000,-34750
+	SoundBreakA.PlaySound(0)
+	
 
 def apBreakSectorB(sector,entity):
 	global apSectorBBroken
 	if (apSectorBBroken) : return
-	if (entity<>"Player1") : return
+	if (entity!="Player1") : return
 	print("abBreakSectorB(trsector,entity)")
 	apSectorB.DoBreak((0,2,0),(-64250,11000,-34750),(0,100,0))
 	apSectorBBroken=1
 
-	a = -63000,10000,-36000
-	b = -65750,10000,-36000
-	c = -63250,10000,-33750
-	d = -65500,10000,-33750
+	# Coordinates have been adjusted, original was tiny -LeadHead
+	a = -62120.0, 9700.0, -36500.0
+	b = -66650.0, 10000.0, -36300.0
+	c = -62120.0, 9560.0, -33000.0
+	d = -66650.0, 10000.0, -33100.0
 	apDust("apDustB1",a,b,c)
 	apDust("apDustB2",d,b,c)
+	
+	# Add sound -LeadHead
+	SoundBreakB.Position = -56000,10000,-34750
+	SoundBreakB.PlaySound(0)
 
 def apActivate():
 	apOpenDoor()
