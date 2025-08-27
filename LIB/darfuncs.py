@@ -3,7 +3,8 @@
 ##||| Change list:
 ##||| * False Cube no longer has selection data that causes character to look at and select it
 ##||| * Deathfile will now assign default enemytype funcs
-##||| * 
+##||| * Fire sectors now check for fire resistance
+##||| * Fire sectors now cause dark smoke when taking fire damage
 ##||| * 
 ##\\\ 
 
@@ -381,13 +382,47 @@ def QuakeStop():
 ######## FIRE SECTORS #######
 FIRE_DAMAGE = 1.0/50.0
 
+### Now affected by fire resistance
+### 			-LeadHead
 def QuemaTimer(e_name, time):
   char = Bladex.GetEntity(e_name)
-  char.Life = char.Life - FIRE_DAMAGE * CharStats.GetCharMaxLife(char.Kind,char.Level)
+  res = (1.0 - char.Data.GetResistance("Fire"))
+
   if char.Life <= 0:
     Actions.FireDeath(e_name)
     char.RemoveFromList("Timer15")
     char.TimerFunc=""
+  else:
+    ttlDamage = ((FIRE_DAMAGE * CharStats.GetCharMaxLife(char.Kind,char.Level)) * res)
+    char.Life = char.Life - ttlDamage
+
+    ## Also generate smoke when taking damage
+    if ttlDamage:
+      x,y,z = char.Position
+      smoke=Bladex.CreateEntity("FireSectorSmoke", "Entity Particle System D1", x, y, z)
+      smoke.ParticleType="DarkSmoke"
+      smoke.YGravity=-2500.0
+      smoke.Friction=0.05
+      smoke.PPS=24
+      smoke.Velocity=0.0, -27.0, 0.0
+      smoke.RandomVelocity=19.0
+      smoke.DeathTime=Bladex.GetTime()+0.5
+      node= 0
+      char.LinkToNode(smoke,node)
+      ### Do a sound when stepping in
+      snd_name=e_name+"_LoopSnd"
+      sound=Bladex.GetEntity(snd_name)
+      if not sound:
+        sound=Bladex.CreateEntity(snd_name, "Entity Sound", x,y,z )
+        sound.Volume = 0.9
+        sound.MinDistance=5000.0
+        sound.MaxDistance=10000.0
+        sound.SetSound("../../Sounds/Ember-crackle.wav")
+      else:
+        sound.Position=char.Position
+
+      sound.PlaySound(-1)
+
 
 def EntraQuema(triggername,entityname):
   if entityname=="Player1":
@@ -395,6 +430,17 @@ def EntraQuema(triggername,entityname):
     if char.Life>0:
         char.SubscribeToList("Timer15")
         char.TimerFunc=QuemaTimer
+        
+		### Do a sound when stepping in
+        snd_name=entityname+"_EntrSnd"
+        EntrySound=Bladex.GetEntity(snd_name)
+        if not EntrySound:
+            EntrySound=Bladex.CreateEntity(snd_name, "Entity Sound", char.Position[0], char.Position[1], char.Position[2] )
+            EntrySound.Volume = 0.8
+            EntrySound.SetSound("../../Sounds/flus1.WAV")
+        else:
+            EntrySound.Position=char.Position
+        EntrySound.PlaySound(0)
 
 def SaleQuema(triggername,entityname):
   if entityname=="Player1":
@@ -402,6 +448,12 @@ def SaleQuema(triggername,entityname):
     if char.Life>0:
         char.RemoveFromList("Timer15")
         char.TimerFunc=""
+		
+        ### Stop looping sound when exiting
+        snd_name=entityname+"_LoopFire"
+        sound=Bladex.GetEntity(snd_name)
+        if sound and sound.Playing:
+            sound.Stop()
 
 ######  Assignation funcs ######
 def FireOnGS(name):
@@ -627,7 +679,7 @@ def CreateFalseCube(pos,timeToKill = -1,Name = ""):
 	o = Bladex.CreateEntity(Name + "quad","Bloque",pos[0],pos[1]-1500,pos[2])
 	o.Orientation = (0.707107245922, 0.0, 0.0, 0.707106292248)
 	o.Scale = 4
-	o.ExclusionMask=2|4
+	o.ExclusionMask=2|4			# PLAGUE: need to add magic excl group -LeadHead
 	o.CastShadows = 0
 	o.Alpha       = 0.0
 	o.RasterMode  ="Read"
