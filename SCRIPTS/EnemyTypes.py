@@ -9,6 +9,8 @@
 ##||| * Lich vomit attack now deals more poison damage per level.
 ##||| * Cositas should no longer rotate on hit when already dead.
 ##||| * Spider spitting should now somewhat work  (# PLAGUE: Might need adjustments)
+##||| * Restored Great Demon's earthquake attack functionality
+##||| * Spit attacks now trigger pain animation and damage only once per instance (Ldm, Spd, Lch, Zkn, Slm)
 ##\\\ 
 
 
@@ -1072,6 +1074,7 @@ class Little_Demon (Enm_Def.NPCPerson):
 	AGE_Number=0
 	ImplosionPeriod = 2.5
 	DeathBallPeriod = 3.5
+	# SpitHits = {}
 
 	def __init__(self, me):
 		# base class init
@@ -1097,6 +1100,7 @@ class Little_Demon (Enm_Def.NPCPerson):
 
 		self.DamageFactorNone  = 0.1
 		self.DamageFactorLight = 0.2
+		self.SpitHits = {}
 
 		me.AddAnmEventFunc("Spit", self.StartSpit)
 		me.AddAnmEventFunc("Disappear", self.Disappear)
@@ -1132,6 +1136,7 @@ class Little_Demon (Enm_Def.NPCPerson):
 		self.DamageFactorLight = 0.2
 		self.ImplosionPeriod = 2.5
 		self.DeathBallPeriod = 3.5
+		self.SpitHits = {}
 		me.AddAnmEventFunc("Spit", self.StartSpit)
 		me.AddAnmEventFunc("Disappear", self.Disappear)
 		me.AddAnmEventFunc("EndZig", self.EndZig)
@@ -1329,12 +1334,28 @@ class Little_Demon (Enm_Def.NPCPerson):
 		#print "Zag Ended"
 
 	def FirePrtlHit(self,prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
+		ptcl=Bladex.GetEntity(prtl_name)
+		me = Bladex.GetEntity(self.Name)
+		SpitAge = ptcl.Data.parentAge
+
 		if hit_entity != "BWorld":
 			victim=Bladex.GetEntity(hit_entity)
 			if victim:
 				if victim.Person and not victim.Kind=="Little_Demon":
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +6.0]]
-					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Fire", 1, -1, x, y, z, 0)
+					if self.SpitHits.has_key(SpitAge):
+						if not hit_entity in self.SpitHits[SpitAge]:
+							self.SpitHits[SpitAge].append(hit_entity)
+							dealDamage = 1
+						else:
+							dealDamage = 0
+							# print (SpitAge + " is hitting " + hit_entity + " but not doing damage")
+					else:
+						self.SpitHits[SpitAge] = [hit_entity,]
+						dealDamage = 1
+					if dealDamage:
+						FireDamage = (CharStats.GetCharDamageData(me.CharType,me.Level) * 2)																				# Damage now scales with levels
+						Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +FireDamage]]	#					- LeadHead
+						victim.DamageFunc(hit_entity, self.Name, prtl_name, "Fire", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
 
@@ -1351,7 +1372,7 @@ class Little_Demon (Enm_Def.NPCPerson):
 					victim.LinkToNode(smoke,node)
 
 					# Override hurt anim
-					if victim.Life>0:
+					if victim.Life>0 and dealDamage:
 						if victim.InCombat:
 							Damage.DropInvalidObjectsOnImpact (victim.Name)
 							victim.Wuea=Reference.WUEA_ENDED
@@ -1364,8 +1385,8 @@ class Little_Demon (Enm_Def.NPCPerson):
 							victim.LaunchAnmType("hurt_f_big")
 				elif victim.Weapon:
 					pass
+					
 		# This particle should be removed, as it has been converted to smoke
-		ptcl=Bladex.GetEntity(prtl_name)
 		ptcl.RemoveFromWorld()
 
 
@@ -1375,6 +1396,8 @@ class Little_Demon (Enm_Def.NPCPerson):
 			prtl=fireball.GetParticleEntity()
 			prtl.HitFunc=self.FirePrtlHit
 			prtl.ObjCTest= 1
+			InitDataField.Initialise(prtl)
+			prtl.Data.parentAge = fireball_name[(len(self.Name)+10):]
 			if(Bladex.GetTime()<end_time):
 				Bladex.AddScheduledFunc(Bladex.GetTime()+period,self.SpitFunc,(fireball_name,end_time,period))
 
@@ -1758,6 +1781,8 @@ class Spidersmall (Enm_Def.NPCPerson):
 		# base class init
 		Enm_Def.NPCPerson.__init__(self, me)
 		self.HitImpulse = [0.0,0.0,0.0]
+		
+		self.SpitHits = {}
 
 		me.ImDeadFunc=self.ImDeadFunc
 		me.AddAnmEventFunc("Spit", self.StartSpit)
@@ -1793,6 +1818,7 @@ class Spidersmall (Enm_Def.NPCPerson):
 			self.AGE_Number=parms[0]
 			self.last_hit_in_air=parms[1]
 			self.HitImpulse=parms[2]
+			self.SpitHits = {}
 
 		me=Bladex.GetEntity(self.Name)
 		#me.ImDeadFunc=self.ImDeadFunc
@@ -1821,6 +1847,7 @@ class Spidersmall (Enm_Def.NPCPerson):
 		Reference.debugprint(EntityName+": (Spider) I died!")
 		Enm_Def.NPCPerson.StdImDead(self,EntityName)
 		me = Bladex.GetEntity(EntityName)
+		me.ExclusionGroup=2
 		#pdb.set_trace()
 		if self.last_hit_in_air:
 			me.Wuea=Reference.WUEA_ENDED
@@ -1856,15 +1883,28 @@ class Spidersmall (Enm_Def.NPCPerson):
 
 
 	def VenomPrtlHit(self,prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
+		ptcl=Bladex.GetEntity(prtl_name)
+		me	=Bladex.GetEntity(self.Name)
+		SpitAge = ptcl.Data.parentAge
+		
 		if hit_entity != "BWorld":
 			victim=Bladex.GetEntity(hit_entity)
 			if victim:
 				if victim.Person and not victim.Kind=="Spidersmall":
-					# Need to check immunity
-					me = Bladex.GetEntity(self.Name)                                                                                                                    # Now does VenomDamage
-					VenomDamage= 2.0 + me.Level # Damage increases per level. -LeadHead                                                                                 #
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,   1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +VenomDamage]] #           -LeadHead
-					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Poison", 1, -1, x, y, z, 0)
+					if self.SpitHits.has_key(SpitAge):
+						if not hit_entity in self.SpitHits[SpitAge]:
+							self.SpitHits[SpitAge].append(hit_entity)
+							dealDamage = 1
+						else:
+							dealDamage = 0
+					else:
+						self.SpitHits[SpitAge] = [hit_entity,]
+						dealDamage = 1
+					if dealDamage:
+						# print "spit " +SpitAge+" is dealing damage now"
+						VenomDamage = (CharStats.GetCharDamageData(me.CharType,me.Level) / 3)																				# Damage now scales with levels
+						Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +VenomDamage]]	#					- LeadHead
+						victim.DamageFunc(hit_entity, self.Name, prtl_name, "Poison", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
 
@@ -1883,7 +1923,6 @@ class Spidersmall (Enm_Def.NPCPerson):
 				elif victim.Weapon:
 					pass
 		# This particle should be removed, as it has been converted to smoke
-		ptcl=Bladex.GetEntity(prtl_name)
 		ptcl.RemoveFromWorld()
 
 
@@ -1893,6 +1932,8 @@ class Spidersmall (Enm_Def.NPCPerson):
 			prtl=venom.GetParticleEntity()
 			prtl.HitFunc=self.VenomPrtlHit
 			prtl.ObjCTest= 1
+			InitDataField.Initialise(prtl)
+			prtl.Data.parentAge = venom_name[(len(self.Name)+7):]
 			if(Bladex.GetTime()<end_time):
 				Bladex.AddScheduledFunc(Bladex.GetTime()+period,self.SpitFunc,(venom_name,end_time,period))
 
@@ -2266,6 +2307,7 @@ class Lich (Enm_Def.NPCPerson):
 		me.ImDeadFunc=self.ImDeadFunc
 		me.AddAnmEventFunc("Spit", self.StartSpit)
 		self.NoFXOnHit= TRUE
+		self.SpitHits = {}
 
 	# Functions for loading and saving state
 	def __getstate__(self):
@@ -2293,6 +2335,8 @@ class Lich (Enm_Def.NPCPerson):
 		self.LegBits= self.RightFoot | self.RightLeg | self.LeftFoot | self.LeftLeg
 		self.RArmAble= self.RightHand | self.RightArm
 		self.LArmAble= self.LeftHand | self.LeftArm
+		
+		self.SpitHits = {}
 
 		Enm_Def.NPCPerson.__setstate__(self,parm)
 
@@ -2388,21 +2432,33 @@ class Lich (Enm_Def.NPCPerson):
 		Bladex.AddScheduledFunc(Bladex.GetTime()+10, dust.EnPolvoObjeto,(obj_name,100,0,))
 
 	def VomitPrtlHit(self,prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
+		ptcl=Bladex.GetEntity(prtl_name)
+		me = Bladex.GetEntity(self.Name)
+		SpitAge = ptcl.Data.parentAge
+
 		if hit_entity != "BWorld":
 			victim=Bladex.GetEntity(hit_entity)
 			if victim:
-				if victim.Person and not victim.Kind=="Lich":
-					me = Bladex.GetEntity(self.Name)
-					VmtDamage= 2.0 + me.Level #Since Python starts counting from 0, level 1 lch and zkn will do exactly 2 venom damage as in original game. -LeadHead
-					# Need to check immunity ## Do we?
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +VmtDamage]] ### Now does VmtDamage -LeadHead
-					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Vomit", 1, -1, x, y, z, 0)
+				if victim.Person and not victim.Kind=="Little_Demon":
+					if self.SpitHits.has_key(SpitAge):
+						if not hit_entity in self.SpitHits[SpitAge]:
+							self.SpitHits[SpitAge].append(hit_entity)
+							dealDamage = 1
+						else:
+							dealDamage = 0
+							# print (SpitAge + " is hitting " + hit_entity + " but not doing damage")
+					else:
+						self.SpitHits[SpitAge] = [hit_entity,]
+						dealDamage = 1
+					if dealDamage:
+						VmtDamage = (CharStats.GetCharDamageData(me.CharType,me.Level) * 2)																					# Damage now scales with levels
+						Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Venom", +VmtDamage]]	#					- LeadHead
+						victim.DamageFunc(hit_entity, self.Name, prtl_name, "Vomit", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
-				elif victim.Weapon:
-					pass
+
 		# This particle should be removed, as it has collided
-		ptcl=Bladex.GetEntity(prtl_name)
+
 		ptcl.RemoveFromWorld()
         
 
@@ -2412,6 +2468,8 @@ class Lich (Enm_Def.NPCPerson):
 			prtl=vomit.GetParticleEntity()
 			prtl.HitFunc=self.VomitPrtlHit
 			prtl.ObjCTest= 1
+			InitDataField.Initialise(prtl)
+			prtl.Data.parentAge = vomit_name[(len(self.Name)+7):]
 			if(Bladex.GetTime()<end_time):
 				Bladex.AddScheduledFunc(Bladex.GetTime()+period,self.SpitFunc,(vomit_name,end_time,period))
 
@@ -2593,6 +2651,8 @@ class Salamander (Enm_Def.NPCPerson):
 		# constants
 		self.DamageFactorNone  = 0.15
 		self.DamageFactorLight = 0.25
+		
+		self.SpitHits = {}
 
 		me.AddAnmEventFunc("Spit", self.StartSpit)
 
@@ -2614,6 +2674,7 @@ class Salamander (Enm_Def.NPCPerson):
 			self.AGE_Number=parms[0]
 		me=Bladex.GetEntity(self.Name)
 		me.AddAnmEventFunc("Spit", self.StartSpit)
+		self.SpitHits = {}
 
 	def ResetSounds(self, EntityName):
 		AniSound.AsignarSonidosSalamander(EntityName)
@@ -2630,12 +2691,27 @@ class Salamander (Enm_Def.NPCPerson):
 			self.ChanceOfFuryOnLeaderDeath = 0.0
 
 	def FirePrtlHit(self,prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
+		ptcl=Bladex.GetEntity(prtl_name)
+		me = Bladex.GetEntity(self.Name)
+		SpitAge = ptcl.Data.parentAge
 		if hit_entity != "BWorld":
 			victim=Bladex.GetEntity(hit_entity)
 			if victim:
 				if victim.Person and not victim.Kind=="Salamander":
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,   1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +6.0]]
-					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Fire", 1, -1, x, y, z, 0)
+					if self.SpitHits.has_key(SpitAge):
+						if not hit_entity in self.SpitHits[SpitAge]:
+							self.SpitHits[SpitAge].append(hit_entity)
+							dealDamage = 1
+						else:
+							dealDamage = 0
+							# print (SpitAge + " is hitting " + hit_entity + " but not doing damage")
+					else:
+						self.SpitHits[SpitAge] = [hit_entity,]
+						dealDamage = 1
+					if dealDamage:
+						FireDamage = (CharStats.GetCharDamageData(me.CharType,me.Level) * 2)	
+						Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +FireDamage]]
+						victim.DamageFunc(hit_entity, self.Name, prtl_name, "Fire", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
 
@@ -2652,9 +2728,10 @@ class Salamander (Enm_Def.NPCPerson):
 					victim.LinkToNode(smoke,node)
 
 					# Override hurt anim
-					if victim.Life>0:
+					if victim.Life>0 and dealDamage:
 						Damage.DropInvalidObjectsOnImpact (victim.Name)
 						victim.Wuea=Reference.WUEA_ENDED
+						victim.InterruptCombat()
 						if victim.InCombat:
 							victim.InterruptCombat()
 							victim.LaunchAnmType("hurt_f_big")
@@ -2663,7 +2740,7 @@ class Salamander (Enm_Def.NPCPerson):
 				elif victim.Weapon:
 					pass
 		# This particle should be removed, as it has been converted to smoke
-		ptcl=Bladex.GetEntity(prtl_name)
+
 		ptcl.RemoveFromWorld()
 
 
@@ -2673,6 +2750,8 @@ class Salamander (Enm_Def.NPCPerson):
 			prtl=fireball.GetParticleEntity()
 			prtl.HitFunc=self.FirePrtlHit
 			prtl.ObjCTest= 1
+			InitDataField.Initialise(prtl)
+			prtl.Data.parentAge = fireball_name[(len(self.Name)+10):]
 			if(Bladex.GetTime()<end_time):
 				Bladex.AddScheduledFunc(Bladex.GetTime()+period,self.SpitFunc,(fireball_name,end_time,period))
 
@@ -2978,7 +3057,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 			if (object.Physic or object.Weapon) and not object.Parent:
 				op= object.Position;
 				x= op[0]-mp[0]; y= op[1]-mp[1]; z= op[2]-mp[2]
-				dist= ((x**2.0) + (y**2.0) + (z**2.0))**0.5
+				# dist= ((x**2.0) + (y**2.0) + (z**2.0))**0.5
+				dist= ((x*x) + (y*y) + (z*z))**0.5					# Fixes the Quake attack	-LeadHead
 				x,y,z= B3DLib.Normalize((x,y-500.0,z))
 				factor= ((QuakeRange-dist)/QuakeRange) * impulse
 				object.Impulse(x*factor, y*factor,z*factor)
@@ -3088,6 +3168,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 		obj.RasterMode="AdditiveAlpha"
 		obj.RasterMode="Read"
 		obj.Solid= 0
+		obj.CastShadows= 0		# Added
 
 		# Set position & orientation
 		me.LinkAnchors("FireRing",obj,"FireRing")
