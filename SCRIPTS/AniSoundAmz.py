@@ -5,6 +5,7 @@
 ##||| * Fire Bo now has a more powerful whoosh and fire effect.
 ##||| * g_magic2 whoosh sound timing corrected
 ##||| * SteelFeather now has strong whooshes.
+##||| * Regular low and neutral attack now uses weaker shouts
 ##\\\ 
 
 import Bladex
@@ -39,7 +40,7 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_chg_r_l', EnfundarAmz, 0.3599)
 	NetSounds.AddAnimSound(per,'Amz_g_spears1', SesgadoLargoAgudo, 0.2610)
 	NetSounds.AddAnimSound(per,'Amz_g_spears1', SesgadoCortoAgudo, 0.6010)
-	NetSounds.AddAnimSound(per,'Amz_g_spears1', EsfuerzoAmzMediano, 0.1620)
+	NetSounds.AddAnimSound(per,'Amz_g_spears1', EsfuerzoCorto3Amz, 0.1620)		# Was EsfuerzoAmzMediano, now less obnoxious 		-LeadHead
 	NetSounds.AddAnimSound(per,'Amz_g_spears1', AndarAmz1, 0.1100)
 	NetSounds.AddAnimSound(per,'Amz_g_spears6', SesgadoLargoAgudo, 0.1470)
 	NetSounds.AddAnimSound(per,'Amz_g_spears6', EsfuerzoCortoAmz, 0.1400)
@@ -631,7 +632,8 @@ def AsignarSonidosAmazona(Personaje):
 	NetSounds.AddAnimSound(per,'Amz_g_spear32kata_b2', EsfuerzoGolpeFrontalAmz, 0.506)
 	NetSounds.AddAnimSound(per,'Amz_g_spear16low', SesgadoCorto, 0.1170)
 	NetSounds.AddAnimSound(per,'Amz_g_spear16low', SesgadoLargoAgudo, 0.3560)
-	NetSounds.AddAnimSound(per,'Amz_g_spear16low', EsfuerzoGolpeCabezaAmz, 0.1000)
+	# NetSounds.AddAnimSound(per,'Amz_g_spear16low', EsfuerzoGolpeCabezaAmz, 0.1000)
+	NetSounds.AddAnimSound(per,'Amz_g_spear16low', EsfuerzoCorto4Amz, 0.1000)			# Less obnoxious	-LeadHead
 	NetSounds.AddAnimSound(per,'Amz_g_spear16low', AndarAmz2, 0.1270)
 	NetSounds.AddAnimSound(per,'Amz_g_spear02low', SesgadoLargo, 0.2300)
 	NetSounds.AddAnimSound(per,'Amz_g_spear02low', SesgadoCortoAgudo, 0.5320)
