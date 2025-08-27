@@ -97,7 +97,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 luzh=Bladex.CreateEntity("Luz2","Entity Spot",-62026.720392,-9992.723457,-2777.438267)
 luzh.Color=255,113,10
 luzh.Intensity=25
-luzh.Precission=0.12
+luzh.Precission=0.07        # Changed
 # luzh.CastShadows=0        # Commented out
 
 ### All tables below added param 'CastShadows=0' -LeadHea

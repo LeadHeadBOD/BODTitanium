@@ -4,6 +4,7 @@
 ##||| * added sparks for misc items
 ##||| * removed selection data from some misc stuff
 ##||| * Changed some light sources for more consistent shadows
+##||| * added invisible block near first platforming part (across cliff) for more consistent collision
 ##\\\
 
 import Reference
@@ -373,7 +374,7 @@ o=Bladex.CreateEntity("antorchaen13","Antorchaenpared",-200526.966000,-12314.177
 o.Scale=1.000000
 o.Orientation=0.706676,0.706676,-0.024678,0.024678
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (7.000000,0.050000,(255,165,64)) ]
+o.Lights=[ (7.000000,0.03125,(255,165,64)) ]        # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -455,7 +456,7 @@ o=Bladex.CreateEntity("NoName1","Antorchaenpared",-159078.811000,-22335.301000,2
 o.Scale=1.000000
 o.Orientation=0.098461,0.121630,-0.706032,0.690674
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (7.000000,0.100000,(255,165,64)) ]
+o.Lights=[ (7.000000,0.031250,(255,165,64)) ]       # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -1292,7 +1293,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",-55258.867000,-20619.685000,29
 o.Scale=1.000000
 o.Orientation=0.400510,0.400510,-0.582745,0.582745
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (10.000000,0.099000,(255,150,34)) ]
+o.Lights=[ (10.000000,0.07,(255,150,34)) ]      # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -3219,7 +3220,7 @@ o=Bladex.CreateEntity("NoName2","Antorchaenpared",-55631.035000,-14214.730000,42
 o.Scale=1.000000
 o.Orientation=0.395409,0.395409,0.586218,-0.586218
 o.FiresIntensity=[ 7 ]
-o.Lights=[ (6.000000,0.080000,(255,145,21)) ]
+o.Lights=[ (6.000000,0.040000,(255,145,21)) ]       # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -3607,3 +3608,11 @@ o.Orientation=0.877926,0.456925,-0.142496,0.012649
 #o.Scripts=?  En la siguiente versión
 
 
+
+### Added Block to make 1 platforming section more consistent
+
+o=Bladex.CreateEntity("TiBlock1Barb","Adoquinpulsador",-13569.7523404, -17892.1740454, 7346.00668414)
+o.Scale = 2.2
+o.Orientation = 1.0, 0.0, 0.0, 0.0
+o.Alpha = 0.0
+o.CastShadows = 0
