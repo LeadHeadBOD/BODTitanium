@@ -410,7 +410,7 @@ def QuemaTimer(e_name, time):
       node= 0
       char.LinkToNode(smoke,node)
       ### Do a sound when stepping in
-      snd_name=e_name+"_LoopSnd"
+      snd_name=e_name+"_LoopFireSnd"
       sound=Bladex.GetEntity(snd_name)
       if not sound:
         sound=Bladex.CreateEntity(snd_name, "Entity Sound", x,y,z )
@@ -450,7 +450,7 @@ def SaleQuema(triggername,entityname):
         char.TimerFunc=""
 		
         ### Stop looping sound when exiting
-        snd_name=entityname+"_LoopFire"
+        snd_name=entityname+"_LoopFireSnd"
         sound=Bladex.GetEntity(snd_name)
         if sound and sound.Playing:
             sound.Stop()
