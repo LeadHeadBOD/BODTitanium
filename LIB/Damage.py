@@ -10,7 +10,7 @@
 ##||| * Adapted bow camera fix from HD update
 ##||| * Blocking with weapons with no "brkobjdata" (special weapons) will now still cause attacker to recoil
 ##||| * Having a 2handed weapon broken will now remove child entities (for example arrows) before being destroyed
-##||| * 
+##||| * Barbarian "Rage" attack now does 2.0 damage multiplier, up from 1.2 (same stamina use though)
 ##\\\ 
 
 import Reference
@@ -231,7 +231,8 @@ AnimationData['Bar_g2h_b7']=  2.8           ### PLAGUE: Duplicated - Skysmash. S
 
 #combos derecha
 AnimationData['Bar_g2h_11']=   1.0
-AnimationData['Bar_g2h_02kata']=  1.2      
+AnimationData['Bar_g2h_02kata']=  	2.0		# Changed    
+StaminaData  ['Bar_g2h_02kata']=    1.2		# Added
 
 #combos izquierda
 AnimationData['Bar_g2h_s7']=  1.0
@@ -1077,6 +1078,7 @@ def StuckWeaponFall (WeaponName, TargetName):
 				weapon.Impulse(0.0, 1.0, 0.0)
 
 def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
+	# print "Damage.py -> " + AnimName
 	me= Bladex.GetEntity(EntityName)	
 	if me:
 		current_energy= me.Energy
