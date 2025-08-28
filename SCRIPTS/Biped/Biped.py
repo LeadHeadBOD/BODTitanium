@@ -3,11 +3,60 @@
 ##||| Change list:
 ##||| * Added Ice Golem
 ##||| * Added Gold Ork
-##||| 
+##||| * Added check for TiVersion to re-generate AnmData
 ##\\\ 
 
 import Bladex
 import DefAnims
+import os
+
+
+### Scary stuff!
+#
+
+TiVersion = "v0.5"
+
+def VerifyTiVersion():
+	generateNew = 0
+	filePath = ("../../AnmPak/TiVersion.txt")
+	try:
+		versionFile = open(filePath, "r")
+		currentVersion = versionFile.read()
+		if currentVersion == TiVersion: 
+			print "TiVersion verified"
+			versionFile.close()
+			return
+		else:
+			print "TiVersion mismatch! Found file is " + currentVersion
+			versionFile.close()
+			generateNew = 1
+	except:
+		print "TiVersion not found!"
+		generateNew = 1
+	
+	if generateNew:
+		print "creating new TiVersion file AND wiping AnmPaks"
+		WipeCachedAnms()
+		versionFile = open(filePath, "w")
+		versionFile.write(TiVersion)
+		versionFile.close()
+
+
+def WipeCachedAnms():
+	
+	datPath = ("../../AnmPak/")
+	datList = os.listdir(datPath)
+	for f in datList:
+		datFile =  os.path.join(datPath, f)
+		os.remove(datFile)
+	print "AnmPak -> All data wiped"
+
+
+VerifyTiVersion()
+	
+#
+###
+
 
 #
 # Kind of attack set -> For the combos files
