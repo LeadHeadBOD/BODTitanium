@@ -11,6 +11,7 @@
 ##||| * Following attacks now hit twice - FireSword combo, FireAxe combo, FireBo combo
 ##||| * Corrected start_weapon_special timing for g_magic2 (level 19 Sword of Ianna combo)
 ##||| * Adjusted "tke_r_key" timings for: Knight, Barbarian, Amazon
+##||| * Added Bar_df_01_2w and Bar_df_01_axe
 ##\\\ 
 
 def Init():
@@ -1158,6 +1159,12 @@ def Init():
     Bladex.AddAnmEvent("Bar_lvr_d","Activate",0.3548)
     Bladex.AddAnmEvent("Bar_lvr_u","Activate",0.3889)
 
+    # Added     -LeadHead
+    Bladex.AddAnmEvent("Bar_df_01_2w","HitFinalItp",0.388)
+    Bladex.AddAnmEvent("Bar_df_01_axe","HitFinalItp",0.388)
+    
+
+
     Bladex.AddAnmEvent("Bar_g_01","Start_Trail",0.3117)
     Bladex.AddAnmEvent("Bar_g_01","Stop_Trail",0.5714)
     Bladex.AddAnmEvent("Bar_g_01","Start_Weapon",0.3117)
@@ -1887,7 +1894,7 @@ def Init():
     #                                                          #
     ############################################################
     # Old auto converted events
-    Bladex.AddAnmEvent("Kgt_df_01","HitFinalItp",0.270)
+    Bladex.AddAnmEvent("Kgt_df_01","HitFinalItp",0.270)     # PLAGUE: These are missing for all other characters
     Bladex.AddAnmEvent("Kgt_df_02","HitFinalItp",0.654)
 
     Bladex.AddAnmEvent("Kgt_bag","ChangeREvent",0.5500)

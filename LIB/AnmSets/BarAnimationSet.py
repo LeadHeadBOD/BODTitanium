@@ -4,6 +4,7 @@
 ##||| * Removed steps from _fire type anims where they were not needed.
 ##||| * Added steps for dth anims that were missing them.
 ##||| * Removed duplicate "W2H" AnmEvents
+##||| * Barbarian will now use correct block animation with shield
 ##\\\ 
 
 import Bladex
@@ -2443,7 +2444,7 @@ def LoadBarAnimationSet(ct_name):
 	Bladex.AddAnmLStep(anm_name,0.745)
 
 	anm_name="Bar_df_01"
-	Bladex.LoadSampledAnimation("../../Anm/Bar_df_01.BMV",anm_name,0,"Barbarian")
+	Bladex.LoadSampledAnimation("../../Anm/Kgt_df_01.BMV",anm_name,0,"Barbarian")	# Previously used Bar_df_01, which is a 2h anim -LeadHead
 	Bladex.AddAnmRStep(anm_name,0.000)
 	Bladex.AddAnmLStep(anm_name,0.000)
 
