@@ -128,7 +128,7 @@ def AsignarSonidosMinotaur(Personaje):
 	
 	### Added "Min_dth_n00" 	-LeadHead
 	per.AddAnimSound("Min_dth_n00", MovimientoMin2, 0.0740)
-	per.AddAnimSound("Min_dth_n00", MuerteMin3,     0.9200)
+	per.AddAnimSound("Min_dth_n00", MuerteMin3,     0.0920)
 	per.AddAnimSound("Min_dth_n00", MovimientoMin1, 0.1780)
 	per.AddAnimSound("Min_dth_n00", MovimientoMin2, 0.2290)
 	per.AddAnimSound("Min_dth_n00", MovimientoMin1, 0.3930)
