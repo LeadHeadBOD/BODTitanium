@@ -109,8 +109,8 @@ MuerteMin3.MaxDistance=25000
 
 AgonizaMin2=Bladex.CreateSound('../../sounds/AGONIZANDO-MINO.wav', 'AgonizaMin2')
 AgonizaMin2.SendNotify=0
-HeridaMin2.MinDistance=1000
-HeridaMin2.MaxDistance=16000
+AgonizaMin2.MinDistance=1000
+AgonizaMin2.MaxDistance=16000
 
 HeridaMin1=Bladex.CreateSound('../../sounds/MINOTAURO-GRUNIDO1.wav', 'HeridaMin1')
 HeridaMin1.SendNotify=0
