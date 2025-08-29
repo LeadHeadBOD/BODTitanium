@@ -576,7 +576,7 @@ class PlayerPerson:
 			return
 		"""
 		
-		limb.ExclusionGroup=2|4		# Added
+		limb.ExclusionGroup=1337		# Added
 		if limb.TestHit:                                 #
 			limb.ExclusionGroup=1                        # 
 			limb.Move(0, -190, 0)                        # Fixes disappearing limbs
