@@ -4,9 +4,13 @@
 ##||| * Added Ice Golem entries
 ##||| * Modified Gold and Dark Ork life and damage data
 ##||| * Expanded Salamander resistances
+##||| * Raised Salamander slash resistance from 0.1 to 0.3
 ##||| * Normalized Salamander experience gain (for now same as skeleton)
 ##||| * Snow Troll life values set to same as Dark Troll (Snow Trolls have better resistances, it balances out)
 ##||| * Improved formatting in restistances for easier reading
+##||| * Barbarian now has the lowest defence gain per level (with old values he would gain more defence than dwarf even with medium armour due to lower weapon penalties)
+##||| * Heavily increased Little_Demon damage gain per level (previously was too easy to make them do no damage at all)
+##||| * Heavily increased Salamadner damage gain per level (Same issue as Ldm)
 ##\\\ 
 
 
@@ -90,7 +94,7 @@ CharDamageData['Lich']=                  [     1,      5,     10,     15,     20
 CharDamageData['Knight_Zombie']=         [     1,      5,     10,     15,     20,     25,     40,     45,     50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    100,    110]
 CharDamageData['Skeleton']=              [     1,      5,     10,     15,     20,     25,     40,     45,     50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    100,    110]
 CharDamageData['Flame_Skeleton']=        [    38,     39,     40,     41,     42,     43,     44,     45,     46,     47,     48,     49,     50,     51,     52,     53,     54,     55,     56,     57]
-CharDamageData['Salamander']=            [    32,     33,     34,     35,     36,     37,     38,     39,     40,     41,     42,     43,     44,     45,     46,     47,     48,     49,     50,     51]
+CharDamageData['Salamander']=            [    32,     38,     44,     50,     56,     64,     72,     80,     88,     96,    104,    112,    120,    128,    140,    150,    160,    170,    180,    190]       #Modified  -LeadHead
 CharDamageData['Troll_Dark']=            [    12,     14,     16,     18,     20,     22,     24,     26,     28,     30,     32,     34,     36,     38,     40,     42,     44,     46,     48,     50]
 CharDamageData['Troll_snow']=            [    12,     14,     16,     18,     20,     22,     24,     26,     28,     30,     32,     34,     36,     38,     40,     42,     44,     46,     48,     50]
 CharDamageData['Minotaur']=              [    30,     40,     50,     60,     70,     80,     90,    100,    110,    120,     32,     34,     36,     38,     40,     42,     44,     46,     48,     50]
@@ -98,7 +102,7 @@ CharDamageData['Golem_clay']=            [    44,     45,     46,     47,     48
 CharDamageData['Golem_stone']=           [    52,     53,     54,     55,     56,     57,     58,     59,     60,     61,     62,     63,     64,     65,     66,     67,     68,     69,     70,     71]
 CharDamageData['Golem_metal']=           [    50,     55,     60,     65,     70,     75,     80,     85,     90,     95,    100,    105,    110,    115,    120,    125,    130,    135,    140,    145]
 CharDamageData['Golem_ice']=             [    52,     53,     54,     55,     56,     57,     58,     59,     60,     61,     62,     63,     64,     65,     66,     67,     68,     69,     70,     71]       #Added -LeadHead
-CharDamageData['Little_Demon']=          [    12,     18,     25,     35,     45,     55,     24,     26,     28,     30,     32,     34,     36,     38,     40,     42,     44,     46,     48,     50]
+CharDamageData['Little_Demon']=          [    12,     18,     25,     35,     45,     55,     64,     76,     88,     99,    102,    114,    136,    148,    164,    182,    196,    224,    252,    270]       #Modified -LeadHead
 CharDamageData['Ragnar']=                [     1,      2,      3,      4,      5,      6,      7,      8,      9,     10,     11,     12,     13,     14,     15,     16,     17,     18,     19,     20]
 CharDamageData['Golem_lava']=            [    60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60,     60]
 CharDamageData['DalGurak']=              [    62,     63,     64,     65,     66,     67,     68,     69,     70,     71,     72,     73,     74,     75,     76,     77,     78,     79,     80,     81]
@@ -119,7 +123,7 @@ CharDefenseData['Prisoner_6']=           [     0,      0,      0,      0,      0
 CharDefenseData['Enano1']=               [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
 CharDefenseData['Enano2']=               [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
 CharDefenseData['Knight_N']=             [     1,      2,      4,      6,      8,     10,     12,     14,     16,     18,     20,     22,     24,     26,     28,     30,     32,     34,     36,     38]
-CharDefenseData['Barbarian_N']=          [     0,      4,      8,     12,     16,     20,     24,     28,     32,     36,     40,     44,     48,     52,     56,     60,     64,     68,     72,     76]
+CharDefenseData['Barbarian_N']=          [     0,      1,      2,      3,      4,      6,      7,      8,      9,     10,     12,     14,     16,     18,     20,     22,     24,     26,     28,     30]       #Rebalanced  -LeadHead
 CharDefenseData['Amazon_N']=             [     0,      2,      4,      6,      8,     10,     12,     14,     16,     18,     20,     22,     24,     26,     28,     30,     32,     34,     36,     38]
 CharDefenseData['Dwarf_N']=              [     1,      4,      8,     12,     16,     20,     24,     28,     32,     36,     40,     44,     48,     52,     56,     60,     64,     68,     72,     76]
 CharDefenseData['Spidersmall']=          [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0]
@@ -242,7 +246,7 @@ CharExperienceReward['Great_Demon']=     [6000000,6000000,6000000,6000000,600000
 CharExperienceReward['DarkLord']=        [8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000,8000000]
 
 
-# Resistances to various forms of attack, range 0.0-1.0
+# Resistances to various forms of attack, range from negative 1.0 to positive 1.0
 CharResistances={}
 CharResistances['Default']=        {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
 CharResistances['Knight_N']=       {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
@@ -251,13 +255,13 @@ CharResistances['Barbarian_N']=    {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00
 CharResistances['Amazon_N']=       {'Impale': 0.00, 'Slash': 0.00, 'Crush': 0.00, 'Fire': 0.00, 'Ice': 0.00, 'Venom': 0.00, 'Light': 0.00, 'Electric': 0.00, 'Acid': 0.00, 'Drain': 0.00}
 
 # Resistant enemies
-CharResistances['Salamander']=     {'Impale':  0.10, 'Venom':  1.00, 'Slash':  0.10, 'Crush':  0.40, 'Ice': -1.00, 'Fire':  1.00, 'Light':  0.00, 'Drain':  0.60}         #Modified -LeadHead
+CharResistances['Salamander']=     {'Impale':  0.10, 'Venom':  1.00, 'Slash':  0.30, 'Crush':  0.40, 'Ice': -1.00, 'Fire':  1.00, 'Light':  0.00, 'Drain':  0.60}         #Modified -LeadHead
 CharResistances['Golem_clay']=     {'Impale':  0.60, 'Venom':  1.00, 'Slash':  0.00, 'Crush': -0.60, 'Ice':  0.90, 'Fire':  0.90, 'Light':  0.10, 'Drain':  1.00}
 CharResistances['Golem_stone']=    {'Impale':  0.90, 'Venom':  1.00, 'Slash':  0.10, 'Crush': -0.50, 'Ice':  0.80, 'Fire':  0.80, 'Light':  0.20, 'Drain':  1.00}
 CharResistances['Golem_metal']=    {'Impale':  0.90, 'Venom':  1.00, 'Slash':  0.20, 'Crush': -0.20, 'Ice': -0.50, 'Fire':  0.80, 'Light':  0.60, 'Drain':  1.00}
 CharResistances['Golem_lava']=     {'Impale':  0.95, 'Venom':  1.00, 'Slash':  0.20, 'Crush': -0.40, 'Ice': -1.00, 'Fire':  1.00, 'Light':  0.80, 'Drain':  1.00}
 CharResistances['Golem_ice']=      {'Impale':  0.95, 'Venom':  1.00, 'Slash':  0.20, 'Crush': -0.40, 'Ice':  1.00, 'Fire': -1.00, 'Light':  0.80, 'Drain':  1.00}
-CharResistances['Flame_Skeleton']= {'Impale':  1.00, 'Venom':  1.00, 'Fire':  1.00,  'Ice': -1.00, 'Drain':  1.00} # Must revisit, I suspect nothing has this CharData assigned. Not modified -LeadHead
+CharResistances['Flame_Skeleton']= {'Impale':  1.00, 'Venom':  1.00, 'Fire':  1.00,  'Ice': -1.00, 'Drain':  1.00} # PLAGUE: Must revisit, I suspect nothing has this CharData assigned
 CharResistances['Skeleton']=       {'Impale':  0.60, 'Venom':  1.00, 'Slash':  0.40, 'Crush': -0.20, 'Ice':  0.30, 'Fire':  0.30, 'Light': -1.00, 'Drain':  1.00}
 CharResistances['Ork']=            {'Impale':  0.00, 'Venom': -0.30, 'Slash': -0.10, 'Crush':  0.00, 'Ice':  0.40, 'Fire': -0.30, 'Light': -1.00, 'Drain':  0.40}
 CharResistances['Great_Ork']=      {'Impale':  0.80, 'Venom':  0.30, 'Slash':  0.00, 'Crush':  0.20, 'Ice':  0.60, 'Fire':  0.00, 'Light': -1.00, 'Drain':  0.60}
