@@ -5,6 +5,7 @@
 ##||| * Added transitions for Org and Dok
 ##||| * Commented out prisoner transition times, they only spam the console 
 ##||| * Sped up misc anims: LowFall, drink
+##||| * Sped up Double Sword special attack
 ##\\\ 
 
 
@@ -124,6 +125,7 @@ def AnmFactBarbarian():
 	Bladex.SetAnimationFactor("Bar_parry_axe",2)
 	Bladex.SetAnimationFactor("Bar_df_01",1.4)
 	Bladex.SetAnimationFactor("Bar_df_02",1.4)
+	### PLAGUE: df_01_2w etc is missing?
 	
 	Bladex.SetAnimationFactor("Bar_g2h_d_r",3)
 	Bladex.SetAnimationFactor("Bar_g2h_d_l",3)
@@ -358,7 +360,7 @@ def AnmFactKnight():
 	Bladex.SetAnimationFactor("Kgt_g_09_07_s6low_new",3.6)
 	Bladex.SetAnimationFactor("Kgt_g_12_new",4)
 	Bladex.SetAnimationFactor("Kgt_g_18_11_22_new",3.6)
-	Bladex.SetAnimationFactor("Kgt_g_22kata_23_new",3)
+	Bladex.SetAnimationFactor("Kgt_g_22kata_23_new",3.6)	# was 3.0	-LeadHead
 	Bladex.SetAnimationFactor("Kgt_g_22lowkata_new",4.1)
 	Bladex.SetAnimationFactor("Kgt_g_b06_new",4.5)
 	Bladex.SetAnimationFactor("Kgt_g_27kata_new",3.5)

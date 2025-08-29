@@ -12,6 +12,7 @@
 ##||| * Corrected start_weapon_special timing for g_magic2 (level 19 Sword of Ianna combo)
 ##||| * Adjusted "tke_r_key" timings for: Knight, Barbarian, Amazon
 ##||| * Added Bar_df_01_2w and Bar_df_01_axe
+##||| * Removed some start-up frames from Double Sword special attack
 ##\\\ 
 
 def Init():
@@ -1611,7 +1612,7 @@ def Init():
     Bladex.AddAnmEvent("Kgt_g_18_11_22_new","Start_Trail",0.630)
     Bladex.AddAnmEvent("Kgt_g_18_11_22_new","Stop_Trail",0.770)
 
-    Bladex.AddAnmEvent("Kgt_g_22kata_23_new","HitInitialItp",0.062)
+    Bladex.AddAnmEvent("Kgt_g_22kata_23_new","HitInitialItp",0.112)     # Was 0.062 -LeadHead
     Bladex.AddAnmEvent("Kgt_g_22kata_23_new","HitFinalItp",0.712)
     Bladex.AddAnmEvent("Kgt_g_22kata_23_new","Start_Weapon",0.258)
     Bladex.AddAnmEvent("Kgt_g_22kata_23_new","Stop_Weapon",0.332)
