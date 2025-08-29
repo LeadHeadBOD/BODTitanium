@@ -75,8 +75,7 @@ LLeg = LeftLeg | LeftFoot
 RestoreEnergyTime= 1.0/40.0 # was /20 -LeadHead
 EnergyMin= 14.0
 #RestoreEnergyRateMin= 0.005*EnergyMin
-#RestoreEnergyRateMin= 0.095*EnergyMin
-#RestoreEnergyRateMax= 0.095*EnergyMin
+
 RestoreEnergyRateMin= 0.005/2.0     # /2.0 for smoother energy restore
 RestoreEnergyRateMax= 0.095/2.0     # with minimal calc difference.     -LeadHead
 
@@ -577,10 +576,10 @@ class PlayerPerson:
 			return
 		"""
 		
-		limb.ExclusionGroup=1337 					 	 # Added
+		limb.ExclusionGroup=2|4		# Added
 		if limb.TestHit:                                 #
 			limb.ExclusionGroup=1                        # 
-			limb.Move(0, -160, 0)                        # Fixes disappearing limbs
+			limb.Move(0, -190, 0)                        # Fixes disappearing limbs
 			limb.PutToWorld()                            # PLAGUE: Needs further work to look better.
 			limb.Impulse(0,0,0)                          #    -LeadHead
 			
@@ -749,6 +748,8 @@ class PlayerPerson:
 					aura= Auras.MakeAura (EntityName,0.7,   (55,0.1,1.0,1,0,0), (),(),(2,  0.0,0.35,0.0, 0.2, 0.0  , 0.0,0.35,0.0, 0.1, 1.0))
 					aura.Data.AddEvent(time+0.2,           (45,1.0,1.0,1,0,0), (),(),(2,  0.0,0.35,0.0, 0.2, 0.0  , 0.0,0.35,0.0, 0.1, 1.0))
 					aura.Data.AddEvent(time+0.7,           (5,0.1,1.0,1,0,0),  (),(),(2,  0.0,0.35,0.0, 0.2, 0.0  , 0.0,0.35,0.0, 0.1, 1.0))
+					
+					# Add an audio effect for player?
 
 				# Add another poison source
 				self.Poisoned= self.Poisoned+1
