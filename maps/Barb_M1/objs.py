@@ -82,7 +82,7 @@ o=Bladex.CreateEntity("antorchaen1","Antorchaenpared",-127077.249000,-8688.11300
 o.Scale=1.000000
 o.Orientation=0.403989,0.407020,-0.587808,0.570621
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.099000,(231,152,65)) ]
+o.Lights=[ (10.000000,0.0500,(231,152,65)) ]        # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
