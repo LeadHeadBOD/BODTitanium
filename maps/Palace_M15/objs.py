@@ -1,8 +1,9 @@
 ##///
 ##||| PALACE_M15/objs.PY TITANIUM
 ##||| Change list:
-##||| * Added sparks for metal bars
-##||| 
+##||| * Spark pass
+##||| * Added light bow next to one of the traps, so people who skip the bow until this point don't get softlocked
+##||| * Shadow pass
 ##\\\ 
 
 import pocimac
@@ -10,6 +11,15 @@ import Ontake
 import ItemTypes
 import Reference
 
+
+###
+
+tiBow = Bladex.CreateEntity("TiBow1Pal","Arco",17841.5107439, -32.7040566939, 69962.8155048,"Weapon")
+tiBow.Scale = 1.0
+tiBow.Orientation = 0.65319275856, 0.115578897297, -0.101717732847, -0.741373181343
+ItemTypes.ItemDefaultFuncs(tiBow)
+
+###
 
 
 
@@ -108,7 +118,7 @@ o.FiresIntensity=[ 3 ]
 o.Lights=[ (1.000000,0.031250,(255,196,128)) ]
 
 
-o=Bladex.CreateEntity("NoName17","Elefante",-17181.221000,-2102.008000,194030.517000,"Physic")
+o=Bladex.CreateEntity("NoName17","Elefante",-17181.221000,-2077.008000,194030.517000,"Physic")      # no longer floats above ground
 o.Scale=1.388690
 o.Orientation=0.508650,0.508650,-0.491198,0.491198
 Sparks.SetStoneSparkling(o.Name)
@@ -131,7 +141,7 @@ o=Bladex.CreateEntity("NoName20","LamparaAurelio",27449.600000,-10348.792000,133
 o.Scale=1.082857
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (1.885648,0.031250,(255,196,128)) ]
+o.Lights=[ (9.4342388,0.031250,(255,196,128)) ]     # Changed
 
 
 o=Bladex.CreateEntity("NoName21","Antorcha2",-29411.152000,-3058.995000,110232.728000,"Physic")
@@ -589,7 +599,7 @@ o.FiresIntensity=[ 3 ]
 o.Lights=[ (6.000000,0.031250,(255,196,128)) ]
 
 
-o=Bladex.CreateEntity("NoName0","Elefante",-17087.748000,-2201.102000,198859.792000,"Physic")
+o=Bladex.CreateEntity("NoName0","Elefante",-17087.748000,-2077.008000,198859.792000,"Physic")   # no longer floats above ground
 o.Scale=1.459527
 o.Orientation=0.503119,0.501730,-0.497213,0.497914
 Sparks.SetStoneSparkling(o.Name)
