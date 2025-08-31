@@ -9,6 +9,7 @@
 ##||| * Potions will now start fading with a 5s delay
 ##||| * Fixed a bug which would cause drawing right item from back (AND ONLY THE RIGHT) after drinking a potion
 ##||| * Using a potion from inventory while a standard object is in hand will properly make you drink the potion now
+##||| * Potions will no longer be drunk if the drink event timing coincides while in pain anim transition
 ##\\\ 
 
 import OnInitTake
@@ -282,6 +283,9 @@ def BeberPocima(Entidad,Evento):
 	char = Bladex.GetEntity(Entidad)
 	char.DelAnmEventFunc(Evento)
 	Poti = Bladex.GetEntity(char.Data.obj_used)
+	if not ((char.InvRight == Poti.Name) or (char.InvLeft == Poti.Name) or (char.InvLeft2 == Poti.Name)):
+		print "ERROR: calling func BeberPocima(), "+Poti.Name+ " not in hand anymore"
+		return
 	Pot = Poti.Data
 	Pot.Estado = POTION_STATE_USED
 
@@ -331,10 +335,7 @@ def BeberPocima(Entidad,Evento):
 	Poti.ExcludeHitFor(char)
 	if Pot.Type != POTION_TYPE_EAT:                                                  #  Now fades only when stopped moving.
 		Bladex.AddScheduledFunc(Bladex.GetTime() + 5.0, FadeOnStop,(Poti.Name,))     #        -LeadHead
-	# Poti.TimerFunc = Poti.Data.FadeOut    #
-	# Poti.SubscribeToList("Timer60")       #
 	Poti.Data.Takeable=0
-	# darfuncs.SetHint(Poti,"")
 	darfuncs.SetHint(Poti,"",0,0,0)   # Stop looking at empty potions -LeadHead
 	OnInitTake.AddOnInitTakeEvent(Poti.Name,TakePotionUsed)
 
