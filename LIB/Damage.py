@@ -11,6 +11,7 @@
 ##||| * Blocking with weapons with no "brkobjdata" (special weapons) will now still cause attacker to recoil
 ##||| * Having a 2handed weapon broken will now remove child entities (for example arrows) before being destroyed
 ##||| * Barbarian "Rage" attack now does 2.0 damage multiplier, up from 1.2 (same stamina use though)
+##||| * Addressed floating point errors in stamina calculation.
 ##\\\ 
 
 import Reference
@@ -1142,7 +1143,7 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 			######################################################################################
 			
 			lvl= me.Level+1     # PLAGUE: This var is literally never called in this function???
-			energy_cost= max((charF + weaponF) * animF, 0.0)+me.Data.Energy2Lose
+			energy_cost= round(max((charF + weaponF) * animF, 0.0)+me.Data.Energy2Lose, 2)
 			if me.Data.FAttack>1.0:
 				# during powerup, do not lose energy ### PLAGUE: This is a stupid way to do it - there is char.Data.PowerPotion, why not use that instead?
 				energy_cost= 0.0
@@ -1158,7 +1159,7 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 			if energy_cost<max_energy:
 				me.Data.Energy2Lose= energy_cost
 				
-				if energy_cost>me.Energy:
+				if energy_cost>round(me.Energy,2):		# both values are now rounded to prevent float erorrs 	-LeadHead
 					# Launch a clumsy animation instead
 					weapon= Bladex.GetEntity(me.GetInventory().GetActiveWeapon())
 					if weapon and not weapon.Person:
