@@ -6,6 +6,7 @@
 ##||| * Commented out prisoner transition times, they only spam the console 
 ##||| * Sped up misc anims: LowFall, drink
 ##||| * Sped up Double Sword special attack
+##||| * Barbarian - normalized running and strafing speed (facing and non-facing) across all weapon types.
 ##\\\ 
 
 
@@ -139,13 +140,23 @@ def AnmFactBarbarian():
 	Bladex.SetAnimationFactor("Bar_b1",2)
 	Bladex.SetAnimationFactor("Bar_b2",3)
 	
-	Bladex.SetAnimationFactor("Bar_attack_f",3)
+	### Adjusted to have approximately consistent movement speed
+	###	across all weapon types. 				  -LeadHead
+	Bladex.SetAnimationFactor("Bar_attack_f",3.3)		# was 3.0
+	Bladex.SetAnimationFactor("Bar_attack_b",1.3)		# added
+	Bladex.SetAnimationFactor("Bar_attack_r",1.3)		# added
+	Bladex.SetAnimationFactor("Bar_attack_l",1.3)		# added
+	
 	Bladex.SetAnimationFactor("Bar_attack_f_2w",1.6)
 	Bladex.SetAnimationFactor("Bar_attack_b_2w",3)
 	Bladex.SetAnimationFactor("Bar_attack_r_2w",1.35)
 	Bladex.SetAnimationFactor("Bar_attack_l_2w",1.35)
+	
 	Bladex.SetAnimationFactor("Bar_attack_f_axe",1.6)
 	Bladex.SetAnimationFactor("Bar_attack_b_axe",3)
+	Bladex.SetAnimationFactor("Bar_attack_r_axe",1.3)	# added
+	Bladex.SetAnimationFactor("Bar_attack_l_axe",1.3)	# added
+	
 	Bladex.SetAnimationFactor("Bar_jmp_no",1.40)
 	Bladex.SetAnimationFactor("Bar_jmp_1h",1.40) 
 	Bladex.SetAnimationFactor("Bar_jmph0_no",1.50) 
@@ -156,8 +167,12 @@ def AnmFactBarbarian():
 	###movimientos###
 
 	Bladex.SetAnimationFactor("Jog_no_Bar",3.35)
-	Bladex.SetAnimationFactor("Jog_1h_Bar",2.7)
+	Bladex.SetAnimationFactor("Jog_1h_Bar",2.9)		# was 2.7
 	Bladex.SetAnimationFactor("Jog_b_Bar",1.25)
+	Bladex.SetAnimationFactor("Jog_axe_Bar",3.35)
+	Bladex.SetAnimationFactor("Jog_2w_Bar",3.4)
+	Bladex.SetAnimationFactor("Jog_2h_Bar",3.2)
+	
 	Bladex.SetAnimationFactor("Wlk_no_Bar",1.6)
 	Bladex.SetAnimationFactor("Wlk_1h_Bar",1.7)
 	Bladex.SetAnimationFactor("Wlk_2h_Bar",1.7)
@@ -165,15 +180,21 @@ def AnmFactBarbarian():
 	Bladex.SetAnimationFactor("Wlk_axe_Bar",1.55)
 	Bladex.SetAnimationFactor("Wlk_s_Bar",1.5)
 	Bladex.SetAnimationFactor("Wlk_b_Bar",1.65)
+	
 	Bladex.SetAnimationFactor("Wbk_2w_Bar",1.3)
 	Bladex.SetAnimationFactor("Wbk_axe_Bar",1.6)
 	Bladex.SetAnimationFactor("Wbk_no_Bar",1.5)
 	Bladex.SetAnimationFactor("Wbk_1h_Bar",1.5)
 	Bladex.SetAnimationFactor("Wbk_b_Bar",1.5)
-	Bladex.SetAnimationFactor("Jog_axe_Bar",3.35)
-	Bladex.SetAnimationFactor("Jog_2w_Bar",3.4)
-	Bladex.SetAnimationFactor("Jog_2h_Bar",3.2)
-	Bladex.SetAnimationFactor("Bar_jogb_axe",3.5)
+
+	
+	### Running backwards should no longer be just as slow as walking backwards
+	Bladex.SetAnimationFactor("Bar_jogb_axe",3.6)	# was 3.5
+	Bladex.SetAnimationFactor("Bar_jogb_b",1.2)		# added
+	Bladex.SetAnimationFactor("Bar_jogb_no",1.2)	# added
+	Bladex.SetAnimationFactor("Bar_jogb_b",1.2)		# added
+	Bladex.SetAnimationFactor("Bar_jogb_2w",1.2)	# Added		-LeadHead
+
 	Bladex.SetAnimationFactor("Bar_wlk_turn",1.7)
 	Bladex.SetAnimationFactor("Bar_snk_turn",1.5)
 	Bladex.SetAnimationFactor("Bar_jog_turn",1.5)
