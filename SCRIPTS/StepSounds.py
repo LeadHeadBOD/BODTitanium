@@ -2353,7 +2353,8 @@ def Init():
         #
         #********************************************************************
         
-    # All player char entriees have been unified in a single loop to prevent copy-paste accidents
+    # All player char entrees have been unified in a single loop to prevent copy-paste accidents
+    ### PLAGUE: Maybe have to add clmb anims as well?
     playerChars = ("Knight", "Bar", "Dwf", "Amz")
     sneakActs   = ("SNK_b", "SNK_no", "SNK_s", "SNK_1h", "SNK_2h", "SNK_sp", "SNK_axe", "snk_turn", "rlx_turn", "Rlx_no", "Rlx_1h", "SNK_2w", 
                    "Rlx_b", "Rlx_2h", "Rlx_s", "Rlx_2w", "Rlx_axe", "Rlx_sp", "Rlx_f_axe", "Rlx_f_sp", "Rlx_f_2w", "Rlx_f_no", "Rlx_f_s",

@@ -1702,8 +1702,11 @@ class NPCPerson (Basic_Funcs.PlayerPerson):
 				object.Position=me.Position
 				me.Unlink(object)
 				inv.RemoveKey(object_name)
-				object.ExclusionGroup=EXG_MAGIC  ## Added -LeadHead
 				object.ExcludeHitFor(me)
+				try:
+					object.ExclusionGroup=1  ## Added -LeadHead
+				except AttributeError:
+					print object.Name+": unsupported Attribute"
 				Bladex.AddScheduledFunc(Bladex.GetTime(), Actions.TakeObject,("Player1",object_name))
 
 				char = Bladex.GetEntity("Player1")
@@ -1720,7 +1723,7 @@ class NPCPerson (Basic_Funcs.PlayerPerson):
 	#
 	def StdEnemyDead(self,EntityName):
 		me = Bladex.GetEntity(EntityName)
-		print "EntityName, enemy "+me.GetEnemyName()+" dead"
+		# print EntityName + ", enemy "+me.GetEnemyName()+" dead"
 		# Check I'm not dead
 		if me:
 			if me.Life > 0:

@@ -1,5 +1,5 @@
 ##///
-##||| CHARSTATS.PY TITANIUM
+##||| CHARDATA.PY TITANIUM
 ##||| Change list:
 ##||| * Added Ice Golem entries
 ##||| * Modified Gold and Dark Ork life and damage data
