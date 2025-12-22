@@ -10,6 +10,7 @@
 ##||| * Fixed a bug which would cause drawing right item from back (AND ONLY THE RIGHT) after drinking a potion
 ##||| * Using a potion from inventory while a standard object is in hand will properly make you drink the potion now
 ##||| * Potions will no longer be drunk if the drink event timing coincides while in pain anim transition
+##||| * Fixed drink animation playing even when potion has been knocked out of hands
 ##\\\ 
 
 import OnInitTake
@@ -368,7 +369,12 @@ def CreateMiguillas(Entidad,Evento):
 
 def UsePotion3(Entity):
 	char = Bladex.GetEntity(Entity)
+	Poti = Bladex.GetEntity(char.Data.obj_used)
+	if not ((char.InvRight == Poti.Name) or (char.InvLeft == Poti.Name) or (char.InvLeft2 == Poti.Name)):	# Added. Fixes the drink animation playing even
+		print "ERROR: calling func UsePotion3(), "+Poti.Name+ " not in inventory anymore"					# after the potion has been knocked out of hands
+		return																								# 								-LeadHead
 	UsePotion2(char.Data.obj_used)
+
 
 def UsePotion2(NombrePocima):
 	Reference.debugprint("UsePotion2")
