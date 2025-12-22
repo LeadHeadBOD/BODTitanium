@@ -2,6 +2,7 @@
 ##||| DESERT_M13/Enemigos.PY TITANIUM
 ##||| Change list:
 ##||| * OrkController 
+##||| * Renamed the orc archer's potion to "desertPotion10" to resolve naming conflict in Volcano_M14
 ##\\\ 
 
 from math import pow
@@ -616,7 +617,7 @@ pers.ActionAreaMin=pow(2,14)
 pers.ActionAreaMax=pow(2,15)
 pers.SetOnFloor()
 
-potion=Bladex.CreateEntity("Potion10","Pocima100",0,0,0,"Physic")
+potion=Bladex.CreateEntity("desertPotion10","Pocima100",0,0,0,"Physic")     # Renamed	-LeadHead
 potion.Scale=1.220190
 pocimac.CreatePotion(potion.Name)
 Actions.TakeObject(pers.Name,potion.Name)
