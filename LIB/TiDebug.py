@@ -203,6 +203,27 @@ def GiveSpecials():
         Actions.TakeObject(Char.Name,o.Name)
 
 
+### Func to trigger a reaction to the player as if they were hit
+import Damage
+def HitSimulation():
+    char = Bladex.GetEntity("Player1")
+    effective_damage = 0
+    DamageType       = "Slash"
+    DamageZone       = 1
+    Shielded         = 0
+    if char:
+        Damage.CheckRightHandToDrop(char.Name)
+        char.Data.RespondToHit(char.Name, "BWorld", effective_damage, DamageType, DamageZone, Shielded)
+        # Damage.CalculateDamage(char.Name, "BWorld", "BWorld", "Crush", DamageZone, DamageNode, x, y, z, Shielded)
+
+
+def printCurrentAnm():
+    char = Bladex.GetEntity("Player1")
+    print "~Current anm @  " + `Bladex.GetTime()`
+    print "Anm:     " + `char.AnimName`
+    print "FullAnm: " + `char.AnimFullName`
+    print "Frame:   " + `char.AnmPos`
+
 
 ### Debug binds for quick level testing
 
@@ -222,6 +243,14 @@ def initDebugBinds():
     Bladex.AddInputAction("GiveSpecials", 0)
     Bladex.AssocKey("GiveSpecials", "Keyboard", "0", 1)
     Bladex.AddBoundFunc("GiveSpecials", GiveSpecials)
+    
+    Bladex.AddInputAction("HitSimulation", 0)
+    Bladex.AssocKey("HitSimulation", "Keyboard", "V", 1)
+    Bladex.AddBoundFunc("HitSimulation", HitSimulation)
+    
+    Bladex.AddInputAction("printCurrentAnm", 0)
+    Bladex.AssocKey("printCurrentAnm", "Keyboard", "G", 1)
+    Bladex.AddBoundFunc("printCurrentAnm", printCurrentAnm)
     
 
 ### Prints a list of the name of all entities of the selected kind
@@ -258,12 +287,17 @@ def checkStamina(time):
         timeEnded = Bladex.GetTime()
         print timeEnded - timeStarted
         Bladex.RemoveAfterFrameFunc("debugStaminaFunc")
+    
+    
+
 
 
 
 initDebugBinds()
 
 print ("- - - TiDebug functions enabled! - - -")
+print ("V - simulate character getting hit"    )
+print ("G - print Player1 current anim"        )
 print ("7 - print target name to console"      )
 print ("8 - print nearby entities to console"  )
 print ("9 - toggle invisible entities"         )
