@@ -7,6 +7,8 @@
 ##||| * Sped up misc anims: LowFall, drink
 ##||| * Sped up Double Sword special attack
 ##||| * Barbarian - normalized running and strafing speed (facing and non-facing) across all weapon types.
+##||| * Chaos Knight - Sped up pain animations to make him less prone to stunlock at low health.
+##||| * Lesser Demon - Slight speed up to pain animations to make them less prone to stunlock.
 ##\\\ 
 
 
@@ -1108,7 +1110,8 @@ def AnmFactChosKnight():
 	Bladex.SetAnimationFactor("Attack_b_Chk",1.7) 
 	Bladex.SetAnimationFactor("Attack_b_s_Chk",1.7)
 	
-	Bladex.SetAnimationFactor("Chk_hurt01",3)
+	Bladex.SetAnimationFactor("Chk_hurt01",3.2)		# was 3.0
+	Bladex.SetAnimationFactor("Chk_hurt_hip",2.0)	# Added -LeadHead
 
 	#
 	# TRANSICIONES DEL CABALLERO CAOS
@@ -1427,6 +1430,12 @@ def AnmFactLittleDemon():
 	Bladex.SetAnimationFactor("Ldm_g_jumpl",3)
 	Bladex.SetAnimationFactor("Ldm_g_jumpr",3)
 	Bladex.SetAnimationFactor("Ldm_g_spit",3)
+	
+	Bladex.SetAnimationFactor("Ldm_hurt_f_big", 1.1)
+	Bladex.SetAnimationFactor("Ldm_hurt_f_big", 1.1)
+	Bladex.SetAnimationFactor("Ldm_hurt_f_big", 1.1)
+	Bladex.SetAnimationFactor("Ldm_hurt_f_big", 1.1)
+	
 	Bladex.AddTranTime("Ldm","","g_jumpl",0.1, 0)
 	Bladex.AddTranTime("Ldm","","g_jumpr",0.1, 0)
 
