@@ -136,6 +136,34 @@ def GetListOfObjectsAt(inv,id):
 		resulto.append(name)
 	return resulto
 
+###
+# Added these 2 funcs, might use them somewhere later
+#				-LeadHead
+
+def GetInvObjList(inv):
+	
+	fullList = []
+	if inv:
+		num = inv.nObjects
+		for i in range(num):
+			if range(inv.GetNumberObjectsAt(i)):
+				for o in range(inv.GetNumberObjectsAt(i)):
+					name = inv.GetObject(o)
+					fullList.append(name)
+					inv.RemoveObject(name)
+					ExtendedTakeObject(inv,name)
+
+	return fullList
+
+
+def IsCharHoldingObj(persName, objName):
+	inv = Bladex.GetEntity(persName).GetInventory()
+	if objName in GetInvObjList(inv):
+		return TRUE
+	else:
+		return FALSE
+
+###
 
 def RemoveAllKeys(EntityName):
 	me = Bladex.GetEntity(EntityName)
@@ -2334,7 +2362,6 @@ def ToggleWEvent(pj_name,event):
 	# So the standard obnject that could NOT ve dropped at the beggining ( cause inside B_world ) , do NOT dissapear!
 	#
 	if IsRightHandStandardObject(pj_name) and not event=="ChangeLEvent":        # Added "not LEvent"    -LeadHead
-		#print "TryDropRight is ok"
 		DropReleaseEventHandler(pj_name, "DropRightEvent")
 		if me.InvRight:
 			print "Actions.ToggleWEvent-> Could not drop standard object!"
@@ -2370,9 +2397,7 @@ def ToggleWEvent(pj_name,event):
 	if something_on_back and (event=="ChangeRLEvent" or event=="ChangeREvent"):
 
 		if me.InvRight:
-			###Reference.debugprint ("Removeing right hand thing on ToggleWEvent")
 			inv.LinkRightHand("None")
-		#inv.LinkBack("None") #Only here ! It deal with BOTH of them
 
 		if tmp_lback and Reference.GiveObjectFlag(tmp_lback)==Reference.OBJ_BOW:
 			add_quiver=1
@@ -2383,16 +2408,15 @@ def ToggleWEvent(pj_name,event):
 	if event=="ChangeRLEvent" or event=="ChangeREvent":
 		if me.InvRight:
 			if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW and me.InvRight and Reference.GiveObjectFlag(me.InvRight)==Reference.OBJ_ARROW:
-				SheatheArrow(inv, me.InvRight)	# We must be carrying an arrow in the right hand, lets sheathe it           
+				SheatheArrow(inv, me.InvRight)
 			else:
 				inv.LinkBack(me.InvRight)
 		else:
 			if inv.HoldingBow:
-				if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW and rback_backup:  # The core part of the retarded fix
-					#print "we have bow in left and rback_backup ("+`rback_backup`+") was found"             # Fixes a bug where after using an item/key/lever with a bow in hand
-					inv.LinkBack(rback_backup)                                                               # the arrow would be sheathed, the animation would play to unsheath it
-					UnSheatheArrow(inv)                                                                      # but no arrow would actually be drawn
-					ArrowDrawn=1                                                                             #                          -LeadHead
+				if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)==Reference.OBJ_BOW and rback_backup:  # The core part of the retarded fix					
+					inv.LinkBack(rback_backup)                                                               # Fixes a bug where after using an item/key/lever with a bow in hand
+					UnSheatheArrow(inv)                                                                      # the arrow would be sheathed, the animation would play to unsheath it
+					ArrowDrawn=1                                                                             # but no arrow would actually be drawn                      -LeadHead                         
 				else: 
 					des_quiver_name=inv.GetSelectedQuiver()
 					if des_quiver_name:
@@ -2601,7 +2625,7 @@ def StdToggleWeapons(EntityName):
 		return
 	
     ### If we got here, we have failed our mission spectacularly
-	print "ERROR - ToggleW"
+	print "ERROR - Actions.ToggleW"
 
 		
 def LegacyToggleWeapons(EntityName):

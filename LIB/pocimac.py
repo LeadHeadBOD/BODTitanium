@@ -370,8 +370,10 @@ def CreateMiguillas(Entidad,Evento):
 def UsePotion3(Entity):
 	char = Bladex.GetEntity(Entity)
 	Poti = Bladex.GetEntity(char.Data.obj_used)
-	if not ((char.InvRight == Poti.Name) or (char.InvLeft == Poti.Name) or (char.InvLeft2 == Poti.Name)):	# Added. Fixes the drink animation playing even
-		print "ERROR: calling func UsePotion3(), "+Poti.Name+ " not in inventory anymore"					# after the potion has been knocked out of hands
+	in_hands = (char.InvRight == Poti.Name) or (char.InvLeft == Poti.Name) or (char.InvLeft2 == Poti.Name)	# Added.
+	QuickType = (Poti.Data.Type==POTION_TYPE_EAT) or (Poti.Data.Type==POTION_TYPE_GULP)						# PLAGUE: should handle this on Damage or
+	if QuickType and (not in_hands):																		# RespondToHit side to remove AnmEndFunc()
+		print "ERROR: calling func UsePotion3(), "+Poti.Name+ " not in inventory anymore"					# 
 		return																								# 								-LeadHead
 	UsePotion2(char.Data.obj_used)
 
