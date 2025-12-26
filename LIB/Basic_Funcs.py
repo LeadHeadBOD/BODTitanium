@@ -8,6 +8,7 @@
 ##||| * Limbs now always spawn - Thanks Sryml! ( PLAGUE: Might need to be reworked to retain full physics for as long as possible)
 ##||| * Combo text should now fade properly when something was already written.
 ##||| * Fixed "hurt jog" animation playing if not locked on enemy and using shield.
+##||| * "New Attack" text should now be translated.
 ##\\\ 
 
 #
@@ -72,15 +73,15 @@ LLeg = LeftLeg | LeftFoot
 
 ############################  Energy Functions  ############################
 
-RestoreEnergyTime= 1.0/40.0 # was /20 -LeadHead
+RestoreEnergyTime= 1.0/40.0 		# was /20 -LeadHead
 EnergyMin= 14.0
-#RestoreEnergyRateMin= 0.005*EnergyMin
-
 RestoreEnergyRateMin= 0.005/2.0     # /2.0 for smoother energy restore
 RestoreEnergyRateMax= 0.095/2.0     # with minimal calc difference.     -LeadHead
 
-## PLAGUE: Maybe use EnergyTime = 1.0 / 60.0 ; RateMin = 1 / 600.0 ; RateMax =  0.95/ 60.0
-##         just an idea, will get floating point errors anyway.
+## PLAGUE:  This entire function is so unbelievably bad
+##			You suffer from floating point errors
+##			AND ScheduledFunc is not accurate and will not be called
+##			on time, returning inconsistent stamina
 
 def RestoreEnergyFunc(EntityName):
 	Bladex.AddScheduledFunc(Bladex.GetTime()+RestoreEnergyTime, RestoreEnergyFunc,(EntityName,),"PlayerRestoreEnergy")
@@ -543,11 +544,6 @@ class PlayerPerson:
 		limb = Bladex.GetEntity(obj_name)
 		
 		""" ## For now disabled this code. It sort of works, but has various inconsistencies across enemy Kinds
-		# global LArm
-		# global RArm
-		# global LLeg
-		# global RLeg
-		
 		mut = me.MutilationsMask
 		
 		isGrork = 0
@@ -555,8 +551,6 @@ class PlayerPerson:
 			isGrork = 1
 			RArm = Head | RightArm | RightHand
 			
-
-		
 		### Remove duplicated limbs from world.
 		noMutil = 0
 		if (node == me.GetNodeIndex("L_Hand") or node == me.GetNodeIndex("L_Forearm") or node == me.GetNodeIndex("L_Elbow") or node == me.GetNodeIndex("L_Wrist")) and (mut & LArm):
@@ -577,13 +571,13 @@ class PlayerPerson:
 		"""
 		
 		limb.ExclusionGroup=1337		# Added
-		if limb.TestHit:                                 #
-			limb.ExclusionGroup=1                        # 
-			limb.Move(0, -190, 0)                        # Fixes disappearing limbs
-			limb.PutToWorld()                            # PLAGUE: Needs further work to look better.
-			limb.Impulse(0,0,0)                          #    -LeadHead
+		if limb.TestHit:
+			limb.ExclusionGroup=1                        			 # 
+			limb.Move(0, -190, 0)                           		 # Fixes disappearing limbs
+			limb.PutToWorld()                           	 		 # PLAGUE: Needs further work to look better.
+			limb.Impulse(0,0,0)                          			 #    -LeadHead
 			
-		if me and me.Kind[0:7]!="Skeleton":		# This check makes no sense, since the skeletons override this func anyway.
+		if me and me.Kind[0:7]!="Skeleton":							# This check makes no sense, since the skeletons override this func anyway.
 			Blood.Mutilate (EntityName,obj_name,x,y,z,nx,ny,nz,node)
 
 		if me.Kind=="Golem_lava":
@@ -834,9 +828,9 @@ class PlayerPerson:
 			if launch_new==1:
 				me.LaunchAnmType(death_anim)
 
-			if me.AnimName<>death_anim:
+			if me.AnimName!=death_anim:
 				me.LaunchAnmType("dth0")
-				if me.AnimName<>"dth0":
+				if me.AnimName!="dth0":
 					#pdb.set_trace()
 					print "BUG? -> Basdic_Funcs.py ,def PCImDead"
 
@@ -1029,7 +1023,8 @@ class PlayerPerson:
 				if (me.AnimName == "df_s_broken" and me.AnmPos<0.55) or (me.AnimName == "sword_broken" and me.AnmPos<0.55) or (me.AnimName == "sw_react" and me.AnmPos<0.55) or self.Invincibility==2:
 					do_not_abort=1
 				if do_not_abort==0:
-
+					# if me.AnmEndedFunc:
+						# print me.Name+" has func " + `me.AnmEndedFunc`
 					Damage.DropInvalidObjectsOnImpact (EntityName)
 					me.Wuea=Reference.WUEA_ENDED
 
@@ -1086,7 +1081,7 @@ class PlayerPerson:
 								Reference.debugprint("Launching .hurt_f_l_leg")
 								me.LaunchAnmType("hurt_f_l_leg")
 					else:
-						if me.Run and not Shielded:		# Added "and not Shielded"	-LeadHead
+						if me.Run and (not Shielded) and (me.AnimName[-3:]=="JOG"):		# Added check to see if we are actually running	-LeadHead
 							Reference.debugprint("Launching .hurt_jog")
 							me.LaunchAnmType("hurt_jog")
 						else:
@@ -1147,12 +1142,12 @@ class PlayerPerson:
 			import GameText
 
 			me = Bladex.GetEntity(EntityName)
-			if EntityName<>"Player1":
+			if EntityName!="Player1":
 				return
 
 			ComboTXT = GameText.GetComboName(EntityName,ComboName)
 			if ComboTXT:
-				Actions.ReportMsg(("New Attack")+": "+ ComboTXT)	# Changed to ReportMsg 	-LeadHead
+				Actions.ReportMsg(MenuText.GetMenuText("New Attack")+": "+ ComboTXT)	# Changed to ReportMsg, also should now always be translated 	-LeadHead
 
 				new_combo_sound.Stop()
 				new_combo_sound.PlayStereo()
@@ -1160,11 +1155,12 @@ class PlayerPerson:
 
 
 	def StdBigFall(self,EntityName,Dist):
+		# print "entering BigFall"
 		me = Bladex.GetEntity(EntityName)
 		chartype = Bladex.GetCharType(me.CharType,me.CharTypeExt)
 
 		if Dist>=chartype.DieFall:
-			print "About to die due to DieFall in Basic_Funcs.StdBigFall"
+			print EntityName + " is about to die due to DieFall in Basic_Funcs.StdBigFall"
 			me.Life=0
 			me.LaunchAnmType("Dth_Fll2")
 			return
