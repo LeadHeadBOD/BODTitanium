@@ -12,6 +12,8 @@
 ##||| * Having a 2handed weapon broken will now remove child entities (for example arrows) before being destroyed
 ##||| * Barbarian "Rage" attack now does 2.0 damage multiplier, up from 1.2 (same stamina use though)
 ##||| * Addressed floating point errors in stamina calculation.
+##||| * Attacks which stamina requirement exactly matches max stamina no longer return as insufficient stamina
+##||| * Rebalanced all player dodge attacks to make their spam less effective
 ##\\\ 
 
 import Reference
@@ -330,10 +332,14 @@ AnimationData['Bar_g_axe30']=   34.0
 AnimationData['Bar_g_axe28']=   1.0
 
 #esquivas y ataque 180
-AnimationData['Bar_g2h_d_r']=   2.0
-AnimationData['Bar_g2h_d_l']=   2.0
-AnimationData['Bar_g_d_r_axe']=   2.0
-AnimationData['Bar_g_d_l_axe']=   2.0
+AnimationData['Bar_g2h_d_r']=     1.2				# All of these were 2.0
+AnimationData['Bar_g2h_d_l']=     1.2				# 
+AnimationData['Bar_g_d_r_axe']=   1.2				# Spamming dodge attacks was FAR 
+AnimationData['Bar_g_d_l_axe']=   1.2				# too effective and stamina efficient
+StaminaData['Bar_g2h_d_r']=	   2.0					# Hopefully, this makes them more balanced
+StaminaData['Bar_g2h_d_l']=	   2.0					#
+StaminaData['Bar_g_d_r_axe']=  2.0					#
+StaminaData['Bar_g_d_l_axe']=  2.0					# 
 AnimationData['Bar_g2h_back']=   2.0
 
 #golpes sin armas
@@ -422,6 +428,8 @@ AnimationData['Kgt_g_kick']=   1.2
 #dodge attacks
 AnimationData['Kgt_g_d_r']=   1.2
 AnimationData['Kgt_g_d_l']=   1.2
+StaminaData['Kgt_d_r']=   2.0		# Added 
+StaminaData['Kgt_d_l']=   2.0		#		-LeadHead
 
 AnimationData['Kgt_g_magic']=   37.5
 AnimationData['Kgt_g_magic2']=  21.0
@@ -591,8 +599,10 @@ AnimationData['Dwf_g_draw_rlx']=   1.0
 AnimationData['Dwf_g_draw_run']=   1.0
 
 #Esquivas
-AnimationData['Dwf_g_d_r']=   2.0
-AnimationData['Dwf_g_d_l']=   2.0
+AnimationData['Dwf_g_d_r']=   1.2	# Was 2.0
+AnimationData['Dwf_g_d_l']=   1.2	# Added
+StaminaData['Dwf_d_r']=	  2.0		#
+StaminaData['Dwf_d_r']=   2.0		#		-LeadHead
 
 #golpes sin armas
 AnimationData['Dwf_g_punch1']=   1.0
@@ -1082,7 +1092,7 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 	# print "Damage.py -> " + AnimName
 	me= Bladex.GetEntity(EntityName)	
 	if me:
-		current_energy= me.Energy
+		current_energy= round(me.Energy, 2)		# Round it up to avoid floating point errors 	-LeadHead
 		if current_energy > 0.0:
 			
 			charF = 0
@@ -1130,7 +1140,7 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 			######################################################################################
 			# Animation component #
 			######################################################################################
-			me.LaunchAnimation(AnimName)        # PLAGUE: Why are we launching the animation BEFORE making stamina checks?
+			me.LaunchAnimation(AnimName)        									# PLAGUE: Why are we launching the animation BEFORE making stamina checks?
 			# Animation component #
 			if AnimationData.has_key(me.AnimFullName):
 				animF = AnimationData[me.AnimFullName]
@@ -1142,7 +1152,6 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 			
 			######################################################################################
 			
-			lvl= me.Level+1     # PLAGUE: This var is literally never called in this function???
 			energy_cost= round(max((charF + weaponF) * animF, 0.0)+me.Data.Energy2Lose, 2)
 			if me.Data.FAttack>1.0:
 				# during powerup, do not lose energy ### PLAGUE: This is a stupid way to do it - there is char.Data.PowerPotion, why not use that instead?
@@ -1156,19 +1165,19 @@ def CalculateFatigue(EntityName, AnimName):     # PLAGUE: This function sucks.
 			if PrintFatigue:
 				print "energy_cost= (charF("+`charF`+") + weaponF("+`weaponF`+")) * (animF("+me.AnimFullName+"="+`animF`+") + prev_energy2lose("+`me.Data.Energy2Lose`+")= "+`energy_cost`
 				print "max_energy= "+`max_energy`+", current_energy= "+`me.Energy`
-			if energy_cost<max_energy:
+			if energy_cost<=max_energy:							# 	 -LeadHead	
 				me.Data.Energy2Lose= energy_cost
 				
-				if energy_cost>round(me.Energy,2):		# both values are now rounded to prevent float erorrs 	-LeadHead
+				if energy_cost>current_energy:
 					# Launch a clumsy animation instead
 					weapon= Bladex.GetEntity(me.GetInventory().GetActiveWeapon())
 					if weapon and not weapon.Person:
 						weapon_flag= Reference.GiveWeaponFlag(WeaponName)
-						if weapon_flag==Reference.W_FLAG_2W: clumsy_anm= "g_bad_sword"
+						if   weapon_flag==Reference.W_FLAG_2W:  clumsy_anm= "g_bad_sword"
 						elif weapon_flag==Reference.W_FLAG_AXE: clumsy_anm= "g_bad_axe"
-						elif weapon_flag==Reference.W_FLAG_SP: clumsy_anm= "g_bad_spear"
-						else: clumsy_anm= "g_bad_1h"
-					else: clumsy_anm= "g_bad_no"
+						elif weapon_flag==Reference.W_FLAG_SP:  clumsy_anm= "g_bad_spear"
+						else:                                   clumsy_anm= "g_bad_1h"
+					else: 									    clumsy_anm= "g_bad_no"
 					me.Wuea=Reference.WUEA_ENDED
 					me.LaunchAnmType(clumsy_anm)
 					Actions.ReportMsg ("You need more energy for this attack")
@@ -1200,7 +1209,7 @@ def CheckRightHandToDrop(EntityName):
     two_handed_on_right=0
     if Actions.IsRightHandWeaponObject(EntityName):
         w_flag=Reference.GiveWeaponFlag(me.InvRight)
-        if w_flag<>Reference.W_FLAG_1H:
+        if w_flag!=Reference.W_FLAG_1H:
             two_handed_on_right=1
 
     special_to_drop=0
@@ -1209,7 +1218,7 @@ def CheckRightHandToDrop(EntityName):
         print "right 2 drop"
         special_to_drop=1
 
-    if special_to_drop==1 or (two_handed_on_right and me.InvLeft and me.InvRight<>me.InvLeft):
+    if special_to_drop==1 or (two_handed_on_right and me.InvLeft and me.InvRight!=me.InvLeft):
         if Actions.TryDropRight(EntityName):
             Actions.DropReleaseEventHandler(EntityName, "DropRightEvent")
             if me.InvRight:
@@ -1222,7 +1231,7 @@ def CheckRightHandToDrop(EntityName):
 def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded):
 	#pdb.set_trace()
     
-	CheckRightHandToDrop(VictimName)
+	CheckRightHandToDrop(VictimName)		# PLAGUE: shouldn't this be under BasicFuncs.RespondToHit() ?
 
 	# Additive vars set to 0
 	charF = 0
@@ -1355,7 +1364,6 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	######################################################################################
 	
     ### Bow camera fix from HD update. 
-    ### Has NOT been tested extensively, but the code seems fine.
     
 	me = Bladex.GetEntity(VictimName)
 	if me.Data.AimPressed==0 and me.Aim==1:
@@ -1369,15 +1377,9 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	except:
 		pass
 
-    ### Again, the code is lifted directly from the HD update, it's unchanged.
     ### -LeadHead
             
     ######################################################################################
-
-	if AttackerName and attacker and attacker.Person:
-		lvl= attacker.Level+1
-	else:
-		lvl=0
 		
 	basic_damage = ((charF * magicF * locationF) + weaponF + throwF + bowF + shieldF) * animF
 	basic_damage = max( basic_damage, 0 )
