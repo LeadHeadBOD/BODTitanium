@@ -11,6 +11,7 @@
 ##||| * Spider spitting should now somewhat work  (# PLAGUE: Might need adjustments)
 ##||| * Restored Great Demon's earthquake attack functionality
 ##||| * Spit attacks now trigger pain animation and damage only once per instance (Ldm, Spd, Lch, Zkn, Slm)
+##||| * Increased heavy pain threshold for Chk.
 ##\\\ 
 
 
@@ -423,7 +424,7 @@ class ChaosKnight (Enm_Def.NPCPerson):
 
 		self.DamageFactorNone  = 0.15
 		self.DamageFactorLight = 0.25
-		self.DamageFactorHeavy = 0.35
+		self.DamageFactorHeavy = 0.45		# was 0.35		-LeadHead
 
 		# anims
 		#me.AnmTranFunc=AuxTran.AuxTranKnightLivingDead
