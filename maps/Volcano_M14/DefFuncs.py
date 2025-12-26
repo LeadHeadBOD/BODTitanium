@@ -4,6 +4,9 @@
 ##||| * Final door to fire golem fight can no longer be triggered multiple times.
 ##||| * Fire statue trap now checks for fire resistance.
 ##||| * Added sounds for sectors breaking in great fire sword area (arrowPuz).
+##||| * Lava golem head now explodes when gem emerges (SaltanPiedritasDelGolem)
+##||| * Adjusted ftDoor displacement and velocity to prevent player from softlocking themselves
+##||| * Cleaned up lava golem cutscene scripts, lots of redundancy and unneeded stuff there.
 ##\\\ 
 
 import def_class
@@ -66,6 +69,10 @@ def SaltanPiedritasDelGolem(pos):
 	dust.DropPiedra(pos[0], pos[1]-2000, pos[2], 50000,-30000,-50000)
 	dust.DropPiedra(pos[0], pos[1]-2000, pos[2],-60000,-40000, 30000)
 	dust.DropPiedra(pos[0], pos[1]-2000, pos[2],-40000,-50000,-50000)
+	head = finalGolem.SeverLimb(1)
+	if head:
+		head.SubscribeToList("Pin")
+		# BoomLlave()
 
 
 def Camerita():
@@ -123,13 +130,13 @@ def Camerita():
 # pata.Velocity= 0,0,0
 # pata.RandomVelocity=35
 
-def BoomLlave():
+def BoomLlave():		# PLAGUE: Unused func
 	wps=Bladex.CreateEntity("EfectoLlaveCool", "Entity Particle System Dobj", 0, 0, 0)
 	wps.ObjectName=LlaveNegra.Name
 	wps.ParticleType="DemonShield"
 	wps.Time2Live=128
 	wps.RandomVelocity=1.0
-	wps.Velocity=-1000,0,0
+	wps.Velocity=-1000,0,0		# Is this supposed to actually be 0,-1000,0?
 	wps.NormalVelocity=3
 	wps.YGravity=0
 	wps.PPS=256
@@ -161,8 +168,8 @@ def IniciaTrollScene():
 #*************************************************************************************************
 #*************************************************************************************************
 
-### PLAGUE: All three funcs here end up being unused, because gfireHit is overwritten later on in the file.
-
+### PLAGUE: All three funcs here end up being unused, because gfireHit is overwritten later on in the file, so commented out.
+"""
 def killPlayer():
 	char.Life=0
 
@@ -180,7 +187,7 @@ def gfireHit(name,hit_entity,x,y,z,vx,vy,vz):
 			Bladex.AddScheduledFunc(Bladex.GetTime()+2.0, killPlayer, ())
 		else:
 			char.Life=char.Life-5
-
+"""
 ##################################### lanzamiento de una llama a partir de una posicion y un destino #############
 
 def gfire(ama,amb) :
@@ -1267,34 +1274,34 @@ def TruchOnFire(Piedra,Time=10,Size=35,PPS=128):
 
 def ftOpenDoors():
 	ftDoorA.opentype=Doors.AC_UNIF_DEC
-	ftDoorA.o_init_vel=0	; ftDoorA.o_init_displ=625
+	ftDoorA.o_init_vel=0	; ftDoorA.o_init_displ=300
 	ftDoorA.o_med_vel=-1000 ; ftDoorA.o_med_displ=3000
-	ftDoorA.o_end_vel=0		; ftDoorA.o_end_displ=625
+	ftDoorA.o_end_vel=0		; ftDoorA.o_end_displ=380
 	ftDoorA.SetWhileOpenSound(puertapiedrai)
 	ftDoorA.SetEndOpenSound(finpuertapiedrai)
 	ftDoorA.OpenDoor()
 
 	ftDoorB.opentype=Doors.AC_UNIF_DEC
-	ftDoorB.o_init_vel=0	; ftDoorB.o_init_displ=625
+	ftDoorB.o_init_vel=0	; ftDoorB.o_init_displ=300
 	ftDoorB.o_med_vel=-1000 ; ftDoorB.o_med_displ=3000
-	ftDoorB.o_end_vel=0		; ftDoorB.o_end_displ=625
+	ftDoorB.o_end_vel=0		; ftDoorB.o_end_displ=380
 	ftDoorB.SetWhileOpenSound(puertapiedrad)
 	ftDoorB.SetEndOpenSound(finpuertapiedrad)
 	ftDoorB.OpenDoor()
 
 def ftCloseDoors():
 	ftDoorA.closetype=Doors.AC_UNIF_DEC
-	ftDoorA.c_init_vel=0	; ftDoorA.c_init_displ=625
-	ftDoorA.c_med_vel=1000 ; ftDoorA.c_med_displ=3000
-	ftDoorA.c_end_vel=0	; ftDoorA.c_end_displ=625
+	ftDoorA.c_init_vel=0	; ftDoorA.c_init_displ=380
+	ftDoorA.c_med_vel=1200 ; ftDoorA.c_med_displ=3000
+	ftDoorA.c_end_vel=0	; ftDoorA.c_end_displ=385
 	ftDoorA.SetWhileCloseSound(puertapiedrai)
 	ftDoorA.SetEndCloseSound(finpuertapiedrai)
 	ftDoorA.CloseDoor()
 
 	ftDoorB.closetype=Doors.AC_UNIF_DEC
-	ftDoorB.c_init_vel=0	; ftDoorB.c_init_displ=625
-	ftDoorB.c_med_vel=1000 ; ftDoorB.c_med_displ=3000
-	ftDoorB.c_end_vel=0	; ftDoorB.c_end_displ=625
+	ftDoorB.c_init_vel=0	; ftDoorB.c_init_displ=380
+	ftDoorB.c_med_vel=1200 ; ftDoorB.c_med_displ=3000
+	ftDoorB.c_end_vel=0	; ftDoorB.c_end_displ=385
 	ftDoorB.SetWhileCloseSound(puertapiedrad)
 	ftDoorB.SetEndCloseSound(finpuertapiedrad)
 	ftDoorB.CloseDoor()
@@ -1308,10 +1315,10 @@ def ftCloseDoors():
 ################# primera secuencia
 def eSecOnEnter(index,ent) :
 	global eSecEntered
-	if (ent<>"Player1"): return
-	if (eSecEntered==1) : return
-	print("close")
-	eSecEntered = 1 			# Added -LeadHead
+	if (ent!="Player1") or (eSecEntered==1): return
+	# print("close")
+	eSecEntered = 1 						# Added 
+	ftDoorB.OnEndOpenFunc=ftCloseDoors 		#		-LeadHead
 	ftCloseDoors()
 
 def eSceneCameraRestore(ent,frame):
@@ -1320,7 +1327,6 @@ def eSceneCameraRestore(ent,frame):
 	cam.SetPersonView("Player1")
 	cam.Cut()
 	char.Angle = 0.2
-	Bladex.ActivateInput()
 	Scorer.SetVisible(1)
 	Bladex.SetListenerPosition(1)
 	stoneFalse.SubscribeToList("Pin")
@@ -1360,10 +1366,13 @@ def eSceneStoneAnim():
 	stone.SendSectorMsgs=0
 	stone.TurnOn()
 
+### PLAGUE: Func is unused in the map, since the animation doesn't exist.
+"""
 def eSceneStoneAnimLoop():
 	print("eSceneAnimLoop()")
 	stone = Bladex.GetEntity("lavaStone")
 	stone.Animation="Sct_ondula"
+"""
 
 def eSceneStoneAnimStop():
 	print("eSceneAnimStop()")
@@ -1511,6 +1520,7 @@ def fGolemAppears(cam,frame):
 ###########################################                                    ############################################
 ###########################################################################################################################
 
+### PLAGUE: This func is useless.
 def eSceneProtPosition():
 	print("eSceneProtPosition()")
 	char = Bladex.GetEntity("Player1")
@@ -1522,7 +1532,8 @@ def eSceneProtAnim():
 	char = Bladex.GetEntity("Player1")
 	char.SetTmpAnmFlags(1,1,1,0,5,1,0)
 	char.Wuea = Reference.WUEA_ENDED
-	char.Angle = 3.14159
+	char.Position=6422.1,-1099.1,-147752.9
+	char.Angle = 3.14159					# For reasons I cannot figure out, the angle is actually never initialized properly.
 	char.LaunchAnmType("cae_lava")
 
 ###########################################################################################################################
@@ -1531,22 +1542,17 @@ def eSceneProtAnim():
 ###########################################                                    ############################################
 ###########################################################################################################################
 
-def eSceneStart1(sec, ent) :
-	global eSceneStartFlag
-	#if (eSceneStartFlag) : return
-	eSceneStartFlag=1
+def eSceneStart1(sec, ent):
+	
 	print("eSceneStart()")
 	eSceneCameraA()
-	eSceneProtPosition()
 	eSceneProtAnim()
 	Bladex.AddScheduledFunc( Bladex.GetTime()+0.0, eSceneStoneAnim,())
-	ftSectorsBreak()
-	Bladex.DeactivateInput()
+	# ftSectorsBreak()			# PLAGUE: Func is commented out and never actually defined
 	Scorer.SetVisible(0)
 	Bladex.SetListenerPosition(2)
 
-def eSceneStart(sec, ent) :
-	eSceneProtAnim()
+def eSceneStart(sec, ent):
 	Bladex.SetTriggerSectorFunc("muere", "OnEnter", "" )
 	ScriptSkip.SkipScriptStart("final")
 
