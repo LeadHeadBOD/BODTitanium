@@ -3,7 +3,7 @@
 ##||| Change list:
 ##||| * Removed duplicate entry for alert sound
 ##||| * Changed alert sound variable name, to prevent the Tkn sound overriding Dkn sound
-##||| * 
+##||| * [Temporary] if the game is in Spanish, we make Dark Knights laugh, since they don't have a 
 ##||| * 
 ##||| *
 ##||| *
@@ -31,7 +31,10 @@ GolpeContundenteDkn=Bladex.CreateSound('../../sounds/golpe-maza-arm.wav', 'Golpe
 GolpeContundenteDkn.SendNotify=1
 
 
-DKnightKeepStill=Bladex.CreateSound('../../sounds/'+language+'/InsultoDkn1.wav', 'DKnightKeepStill')    # Changed variable name not to conflict with Tkn -LeadHead
+if language == "Spanish":
+    DKnightKeepStill=Bladex.CreateSound('../../sounds/RisaDkn2.wav', 'DKnightKeepStill')
+else: 
+    DKnightKeepStill=Bladex.CreateSound('../../sounds/'+language+'/InsultoDkn1.wav', 'DKnightKeepStill')    # Changed variable name not to conflict with Tkn -LeadHead
 DKnightKeepStill.MinDistance=1000
 DKnightKeepStill.MaxDistance=25000
 # Dupe, commented out
