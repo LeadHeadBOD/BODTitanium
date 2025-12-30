@@ -1176,7 +1176,7 @@ def takeGemR() :
 	luz.SubscribeToList("RLightTimerB")
 	lightTimerStartTime=Bladex.GetTime()
 	
-	OnTake.DelOnTakeEvent("GemaR")			# Added
+	Ontake.DelOnTakeEvent("GemaR")			# Added
 
 def takeGemG() :
 	global lightTimerStartTime
@@ -1188,7 +1188,7 @@ def takeGemG() :
 	MusicTool.Music2Sector("ambiente33","Atmosfera18")
 	MusicTool.ModifyMusicEvent("ambiente33","ambiente30")
 	
-	OnTake.DelOnTakeEvent("GemaG")				# Added
+	Ontake.DelOnTakeEvent("GemaG")				# Added
 
 def Print(x):
 	print x
