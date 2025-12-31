@@ -4,7 +4,7 @@ Modification of Blade of Darkness aimed at improving the vanilla experience.
 
 
 ## Installation
-Current version of Titanium (0.4) is an experiment at getting something publicly out there. As such, there is no elegant installation yet, BODLoader is not an option,
+Current version of Titanium (0.5.1a) is an experiment at getting something publicly out there. As such, there is no elegant installation yet, BODLoader is not an option,
 since it does not work well for multiple folders containing same file names.
 
 To install the mod you will need to:
