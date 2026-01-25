@@ -1,6 +1,12 @@
 # BODTitanium
 Modification of Blade of Darkness aimed at improving the vanilla experience.
 
+<a href="https://www.moddb.com/mods/titanium" title="View Titanium on ModDB" target="_blank"><img src="https://button.moddb.com/popularity/medium/mods/52444.png" alt="Titanium" /></a>
+Official Titanium links
+ModDB: https://www.moddb.com/mods/titanium
+NexusMods: https://www.nexusmods.com/severencebladeofdarkness/mods/28
+Steam Forums: https://steamcommunity.com/app/1710170/discussions/0/591780787069894841/
+GOG Forums: https://www.gog.com/forum/blade_of_darkness/titanium_mod
 
 
 ## Installation
