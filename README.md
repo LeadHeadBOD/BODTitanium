@@ -2,10 +2,16 @@
 Modification of Blade of Darkness aimed at improving the vanilla experience.
 
 <a href="https://www.moddb.com/mods/titanium" title="View Titanium on ModDB" target="_blank"><img src="https://button.moddb.com/popularity/medium/mods/52444.png" alt="Titanium" /></a>
-Official Titanium links
+
+
+**Official Titanium links**
+
 ModDB: https://www.moddb.com/mods/titanium
+
 NexusMods: https://www.nexusmods.com/severencebladeofdarkness/mods/28
+
 Steam Forums: https://steamcommunity.com/app/1710170/discussions/0/591780787069894841/
+
 GOG Forums: https://www.gog.com/forum/blade_of_darkness/titanium_mod
 
 
@@ -14,13 +20,10 @@ Current version of Titanium (0.5.1a) is an experiment at getting something publi
 since it does not work well for multiple folders containing same file names.
 
 To install the mod you will need to:
- 1. Revert to v109.
+ 1. [Revert to v109](https://steamcommunity.com/sharedfiles/filedetails/?id=3558309779)
  2. Create a backup of the original game just in case.
  3. Extract all the files in the BoD v109 while preserving the folder structure.
  4. Launch the game.
-
-
-There's tons of stuff to do, millions of things I'd still like to get done, etc., so this is far from a full release.
 
 
 ## Credits:
