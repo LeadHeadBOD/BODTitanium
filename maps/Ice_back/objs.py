@@ -2,7 +2,7 @@
 ##||| Ice_back/objs.PY TITANIUM
 ##||| Change list:
 ##||| * Added some of the missing statues from Ice_M11 to make the level look less empty
-##||| * 
+##||| * Shadowpass
 ##\\\ 
 
 import Sparks
@@ -12,6 +12,7 @@ import Bladex
 import Breakings
 import Reference
 import OnOff
+import AuxFuncs
 
 
 ###
@@ -286,7 +287,9 @@ o=Bladex.CreateEntity("cand1","Candelabro",43276.809000,-9798.611000,58588.92200
 o.Scale=1.694466
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
+o.Lights=[ (0.200000,0.031250,(255,196,128)) ]  # now visible lights
+AuxFuncs.GetSpot(o).Visible=0                   #
+AuxFuncs.GetSpot(o).CastShadows=0               #   -LeadHead
 
 
 
@@ -295,7 +298,10 @@ o=Bladex.CreateEntity("cand2","Candelabro",46372.755000,-9757.552000,58188.54100
 o.Scale=1.661078
 o.Orientation=0.006164,0.006171,-0.707080,0.707080
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
+o.Lights=[ (0.300000,0.031250,(255,196,128)) ]  # now visible lights
+AuxFuncs.GetSpot(o).Visible=0                   #
+AuxFuncs.GetSpot(o).CastShadows=0               #   -LeadHead
+
 
 
 
@@ -452,7 +458,7 @@ o=Bladex.CreateEntity("NoName105","Lampcolg",78519.624000,-5936.975000,16945.160
 o.Scale=1.549318
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (17.000000,0.400000,(254,237,158)) ]
+o.Lights=[ (17.000000,0.325000,(254,237,158)) ]     # precision 0.4 -> 0.325
 
 
 
@@ -629,7 +635,7 @@ o=Bladex.CreateEntity("rast1","Rastrillo",-18434.386317,1450.339521,52836.813984
 
 o.Scale=1.172579
 o.Orientation=0.011966,-0.999910,-0.000765,0.005936
-
+Sparks.SetMetalSparkling(o.Name)        # Add
 
 
 o=Bladex.CreateEntity("NoName164","Lampcolg",76417.626000,-4880.519000,-1499.01800,"Physic")
@@ -637,7 +643,7 @@ o=Bladex.CreateEntity("NoName164","Lampcolg",76417.626000,-4880.519000,-1499.018
 o.Scale=1.184304
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (12.000000,0.700000,(255,154,43)) ]
+o.Lights=[ (12.000000,0.200000,(255,154,43)) ]  # precision 0.7 -> 0.2
 
 
 
@@ -663,7 +669,7 @@ o=Bladex.CreateEntity("lamp1","Antorchaenpared",46227.492000,-3276.597000,25397.
 o.Scale=1.000000
 o.Orientation=0.000000,0.000000,0.707107,-0.707107
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (13.225097,0.500000,(255,145,23)) ]
+o.Lights=[ (12.0,0.200000,(255,145,23)) ]  # precision 0.5 -> 0.2 , intens 13.22 -> 12.0
 
 
 
@@ -784,7 +790,7 @@ o=Bladex.CreateEntity("NoName14","Roca1Aurelio",32720.199000,7511.212000,23071.5
 
 o.Scale=1.000000
 o.Orientation=0.353553,0.353553,0.612372,-0.612373
-
+Sparks.SetStoneSparkling(o.Name)
 
 
 o=Bladex.CreateEntity("NoName18","PiedraNevada",40048.379000,-760.955000,29541.04400,"Physic")
@@ -1458,7 +1464,7 @@ o=Bladex.CreateEntity("antj21","Antorcha",37353.534568,7181.237040,8713.195738,"
 o.Scale=1.000000
 o.Orientation=0.907006,0.026734,0.413806,0.073421
 o.FiresIntensity=[ 40 ]
-o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
+o.Lights=[ (0.000000,0.031250,(255,196,128)) ]  # PLAGUE: maybe should match colour with ant1?
 
 
 
@@ -1565,7 +1571,7 @@ o=Bladex.CreateEntity("NoName1","Antorchaenpared",63277.155000,-5876.235000,-279
 o.Scale=1.000000
 o.Orientation=0.049325,-0.061628,0.705384,-0.704416
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (10.000000,0.131250,(255,158,51)) ]
+o.Lights=[ (10.000000, 0.100000, (255,158,51)) ]  # precision 0.131250 -> 0.1
 
 
 adoq=Bladex.CreateEntity("Adice1","Adoquinpulsador",89051.158765,-10344.732901,67701.517490,"Physic")
@@ -1645,10 +1651,10 @@ Sparks.SetStoneSparkling(o.Name)
 
 
 
+
 o=Bladex.CreateEntity("NoName4","BarrilPieza6",4131.179111,-48.645591,113750.270363,"Physic")
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
-
 
 
 
@@ -1658,11 +1664,9 @@ o.Orientation=0.391260,0.486612,-0.737755,-0.256595
 
 
 
-
 o=Bladex.CreateEntity("NoName6","BarrilPieza4",3539.845227,-57.182872,114668.998679,"Physic")
 o.Scale=1.269735
 o.Orientation=0.824692,0.071252,-0.105614,-0.551047
-
 
 
 
@@ -1672,11 +1676,9 @@ o.Orientation=0.619258,0.363078,-0.566228,-0.405067
 
 
 
-
 o=Bladex.CreateEntity("NoName8","BarrilPieza4",2683.332334,-55.858381,115319.395570,"Physic")
 o.Scale=1.000000
 o.Orientation=0.801553,0.122073,-0.192275,-0.552848
-
 
 
 
@@ -1686,11 +1688,9 @@ o.Orientation=0.674525,0.325598,-0.478824,-0.457962
 
 
 
-
 o=Bladex.CreateEntity("NoName10","BarrilPieza4",4543.696302,-56.321027,112971.661367,"Physic")
 o.Scale=1.244716
 o.Orientation=0.764335,-0.217331,0.325688,-0.512334
-
 
 
 
@@ -1704,7 +1704,16 @@ o.Orientation=0.707107,0.707107,0.000000,0.000000
 o=Bladex.CreateEntity("NoName12","Caja_i_r",7724.018772,-602.016841,115790.574062,"Physic")
 o.Scale=1.000000
 o.Orientation=0.504344,0.504344,0.495618,-0.495618
+Sparks.SetWoodenSparkling(o.Name)
+o.Static=1
 
+
+
+o=Bladex.CreateEntity("NoName15","Hoguera",1604.858220,-196.690820,110888.486192,Reference.ObjType("Hoguera"))
+o.Scale=1.000000
+o.Orientation=0.707107,0.707107,0.000000,0.000000
+o.FiresIntensity=[ 44 ]
+o.Lights=[ (0.000000,0.331250,(239,189,143)) ]
 
 
 
@@ -1714,11 +1723,9 @@ o.Orientation=0.684900,0.299400,-0.477216,-0.462099
 
 
 
-
 o=Bladex.CreateEntity("NoName17","BarrilPieza4",1052.745974,-48.488641,108265.468807,"Physic")
 o.Scale=1.000000
 o.Orientation=0.820416,-0.093729,0.141372,-0.546028
-
 
 
 
@@ -1728,11 +1735,9 @@ o.Orientation=0.827484,-0.001498,-0.010468,-0.561390
 
 
 
-
 o=Bladex.CreateEntity("NoName20","BarrilPieza4",2597.257927,-46.905012,109407.805560,"Physic")
 o.Scale=1.000000
 o.Orientation=0.801218,-0.144941,0.219336,-0.537525
-
 
 
 
@@ -1742,16 +1747,86 @@ o.Orientation=0.695961,0.299410,-0.461341,-0.461688
 
 
 
-
 o=Bladex.CreateEntity("NoName0","Antorchaenpared",59200.588222,-1891.683260,88222.229891,"Physic")
 o.Scale=1.000000
 o.Orientation=0.485751,0.560887,-0.520522,0.422503
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (5.000000,0.231250,(255,154,43)) ]
+o.Lights=[ (6.000000,0.102000,(255,154,43)) ]   # precision 0.23 -> 0.102, intens 5.0 -> 6.0
+
+### Missing stuff from Ice_M11 start
+o=Bladex.CreateEntity("NoName1","Caja_i_r",49810.999824,-2014.085634,67799.248010,Reference.ObjType("Caja_i_r"))
+o.Scale=1.533978
+o.Orientation=0.707107,0.707107,0.000000,0.000000
+Sparks.SetWoodenSparkling(o.Name)
 
 
 
 
+
+o=Bladex.CreateEntity("NoName4","BarrilPieza4",48272.407291,-1152.636360,70365.776859,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.000000
+o.Orientation=0.671665,0.314692,-0.480860,-0.467556
+
+
+
+o=Bladex.CreateEntity("NoName5","BarrilPieza4",48762.721209,-1152.340378,69900.342015,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.000000
+o.Orientation=0.645131,-0.353699,0.515080,-0.439768
+
+
+
+o=Bladex.CreateEntity("NoName6","BarrilPieza6",48643.695934,-1175.329819,70333.902391,Reference.ObjType("BarrilPieza6"))
+o.Scale=1.000000
+o.Orientation=0.722168,0.689675,0.046374,0.025906
+
+
+
+o=Bladex.CreateEntity("NoName7","BarrilPieza4",47578.088994,-1152.013273,70071.997214,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.000000
+o.Orientation=0.310839,0.523016,-0.763399,-0.216922
+
+
+
+o=Bladex.CreateEntity("NoName8","BarrilPieza4",47494.827259,-1186.566635,69873.197595,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.000000
+o.Orientation=0.194088,0.746481,0.587840,0.244009
+
+
+
+o=Bladex.CreateEntity("NoName9","BarrilPieza4",49884.657656,-1156.619611,69283.546076,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.000000
+o.Orientation=0.637812,0.334450,-0.545057,-0.429245
+
+
+
+o=Bladex.CreateEntity("NoName10","BarrilPieza4",42864.922132,-1149.578610,69277.094851,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.000000
+o.Orientation=0.297262,0.512761,-0.778350,-0.207081
+
+
+
+o=Bladex.CreateEntity("NoName11","BarrilPieza6",43047.497523,-1174.824630,69607.768942,Reference.ObjType("BarrilPieza6"))
+o.Scale=1.000000
+o.Orientation=0.733926,0.677260,-0.004957,0.051441
+
+
+
+o=Bladex.CreateEntity("NoName12","BarrilPieza5",43934.270119,-1133.722058,70163.248479,Reference.ObjType("BarrilPieza5"))
+o.Scale=1.000000
+o.Orientation=0.707107,0.707107,0.000000,0.000000
+
+
+
+o=Bladex.CreateEntity("NoName13","BarrilPieza4",42428.767308,-1152.033521,70217.727046,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.000000
+o.Orientation=0.642517,0.347373,-0.519761,-0.443116
+
+
+
+o=Bladex.CreateEntity("NoName14","BarrilPieza4",43765.075091,-1157.518642,69183.690080,Reference.ObjType("BarrilPieza4"))
+o.Scale=1.257163
+o.Orientation=0.780547,0.195186,-0.286531,-0.520144
+### End of stuff
 
 icebloqueback=Bladex.CreateEntity("Icebloqueback","Bloque",-22646.140706,9352.146791,64762.641156)
 icebloqueback.Static=1                                                                          
@@ -1800,4 +1875,4 @@ o=Bladex.CreateEntity("NoName6","LamparaAurelio",-31542.615000,1996.494000,62173
 o.Scale=1.257163
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (15.000000,0.300000,(234,123,0)) ]
+o.Lights=[ (15.000000,0.180000,(234,123,0)) ]       # precision 0.3 -> 0.18

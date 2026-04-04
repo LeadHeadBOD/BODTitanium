@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Enabled sparks for stuff that was missing it
 ##||| * Removed selectiondata for stuff where it doesn't make sense
+##||| * Shadowpass
 ##\\\ 
 
 
@@ -14,6 +15,7 @@ import time
 import Bladex
 import Breakings
 import OnOff
+import AuxFuncs
 
 o=Bladex.CreateEntity("NoName4","Monjespada",9351.773000,-9542.042000, -9092.173000,Reference.ObjType("Monjespada"))
 
@@ -322,7 +324,9 @@ o=Bladex.CreateEntity("cand1","Candelabro",43276.809000,-9798.611000,58588.92200
 o.Scale=1.694466
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
+o.Lights=[ (0.200000,0.031250,(255,196,128)) ]  # now visible lights
+AuxFuncs.GetSpot(o).Visible=0                   #
+AuxFuncs.GetSpot(o).CastShadows=0               #   -LeadHead
 
 
 
@@ -331,7 +335,10 @@ o=Bladex.CreateEntity("cand2","Candelabro",46372.755000,-9757.552000,58188.54100
 o.Scale=1.661078
 o.Orientation=0.006164,0.006171,-0.707080,0.707080
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
+o.Lights=[ (0.300000,0.031250,(255,196,128)) ]  # now visible lights
+AuxFuncs.GetSpot(o).Visible=0                   #
+AuxFuncs.GetSpot(o).CastShadows=0               #   -LeadHead
+
 
 
 
@@ -488,7 +495,7 @@ o=Bladex.CreateEntity("NoName105","Lampcolg",78519.624000,-5936.975000,16945.160
 o.Scale=1.549318
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (17.000000,0.400000,(254,237,158)) ]
+o.Lights=[ (17.000000,0.325000,(254,237,158)) ]     # precision 0.4 -> 0.325
 
 
 
@@ -751,6 +758,7 @@ o=Bladex.CreateEntity("rast1","Rastrillo",-18627.012000,-1943.293000,57806.68700
 
 o.Scale=1.172579
 o.Orientation=0.719340,-0.694658,0.000000,0.000000
+Sparks.SetMetalSparkling(o.Name)        # Add
 
 
 
@@ -759,7 +767,7 @@ o=Bladex.CreateEntity("NoName164","Lampcolg",76417.626000,-4880.519000,-1499.018
 o.Scale=1.184304
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (12.000000,0.700000,(255,154,43)) ]
+o.Lights=[ (12.000000,0.200000,(255,154,43)) ]  # precision 0.7 -> 0.2
 
 
 
@@ -785,7 +793,7 @@ o=Bladex.CreateEntity("lamp1","Antorchaenpared",46227.492000,-3276.597000,25397.
 o.Scale=1.000000
 o.Orientation=0.000000,0.000000,0.707107,-0.707107
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (13.225097,0.500000,(255,145,23)) ]
+o.Lights=[ (12.0,0.200000,(255,145,23)) ]  # precision 0.5 -> 0.2 , intens 13.22 -> 12.0
 
 
 
@@ -835,7 +843,7 @@ o=Bladex.CreateEntity("antp9","Antorchaenpared",87529.877000,-1861.412000,4035.7
 o.Scale=1.000000
 o.Orientation=0.486740,0.486740,0.512917,-0.512917
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (16.135740,1.800000,(255,196,128)) ]
+o.Lights=[ (16.000000,1.800000,(255,196,128)) ]
 
 
 
@@ -2147,7 +2155,7 @@ o=Bladex.CreateEntity("antj21","Antorcha",37353.534568,7181.237040,8713.195738,R
 o.Scale=1.000000
 o.Orientation=0.907006,0.026734,0.413806,0.073421
 o.FiresIntensity=[ 40 ]
-o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
+o.Lights=[ (0.000000,0.031250,(255,196,128)) ]  # PLAGUE: maybe should match colour with ant1?
 
 
 
@@ -2287,7 +2295,7 @@ o=Bladex.CreateEntity("NoName1","Antorchaenpared",63277.155000,-5876.235000,-279
 o.Scale=1.000000
 o.Orientation=0.049325,-0.061628,0.705384,-0.704416
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (10.000000,0.131250,(255,158,51)) ]
+o.Lights=[ (10.000000, 0.100000, (255,158,51)) ]  # precision 0.131250 -> 0.1
 
 
 
@@ -2725,12 +2733,12 @@ o.Orientation=0.707107,0.707107,0.000000,0.000000
 
 
 
+
 o=Bladex.CreateEntity("NoName12","Caja_i_r",7724.018772,-602.016841,115790.574062)
-o.Static=1
 o.Scale=1.000000
 o.Orientation=0.504344,0.504344,0.495618,-0.495618
 Sparks.SetWoodenSparkling(o.Name)
-
+o.Static=1
 
 
 
@@ -2776,7 +2784,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",59200.588222,-1891.683260,8822
 o.Scale=1.000000
 o.Orientation=0.485751,0.560887,-0.520522,0.422503
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (5.000000,0.231250,(255,154,43)) ]
+o.Lights=[ (6.000000,0.102000,(255,154,43)) ]   # precision 0.23 -> 0.102, intens 5.0 -> 6.0
 
 
 o=Bladex.CreateEntity("NoName1","Caja_i_r",49810.999824,-2014.085634,67799.248010,Reference.ObjType("Caja_i_r"))
@@ -3016,4 +3024,4 @@ o=Bladex.CreateEntity("NoName6","LamparaAurelio",-31542.615000,1996.494000,62173
 o.Scale=1.257163
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (15.000000,0.300000,(234,123,0)) ]
+o.Lights=[ (15.000000,0.180000,(234,123,0)) ]       # precision 0.3 -> 0.18

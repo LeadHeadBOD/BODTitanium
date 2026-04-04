@@ -126,7 +126,7 @@ demonio=Bladex.CreateEntity("Demonio de Ventana", "Little_Demon", 18712,-18252,-
 demonio.Person=1
 demonio.Level=lvl_control.GiveLevel(14,16)
 EnemyTypes.EnemyDefaultFuncs(demonio)
-AniSound.AsignarSonidosLittleDemon(demonio.Name)
+# AniSound.AsignarSonidosLittleDemon(demonio.Name)	# Not needed, commented out
 demonio.Freeze()
 demonio.RemoveFromWorld()
 Actions.TakeObject(demonio.Name,"LlaveMentira")

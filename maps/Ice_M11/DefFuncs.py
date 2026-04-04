@@ -2,8 +2,8 @@
 ##||| Ice_M11/DefFuncs.PY TITANIUM
 ##||| Change list:
 ##||| * Final crystal key animation 60fps (camera and key movement)
-##||| * Medallion recesses now have proper light fade on insert
-##||| * 
+##||| * Medallion recesses now have proper light fade on insert (TO DO: Need new meshes there)
+##||| * Fixed Minorx not having default deadfunc being executed
 ##\\\ 
 
 
@@ -317,8 +317,8 @@ def PourBlood(MinoCarne):
 		blood.ParticleType="Blood"
 		blood.YGravity=10000.0
 		blood.Friction=0.2
-		blood.RandomVelocity=10.0
-		blood.PPS=400
+		blood.RandomVelocity=15.0
+		blood.PPS=600
 		blood.Time2Live=32
 		blood.DeathTime=Bladex.GetTime() + LifeMinoBlood
 
@@ -1105,6 +1105,8 @@ def CierraPuertaMino(sectorindex,entityname):
 		SndRujido()
 
 def DieFukingMinorx(ent_name):
+	Minorx = Bladex.GetEntity("Minorx") # Add
+	Minorx.Data.OldDeadFunc(ent_name)   #   -LeadHead
 	puertamino.OpenDoor()
 	PoneArmas(ktrai1)
 	PoneArmas(ktrai2)
@@ -1564,7 +1566,7 @@ def CogeLaTablilla(Camera,frame):
   inv  = char.GetInventory()
   inv.AddTablet("Tablilla5")
   inv.LinkLeftHand("Tablilla5")
-  Bladex.AddScheduledFunc(Bladex.GetTime(), ImprimeDatosTablilla,("Tablilla5",))
+  # Bladex.AddScheduledFunc(Bladex.GetTime(), ImprimeDatosTablilla,("Tablilla5",))
 
 
 
