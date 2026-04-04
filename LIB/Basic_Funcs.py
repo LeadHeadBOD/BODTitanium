@@ -9,7 +9,6 @@
 ##||| * Combo text should now fade properly when something was already written.
 ##||| * Fixed "hurt jog" animation playing if not locked on enemy and using shield.
 ##||| * "New Attack" text should now be translated.
-##||| * Hits that kill a character will now still change their wound zones (see RespondToHit func)
 ##\\\ 
 
 #
@@ -1012,14 +1011,12 @@ class PlayerPerson:
 			shine.Data.AddEvent(time+0.8,          (160, 0.01, 1.0, 0, 0, 1), (), (), (2,  0.8, 0.1, 0.0, 0.6, 0.2  ,  0.8, 0.0, 0.0, 0.0, 0.8))
 			return
 		"""
-		if me: # and me.Life > 0:
+		if me and me.Life > 0:
 			damage_factor = DamagePoints / (me.Life+DamagePoints)
 
 			if damage_factor > me.Data.DamageFactorNone:
 				if DamageZone >= 0 and DamageZone < 32 and DamagePoints>1:       #Added check for damagepoints>1 -LeadHead:
 					me.SetWoundedZone(DamageZone, 1)
-					
-			if me.Life > 0:		# bug fix for fatal blows	-LeadHead
 
 				do_not_abort=0
 				# Now checks if the animation has basically already ended. Makes parrying much more viable and having your shield broken more deadly. -LeadHead
@@ -1168,6 +1165,7 @@ class PlayerPerson:
 			me.LaunchAnmType("Dth_Fll2")
 			return
 
+			return
 		if Dist<5000:
 			return
 
