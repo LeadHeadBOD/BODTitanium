@@ -1,0 +1,25 @@
+GammaC -> 0.8
+Bitmaps -> lab_lava.mmp
+Bitmaps -> labyr_back.mmp
+Bitmaps -> pulruna.mmp
+Bitmaps -> bloquepi.mmp
+Bitmaps -> ../../3dchars/Amz.mmp
+Bitmaps -> ../../3dchars/Bar.mmp
+Bitmaps -> ../../3dchars/Dwf.mmp
+Bitmaps -> ../../3dchars/Kgt.mmp
+Bitmaps -> ../../3dchars/Ldm.mmp
+Bitmaps -> ../../3dchars/Vmp.mmp
+Bitmaps -> ../../3dchars/Chk.mmp
+Bitmaps -> ../../3dchars/Skl.mmp
+Bitmaps -> ../../3dobjs/3dobjs.mmp
+Bitmaps -> ../../3dobjs/weapons.mmp
+Bitmaps -> ../../3dobjs/genericos.mmp
+Bitmaps -> ../../3dobjs/telaranya.mmp
+Bitmaps -> ../../3dobjs/objetos_p.mmp
+Bitmaps -> ../../3dobjs/esferagemaazul.mmp
+Bitmaps -> ../../3dobjs/CilindroMagico.mmp
+
+
+World -> labyr_back.bw
+
+WorldDome -> dome.mmp
