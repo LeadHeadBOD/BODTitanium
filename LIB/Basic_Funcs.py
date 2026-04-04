@@ -9,6 +9,7 @@
 ##||| * Combo text should now fade properly when something was already written.
 ##||| * Fixed "hurt jog" animation playing if not locked on enemy and using shield.
 ##||| * "New Attack" text should now be translated.
+##||| * Hits that kill a character will now still change their wound zones (see RespondToHit func)
 ##\\\ 
 
 #
@@ -1011,80 +1012,27 @@ class PlayerPerson:
 			shine.Data.AddEvent(time+0.8,          (160, 0.01, 1.0, 0, 0, 1), (), (), (2,  0.8, 0.1, 0.0, 0.6, 0.2  ,  0.8, 0.0, 0.0, 0.0, 0.8))
 			return
 		"""
-		if me and me.Life > 0:
+		if me: # and me.Life > 0:
 			damage_factor = DamagePoints / (me.Life+DamagePoints)
 
 			if damage_factor > me.Data.DamageFactorNone:
 				if DamageZone >= 0 and DamageZone < 32 and DamagePoints>1:       #Added check for damagepoints>1 -LeadHead:
 					me.SetWoundedZone(DamageZone, 1)
-
-				do_not_abort=0
-				# Now checks if the animation has basically already ended. Makes parrying much more viable and having your shield broken more deadly. -LeadHead
-				if (me.AnimName == "df_s_broken" and me.AnmPos<0.55) or (me.AnimName == "sword_broken" and me.AnmPos<0.55) or (me.AnimName == "sw_react" and me.AnmPos<0.55) or self.Invincibility==2:
-					do_not_abort=1
-				if do_not_abort==0:
-					# if me.AnmEndedFunc:
-						# print me.Name+" has func " + `me.AnmEndedFunc`
-					Damage.DropInvalidObjectsOnImpact (EntityName)
-					me.Wuea=Reference.WUEA_ENDED
-
-					if me.InCombat:
-						me.InterruptCombat()
-						if Shielded:
-							# Launch Blocking damage animations
-							if damage_factor <= (me.Data.DamageFactorLight+me.Data.DamageFactorHeavy) / 2.0:
-								Reference.debugprint("Launching .df_01")
-								if weapon_flag==Reference.W_FLAG_2W:
-									me.LaunchAnmType("df_01_2w")
-								elif weapon_flag==Reference.W_FLAG_AXE:
-									me.LaunchAnmType("df_01_axe")
-								elif weapon_flag==Reference.W_FLAG_SP:
-									me.LaunchAnmType("df_01_spear")
-								else:
-									me.LaunchAnmType("df_01")
-							else:
-								Reference.debugprint("Launching .df_02")
-								if weapon_flag==Reference.W_FLAG_2W:
-									me.LaunchAnmType("df_02_2w")
-								elif weapon_flag==Reference.W_FLAG_AXE:
-									me.LaunchAnmType("df_02_axe")
-								elif weapon_flag==Reference.W_FLAG_SP:
-									me.LaunchAnmType("df_02_spear")
-								else:
-									me.LaunchAnmType("df_02")
-						else:
-							if damage_factor <= me.Data.DamageFactorLight:
-								Reference.debugprint("Launching .hurt_f_lite")
-								me.LaunchAnmType("hurt_f_lite")
-							elif damage_factor >= me.Data.DamageFactorHeavy:
-								Reference.debugprint("Launching .hurt_f_big")
-								me.LaunchAnmType("hurt_f_big")
-							elif DamageZone==Reference.BODY_HEAD:
-								Reference.debugprint("Launching .hurt_f_head")
-								me.LaunchAnmType("hurt_f_head")
-							elif DamageZone==Reference.BODY_FRONT:
-								Reference.debugprint("Launching .hurt_f_breast")
-								me.LaunchAnmType("hurt_f_breast")
-							elif DamageZone==Reference.BODY_BACK:
-								Reference.debugprint("Launching .hurt_f_back")
-								me.LaunchAnmType("hurt_f_back")
-							elif DamageZone==Reference.BODY_RARM or DamageZone==Reference.BODY_RHAND:
-								Reference.debugprint("Launching .hurt_f_r_arm")
-								me.LaunchAnmType("hurt_f_r_arm")
-							elif DamageZone==Reference.BODY_LARM or DamageZone==Reference.BODY_LHAND:
-								Reference.debugprint("Launching .hurt_f_l_arm")
-								me.LaunchAnmType("hurt_f_l_arm")
-							elif DamageZone==Reference.BODY_RLEG or DamageZone==Reference.BODY_RFOOT:
-								Reference.debugprint("Launching .hurt_f_r_leg")
-								me.LaunchAnmType("hurt_f_r_leg")
-							elif DamageZone==Reference.BODY_LLEG or DamageZone==Reference.BODY_LFOOT:
-								Reference.debugprint("Launching .hurt_f_l_leg")
-								me.LaunchAnmType("hurt_f_l_leg")
-					else:
-						if me.Run and (not Shielded) and (me.AnimName[-3:]=="JOG"):		# Added check to see if we are actually running	-LeadHead
-							Reference.debugprint("Launching .hurt_jog")
-							me.LaunchAnmType("hurt_jog")
-						else:
+					
+				if me.Life > 0:		# bug fix for fatal blows	-LeadHead
+	
+					do_not_abort=0
+					# Now checks if the animation has basically already ended. Makes parrying much more viable and having your shield broken more deadly. -LeadHead
+					if (me.AnimName == "df_s_broken" and me.AnmPos<0.55) or (me.AnimName == "sword_broken" and me.AnmPos<0.55) or (me.AnimName == "sw_react" and me.AnmPos<0.55) or self.Invincibility==2:
+						do_not_abort=1
+					if do_not_abort==0:
+						# if me.AnmEndedFunc:
+							# print me.Name+" has func " + `me.AnmEndedFunc`
+						Damage.DropInvalidObjectsOnImpact (EntityName)
+						me.Wuea=Reference.WUEA_ENDED
+	
+						if me.InCombat:
+							me.InterruptCombat()
 							if Shielded:
 								# Launch Blocking damage animations
 								if damage_factor <= (me.Data.DamageFactorLight+me.Data.DamageFactorHeavy) / 2.0:
@@ -1107,31 +1055,86 @@ class PlayerPerson:
 										me.LaunchAnmType("df_02_spear")
 									else:
 										me.LaunchAnmType("df_02")
-							elif DamageZone==Reference.BODY_HEAD:
-								Reference.debugprint("Launching .hurt_head")
-								me.LaunchAnmType("hurt_head")
-							elif DamageZone==Reference.BODY_FRONT:
-								Reference.debugprint("Launching .hurt_breast")
-								me.LaunchAnmType("hurt_breast")
-							elif DamageZone==Reference.BODY_BACK:
-								Reference.debugprint("Launching .hurt_back")
-								me.LaunchAnmType("hurt_back")
-							elif DamageZone==Reference.BODY_RARM or DamageZone==Reference.BODY_RHAND:
-								Reference.debugprint("Launching .hurt_r_arm")
-								me.LaunchAnmType("hurt_r_arm")
-							elif DamageZone==Reference.BODY_LARM or DamageZone==Reference.BODY_LHAND:
-								Reference.debugprint("Launching .hurt_l_arm")
-								me.LaunchAnmType("hurt_l_arm")
-							elif DamageZone==Reference.BODY_RLEG or DamageZone==Reference.BODY_RFOOT:
-								Reference.debugprint("Launching .hurt_r_leg")
-								me.LaunchAnmType("hurt_r_leg")
-							elif DamageZone==Reference.BODY_LLEG or DamageZone==Reference.BODY_LFOOT:
-								Reference.debugprint("Launching .hurt_l_leg")
-								me.LaunchAnmType("hurt_l_leg")
 							else:
-								# Shouldn't get here
-								#pdb.set_trace()
-								pass
+								if damage_factor <= me.Data.DamageFactorLight:
+									Reference.debugprint("Launching .hurt_f_lite")
+									me.LaunchAnmType("hurt_f_lite")
+								elif damage_factor >= me.Data.DamageFactorHeavy:
+									Reference.debugprint("Launching .hurt_f_big")
+									me.LaunchAnmType("hurt_f_big")
+								elif DamageZone==Reference.BODY_HEAD:
+									Reference.debugprint("Launching .hurt_f_head")
+									me.LaunchAnmType("hurt_f_head")
+								elif DamageZone==Reference.BODY_FRONT:
+									Reference.debugprint("Launching .hurt_f_breast")
+									me.LaunchAnmType("hurt_f_breast")
+								elif DamageZone==Reference.BODY_BACK:
+									Reference.debugprint("Launching .hurt_f_back")
+									me.LaunchAnmType("hurt_f_back")
+								elif DamageZone==Reference.BODY_RARM or DamageZone==Reference.BODY_RHAND:
+									Reference.debugprint("Launching .hurt_f_r_arm")
+									me.LaunchAnmType("hurt_f_r_arm")
+								elif DamageZone==Reference.BODY_LARM or DamageZone==Reference.BODY_LHAND:
+									Reference.debugprint("Launching .hurt_f_l_arm")
+									me.LaunchAnmType("hurt_f_l_arm")
+								elif DamageZone==Reference.BODY_RLEG or DamageZone==Reference.BODY_RFOOT:
+									Reference.debugprint("Launching .hurt_f_r_leg")
+									me.LaunchAnmType("hurt_f_r_leg")
+								elif DamageZone==Reference.BODY_LLEG or DamageZone==Reference.BODY_LFOOT:
+									Reference.debugprint("Launching .hurt_f_l_leg")
+									me.LaunchAnmType("hurt_f_l_leg")
+						else:
+							if me.Run and (not Shielded) and (me.AnimName[-3:]=="JOG"):		# Added check to see if we are actually running	-LeadHead
+								Reference.debugprint("Launching .hurt_jog")
+								me.LaunchAnmType("hurt_jog")
+							else:
+								if Shielded:
+									# Launch Blocking damage animations
+									if damage_factor <= (me.Data.DamageFactorLight+me.Data.DamageFactorHeavy) / 2.0:
+										Reference.debugprint("Launching .df_01")
+										if weapon_flag==Reference.W_FLAG_2W:
+											me.LaunchAnmType("df_01_2w")
+										elif weapon_flag==Reference.W_FLAG_AXE:
+											me.LaunchAnmType("df_01_axe")
+										elif weapon_flag==Reference.W_FLAG_SP:
+											me.LaunchAnmType("df_01_spear")
+										else:
+											me.LaunchAnmType("df_01")
+									else:
+										Reference.debugprint("Launching .df_02")
+										if weapon_flag==Reference.W_FLAG_2W:
+											me.LaunchAnmType("df_02_2w")
+										elif weapon_flag==Reference.W_FLAG_AXE:
+											me.LaunchAnmType("df_02_axe")
+										elif weapon_flag==Reference.W_FLAG_SP:
+											me.LaunchAnmType("df_02_spear")
+										else:
+											me.LaunchAnmType("df_02")
+								elif DamageZone==Reference.BODY_HEAD:
+									Reference.debugprint("Launching .hurt_head")
+									me.LaunchAnmType("hurt_head")
+								elif DamageZone==Reference.BODY_FRONT:
+									Reference.debugprint("Launching .hurt_breast")
+									me.LaunchAnmType("hurt_breast")
+								elif DamageZone==Reference.BODY_BACK:
+									Reference.debugprint("Launching .hurt_back")
+									me.LaunchAnmType("hurt_back")
+								elif DamageZone==Reference.BODY_RARM or DamageZone==Reference.BODY_RHAND:
+									Reference.debugprint("Launching .hurt_r_arm")
+									me.LaunchAnmType("hurt_r_arm")
+								elif DamageZone==Reference.BODY_LARM or DamageZone==Reference.BODY_LHAND:
+									Reference.debugprint("Launching .hurt_l_arm")
+									me.LaunchAnmType("hurt_l_arm")
+								elif DamageZone==Reference.BODY_RLEG or DamageZone==Reference.BODY_RFOOT:
+									Reference.debugprint("Launching .hurt_r_leg")
+									me.LaunchAnmType("hurt_r_leg")
+								elif DamageZone==Reference.BODY_LLEG or DamageZone==Reference.BODY_LFOOT:
+									Reference.debugprint("Launching .hurt_l_leg")
+									me.LaunchAnmType("hurt_l_leg")
+								else:
+									# Shouldn't get here
+									#pdb.set_trace()
+									pass
 
 
 	#
@@ -1165,7 +1168,6 @@ class PlayerPerson:
 			me.LaunchAnmType("Dth_Fll2")
 			return
 
-			return
 		if Dist<5000:
 			return
 
