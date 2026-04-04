@@ -1,10 +1,11 @@
 ##///
 ##||| REFERENCE.PY TITANIUM
 ##||| Change list:
-##||| * Barbarian Shield (Escudo9) now makes wooden hit sound
+##||| * Wooden shields/2h weapons now makes wooden hit sound
 ##||| * Rhino Club now makes wooden hit sound
 ##||| * Added IceGolem attack data
 ##||| * Added Zombie Knight attack data 
+##||| * Added Pivote2 and 
 ##\\\ 
 
 import Bladex
@@ -52,13 +53,13 @@ def debugprint(Msg):
 
 #Damage flags
 BODY_UNCLASSIFIED=-1
+BODY_FRONT=1
+BODY_BACK=2
 BODY_HEAD=3
 BODY_RARM=6
 BODY_LARM=4
 BODY_RHAND=7
 BODY_LHAND=5
-BODY_FRONT=1
-BODY_BACK=2
 BODY_RLEG=10
 BODY_LLEG=8
 BODY_RFOOT=11
@@ -647,8 +648,8 @@ DefaultObjectData['Alabarda']=           [OBJ_STANDARD,   8,-25, 1.0,  THR_SPINN
 ######### ARMAS SAGRADAS
 
 
-DefaultObjectData['BladeSword']=         [OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_1H,]]
-DefaultObjectData['BladeSword2']=        [OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_1H,], ["Light", +300.0]]
+DefaultObjectData['BladeSword']=          [OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_1H,]]
+DefaultObjectData['BladeSword2']=         [OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_1H,], ["Light", +300.0]]
 DefaultObjectData['BladeSwordBarbarian'] =[OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,50000,0,GolpeArmaEscudoMetal]]
 DefaultObjectData['BladeSword2Barbarian']=[OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,50000,0,GolpeArmaEscudoMetal], ["Light", +300.0]]
 
@@ -680,6 +681,8 @@ DefaultObjectData['Pendulo']=            [OBJ_WEAPON,9000, -5, 1.0,  THR_SPINNIN
 DefaultObjectData['PinchoManuel']=       [OBJ_WEAPON,9000, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['PinchoMiguel']=       [OBJ_WEAPON,9000, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,]]
 DefaultObjectData['Pivote']=             [OBJ_WEAPON,  20, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['Pivote2']=            [OBJ_WEAPON,  60, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,]]                        # Added
+DefaultObjectData['PivoteEnvenenado']=   [OBJ_WEAPON,  60, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,], ["Venom",+20.0]]       #   -LeadHead
 DefaultObjectData['Roca1Aurelio']=       [OBJ_WEAPON,  35, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,]]
 
 
