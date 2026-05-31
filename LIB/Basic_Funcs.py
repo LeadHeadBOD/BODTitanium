@@ -313,12 +313,12 @@ class PlayerPerson:
 
 		for i in funcs:
 			exec('f = me.'+i[0])
-			if (i[1] <> f):
+			if (i[1] != f):
 				print "Save Core Func para",me.Name," callback ",i[0]," funcion ", f
 				core_funcs.append((j,GameStateAux.SaveFunctionAux(f)))
 			j = j + 1
 
-		if (self.inheritance <> 1):
+		if (self.inheritance != 1):
 			funcs2=["SeeFunc",
 				    "HearFunc",
 				    "DelayNoSeenFunc",
@@ -336,12 +336,12 @@ class PlayerPerson:
 
 			for i in funcs2:
 				exec('f = me.'+i)
-				if (f <> None):
+				if (f != None):
 					print "Save Core Func para",me.Name," callback ",i," funcion ", f
 					core_funcs.append((j,GameStateAux.SaveFunctionAux(f)))
 				j = j + 1
 
-			if me.ImDeadFunc <> self.PCImDead:
+			if me.ImDeadFunc != self.PCImDead:
 				core_funcs.append((j,GameStateAux.SaveFunctionAux(f)))
 
 
@@ -1013,13 +1013,14 @@ class PlayerPerson:
 			return
 		"""
 		if me: # and me.Life > 0:
-			damage_factor = DamagePoints / (me.Life+DamagePoints)
+			if me.Life <= 0: damage_factor = 1								# Set this up so wound zones can be applied to dead people
+			else: damage_factor = DamagePoints / (me.Life+DamagePoints)		# and we handle div by zero errors 			-LeadHead
 
 			if damage_factor > me.Data.DamageFactorNone:
 				if DamageZone >= 0 and DamageZone < 32 and DamagePoints>1:       #Added check for damagepoints>1 -LeadHead:
 					me.SetWoundedZone(DamageZone, 1)
 					
-				if me.Life > 0:		# bug fix for fatal blows	-LeadHead
+				if me.Life > 0:
 	
 					do_not_abort=0
 					# Now checks if the animation has basically already ended. Makes parrying much more viable and having your shield broken more deadly. -LeadHead
