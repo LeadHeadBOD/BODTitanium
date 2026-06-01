@@ -871,7 +871,7 @@ def Init():
 
 
 
-     # *********************************
+    # *********************************
     # *    GravaMinotauro                   *
     # *********************************
 
@@ -2235,10 +2235,13 @@ def Init():
 
     Bladex.AddMaterialStepSound("default","default","default")                  ### PLAGUE: This seems to not actually do anything unless a biped is not assigned anything at all 
     Bladex.AddMaterialStepSound("PisadaSigilo","default","SigiloSobrePiedra")   # Added -LeadHead
-    Bladex.AddMaterialStepSound("PisadaSigilo","Piedra","SigiloSobrePiedra")
+
     Bladex.AddMaterialStepSound("default","Piedra","Piedra")
-    Bladex.AddMaterialStepSound("PisadaSigilo","Metal","SigiloSobreMetal")
+    Bladex.AddMaterialStepSound("PisadaSigilo","Piedra","SigiloSobrePiedra")
     Bladex.AddMaterialStepSound("default","Metal","Metal")
+    Bladex.AddMaterialStepSound("PisadaSigilo","Metal","SigiloSobreMetal")
+    # Bladex.AddMaterialStepSound("default","metal pesado","Metal")                     # Disabled for now, need proper entities
+    # Bladex.AddMaterialStepSound("PisadaSigilo","metal pesado","SigiloSobreMetal")     # that will use it          -LeadHead
     Bladex.AddMaterialStepSound("default","Barro","Barro")
     Bladex.AddMaterialStepSound("PisadaSigilo","Barro","SigiloSobreBarro")
     Bladex.AddMaterialStepSound("default","Tierra","Tierra")

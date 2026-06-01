@@ -73,8 +73,8 @@ def Init():
 
     s=Bladex.CreateSound('../../sounds/golpe-piedra-ligera.wav', 'GolpePiedraLigera')
     s.SendNotify=1
-    s.MinDistance=1000
-    s.MaxDistance=15000
+    s.MinDistance=500
+    s.MaxDistance=10000
     s.SetPitchVar(1, -8000, 8000, 0, 0)
     mat=Bladex.CreateMaterial('piedra ligera')
     mat.HitSound=s
@@ -186,6 +186,9 @@ def Init():
     Bladex.SetDefaultMaterial('Rama2', 'madera ligera')
     Bladex.SetDefaultMaterial('Silla', 'madera ligera')
     Bladex.SetDefaultMaterial('VigaPlana', 'madera ligera')
+    Bladex.SetDefaultMaterial('Plataforma', 'madera ligera')             # Added for stepsounds
+    Bladex.SetDefaultMaterial('PlataformaRail', 'madera ligera')         # 
+    Bladex.SetDefaultMaterial('PlataformaFernando', 'madera ligera')     #      -LeadHead
 
 
     # *** Madera mediana ***
@@ -269,11 +272,13 @@ def Init():
     Bladex.SetDefaultMaterial('Mesa', 'madera pesada')
     Bladex.SetDefaultMaterial('Meson', 'madera pesada')
     Bladex.SetDefaultMaterial('RhinoClub', 'madera pesada')
-    Bladex.SetDefaultMaterial('Caja_i_i', 'madera pesada')          # Added
-    Bladex.SetDefaultMaterial('Caja_i_r', 'madera pesada')          # 
-    Bladex.SetDefaultMaterial('PuenteAurelio', 'madera pesada')     # 
-    Bladex.SetDefaultMaterial('Puenteau_Plano', 'madera pesada')    #       -LeadHead
-
+    Bladex.SetDefaultMaterial('Caja_i_i', 'madera pesada')               # Added
+    Bladex.SetDefaultMaterial('Caja_i_r', 'madera pesada')               # 
+    Bladex.SetDefaultMaterial('PuenteAurelio', 'madera pesada')          # 
+    Bladex.SetDefaultMaterial('Puenteau_Plano', 'madera pesada')         #       
+    Bladex.SetDefaultMaterial('Banco', 'madera pesada')                  # 
+    Bladex.SetDefaultMaterial('Camastro', 'madera pesada')               #
+    Bladex.SetDefaultMaterial('Camabad', 'madera pesada')                #      -LeadHead
 
 
 
@@ -306,20 +311,24 @@ def Init():
     Bladex.SetDefaultMaterial('Llavecobox', 'metal ligero')
     Bladex.SetDefaultMaterial('Llavecutre', 'metal ligero')
     Bladex.SetDefaultMaterial('Llavedor', 'metal ligero')       # Added
-    Bladex.SetDefaultMaterial('Llavepla', 'metal ligero')       #       -LeadHead
+    Bladex.SetDefaultMaterial('Llavepla', 'metal ligero')       # 
     Bladex.SetDefaultMaterial('Llavemaz', 'metal ligero')
     Bladex.SetDefaultMaterial('LlaveAmarilla', 'metal ligero')
     Bladex.SetDefaultMaterial('MartilloForja', 'metal ligero')
     Bladex.SetDefaultMaterial('Suriken', 'metal ligero')
     Bladex.SetDefaultMaterial('Candelpeque', 'metal ligero')   # Added
     Bladex.SetDefaultMaterial('Tacita', 'metal ligero')        #
-    Bladex.SetDefaultMaterial('Cazo', 'metal ligero')          #        -LeadHead
+    Bladex.SetDefaultMaterial('Cazo', 'metal ligero')          #        
     Bladex.SetDefaultMaterial('Chakram', 'metal ligero')       #
     Bladex.SetDefaultMaterial('Chakram2', 'metal ligero')      #
     Bladex.SetDefaultMaterial('DeathKatar', 'metal ligero')    #
     Bladex.SetDefaultMaterial('Katar', 'metal ligero')         #
     Bladex.SetDefaultMaterial('KatarDoble', 'metal ligero')    #
     Bladex.SetDefaultMaterial('KatarMoon', 'metal ligero')     #
+    Bladex.SetDefaultMaterial('Brazalete', 'metal ligero')     #
+    ### Metal shield pieces
+    Bladex.SetDefaultMaterial('Escudo5Pieza1', 'metal ligero')     #
+    Bladex.SetDefaultMaterial('Escudo5Pieza2', 'metal ligero')     #        -LeadHead
 
 
 
@@ -519,7 +528,8 @@ def Init():
     # *** Ceramica ligera***    
     # Even though the material was created, it was completely unused -LeadHead
     Bladex.SetDefaultMaterial('Jarra', 'ceramica ligera')
-    Bladex.SetDefaultMaterial('BotellaSagrada', 'ceramica ligera') # Added -LeadHead
+    Bladex.SetDefaultMaterial('BotellaSagrada', 'ceramica ligera')
+    Bladex.SetDefaultMaterial('Jarrita', 'ceramica ligera')
     
     
     # *** Ceramica mediana***
