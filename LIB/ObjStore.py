@@ -2,7 +2,7 @@
 ##||| OBJSTORE.PY TITANIUM
 ##||| Change list:
 ##||| * Fixed re-release specific memory leak (thanks, Tomash!)
-##||| * 
+##||| * (0.6) Properly fixed it this time (thanks, Sryml!)
 ##\\\ 
 
 import sys
@@ -32,7 +32,7 @@ def CheckStore():
 
 ##    # Recoleccion de basura
     for i in ObjectsStore.keys():
-        if sys.getrefcount(ObjectsStore[i])<2:
+        if sys.getrefcount(ObjectsStore[i])<=2:
             # garbage collection, if the only reference to the class is here, delete it
             print "CheckStore(): "+`ObjectsStore[i]`+" deleted by garbage collection" # ,rfcount # To FireFalcom, SNEG and GeneralArcade,
             del ObjectsStore[i]                                                                  # Your "massive patchwork" introduced a memory leak, good job!
