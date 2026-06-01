@@ -4,8 +4,9 @@
 ##||| * Values of 0 should now be correctly assigned upon loading game if saved
 ##||| * Spot Entity (lights) flickering now gets properly saved
 ##||| * Camera will now remember its zoom level if altered by the player (Enjoy, Tomash!)
-##||| * Camera will now remember its direction 
-##||| 
+##||| * Camera will now (try to) remember its direction 
+##||| * FireParticleType is now saved
+##||| * Added "interpTrueEnergy" to list of exclusions to not save.
 ##\\\ 
 
 
@@ -158,7 +159,6 @@ class EntitySpotState(EntityState):
     def __init__(self,entity):
         EntityState.__init__(self,entity)
         if entity.Flick == 0:                        # Added.
-            # print entity.Name + " has no Flick"    #
             self.SpecialProps["Flick"]=0             #      -LeadHead
 
 
@@ -207,6 +207,8 @@ class EntityParticleSystemState(EntityState):
 class EntityFireState(EntityState):
     def __init__(self,entity):
         EntityState.__init__(self,entity)
+        if entity.FireParticleType != "Fire":
+                self.SpecialProps["FireParticleType"]=entity.FireParticleType   # Added     -LeadHead
 
 
 
@@ -1023,7 +1025,10 @@ class WorldState:
         self.SaveObjects(file)
         file.write('__load_bar.Increment("MapState")\n')
 
-
+        # Extra modules are now saved earlier to make sure Reference dictionaries get saved, etc. Thanks Ubaid! -LeadHead
+        load_bar.Increment("Extra Modules")
+        self.SaveModulesToBeSaved(file,temp_dir,aux_dir,ModulesToBeSaved)
+        
         load_bar.Increment("Map State")
         self.MapState.SaveState(file,temp_dir)
         file.write('__load_bar.Increment("TriggerState")\n')
@@ -1054,9 +1059,6 @@ class WorldState:
 
         load_bar.Increment("Extra Data")
         GameStateAux.SaveExtraDataAux(file,temp_dir)
-
-        load_bar.Increment("Extra Modules")
-        self.SaveModulesToBeSaved(file,temp_dir,aux_dir,ModulesToBeSaved)
 
         load_bar.Increment("Cleaning up")
         GameStateAux.EndGameState(temp_dir)
@@ -1372,7 +1374,7 @@ class WorldState:
 
     def SaveAfterFrameFuncs(self,file):
 
-        exclude_funcs=('InterpinterpLevelBar','InterpinterpStrengthBar','InterpinterpEnergyBar',
+        exclude_funcs=('InterpinterpLevelBar','InterpinterpStrengthBar','InterpinterpEnergyBar', 'InterpinterpTrueEnergyBar',
                        'InterpShields','InterpFadeText','InterpWeapons','InterpObjects','DefaultSelectionData',
                        'Fade')
 
