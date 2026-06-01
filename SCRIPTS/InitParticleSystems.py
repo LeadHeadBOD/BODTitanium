@@ -2,6 +2,7 @@
 ##||| INITPARTICLESYSTEMS.PY TITANIUM
 ##||| Change list:
 ##||| * Venom spit now more visible
+##||| * GreenBlood fix - no longer blocky (credit: Sryml)
 ##\\\ 
 
 
@@ -18,6 +19,7 @@ def Init():
 	Bladex.ReadBitMap("../../Data/Glow.bmp","Glow")
 	Bladex.ReadBitMap("../../Data/SunFlare.bmp","SunFlare")
 	Bladex.ReadBitMap("../../Data/BloodPrtl.bmp","BloodParticle")
+	Bladex.ReadBitMap("../../Data/GreenBloodPrtl.bmp","GreenBloodParticle")
 	Bladex.ReadAlphaBitMap("../../Data/BloodDropPrtl.bmp","BloodDropParticle")
 	Bladex.ReadAlphaBitMap("../../Data/GenericPrtl.bmp","GenericParticle")
 	Bladex.ReadAlphaBitMap("../../Data/GenericPrtl2.bmp","GenericParticle2")
@@ -145,17 +147,31 @@ def Init():
 
 	##### GreenBlood Particle definition ######
 
-	Bladex.AddParticleGType("GreenBlood","GenericParticle",Reference.B_PARTICLE_GTYPE_COPY,128)
+	# Bladex.AddParticleGType("GreenBlood","GenericParticle",Reference.B_PARTICLE_GTYPE_COPY,128)
 
-	for i in range(128):
+	# for i in range(128):
+		# if(i>64):
+			# aux=0.0
+		# else:
+			# aux=(64.0-i)/64.0
+		# r=8
+		# g=16
+		# b=8
+		# a=128
+		# size=20.0*(1.0-aux)+2.0
+		# Bladex.SetParticleGVal("GreenBlood",i,r,g,b,a,size)
+		
+	Bladex.AddParticleGType("GreenBlood","GreenBloodParticle",Reference.B_PARTICLE_GTYPE_MUL,64)
+
+	for i in range(64):
 		if(i>64):
 			aux=0.0
 		else:
 			aux=(64.0-i)/64.0
-		r=8
-		g=16
-		b=8
-		a=128
+		r=255
+		g=255
+		b=255
+		a=0
 		size=20.0*(1.0-aux)+2.0
 		Bladex.SetParticleGVal("GreenBlood",i,r,g,b,a,size)
 
