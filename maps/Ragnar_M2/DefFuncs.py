@@ -4,6 +4,10 @@
 ##||| * Gate at tower now only plays cut-scene once if you keep pulling the lever.
 ##||| * Gate cut-scene can now be skipped.
 ##||| * Escape from prison cell scene can now be skipped.
+##||| * Spike trap going up sound should now loop.
+##||| * Arrow trap now uses darts (pivote)
+##||| * Fixed pendulum damage func completely overriding regular damage func
+##||| * Restored the echoing footsteps in cut scene before final fight
 ##\\\ 
 
 import def_class
@@ -16,7 +20,6 @@ import Traps_C
 import GameText
 import AuxFuncs
 import Scorer
-import Sounds
 import EnmGenRnd
 import ReadGSFile
 import Actions
@@ -387,12 +390,13 @@ def DetieneCamaraChk(entity_name, camera_element, node):
 		cam.ChangeNodeFunc=ReiniciaCamaraChk
 
 def MueveCamaraChk(sector_index, entity_name):
-	#Bladex.ExeMusicEvent(-1)
-	Bladex.KillMusic()
-	Bladex.ExeMusicEvent(Bladex.GetMusicEvent("chaosragnar"))
-
+	
+	
 	global prevtpos
 	if entity_name=="Player1":
+		#Bladex.ExeMusicEvent(-1)									# Moved after the player check
+		Bladex.KillMusic()											# to prevent weird scenarios
+		Bladex.ExeMusicEvent(Bladex.GetMusicEvent("chaosragnar"))	#			-LeadHead
 		sectorcamarachk.OnEnter=""
 		ScriptSkip.SkipScriptStart("cacaos")
 		cam=Bladex.GetEntity("Camera")
@@ -1061,8 +1065,8 @@ def PlayerGolpeado(VictimName, AttackerName, WeaponName, DamageType, DamageZone,
 		llamarada.SubscribeToList("Timer30")
 		Bladex.AddScheduledFunc(Bladex.GetTime()+0.4, llamarada.RemoveFromList, ("Timer30",))
 
-		NetSounds.AddAnimSound(char,'Kgt_dth_penl', MuerteBarb1, 5)
-		NetSounds.AddAnimSound(char,'Kgt_dth_penr', MuerteBarb1, 5)
+		NetSounds.AddAnimSound(char,'Kgt_dth_penl', MuerteBarb1, 5)		# PLAGUE: besides wrong sound
+		NetSounds.AddAnimSound(char,'Kgt_dth_penr', MuerteBarb1, 5)		# also impossible sound time
 
 		char.SetTmpAnmFlags(1,1,1,0,5,1)
 
@@ -1086,6 +1090,8 @@ def PlayerGolpeado(VictimName, AttackerName, WeaponName, DamageType, DamageZone,
 				char.Angle = 4.70
 
 		char.Life = 0
+	else:																											# Add 
+		ExHitFunc[0](VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded)	#   -LeadHead
 
 def Activar_Pendulos(sector,Entity):
 	global Trampa_Pendulos
@@ -1461,6 +1467,7 @@ def FinCamaraRaspat():
 	cam.Cut()
 	Bladex.SetListenerPosition(1)
 	ScriptSkip.SkipScriptEnd()
+	Scorer.SetVisible(1)
 	# Bladex.ActivateInput()
 
 GateWasOpened = 0 
@@ -1478,6 +1485,7 @@ def Abrerastpat():
 	Objects.NDisplaceObject(rastpatdin, desplazamientos, vectores, vel_iniciales, vel_finales, (), son_durante, son_finales)
 	if not GateWasOpened:
 		# Bladex.DeactivateInput()
+		Scorer.SetVisible(0)						# Now skippable and plays only once -LeadHead
 		ScriptSkip.SkipScriptStart("gate_open")
 		Bladex.SetListenerPosition(2)
 		AuxFuncs.MoveCamFromTo(-95150.0, -14250.0, 42200.0, -91650.0, -9950.0, 49250.0, -101450.0, -12350.0, 34600.0, -93650.0, -7200.0, 39800.0, 6.0)
@@ -1611,6 +1619,7 @@ def TrampaSubida(sld_name):
 	DesactivarPincho("Pincho10")
 	DesactivarPincho("Pincho11")
 	Sonido_Trampa_Subiendo1.Stop()
+	Sonido_Trampa_Subiendo2.Stop()	# Added		-LeadHead
 	Sonido_Hit2.Play(-124000,-25000,-100000,0)
 	Bladex.AddScheduledFunc(Bladex.GetTime()+1.5,ReactivarTecho,())
 
@@ -1641,8 +1650,8 @@ def SubirTecho():
 	Techo_Pinchos1.sld_area().HitFunc = None
 	Techo_Pinchos2.sld_area().HitFunc = None
 	Techo_Pinchos3.sld_area().HitFunc = None
-	Sonido_Trampa_Subiendo1.Play(-124000,-22000,-100000,0)
-	Sonido_Trampa_Subiendo2.Play(-124000,-22000,-100000,0)
+	Sonido_Trampa_Subiendo1.Play(-124000,-22000,-100000,-1)	# Changed last param from 0 to -1
+	Sonido_Trampa_Subiendo2.Play(-124000,-22000,-100000,-1)	# Now should loop 		-LeadHead
 
 
 def BajarTecho():
@@ -1729,6 +1738,7 @@ def ActivarTecho():
 	ActivarPincho("Pincho9")
 	ActivarPincho("Pincho10")
 	ActivarPincho("Pincho11")
+	ActivarPincho("Pincho12")
 
 
 def ActivarTrampaPinchos(Sector,Entity_Name):
@@ -1960,7 +1970,7 @@ def StickArrow(Sticker,Stick):
 	Flecha = Arrow.Data
 	NewArrow = Traps_C.Prueba(Flecha.Nombre,Flecha.Flechas_Clavadas)
 	Flecha.Flechas_Clavadas = Flecha.Flechas_Clavadas + 1
-	Arrow = Bladex.CreateEntity(NewArrow,"Flecha",Flecha.Position[0],Flecha.Position[1],Flecha.Position[2])
+	Arrow = Bladex.CreateEntity(NewArrow,"Pivote",Flecha.Position[0],Flecha.Position[1],Flecha.Position[2])		# Changed from "Flecha" to "Pivote"
 	Arrow.Orientation = Flecha.Orientation
 	Arrow.Scale = Flecha.Scale
 	Arrow.Arrow = 1
@@ -2136,7 +2146,7 @@ def RagnarVeJugadorCuchillas(entity_name):
 
 def FundidoFin():
 	char=Bladex.GetEntity("Player1")
-	Bladex.DeactivateInput()
+	# Bladex.DeactivateInput()
 	Scorer.SetVisible(0)
 	AuxFuncs.FadeTo(2.0, 31.0)
 	Bladex.ExeMusicEvent(Bladex.GetMusicEvent("documentoragnar"))
@@ -2144,11 +2154,16 @@ def FundidoFin():
 
 	time = 28
 	if Reference.DEMO_MODE==0:
-		Bladex.AddScheduledFunc(Bladex.GetTime()+time,GotoMapVars.EndOfLevel,())
 		GotoMapVars.MapText(2,"D_M2_T2")
+		ScriptSkip.SkipScriptStart("ragnarFin")					# Now skippable -LeadHead
+		Bladex.AddScheduledFunc(Bladex.GetTime()+time,ScriptSkip.SkipScriptEnd,())
+		Bladex.AddScheduledFunc(Bladex.GetTime()+time+0.1,FinishTheLevel,())
 	else:
 		AuxFuncs.setDemoBg(time)
 
+
+def FinishTheLevel():				# New func to make end sequence skippable
+	GotoMapVars.EndOfLevel()
 
 def PolvoPuertaRagnar():
 	polvopuertarg=Bladex.CreateEntity("PolvoPuertaRg", "Entity Particle System D2", -143875, -30275, -95625)
@@ -2275,7 +2290,7 @@ def MiraCuervos():
 	graznidocuervo.Play(-135000.0, -42000.0, -102000.0, 0)
 	char.Face(4.0*3.14159/3.0)
 
-def SigueConCuervos(entity_name):
+def SigueConCuervos(entity_name):		# PLAGUE: Interesting - beta leftover camera events.
 	global original_dist
 	cam=Bladex.GetEntity("Camera")
 	cam.RemoveFromList("Timer60")
@@ -2298,10 +2313,10 @@ def Camara2RagnarFinalTermina(x,y):
 	#RagnarAtaca()
 
 def PlayPasitoRagnar1(a,b):
-	_Pasito.Play(ragnar.Position[0], ragnar.Position[1],-ragnar.Position[2], 0)
+	_Pasito.Play(ragnar.Position[0], ragnar.Position[1],ragnar.Position[2], 0)		# Pos 2 no longer negative
 
 def PlayPasitoRagnar2(a,b):
-	_Pasito1.Play(ragnar.Position[0], ragnar.Position[1],-ragnar.Position[2], 0)
+	_Pasito1.Play(ragnar.Position[0], ragnar.Position[1],ragnar.Position[2], 0)		# pos 2 no longer negative
 
 
 def Camara2RagnarFinal(x,y):
@@ -2343,6 +2358,7 @@ def EntraHabitacionFinal(sector_index, entity_name):
 	if entity_name=="Player1":
 		ScriptSkip.SkipScriptStart("ragnaranda")
 		sectorfinragnar.OnEnter=""
+		Bladex.SetListenerPosition(2)	                                # Added -LeadHead
 		cam=Bladex.GetEntity("Camera")
 		cam.SetMaxCamera("end_ragnarCamera01.cam",0,120)
 		#cam.AddCameraEvent(111,Camara1RagnarCaminante)

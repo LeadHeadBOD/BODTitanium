@@ -2,6 +2,7 @@
 ##||| Ragnar_M2/pocimas.PY TITANIUM
 ##||| Change list:
 ##||| * spark pass
+##||| * 500 life potion no longer stuck inside the gravestone in chapel
 ##\\\ 
 
 import pocimac
@@ -9,7 +10,7 @@ import Ontake
 
 ## pocion 100 en habitacion con llave justo antes de puente levadizo
 
-ragnarpocima100a=Bladex.CreateEntity("ragnarpocima100a","Pocima100",-122925.952125,-1356.138057,8758.883719, "Physic")
+ragnarpocima100a=Bladex.CreateEntity("ragnarpocima100a","Pocima100",-122925.952125,-1418.87877109,8758.883719, "Physic")
 ragnarpocima100a.Scale=1.000000
 ragnarpocima100a.Orientation=0.707107,0.707107,0.000000,0.000000
 pocimac.CreatePotion("ragnarpocima100a")

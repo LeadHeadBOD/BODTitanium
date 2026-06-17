@@ -5,6 +5,7 @@
 ##||| * Shadow pass
 ##||| * Removed selection data from some inconsequential items
 ##||| * Added glitter to final pergament to make it obvious wtf you're supposed to do
+##||| * Adjust item positions to make sure they don't float/stuck-in-geo
 ##\\\ 
 
 import Sparks
@@ -533,7 +534,7 @@ o.Lights=[ (0.000000,0.031250,(255,165,66)) ]
 
 
 
-o=Bladex.CreateEntity("NoName0","Braseroarana",-89692.470000,3114.969000,-21285.176000,"Physic")
+o=Bladex.CreateEntity("NoName0","Braseroarana",-89692.47, 3159.00617041, -21285.176,"Physic")
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
@@ -819,7 +820,7 @@ o.Orientation=0.800235,-0.307181,0.480829,0.184573
 #o.Scripts=?  En la siguiente versión
 
 
-o=Bladex.CreateEntity("NoName8","Braseroarana",-123394.011000,-5903.310000,-91629.323000,"Physic")
+o=Bladex.CreateEntity("NoName8","Braseroarana",-123394.011000,-5841.25726563,-91629.323000,"Physic")
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
@@ -1798,6 +1799,7 @@ ItemTypes.ItemDefaultFuncs(esc2)
 o=Bladex.CreateEntity("NoName0","LapidaCaballero",-123249.255791,-1172.925767,8773.853082,"Physic")
 o.Scale=0.795442
 o.Orientation=0.707107,0.707107,0.000000,0.000000
+darfuncs.SetHint(o,"","",0.0,0.0)   # Add
 
 
 
@@ -2223,11 +2225,11 @@ o.Orientation=0.999962,0.008727,0.000000,0.000000
 
 
 
-"""
-alal1=Bladex.CreateEntity("Alal1","Alabarda",-89557.433400,1849.352622,-27349.159784,"Weapon")
+### Restored this halberd to make the armoury look more "full" -LeadHead
+alal1=Bladex.CreateEntity("Alal1","Alabarda",-89427.4334, 2659.352622, -26949.159784,"Weapon")
 alal1.Scale=1.000000
 alal1.Orientation=0.706864,0.706864,-0.018510,-0.018510
-
+"""
 ### PLAGUE: Might restore
 alal3=Bladex.CreateEntity("Alal3","Alabarda",-89495.897675,1859.848045,-28911.834395,"Weapon")
 alal3.Scale=1.000000
@@ -2330,7 +2332,7 @@ o.Scale=1.612226
 o.Orientation=0.072353,0.701673,0.701937,-0.098507
 
 
-o=Bladex.CreateEntity("NoName19","Tabla_rota",-136696.739675,-12698.113175,-86528.950201,"Physic")
+o=Bladex.CreateEntity("NoName19","Tabla_rota",-136696.739675,-12558.113175,-86528.950201,"Physic")
 o.Scale=1.763268
 o.Orientation=0.080047,0.702561,0.702561,-0.080047
 
@@ -2355,9 +2357,9 @@ o.Scale=0.639055
 o.Orientation=0.641772,0.756563,-0.009558,-0.125101
 
 
-o=Bladex.CreateEntity("NoName24","Piedra_03",-124412.685637,-5602.389445,-88813.484689,"Physic")
+o=Bladex.CreateEntity("NoName24","Piedra_03",-124395.614343, -5568.72565155, -88820.1534616,"Physic")
 o.Scale=0.534261
-o.Orientation=0.745436,0.650097,-0.001181,-0.147304
+o.Orientation=0.685798, 0.7133149, 0.0591545, -0.13176724
 
 
 o=Bladex.CreateEntity("NoName25","Piedra_03",-131140.588662,-8374.856662,-103712.496460,"Physic")
@@ -2771,7 +2773,7 @@ o.Orientation=0.477714,0.477714,-0.521334,-0.521334
 
 
 
-o=Bladex.CreateEntity("aver","Rastrillo2",-98344.515000,-14640.859000,39318.652000,"Physic")
+o=Bladex.CreateEntity("aver","Rastrillo2",-98344.515000,-14640.859000,39198.652000,"Physic")    ### 
 o.Scale=0.712973
 o.Orientation=0.500000,0.500000,0.500000,-0.500000
 Sparks.SetMetalSparkling("aver")
@@ -3006,7 +3008,7 @@ o.Scale=1.000000
 o.Orientation=0.617180,0.334625,-0.324498,-0.633890
 
 
-o=Bladex.CreateEntity("NoName4","Jarrita",-81257.722571,5581.353061,-98299.781428,"Weapon")
+o=Bladex.CreateEntity("NoName4","Jarrita",-81257.722571,5588.75442208,-98299.781428,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.615434,0.615434,0.348196,-0.348196
 
@@ -3022,12 +3024,12 @@ o.Orientation=0.707107,0.707107,0.000000,0.000000
 
 ########libritos en la sala de ragnar
 
-o=Bladex.CreateEntity("NoName9","Tabla_xl",-136956.209876,-32718.869048,-94479.446759)
+o=Bladex.CreateEntity("NoName9","Tabla_xl",-136813.384518, -32718.869048, -94479.446759)
 o.Scale=2.151522
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 
 
-o=Bladex.CreateEntity("NoName10","Tabla_xl",-136898.384518,-33484.178025,-94465.109342)
+o=Bladex.CreateEntity("NoName10","Tabla_xl",-136733.384518,-33484.178025,-94465.109342)
 o.Scale=2.261271
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 
