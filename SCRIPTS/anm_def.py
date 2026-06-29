@@ -13,6 +13,7 @@
 ##||| * Adjusted "tke_r_key" timings for: Knight, Barbarian, Amazon
 ##||| * Added Bar_df_01_2w and Bar_df_01_axe
 ##||| * Removed some start-up frames from Double Sword special attack
+##||| * Changed Glm_g_spit stuff
 ##\\\ 
 
 def Init():
@@ -3852,7 +3853,8 @@ def Init():
     Bladex.AddAnmEvent("Glm_g_31","Stop_Weapon",0.410)
     Bladex.AddAnmEvent("Glm_g_1tw","StoneAppears",0.25)
     Bladex.AddAnmEvent("Glm_g_1tw","ThrowLeftEvent",0.54)
-    Bladex.AddAnmEvent("Glm_g_spit","StartSpit",0.54)
+    Bladex.AddAnmEvent("Glm_g_spit","Spit",0.361)           # Changed    
+    Bladex.AddAnmEvent("Glm_g_spit","Stop_Spit",0.855)      #
     Bladex.AddAnmEvent("Glm_rlx_no","HitInitialItp",0.159)
     Bladex.AddAnmEvent("Glm_rlx_no","HitFinalItp",0.578)
 

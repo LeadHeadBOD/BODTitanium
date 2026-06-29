@@ -12,6 +12,8 @@
 ##||| * Restored Great Demon's earthquake attack functionality
 ##||| * Spit attacks now trigger pain animation and damage only once per instance (Ldm, Spd, Lch, Zkn, Slm)
 ##||| * Increased heavy pain threshold for Chk.
+##||| * Enabled fire spit for Golem_lava
+##||| * Removed unnecessary checks for "if victim.InCombat:" in spit attacks
 ##\\\ 
 
 
@@ -762,7 +764,7 @@ class ChaosKnight (Enm_Def.NPCPerson):
 			Bladex.AddScheduledFunc(Bladex.GetTime()+1.0, AuxFuncs.FadeObject, (weapon, 0.0, 1.0, 1.0),EntityName+"Fade3")
 			Bladex.AddScheduledFunc(Bladex.GetTime()+1.2, AuxFuncs.FadeObject, (weaponpoly, 0.98, 0.0, 0.8),EntityName+"Fade4")
 
-####  ACLARACION:  self=pers.Data
+	####  ACLARACION:  self=pers.Data
 
 	def ActivateWeapon(self, EntityName, EventName):
 		chk=Bladex.GetEntity(self.Name)
@@ -1373,17 +1375,11 @@ class Little_Demon (Enm_Def.NPCPerson):
 					victim.LinkToNode(smoke,node)
 
 					# Override hurt anim
-					if victim.Life>0 and dealDamage:
-						if victim.InCombat:
-							Damage.DropInvalidObjectsOnImpact (victim.Name)
-							victim.Wuea=Reference.WUEA_ENDED
-							victim.InterruptCombat()
-							victim.LaunchAnmType("hurt_f_big")
-						else:
-							Damage.DropInvalidObjectsOnImpact (victim.Name)
-							victim.Wuea=Reference.WUEA_ENDED
-							victim.InterruptCombat()
-							victim.LaunchAnmType("hurt_f_big")
+					if victim.Life>0 and dealDamage:		# There used to be an additional check here for "if victim.InCombat:" 	-LeadHead
+						Damage.DropInvalidObjectsOnImpact (victim.Name)
+						victim.Wuea=Reference.WUEA_ENDED
+						victim.InterruptCombat()
+						victim.LaunchAnmType("hurt_f_big")
 				elif victim.Weapon:
 					pass
 					
@@ -2732,12 +2728,8 @@ class Salamander (Enm_Def.NPCPerson):
 					if victim.Life>0 and dealDamage:
 						Damage.DropInvalidObjectsOnImpact (victim.Name)
 						victim.Wuea=Reference.WUEA_ENDED
-						victim.InterruptCombat()
-						if victim.InCombat:
-							victim.InterruptCombat()
-							victim.LaunchAnmType("hurt_f_big")
-						else:
-							victim.LaunchAnmType("hurt_f_big")
+						victim.InterruptCombat()		# Removed unnecessary checks for "if victim.InCombat:" here -LeadHead
+						victim.LaunchAnmType("hurt_f_big")
 				elif victim.Weapon:
 					pass
 		# This particle should be removed, as it has been converted to smoke
@@ -3217,8 +3209,9 @@ class Great_Demon (Enm_Def.NPCPerson):
 							Damage.DropInvalidObjectsOnImpact (enemy.Name)
 							enemy.Wuea=Reference.WUEA_ENDED
 							enemy.InterruptCombat()
-							if enemy.InCombat: enemy.LaunchAnmType("hurt_f_big")
-							else: enemy.LaunchAnmType("hurt_f_big")
+							enemy.LaunchAnmType("hurt_f_big")
+							# if enemy.InCombat: enemy.LaunchAnmType("hurt_f_big")	# commented out because both conditions do same thing
+							# else: enemy.LaunchAnmType("hurt_f_big")
 			# destroy ring
 			obj.SubscribeToList("Pin")
 
@@ -3249,17 +3242,11 @@ class Great_Demon (Enm_Def.NPCPerson):
 					victim.LinkToNode(smoke,node)
 
 					# Override hurt anim
-					if victim.Life>0:
-						if victim.InCombat:
-							Damage.DropInvalidObjectsOnImpact (victim.Name)
-							victim.Wuea=Reference.WUEA_ENDED
-							victim.InterruptCombat()
-							victim.LaunchAnmType("hurt_f_big")
-						else:
-							Damage.DropInvalidObjectsOnImpact (victim.Name)
-							victim.Wuea=Reference.WUEA_ENDED
-							victim.InterruptCombat()
-							victim.LaunchAnmType("hurt_f_big")
+					if victim.Life>0:										# Removed unnecessary checks for "if victim.InCombat:" here -LeadHead
+						Damage.DropInvalidObjectsOnImpact (victim.Name)
+						victim.Wuea=Reference.WUEA_ENDED
+						victim.InterruptCombat()
+						victim.LaunchAnmType("hurt_f_big")
 				elif victim.Weapon:
 					pass
 		# This particle should be removed, as it has been converted to smoke
@@ -5027,7 +5014,10 @@ class Golem_stone (Enm_Def.NPCPerson):
 			self.AttacksOwnKind=TRUE
 			self.AttackNPCTime = 2.0
 			me.BlockingPropensity = 0.2
-			me.AttackList = BCopy.deepcopy(Combat.StoneGolemAttackData)
+			if me.Kind == "Golem_lava":
+				me.AttackList = BCopy.deepcopy(Combat.LavaGolemAttackData)
+			else:
+				me.AttackList = BCopy.deepcopy(Combat.StoneGolemAttackData)
 			self.ChanceOfFuryOnHurt = 0.0
 			self.ChanceOfFuryOnLeaderDeath = 0.0
 
@@ -5145,11 +5135,105 @@ class Golem_clay (Golem_stone):
 # Define the Golem_lava class
 ################################################################################
 class Golem_lava (Golem_stone):
+	
+	Flame= None
+	AGE_Number=0
+	
 	def __init__(self, me):
 		# base class init
 		Golem_stone.__init__(self, me)
 		self.StoneType="Piedra_Glm_lv"
 		self.StoneSelfIlum=1.0
+		me.AddAnmEventFunc("Spit", self.StartSpit)
+		me.AddAnmEventFunc("Stop_Spit", self.StopSpit)
+		
+	def FirePrtlHit(self,prtl_name,hit_entity,x,y,z,vx,vy,vz,wcx,wcy,wcz,wdx,wdy,wdz):
+		if hit_entity != "BWorld":
+			victim=Bladex.GetEntity(hit_entity)
+			if victim:
+				if victim.Person and not victim.Kind=="Golem_lava":
+					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +300.0]]
+					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Fire", 1, -1, x, y, z, 0)
+					if Reference.EntitiesObjectData.has_key(prtl_name):
+						del Reference.EntitiesObjectData[prtl_name]
+
+					# Generate a smoke effect
+					smoke=Bladex.CreateEntity("FireballSmoke", "Entity Particle System D1", x, y, z)
+					smoke.ParticleType="DarkSmoke"
+					smoke.YGravity=-3000.0
+					smoke.Friction=0.05
+					smoke.PPS=8
+					smoke.Velocity=0.0, -80.0, 0.0
+					smoke.RandomVelocity=5.0
+					smoke.DeathTime=Bladex.GetTime()+0.5
+					node= 0
+					victim.LinkToNode(smoke,node)
+
+					# Override hurt anim
+					if victim.Life>0:
+						Damage.DropInvalidObjectsOnImpact (victim.Name)
+						victim.Wuea=Reference.WUEA_ENDED
+						victim.InterruptCombat()
+						victim.LaunchAnmType("hurt_f_big")
+				elif victim.Weapon:
+					pass
+		# This particle should be removed, as it has been converted to smoke
+		ptcl=Bladex.GetEntity(prtl_name)
+		ptcl.RemoveFromWorld()
+
+
+	def CreateTestParticle(self, fireball_name,end_time,period):
+		fireball=Bladex.GetEntity(fireball_name)
+		if(fireball):
+			prtl=fireball.GetParticleEntity()
+			prtl.HitFunc=self.FirePrtlHit
+			prtl.ObjCTest= 1
+			if(Bladex.GetTime()<end_time):
+				Bladex.AddScheduledFunc(Bladex.GetTime()+period,self.CreateTestParticle,(fireball_name,end_time,period))
+		else:
+			pass
+			#print "system finished"
+
+	def StartSpit (self,EntityName,EventName):
+		me = Bladex.GetEntity(EntityName)
+		x,y,z= me.GraspPos("ViewPoint")
+		self.AGE_Number=self.AGE_Number+1
+		node= me.GetNodeIndex("Head")
+		# Get an angle to the target
+		target= Bladex.GetEntity(me.GetEnemyName())
+		target_pos= target.Position
+		angle= -B3DLib.GetYAngle(target_pos[0]-x,target_pos[1]-y,target_pos[2]-z)
+		# print "angle was "+`angle`
+		# flamethrower style
+		duration= 20.0
+		end_time=Bladex.GetTime()+duration
+		period= 0.05
+		new_name= EntityName+"_flamethrower_"+`self.AGE_Number`
+		print "Creating Flame "+new_name
+		if self.Flame:
+			self.StopSpit (EntityName,EventName)
+		self.Flame=Bladex.CreateEntity(new_name,"Entity Particle System D1",x,y,z)
+		self.Flame.ParticleType="Flame"
+		self.Flame.PPS=512
+		self.Flame.Time2Live=21
+		#self.Flame.DeathTime=Bladex.GetTime()+0.75;
+
+		F= 18000.0             # Vector magnitude
+		Bladex.AddScheduledFunc(Bladex.GetTime()+5.0, self.StopSpit, (EntityName,""), "StopSpitFunc")
+		angle= 	math.fmod(angle+2.8, Actions.TWOPI)
+		vx,vy,vz= me.GetDummyAxis("ViewPoint", -math.cos(angle)*F, -math.sin(angle)*F, 0.0, TRUE)
+		self.Flame.Velocity=vx,vy,vz
+		self.Flame.RandomVelocity=60.0
+		self.Flame.Friction=0.05
+		self.Flame.YGravity=-9000.0
+		me.LinkToNode(self.Flame,node)
+		self.CreateTestParticle(self.Flame.Name, end_time, period)
+
+	def StopSpit (self,EntityName,EventName):
+		if self.Flame:
+			print "Stopping Flame "+self.Flame.Name
+			self.Flame.DeathTime=Bladex.GetTime()
+			self.Flame= None
 
 ################################################################################
 # Define the Golem_metal class
@@ -5213,6 +5297,9 @@ class Golem_ice (Golem_stone):      ### Proper implementation of Ice Golem. Need
 ################################################################################
 # Define the Ragnar class
 ################################################################################
+###         Ragnar needs to be re-written to be in line with other characters
+# PLAGUE:	There is a lot of redundancy here and weirdness here.
+###
 class Ragnar(Enm_Def.NPCPerson):
 
 	risaragnar=None
