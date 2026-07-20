@@ -2,11 +2,13 @@
 ##||| BLOOD.PY TITANIUM
 ##||| Change list:
 ##||| * Optimization to prevent mass overlapping blood pools that kill performance and fuck up SNEG's stupid engine changes.
+##||| * Now uses entity lists in Reference
 ##\\\ 
 
 import Bladex
 import math
 import InitDataField
+import Reference
 
 ## Titanium Config Fuctions ##
 import TitaniumConfig
@@ -122,9 +124,9 @@ def PersonBleed(per,start_time,end_time,period,x=0.0,y=0.0,z=0.0,vx=0,vy=0,vz=0,
 
 	AGE_Number=AGE_Number+1
 	blood=Bladex.CreateEntity("bleed_AGE_"+str(AGE_Number),"Entity Particle System D1",x,y,z)
-	if per.Kind=="Spidersmall":
+	if per.Kind in GreenBloodEntities:
 		blood.ParticleType="GreenBlood"
-	elif per.Kind=="Lich":
+	elif per.Kind in GreyBloodEntities:
 		blood.ParticleType="GreyBlood"
 
 	else:				
@@ -139,8 +141,13 @@ def PersonBleed(per,start_time,end_time,period,x=0.0,y=0.0,z=0.0,vx=0,vy=0,vz=0,
 
 
 # Lista de entidades que tiran polvo
-SparkEntities     = ["Golem_metal","ChaosKnight"]
-DustDeathEntities = ["Skeleton","Lich","Golem_stone","Golem_clay","Golem_lava","Golem_ice","Knight_Zombie"]+SparkEntities
+# SparkEntities     = ["Golem_metal","ChaosKnight"]
+# DustDeathEntities = ["Skeleton","Lich","Golem_stone","Golem_clay","Golem_lava","Golem_ice","Knight_Zombie"]+SparkEntities
+SparkEntities      = Reference.blood_SparkEntities
+DustDeathEntities  = Reference.blood_DustDeathEntities
+GreenBloodEntities = Reference.blood_GreenBleedEntities
+GreyBloodEntities  = Reference.blood_GreyBleedEntities
+
 
 def Mutilate(pj_name,obj_name,x,y,z,nx,ny,nz,node):
 	global DustDeathEntities
@@ -163,9 +170,9 @@ def Mutilate(pj_name,obj_name,x,y,z,nx,ny,nz,node):
 	"""
 
 
-	if per.Kind=="Spidersmall":
+	if per.Kind in GreenBloodEntities:
 		Bleed(obj_name,Bladex.GetTime()+0.0,Bladex.GetTime()+1.0,0.2,x,y,z,vx,vy,vz,"GreenBlood")
-	elif per.Kind=="Lich":
+	elif per.Kind in GreyBloodEntities:
 		Bleed(obj_name,Bladex.GetTime()+0.0,Bladex.GetTime()+1.0,0.2,x,y,z,vx,vy,vz,"GreyBlood")        # PLAGUE: Because Liches and Zombie Knights are in DustDeathEntities, this
 	else:					                                                                            # script is ended early an we never get to bleeding grey blood.
 		Bleed(obj_name,Bladex.GetTime()+0.0,Bladex.GetTime()+1.0,0.2,x,y,z,vx,vy,vz)
@@ -257,13 +264,13 @@ def BleedingImpact(entity, x, y, z, ImpX, ImpY, ImpZ, weapon_entity,WeaponCx, We
 		prtl2=blood.GetParticleEntity()		
 		InitDataField.Initialise(prtl2)
 		prtl2.Data.evaporation=1
-		if entity.Kind=="Spidersmall":
+		if entity.Kind in GreenBloodEntities:
 			blood.ParticleType="GreenBlood"
 			if stickblood:
 				stickblood.ParticleType="GreenBlood"
 			prtl1.HitFunc=GreenBloodPrtlHit
 			prtl2.HitFunc=GreenBloodPrtlHit
-		elif entity.Kind=="Lich":
+		elif entity.Kind in GreyBloodEntities:
 			blood.ParticleType="GreyBlood"
 			if stickblood:
 				stickblood.ParticleType="GreyBlood"

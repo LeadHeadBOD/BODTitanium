@@ -14,6 +14,7 @@
 ##||| * Character will no longer try to draw arrows from an empty quiver after picking/using items.
 ##||| * No longer will draw shield when have a two-handed weapon on InstanAttack
 ##||| * DropRelease --> added "DropLeft2Event", called from Damage.
+##||| * Added ability for NPCs to pick up non-1handed weapons without crashing the game (see TakeObject)
 ##\\\ 
 
 import Bladex
@@ -383,7 +384,7 @@ def AddQuiver(inv, new_quiver_name):                        # edited some parts 
 
 
 def ExtendedTakeObject(inv,Object2TakeName):
-	global StakObjects
+	global StakObjects							# PLAGUE: This var is never used, possibly because misspelled.
 
 	o = Bladex.GetEntity(Object2TakeName)
 	if o:
@@ -394,6 +395,31 @@ def ExtendedTakeObject(inv,Object2TakeName):
 	else:
 		print "ExtendedTakeObject: "+Object2TakeName+" cannot be found to take"
 
+###
+# Func to make sure all characters can use 2handed weapons regardless of whether they have specific anims for it.
+#		-LeadHead
+###
+import BCopy
+def GetWpnFlagFallback(EntityName, WeaponName):
+	me = Bladex.GetEntity(EntityName)
+	wep = Bladex.GetEntity(WeaponName)
+	data_exists = Reference.EntitiesObjectData.has_key(wep.Name)
+	if data_exists:
+		existing_data = Reference.EntitiesObjectData[wep.Name]
+	default_data  = Reference.DefaultObjectData[wep.Kind]
+	realFlag = default_data[5][0]
+	if (realFlag == Reference.W_FLAG_2W and me.GotAnmType("Rlx_2w")) or (realFlag == Reference.W_FLAG_AXE and me.GotAnmType("Rlx_axe")) or (realFlag == Reference.W_FLAG_SP and ((me.GotAnmType("Rlx_sp")) or me.GotAnmType("Rlx_spear"))) or (realFlag == Reference.W_FLAG_1H):
+		if data_exists:
+			existing_data[5][0] = realFlag
+		else:
+			Reference.EntitiesObjectData[wep.Name] = BCopy.deepcopy(default_data)
+		return realFlag
+		
+	else:
+		if not data_exists:
+			Reference.EntitiesObjectData[wep.Name] = BCopy.deepcopy(default_data)
+		Reference.EntitiesObjectData[wep.Name][5][0] = Reference.W_FLAG_1H
+		return Reference.W_FLAG_1H
 
 
 def TakeObject(EntityName,Object2TakeName, force_take=TRUE):
@@ -426,7 +452,7 @@ def TakeObject(EntityName,Object2TakeName, force_take=TRUE):
 		if not me.InvLeftBack and not me.InvRightBack and not me.InvLeft:
 			inv.LinkLeftHand(Object2TakeName)
 	elif object_flag == Reference.OBJ_WEAPON:
-		flag=Reference.GiveWeaponFlag(Object2TakeName)
+		flag = GetWpnFlagFallback(EntityName, Object2TakeName)		# Now handles 2handed weapons for all	-LeadHead
 		inv.AddWeapon(Object2TakeName,flag)
 		if me.InvLeftBack=="" and me.InvRightBack=="" and me.InvRight=="":
 			inv.LinkRightHand(Object2TakeName)
@@ -1112,7 +1138,7 @@ def TryToTake(EntityName, ObjectName):
 
 	if object_flag==Reference.OBJ_ARMOUR:
 
-		if me.CharTypeExt<>object_data[1]:
+		if me.CharTypeExt!=object_data[1]:
 			ReportMsg ("Type of armour not for me")
 			print "Info is " + str(object_data[1])
 			return FALSE
@@ -1245,7 +1271,7 @@ def Toggle4TakingEvent(pj_name,event):
 		else:
 			# Take an arrow
 			UnSheatheArrow(inv)
-	elif me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)<>Reference.OBJ_QUIVER:
+	elif me.InvRightBack and Reference.GiveObjectFlag(me.InvRightBack)!=Reference.OBJ_QUIVER:
 		#Pasar lo de right en espada a mano dch
 		if (not me.Data.stuff_onback_b4) and me.Data.toggle4t_clearback:
 			tmpr_back=me.InvRightBack
@@ -1308,7 +1334,7 @@ def IntermediateTake(EntityName,ObjectName):
 
 	if object_flag==Reference.OBJ_ARMOUR:
 
-		if me.CharTypeExt<>object_data[1]:
+		if me.CharTypeExt!=object_data[1]:
 			ReportMsg ("Type of armour not for me")
 			print "Info is " + str(object_data[1])
 			return
@@ -1347,8 +1373,9 @@ def IntermediateTake(EntityName,ObjectName):
 			me.AnmEndedFunc=TakeMainAnm
 		else:
 			#Are taking a 2h W and do we have a shield? Store shield if so
-			w_flag=Reference.GiveWeaponFlag(ObjectName)
-			if me.InvLeft<>"" and w_flag<>Reference.W_FLAG_1H:
+			# w_flag=Reference.GiveWeaponFlag(ObjectName)
+			w_flag=GetWpnFlagFallback(EntityName, ObjectName)
+			if me.InvLeft!="" and w_flag!=Reference.W_FLAG_1H:
 				me.AddAnmEventFunc("ChangeLEvent",Left2InvEvent)
 				me.LaunchAnmType("Chg_l")
 				me.AnmEndedFunc=TakeMainAnm
@@ -1417,15 +1444,17 @@ def TakeObject2Inv(EntityName):
 
 	back_flag=SthOnBack(EntityName)
 	if back_flag and object_flag==Reference.OBJ_WEAPON:
-		w_flag=Reference.GiveWeaponFlag(me.Data.pickup_entity)
-		if w_flag<>Reference.W_FLAG_1H:
+		# w_flag=Reference.GiveWeaponFlag(me.Data.pickup_entity)
+		w_flag=GetWpnFlagFallback(EntityName, me.Data.pickup_entity)
+
+		if w_flag!=Reference.W_FLAG_1H:
 			back_flag=0
 
 	weapon_stay=0
 	if (not me.Data.stuff_onback_b4) and (not back_flag) and (object_flag == Reference.OBJ_WEAPON):
 		if not me.InvLeft or Reference.GiveObjectFlag(me.InvLeft)!=Reference.OBJ_BOW:
 			weapon_stay=1
-	if object_flag <> Reference.OBJ_STANDARD and object_flag <> Reference.OBJ_USEME and (not weapon_stay):
+	if object_flag != Reference.OBJ_STANDARD and object_flag != Reference.OBJ_USEME and (not weapon_stay):
 		return TRUE
 	return FALSE
 
@@ -1497,7 +1526,7 @@ def TakeArmour(EntityName):
 	else:
 		object_data = Reference.DefaultObjectData[object.Kind]
 
-	if object_data[0]<>Reference.OBJ_ARMOUR:
+	if object_data[0]!=Reference.OBJ_ARMOUR:
 		print "ERROR in Actions.TakeArmour , object is not an armour!!!"
 		return
 
@@ -1712,6 +1741,16 @@ def MainTake2Inv(EntityName):
 
 	ToggleAfterTakeObj(EntityName)
 
+###
+# These weapon lists have been moved outside of the PickupEventHandler, to stop
+# creating new lists every time a weapon is picked up			-LeadHead
+###
+UniversalWeaps = Reference.UniWeaps
+KnightWeaps    = Reference.KgtWeaps
+DwarfWeaps     = Reference.DwfWeaps
+AmazonWeaps    = Reference.AmzWeaps
+BarbWeaps      = Reference.BarWeaps
+
 def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 	me = Bladex.GetEntity(EntityName)
 
@@ -1778,73 +1817,18 @@ def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 	weapon_added=FALSE
 	if not me.InvRight:		# Check right hand is still free
 		if object_flag == Reference.OBJ_WEAPON:
-			flag=Reference.GiveWeaponFlag(object_name)
+			# flag=Reference.GiveWeaponFlag(object_name)
+			flag=GetWpnFlagFallback(EntityName,object_name)
 			inv.AddWeapon(object_name,flag)
 			WeaponName = Bladex.GetEntity(object_name).Kind
 			weapon_added=TRUE
 			if(netgame.GetNetState()==0):
 				if (not me.Data.NPC) and not me.Data.WasObjectAlreadyTaken(object_name):
-					# Race-Ordered Weapons, originals were wrong. Should be fixed now -LeadHead
-					KnightWeaps = [	"QueenSword","IceSword","FireSword","Gladius","Espadaelfica" ,
-									"Espadaromana","Espadacurva","Dagesse","Cimitarra","Espadafilo",
-									"Espada","Maza","Maza2","Maza3","HookSword","DoubleSword"]
-
-					DwarfWeaps = [	"QueenSword","CrushHammer","FireAxe","IceHammer","Hacha","Hacha5","Hacha4","Hacha3",
-									"Hacha6","Hacha2","Garrote","Martillo","Martillo2","Garropin","MazaDoble",
-									"Garrote2","Martillo3"]
-
-					AmazonWeaps = [	"QueenSword","SteelFeather","FireBo","IceWand","LanzaAncha","Bichero",
-									"Bo","Lanza","Naginata","Tridente","Arpon","Axpear","Crosspear",
-									"Hachacuchilla","Naginata2","DeathBo","CrushBo"]
-
-					BarbWeaps  = [	"QueenSword","FireBigSword","IceAxe","Chaosword",
-									"DeathSword","LongSword","Alfanje","BigSword","SawSword","FlatSword",
-									"Eclipse","Guadanya","Hacha2hojas","RhinoClub","Hacharrajada"]
-
-					char = Bladex.GetEntity("Player1")
-
 					import Scorer
-					"""
-					#############
-					#   All of this is absolutely stupid. Instead of checking whether a weapon we picked up belongs to our char.Kind,
-					#   it checks if the weapon is not in any other character's list. What mad man does something like this?
-					#   It also parses 3 separate lists which is slow and non-aligned weapons end up triggering the script. 
-					#############
-					
-					if char.Kind == "Barbarian_N":
-						if  (
-							(not AmazonWeaps.count(WeaponName)) and
-							(not  DwarfWeaps.count(WeaponName)) and
-							(not KnightWeaps.count(WeaponName))
-							):
-							Scorer.SlideTBS(0)
-
-					if char.Kind == "Amazon_N":
-						if  (
-							(not   BarbWeaps.count(WeaponName)) and
-							(not  DwarfWeaps.count(WeaponName)) and
-							(not KnightWeaps.count(WeaponName))
-							):
-							Scorer.SlideTBS(0)
-
-					if char.Kind == "Dwarf_N":
-						if  (
-							(not AmazonWeaps.count(WeaponName)) and
-							(not   BarbWeaps.count(WeaponName)) and
-							(not KnightWeaps.count(WeaponName))
-							):
-							Scorer.SlideTBS(0)
-
-					if char.Kind == "Knight_N":
-						if  (
-							(not AmazonWeaps.count(WeaponName)) and
-							(not  DwarfWeaps.count(WeaponName)) and
-							(not   BarbWeaps.count(WeaponName))
-							):
-							Scorer.SlideTBS(0)
-							"""
-						### Re-written in a sensible manner -LeadHead
-					if char.Kind[:9]=="Barbarian":
+					char = Bladex.GetEntity("Player1")
+					if UniversalWeaps.count(WeaponName):
+						Scorer.SlideTBS(0)
+					elif char.Kind[:9]=="Barbarian":
 						if BarbWeaps.count(WeaponName):
 							Scorer.SlideTBS(0)
 					elif char.Kind[:6]=="Knight":
@@ -1868,8 +1852,10 @@ def PickupEventHandler(EntityName, EventName, force_take=TRUE):
 			###Reference.debugprint("AddShield... " + object_name +" ok ?")
 			inv.AddShield(object_name)
 	elif object_flag == Reference.OBJ_WEAPON:
-		if weapon_added==FALSE:
-			flag=Reference.GiveWeaponFlag(object_name)
+		if weapon_added==FALSE:								# PLAGUE: is this condition even physically possible to reach anymore?
+			# flag=Reference.GiveWeaponFlag(object_name)
+			flag=GetWpnFlagFallback(EntityName,object_name)
+			
 			inv.AddWeapon(object_name,flag)
 			if (not me.Data.NPC) and not me.Data.WasObjectAlreadyTaken(object_name):
 				import Scorer
@@ -1972,7 +1958,7 @@ def StdThrowObject(EntityName):
 	###Reference.debugprint(EntityName+": Im in StdThrowObject")
 	# Have I got anything in the right hand
 	statR = StatR(EntityName)
-	if statR <> RA_NO_WEAPON and statR <>RA_BOW:
+	if statR != RA_NO_WEAPON and statR != RA_BOW:
 		###Reference.debugprint(EntityName+': Right hand obj = '+me.InvRight)
 		object = Bladex.GetEntity(me.InvRight)
 		if IsValidForThrowing (object.Name):
@@ -2220,7 +2206,7 @@ def TryDropRight (EntityName):
 	me = Bladex.GetEntity(EntityName)
 	# Have I got anything in the right hand
 	statR = StatR(EntityName)
-	if statR <> RA_NO_WEAPON:
+	if statR != RA_NO_WEAPON:
 		###Reference.debugprint(EntityName+": Right hand obj = "+me.InvRight)
 		object = Bladex.GetEntity(me.InvRight)
 		if IsValidForDropping (object.Name):
@@ -2252,7 +2238,7 @@ def TryDropRight (EntityName):
 def TryDropLeft (EntityName):
 	me = Bladex.GetEntity(EntityName)
 	statL=StatL(me.Name)
-	if statL <> LA_NO_WEAPON and statL <> LA_BOW:
+	if statL != LA_NO_WEAPON and statL != LA_BOW:
 		###Reference.debugprint(EntityName+": Left hand obj = "+me.InvLeft)
 		object = Bladex.GetEntity(me.InvLeft)
 		if IsValidForDropping (object.Name):
@@ -2640,7 +2626,7 @@ def LegacyToggleWeapons(EntityName):
 		me.Data.time_deactive_enemy=Bladex.GetTime()
 		return
 
-	if me.OnFloor==0 and me.AnimName<>"JOG" and me.AnimName<>"WBK_JOG" and me.AnimName<>"WLK" and me.AnimName<>"WBK":
+	if me.OnFloor==0 and me.AnimName!="JOG" and me.AnimName!="WBK_JOG" and me.AnimName!="WLK" and me.AnimName!="WBK":
 		return
 
 	if me.AnmEndedFunc:
@@ -2651,7 +2637,7 @@ def LegacyToggleWeapons(EntityName):
 	right_standard=IsRightHandStandardObject(EntityName)
 	drop_right=0
 	#pdb.set_trace()
-	if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)<>Reference.OBJ_BOW and me.InvRightBack: 
+	if me.InvLeft and Reference.GiveObjectFlag(me.InvLeft)!=Reference.OBJ_BOW and me.InvRightBack: 
 		if not me.Attack and not me.Block:                      # PLAGUE: This is practically impossible to call because me.Attack requires 
 			me.AddAnmEventFunc("ChangeLEvent",Left2BackEvent)   #         to be already locked on and nobody tries to draw weapon holding block.
 			me.LaunchAnmType("Chg_l")
@@ -2710,7 +2696,7 @@ def LegacyToggleWeapons(EntityName):
 
 
 
-	if drop_right<>0 and IsRightHandStandardObject(EntityName):
+	if drop_right!=0 and IsRightHandStandardObject(EntityName):
 		if TryDropRight(EntityName):
 			DropReleaseEventHandler(EntityName, "DropRightEvent")
 		me.Wuea=Reference.WUEA_ENDED

@@ -4,7 +4,6 @@
 ##||| * Added mutilations for skeletons on crush damage
 ##||| * Added sparks/dust for crush damage on DustDeathEntities
 ##||| * Modified dwarf combo damage data to correspond with IceHammer change
-##||| * Added comments to make it easier to understand which attacks correspond to which animation
 ##||| * Extra entries for InflictDamageFXData for elemental weapons
 ##||| * Added AnimData for Gold and Dark Ork
 ##||| * Adapted bow camera fix from HD update
@@ -14,6 +13,8 @@
 ##||| * Addressed floating point errors in stamina calculation.
 ##||| * Attacks which stamina requirement exactly matches max stamina no longer return as insufficient stamina
 ##||| * Rebalanced all player dodge attacks to make their spam less effective
+##||| * NPCs won't drop 2handed weapons if shield in hand anymore
+##||| * Special effect is now applied to shield instead of parent entity if full damage is blocked
 ##\\\ 
 
 import Reference
@@ -1026,7 +1027,7 @@ def DropInvalidObjectsOnImpact(EntityName):
 
 def BreakMyShield(EntityName):
 	me=Bladex.GetEntity(EntityName)
-	if me.InvLeft<>"":
+	if me.InvLeft!="":
 		esc=Bladex.GetEntity(me.InvLeft)
 		if esc:
 			n_child=esc.GetNChildren()
@@ -1050,7 +1051,7 @@ def BreakMyShield(EntityName):
 
 def BreakMySword(EntityName):
 	me=Bladex.GetEntity(EntityName)
-	if me.InvRight<>"":		
+	if me.InvRight!="":		
 		
 		sword = Bladex.GetEntity(me.InvRight)          # Added.
 		n_child=sword.GetNChildren()                   # Should now properly remove child entities
@@ -1209,7 +1210,7 @@ def CheckRightHandToDrop(EntityName):
     two_handed_on_right=0
     if Actions.IsRightHandWeaponObject(EntityName):
         w_flag=Reference.GiveWeaponFlag(me.InvRight)
-        if w_flag!=Reference.W_FLAG_1H:
+        if w_flag!=Reference.W_FLAG_1H and not me.Data.NPC:		# Allows enemies to use 2-handed weapons with shield	-LeadHead
             two_handed_on_right=1
 
     special_to_drop=0
@@ -1223,7 +1224,7 @@ def CheckRightHandToDrop(EntityName):
             Actions.DropReleaseEventHandler(EntityName, "DropRightEvent")
             if me.InvRight:
                 #print "...but did not work"
-                return FALSE
+                return 0 # FALSE
 
 
 
@@ -1298,6 +1299,7 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 	# Animation component, character type, level and magical components #
 	######################################################################################
 	attacker= None
+	fxAnim = None
 	if AttackerName:
 		attacker=Bladex.GetEntity(AttackerName)
 		
@@ -1313,14 +1315,16 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 			if not thrown_flag:
 				if AnimationData.has_key(attacker.AnimFullName):
 					animF = AnimationData[attacker.AnimFullName]
-					if InflictDamageFXData.has_key(attacker.AnimFullName) and (netgame.GetNetState() != 1):
-						aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch = InflictDamageFXData[attacker.AnimFullName]
-						GenFX.InflictDamageFX(VictimName, aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch)
+					# if InflictDamageFXData.has_key(attacker.AnimFullName) and (netgame.GetNetState() != 1):
+						# aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch = InflictDamageFXData[attacker.AnimFullName]
+						# GenFX.InflictDamageFX(VictimName, aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch)
 				elif AnimationData.has_key(attacker.AnimName):
 					animF = AnimationData[attacker.AnimName]
-					if InflictDamageFXData.has_key(attacker.AnimFullName) and (netgame.GetNetState() != 1):
-						aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch = InflictDamageFXData[attacker.AnimFullName]
-						GenFX.InflictDamageFX(VictimName, aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch)
+				if InflictDamageFXData.has_key(attacker.AnimFullName) and (netgame.GetNetState() != 1):
+					fxAnim = attacker.AnimFullName
+					# if InflictDamageFXData.has_key(attacker.AnimFullName) and (netgame.GetNetState() != 1):
+						# aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch = InflictDamageFXData[attacker.AnimFullName]
+						# GenFX.InflictDamageFX(VictimName, aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch)
 		
 	randomF= round(whrandom.uniform(-0.05, 0.05)*charF)
 	charF= max (charF + randomF, 0)
@@ -1436,7 +1440,7 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 				return
 			w_weapon=Bladex.GetEntity(victimsWeaponName)
 			w_flag=Reference.GiveObjectFlag(victimsWeaponName)
-			if w_flag<>Reference.OBJ_WEAPON:
+			if w_flag!=Reference.OBJ_WEAPON:
 				print "Error in CalculateDamage"
 				print "Blocking with an unexpected type of weapon"
 				return
@@ -1676,6 +1680,22 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 				AttackerEntity=Bladex.GetEntity(AttackerName)
 				if AttackerEntity:
 					AttackerEntity.Data.OnKilledEnemy(VictimName)
+
+	### Create aura on shield/parryWep or opponent depending on whether it was blocked or not
+	if fxAnim:
+		fxTarget = VictimName
+
+		# print "Shielded param is: " + `Shielded`
+		if Shielded:
+			if blocking_with_weapon:
+				fxTarget = victimsWeaponName
+			else:
+				fxTarget  = victimsShieldName
+		# print fxTarget
+
+		aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch = InflictDamageFXData[fxAnim]
+		GenFX.InflictDamageFX(fxTarget, aura_size_var, aura_exp_time, r, g, b, light_intensity, sound, volume, pitch)
+	
 
 	# Sticking to player
 	# Check type of weapon

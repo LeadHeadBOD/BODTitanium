@@ -5,7 +5,7 @@
 ##||| * Rhino Club now makes wooden hit sound
 ##||| * Added IceGolem attack data
 ##||| * Added Zombie Knight attack data 
-##||| * Added Pivote2 and 
+##||| * Added Pivote2 and PivoteEnvenenado
 ##\\\ 
 
 import Bladex
@@ -365,6 +365,44 @@ GolpeArmaEscudoMetal.SendNotify=1
 GolpeArmaEscudoMadera=Bladex.CreateSound('../../Sounds/WoodShield-impact.wav', 'GolpeArmaEscudoMadera')
 GolpeArmaEscudoMadera.SendNotify=1
 
+# Use unique sounds for weapon parries?
+GolpeArmaArmaMetal=Bladex.CreateSound('../../Sounds/golpe-arma-arma.wav', 'GolpeArmaArmaMetal')
+GolpeArmaArmaMetal.SendNotify=1
+# GolpeArmaArmaMadera=Bladex.CreateSound('../../Sounds/golpe-arma-arma.wav', 'GolpeArmaArmaMadera')
+# GolpeArmaArmaMadera.SendNotify=1
+
+###
+#      - - - Titanium specific stuff - - - 
+# Some of these flags are kept here so that they can be referenced in other modules as a single point of contact
+# and don't need to manually change all other modules
+###
+
+PlayerKinds              = ["Barbarian_N", "Knight_N", "Amazon_N", "Dwarf_N" ]
+
+blood_SparkEntities      = ["Golem_metal","ChaosKnight"]
+blood_DustDeathEntities  = ["Skeleton","Lich","Golem_stone","Golem_clay","Golem_lava","Golem_ice","Knight_Zombie"]+blood_SparkEntities
+blood_GreenBleedEntities = ["Spidersmall"]
+blood_GreyBleedEntities  = ["Lich"]
+
+### Weapon kinds specific to characters moved here
+UniWeaps = [    "QueenSword" ]
+
+KgtWeaps = [	"IceSword","FireSword","Gladius","Espadaelfica",
+							"Espadaromana","Espadacurva","Dagesse","Cimitarra","Espadafilo",
+							"Espada","Maza","Maza2","Maza3","HookSword","DoubleSword"]
+
+DwfWeaps = [	"CrushHammer","FireAxe","IceHammer","Hacha","Hacha5","Hacha4","Hacha3",
+							"Hacha6","Hacha2","Garrote","Martillo","Martillo2","Garropin","MazaDoble",
+							"Garrote2","Martillo3"]
+
+AmzWeaps = [	"SteelFeather","FireBo","IceWand","LanzaAncha","Bichero",
+							"Bo","Lanza","Naginata","Tridente","Arpon","Axpear","Crosspear",
+							"Hachacuchilla","Naginata2","DeathBo","CrushBo"]
+
+BarWeaps  = [	"FireBigSword","IceAxe","Chaosword",
+							"DeathSword","LongSword","Alfanje","BigSword","SawSword","FlatSword",
+							"Eclipse","Guadanya","Hacha2hojas","RhinoClub","Hacharrajada"]
+
 
 ##########################################################################################################
 #
@@ -502,12 +540,12 @@ DefaultObjectData['FireRing']=           [OBJ_WEAPON,    0,  0, 1.0,  THR_SPINNI
 #                 #bod                    #type      #POW #RES #throw_mult #throw_type #flag #cone#hght#rad#def#Brk#Sound
 DefaultObjectData['FireBigSword']=       [OBJ_WEAPON, 50, -15, 1.5,  THR_SPINNING, [W_FLAG_2W,PI,2000,750,20000,20000,GolpeArmaEscudoMetal], ["Fire", +10.0]]
 DefaultObjectData['IceAxe']=             [OBJ_WEAPON, 30, -10, 2.0,  THR_SPINNING, [W_FLAG_AXE,PI,2000,750,4000,4000,GolpeArmaEscudoMetal], ["Ice", +10.0]]
-DefaultObjectData['DalWeapon']=          [OBJ_WEAPON,140, 0, 1.0,  THR_SPINNING, [W_FLAG_1H,],["Venom",+6.0]]
-DefaultObjectData['DalBlade']=           [OBJ_WEAPON,800, 0, 2.0,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['DalWeapon']=          [OBJ_WEAPON,140,   0, 1.0,  THR_SPINNING, [W_FLAG_1H,],["Venom",+6.0]]
+DefaultObjectData['DalBlade']=           [OBJ_WEAPON,800,   0, 2.0,  THR_SPINNING, [W_FLAG_1H,]]
 
-DefaultObjectData['Sablazo']=            [OBJ_WEAPON, 20, 0, 2.0,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['Sablazo']=            [OBJ_WEAPON, 20,   0, 2.0,  THR_SPINNING, [W_FLAG_1H,]]
 
-DefaultObjectData['Chaosword']=          [OBJ_WEAPON,  5, 0, 2.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,100,100,GolpeArmaEscudoMetal]]
+DefaultObjectData['Chaosword']=          [OBJ_WEAPON,  5,   0, 2.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,100,100,GolpeArmaEscudoMetal]]
 DefaultObjectData['DeathSword']=         [OBJ_WEAPON, 40, -10, 2.5,  THR_SPINNING, [W_FLAG_2W,PI,2000,750,500,1000,GolpeArmaEscudoMetal]]
 DefaultObjectData['LongSword']=          [OBJ_WEAPON, 80, -15, 2.0,  THR_SPINNING, [W_FLAG_2W,PI,2000,750,1000,4000,GolpeArmaEscudoMetal]]
 DefaultObjectData['Alfanje']=            [OBJ_WEAPON,100, -40, 2.8,  THR_SPINNING, [W_FLAG_2W,PI,2000,750,3000,6000,GolpeArmaEscudoMetal]]
@@ -653,7 +691,7 @@ DefaultObjectData['BladeSword2']=         [OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIG
 DefaultObjectData['BladeSwordBarbarian'] =[OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,50000,0,GolpeArmaEscudoMetal]]
 DefaultObjectData['BladeSword2Barbarian']=[OBJ_WEAPON, 300, -5, 1.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,50000,0,GolpeArmaEscudoMetal], ["Light", +300.0]]
 
-DefaultObjectData['Phurbhu']=            [OBJ_STANDARD, 85, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,]]
+DefaultObjectData['Phurbhu']=             [OBJ_STANDARD, 85, -5, 1.0,  THR_SPINNING, [W_FLAG_1H,]]
 
 
 
@@ -1097,9 +1135,6 @@ ObjWeapon = [
              "Pico",
              "Skull",
              "Taburete",
-             "Taburete",
-             "Taburete",
-             "Taburete",
 
             ]
 
@@ -1168,7 +1203,7 @@ def GiveWeaponFlag(ObjectName):
 		object_data = DefaultObjectData[object.Kind]
 	object_flag = object_data[0]
 
-	if object_flag<>OBJ_WEAPON:
+	if object_flag!=OBJ_WEAPON:
 		return -1
 
 	if len(object_data)<6:
@@ -1256,5 +1291,8 @@ GameState.ModulesToBeSaved.append(__import__(__name__))
 if netgame.GetNetState() == 1:
 	DefaultObjectData['Chaosword']=          [OBJ_WEAPON, 12 , 0, 2.0,  THR_STRAIGHT, [W_FLAG_2W,PI,2000,750,100,100,GolpeArmaEscudoMetal]]
 	DefaultObjectData['Hacha']=              [OBJ_WEAPON, 11 , 0, 2.5,  THR_SPINNING, [W_FLAG_1H,]]
-	DefaultObjectData['Gladius']=            [OBJ_WEAPON, 10, 0, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
-	DefaultObjectData['Bo']=                 [OBJ_WEAPON, 10,   0, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,100,100,GolpeArmaEscudoMadera]]  # Was GolpeArmaEscudoMetal
+	DefaultObjectData['Gladius']=            [OBJ_WEAPON, 10,  0, 2.2,  THR_SPINNING, [W_FLAG_1H,]]
+	DefaultObjectData['Bo']=                 [OBJ_WEAPON, 10,  0, 2.0,  THR_SPINNING, [W_FLAG_SP,PI,2000,750,100,100,GolpeArmaEscudoMadera]]  # Was GolpeArmaEscudoMetal
+    
+    
+
