@@ -14,6 +14,7 @@
 ##||| * Increased heavy pain threshold for Chk.
 ##||| * Enabled fire spit for Golem_lava
 ##||| * Removed unnecessary checks for "if victim.InCombat:" in spit attacks
+##||| * Great demon - better hit detection for fire ring, light on fire ring, dust on earthquake, immunity during powerup, scaling damage
 ##\\\ 
 
 
@@ -1731,7 +1732,6 @@ class Cos (Enm_Def.NPCPerson):
 
 		# Consider getting furious
 		if AttackerName and AttackerName != 'BWorld':
-			me = Bladex.GetEntity(EntityName)
 			if me and me.Life > 0:
 				# consider getting furious
 				if whrandom.random() < self.ChanceOfFuryOnHurt:
@@ -1965,7 +1965,6 @@ class Spidersmall (Enm_Def.NPCPerson):
 
 		# Consider getting furious
 		if AttackerName and AttackerName != 'BWorld':
-			me = Bladex.GetEntity(EntityName)
 			if me and me.Life > 0:
 				# consider getting furious
 				if whrandom.random() < self.ChanceOfFuryOnHurt:
@@ -2805,8 +2804,8 @@ class Salamander (Enm_Def.NPCPerson):
 class Great_Demon (Enm_Def.NPCPerson):
 
 	# constants
-	LevelUpTime=0.5
-	ImplosionPeriod = 2.5
+	LevelUpTime		= 0.5
+	ImplosionPeriod = 2.8	# was 2.5
 	DeathBallPeriod = 3.5
 
 
@@ -2885,7 +2884,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 		Bladex.CreateTimer("Timer8",1.0/8.0)
 		me.Level= 6
 		me.Life= CharStats.GetCharMaxLife(me.Kind, me.Level)
-		me.Alpha= 0.85
+		me.Alpha= 0.9
 
 		for i in range(30):
 			if i>25:
@@ -2953,8 +2952,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 			self.shield_particle_system=Bladex.GetEntity(shield_particle_system_Name)
 
 			# constants
-			self.LevelUpTime=0.5
-			self.ImplosionPeriod = 2.5
+			self.LevelUpTime=0.5		# was 0.5
+			self.ImplosionPeriod = 2.8	# was 2.5
 			self.DeathBallPeriod = 3.5
 			self.LifeUpCalled=0
 			me.AddAnmEventFunc("Spit", self.StartSpit)
@@ -2982,7 +2981,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 			self.back_aura.SetAuraActive(0)
 			self.front_aura.SetAuraActive(0)
 			Bladex.CreateTimer("Timer8",1.0/8.0)
-			me.Alpha= 0.85
+			me.Alpha= 0.9
 
 		for i in range(30):
 			if i>25:
@@ -3024,7 +3023,30 @@ class Great_Demon (Enm_Def.NPCPerson):
 			me.Level= 9
 			me.Life= CharStats.GetCharMaxLife(me.Kind, me.Level)
 			self.ResetCombat (EntityName)
+			
+	########################################################################
+	#____ BACK ATTACK FUNC        -LeadHead   ______________________________
+	########################################################################
 
+	def TestBackAttack(self):
+		me = Bladex.GetEntity(self.Name)
+		enemy = Bladex.GetEntity(me.GetEnemyName())
+		if me and me.Life > 0 and enemy:
+			if me.AnimName != "g_back":	 # don't do it twice in a row
+				angle1 = me.Angle
+				pos    = me.Position
+				x,y,z  = enemy.Position 
+				x = x-pos[0]
+				z = z-pos[2]
+				angle2 = B3DLib.GetXZAngle (x, 0.0, z)
+				angle = B3DLib.DiffAngle (angle1, angle2)
+				dist  = B3DLib.GetXZDistance(me.Name,enemy.Name)
+				# print "angle is " + `angle`
+				# print "dist is " + `dist`
+				if (angle < -2.4 or angle > 1.05) and (dist > 2000.0 and dist < 6000.0):
+					me.SetNextAttack("g_back")
+					return 1
+		return 0
 	########################################################################
 	#____ EARTHQUAKE FUNCS _________________________________________________
 	########################################################################
@@ -3036,11 +3058,34 @@ class Great_Demon (Enm_Def.NPCPerson):
 		else:
 			cam.EarthQuake=FALSE
 
+
+	def QuakeDust(self, p1, p2, p3):
+		QuakeDust=Bladex.CreateEntity(self.Name+"_dust", "Entity Particle System D3", p3[0],p3[1],p3[2] )
+		QuakeDust.D1= p1[0]-p3[0] ,p1[1]-p3[1] ,p1[2]-p3[2]
+		QuakeDust.D2= p2[0]-p3[0] ,p2[1]-p3[1] ,p2[2]-p3[2]
+		QuakeDust.ParticleType="MediumDust"
+		QuakeDust.YGravity=9800.0
+		QuakeDust.Friction=0.2
+		QuakeDust.PPS=412*2
+		QuakeDust.Velocity=0.0, -11000.0, 0.0
+		QuakeDust.RandomVelocity=60.0
+		QuakeDust.Time2Live=13
+		QuakeDust.DeathTime=Bladex.GetTime()+34.0/60.0
+		
 	def Quake (self,EntityName,EventName):
 		QuakeRange= 35000.0
 		me=Bladex.GetEntity(EntityName)
 		cam= Bladex.GetEntity("Camera")
 		mp=me.GraspPos ("Earthquake")
+
+		# Create dust in danger zone	-LeadHead
+		dpos1 = (mp[0] - 4000.0, mp[1] - 500.0 , mp[2])
+		dpos2 = (mp[0]         , mp[1] - 500.0 , mp[2] - 4000.0)
+		dpos3 = (mp[0] + 4000.0, mp[1] - 500.0 , mp[2])
+		dpos4 = (mp[0]         , mp[1] - 500.0 , mp[2] + 4000.0)
+		
+		self.QuakeDust(dpos1,dpos2,dpos3)
+		self.QuakeDust(dpos2,dpos3,dpos4)
 
 		# Shake up physical objects around
 		objects_in_range= Bladex.GetEntitiesAt(mp[0], mp[1], mp[2],QuakeRange)
@@ -3066,7 +3111,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 		distance= math.sqrt(((mp[0]-vp[0])*(mp[0]-vp[0]))+((mp[1]-vp[1])*(mp[1]-vp[1]))+((mp[2]-vp[2])*(mp[2]-vp[2])))
 		severity=max(0.0, 1.0 - distance/QuakeRange)
 
-		cam.EarthQuakeFactor=120.0 * severity
+		cam.EarthQuakeFactor=160.0 * severity	# was base of 120
 		cam.EarthQuake=TRUE
 		QuakeTime= 1.5
 		Interval= 0.25
@@ -3116,12 +3161,13 @@ class Great_Demon (Enm_Def.NPCPerson):
 		MagicStopPos= 0.509
 		anm_duration= Bladex.GetAnimationDuration("Gdm_g_magic")
 		DeathTime= Bladex.GetTime()+max((MagicStopPos-me.AnmPos)*anm_duration, 0.0)
-		period=0.001
+		# period=0.001 	# PLAGUE: This is ridiculous, it can theoretically one-shot any player like this
+		period=0.002	
 
 		x,y,z= me.GraspPos("1H_L")
 		lball=Bladex.CreateEntity(self.Name+"_Fire","Entity Particle System D1",x,y,z)
 		lball.ParticleType="Flame"
-		lball.PPS=256
+		lball.PPS=160			# Reduced to stop killing framnerates/entity limits		-LeadHead
 		lball.YGravity=-300.0
 		lball.Friction=0.04
 		lball.RandomVelocity=-30.0
@@ -3134,7 +3180,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 		x,y,z= me.GraspPos("1H_R")
 		rball=Bladex.CreateEntity(self.Name+"_Fire","Entity Particle System D1",x,y,z)
 		rball.ParticleType="Flame"
-		rball.PPS=256
+		rball.PPS=160			# Reduced to stop killing framnerates/entity limits		-LeadHead
 		rball.YGravity=-300.0
 		rball.Friction=0.04
 		rball.RandomVelocity=-30.0
@@ -3162,6 +3208,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 		obj.RasterMode="Read"
 		obj.Solid= 0
 		obj.CastShadows= 0		# Added
+		InitDataField.Initialise(obj)
+		obj.Data.EnemyHit=0
 
 		# Set position & orientation
 		me.LinkAnchors("FireRing",obj,"FireRing")
@@ -3169,9 +3217,38 @@ class Great_Demon (Enm_Def.NPCPerson):
 		self.RingName= obj.Name
 
 		TurnOffAfter= 0.4
-		AuxFuncs.FadeAndScale(obj.Name, obj.Position, 1.0, 0.0, 0.0, 1.0, 8.0, 0.0, TurnOffAfter, 1, 0)
-		Bladex.AddScheduledFunc(Bladex.GetTime()+TurnOffAfter,self.EndOfRingAttack,(EntityName, EventName),"EndOfRingAttack")
+		AuxFuncs.FadeAndScaleV2(obj.Name, obj.Position, 1.0, 0.0, 0.0, 1.0, 8.0, 0.0, TurnOffAfter, 1, 1, (0,0,1), self.FireRingDamageCheck, (me.Name,0))
+		# Bladex.AddScheduledFunc(Bladex.GetTime()+TurnOffAfter,self.EndOfRingAttack,(EntityName, EventName),"EndOfRingAttack")
+		
+		# Also create a light -LeadHead
+		fireLight=Bladex.CreateEntity(obj.Name+"_Light","Entity Spot", 0,0,0)
+		fireLight.Intensity=16
+		fireLight.Precission=0.125
+		fireLight.Color=225, 125, 108
+		fireLight.CastShadows=0
+		fireLight.Visible=0
+		obj.Link(fireLight)
+		
+		
 
+	def FireRingDamageCheck(self, EntityName, time):
+		me = Bladex.GetEntity(self.Name)
+		if self.RingName:
+			ring = Bladex.GetEntity(self.RingName)
+			if not ring.Data.EnemyHit:
+				if B3DLib.GetXZDistance(ring.Name, me.GetEnemyName()) <= (1000.0*ring.Scale):
+					ring.Data.EnemyHit=1
+					self.EndOfRingAttack(EntityName)
+			luz = Bladex.GetEntity(ring.Name+"_Light")
+			if luz:
+				if ring.Scale <= 6.0:
+					luz.Intensity = luz.Intensity + ring.Scale
+				else:
+					luz.Intensity = luz.Intensity / 1.2
+					luz.Precission = luz.Precission - 0.01
+		
+			
+			
 		"""
 		# Create flame particle system, for collision detection
 		period=0.001
@@ -3191,29 +3268,36 @@ class Great_Demon (Enm_Def.NPCPerson):
 		"""
 
 
-	def EndOfRingAttack (self, EntityName, EventName):
+	# char.Position = (545416.769916, 301221.687897, 184490.583072); char.Life = 90000; char.Data.FAttack = 1.1; import TiDebug
+	def EndOfRingAttack (self, EntityName): #, EventName):	### This func is now trigerred on hit without actually checking for "collision" -LeadHead
 		obj= Bladex.GetEntity(self.RingName)
+		min_distance = 3000.0
+		max_distance = 5000.0
 		if obj:
 			me= Bladex.GetEntity(EntityName)
 			if me:
 				enemy= Bladex.GetEntity(me.GetEnemyName())
 				if enemy and enemy.Life>0:
-					distSQ= me.SQDistance2(enemy)
-					#if distSQ<64000000.0:
-					if distSQ<49000000.0:
-						# inflict damage
-						xhit_point, yhit_point, zhit_point= enemy.Position
-						enemy.DamageFunc(enemy.Name, EntityName, self.RingName, "Fire", 1, -1, xhit_point, yhit_point, zhit_point, 0)
-						# Override hurt anim
-						if enemy.Life>0:
-							Damage.DropInvalidObjectsOnImpact (enemy.Name)
-							enemy.Wuea=Reference.WUEA_ENDED
-							enemy.InterruptCombat()
-							enemy.LaunchAnmType("hurt_f_big")
-							# if enemy.InCombat: enemy.LaunchAnmType("hurt_f_big")	# commented out because both conditions do same thing
-							# else: enemy.LaunchAnmType("hurt_f_big")
-			# destroy ring
-			obj.SubscribeToList("Pin")
+					# inflict damage
+					xhit_point, yhit_point, zhit_point= enemy.Position
+					Reference.EntitiesObjectData[obj.Name]= BCopy.deepcopy(Reference.DefaultObjectData['FireRing'])
+					if B3DLib.GetXZDistance(obj.Name,enemy.Name) <= min_distance:
+						ScaledDamage = Reference.EntitiesObjectData[obj.Name][6][1]
+					elif B3DLib.GetXZDistance(obj.Name,enemy.Name) > max_distance:
+						ScaledDamage = Reference.EntitiesObjectData[obj.Name][6][1] = Reference.EntitiesObjectData[obj.Name][6][1] / 5.0
+					else:
+						ScaledDamage = Reference.EntitiesObjectData[obj.Name][6][1] = Reference.EntitiesObjectData[obj.Name][6][1] / obj.Scale
+					print "Damage inflicted is " +`Reference.EntitiesObjectData[self.RingName][6][1]` + " with obj.Scale " + `obj.Scale`
+					enemy.DamageFunc(enemy.Name, EntityName, obj.Name, "Fire", 1, -1, xhit_point, yhit_point, zhit_point, 0)
+					if Reference.EntitiesObjectData[obj.Name]:
+						del Reference.EntitiesObjectData[obj.Name]
+					# Override hurt anim
+					if enemy.Life>0:
+						Damage.DropInvalidObjectsOnImpact (enemy.Name)
+						enemy.Wuea=Reference.WUEA_ENDED
+						enemy.InterruptCombat()
+						enemy.LaunchAnmType("hurt_f_big")
+
 
 
 	########################################################################
@@ -3224,7 +3308,9 @@ class Great_Demon (Enm_Def.NPCPerson):
 			victim=Bladex.GetEntity(hit_entity)
 			if victim:
 				if victim.Person and not victim.Kind=="Great_Demon":
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +300.0]]
+					me = Bladex.GetEntity(self.Name)
+					levelDamage = 50.0 + (me.Level * 26.0)			# Added, previously dealt fixed 300 damage		-LeadHead
+					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +levelDamage]]
 					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Fire", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
@@ -3256,7 +3342,17 @@ class Great_Demon (Enm_Def.NPCPerson):
 
 	def CreateTestParticle(self, fireball_name,end_time,period):
 		fireball=Bladex.GetEntity(fireball_name)
+		me = Bladex.GetEntity(self.Name)
 		if(fireball):
+			if (fireball_name[:len(self.Name)+10] == self.Name+"_Fireball_") or (me.AnimName == "g_magic"):
+				# print "ball name is "+`fireball_name[:len(self.Name)+10]`
+				pass
+			elif (me.AnimName != "g_spit_around") and (me.AnimName != "g_spit_f"):
+				self.StopSpit(fireball_name,"PreEmptiveStop")
+				# print "~~~WARNING~~~ trying to create particle hits in non-attack anim!"
+				# print `me.Name` + ": current anim is " +`me.AnimName`
+				return
+			
 			prtl=fireball.GetParticleEntity()
 			prtl.HitFunc=self.FirePrtlHit
 			prtl.ObjCTest= 1
@@ -3271,6 +3367,9 @@ class Great_Demon (Enm_Def.NPCPerson):
 		x,y,z= me.GraspPos("ViewPoint")
 		self.AGE_Number=self.AGE_Number+1
 		node= me.GetNodeIndex("Head")
+		
+		# print `me.Name` + " started spit at " + `Bladex.GetTime()`
+		
 		# Get an angle to the target
 		target= Bladex.GetEntity(me.GetEnemyName())
 		target_pos= target.Position
@@ -3295,8 +3394,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 			self.CreateTestParticle(fireball.Name, end_time, period)
 		else:
 			# flamethrower style
-			duration= 20.0
-			end_time=Bladex.GetTime()+duration
+			# duration= 20.0		# Original was 20.0, wtf???	 -LeadHead
+			# end_time=Bladex.GetTime()+duration
 			period= 0.05
 			new_name= EntityName+"_flamethrower_"+`self.AGE_Number`
 			print "Creating Flame "+new_name
@@ -3308,8 +3407,10 @@ class Great_Demon (Enm_Def.NPCPerson):
 			self.Flame.Time2Live=21
 			#self.Flame.DeathTime=Bladex.GetTime()+0.75;
 			if me.AnimName=="g_spit_around":
+				# duration= 2.5
+				end_time=Bladex.GetTime()+2.5
 				F= 18000.0             # Vector magnitude
-				Bladex.AddScheduledFunc(Bladex.GetTime()+5.0, self.StopSpit, (EntityName,""), "StopSpitFunc")
+				# Bladex.AddScheduledFunc(Bladex.GetTime()+5.0, self.StopSpit, (EntityName,"ScheduledEnd"), "StopSpitFunc")		# These scheduled events are no longer needed
 				angle= 	math.fmod(angle+2.8, Actions.TWOPI)
 				vx,vy,vz= me.GetDummyAxis("Mouth", -math.cos(angle)*F, -math.sin(angle)*F, 0.0, TRUE)
 				self.Flame.Velocity=vx,vy,vz
@@ -3317,8 +3418,10 @@ class Great_Demon (Enm_Def.NPCPerson):
 				self.Flame.Friction=0.05
 				self.Flame.YGravity=-9000.0
 			else:
+				# duration= 3.45
+				end_time=Bladex.GetTime()+3.45
 				F= 15000.0             # Vector magnitude
-				Bladex.AddScheduledFunc(Bladex.GetTime()+3.85, self.StopSpit, (EntityName,""), "StopSpitFunc")
+				# Bladex.AddScheduledFunc(Bladex.GetTime()+3.85, self.StopSpit, (EntityName,"ScheduledEnd"), "StopSpitFunc")	# These scheduled events are no longer needed
 				angle= 	math.fmod(angle+3.15, Actions.TWOPI)
 				vx,vy,vz= me.GetDummyAxis("Mouth", -math.cos(angle)*F, -math.sin(angle)*F, 0.0, TRUE)
 				#vx,vy,vz= me.GetDummyAxis("Mouth", F, 0.0, 0.0, TRUE)
@@ -3330,19 +3433,41 @@ class Great_Demon (Enm_Def.NPCPerson):
 			self.CreateTestParticle(self.Flame.Name, end_time, period)
 
 	def StopSpit (self,EntityName,EventName):
+		# if EventName == "ScheduledEnd":
+			# print "Flame was stopped because of scheduled func"
+			# return
 		if self.Flame:
 			print "Stopping Flame "+self.Flame.Name
+			# print `EntityName` + " stopped spit at " + `Bladex.GetTime()`
 			self.Flame.DeathTime=Bladex.GetTime()
 			self.Flame= None
+			
+			self.TestBackAttack()
+		# if EventName == "PreEmptiveStop":
+			# print "Flame was stopped early because something interrupted the animation"
 
 	########################################################################
 	#____ ON HIT FUNCS _____________________________________________________
 	########################################################################
+				
 	def RespondToHit(self, EntityName, AttackerName, DamagePoints, DamageType, DamageZone, Shielded):
+		me = Bladex.GetEntity(EntityName)
+		
+		### Added, do not do damage, and cause a stun animation when trying to hit during powerup		-LeadHead
+		if self.Invincibility:
+			attacker = Bladex.GetEntity(AttackerName)
+			if attacker and attacker.GotAnmType("sw_react"):
+				impactSound=Bladex.CreateEntity("invulnerableHit", "Entity Sound", me.Position[0], me.Position[1], me.Position[2])
+				impactSound.SetSound("../../Sounds/M-impacto-barrera-11.wav")
+				impactSound.MinDistance=5000
+				impactSound.MaxDistance=10000
+				impactSound.PlaySound(0)
+				attacker.Wuea=Reference.WUEA_ENDED
+				attacker.LaunchAnmType("sw_react")
+				return
 
 		if self.shield_light.Intensity > 0.0:
 			damage_absorbed= (self.shield_light.Intensity/self.ShieldIntensityMax) * DamagePoints
-			me = Bladex.GetEntity(EntityName)
 			if me and me.Life > -damage_absorbed:
 				me.Life= me.Life+damage_absorbed
 				DamagePoints= max (DamagePoints-damage_absorbed, 0.0)
@@ -3357,13 +3482,15 @@ class Great_Demon (Enm_Def.NPCPerson):
 		Enm_Def.NPCPerson.RespondToHit(self, EntityName, AttackerName, DamagePoints, DamageType, DamageZone, Shielded)
 
 		if not self.LifeUpCalled:
-			me = Bladex.GetEntity(EntityName)
 			if me and me.Life<CharStats.GetCharMaxLife(me.Kind, me.Level) * 0.5:
 				self.LifeUp (EntityName)
 				self.LifeUpCalled = 1
 				self.ResetCombat (EntityName)
 				#pdb.set_trace()
 				self.ShieldOn (EntityName)
+				return
+		
+		self.TestBackAttack()
 
 	########################################################################
 	#____ POWERUP FUNCS ____________________________________________________
@@ -3376,6 +3503,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 			Bladex.AddScheduledFunc(time+self.LevelUpTime, self.LevelUp, (EntityName,MaxLevel), EntityName+" LevelUp")
 		else:
 			self.ResetCombat (EntityName)
+			self.Invincibility=0			# Add
 
 	def GDLUP2(self):
 		AuraParams=(5, 0, 1, 0, 0, 1)
@@ -3385,7 +3513,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 		PSParams=(self.GDLevelUpParticleData, "GDLevelUpParticle", 30, 255, 120, 40, 1000, -1000, 0.0, 2, 2, 0.4, 30, 1.6)
 		GenFX.LevelUpFX(self.Name, 0, AuraParams, AuraGradient, AuraVar1Args, AuraVar2Args, PSParams, 8.0, "Timer15", 15, "../../Sounds/aparicion-espada.wav")
 		list_of_nodes=("Head", "L_Shoulder", "L_Elbow", "L_Hand", "R_Shoulder", "R_Elbow", "R_Forearm", "Center", "L_Knee", "L_Foot", "R_Knee", "R_Foot")
-		GenFX.ElectricDischarge(self.Name, "GDRayLevelUp", 255, 120, 40, 600, list_of_nodes, 10, 1.5)
+		GenFX.ElectricDischarge(self.Name, "GDRayLevelUp", 255, 120, 40, 600, list_of_nodes, 10, 1.8)
 
 	def GDLUP1(self,EntityName,EventName):
 		pslup=Bladex.CreateEntity("PSGDLifeUp", "Entity Particle System Dperson", 0, 0, 0)
@@ -3400,7 +3528,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 		pslup.Time2Live=50
 		pslup.Velocity=0.0, 0.0, 0.0
 		pslup.DeathTime=Bladex.GetTime()+1.0
-		Bladex.AddScheduledFunc(Bladex.GetTime()+0.6, self.GDLUP2, ())
+		Bladex.AddScheduledFunc(Bladex.GetTime()+0.3, self.GDLUP2, ())
 
 	def LifeUp (self,EntityName):
 		me = Bladex.GetEntity(EntityName)
@@ -3412,6 +3540,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 		else:
 			MaxLevel=19
 		if me.Level < MaxLevel:
+			self.LevelUpTime = 1.8 / (MaxLevel - me.Level)		# Add
+			self.Invincibility=2								# 		-LeadHead
 			time= Bladex.GetTime()
 			Bladex.AddScheduledFunc(time+self.LevelUpTime, self.LevelUp, (EntityName,MaxLevel), EntityName+" LevelUp")
 			self.GDLUP1(EntityName,"no_hay_evento")
@@ -5152,7 +5282,12 @@ class Golem_lava (Golem_stone):
 			victim=Bladex.GetEntity(hit_entity)
 			if victim:
 				if victim.Person and not victim.Kind=="Golem_lava":
-					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +300.0]]
+					me = Bladex.GetEntity(self.Name)
+					if me.AnimName != "g_spit":
+						print "SPIT NONSENSE, tried to hit while not spitting"
+						return
+					damageScale = 50.0 + (me.Level * 20.0)
+					Reference.EntitiesObjectData[prtl_name]= [Reference.OBJ_WEAPON, 0, 0,  1.0,  Reference.THR_STRAIGHT, Reference.W_FLAG_1H, ["Fire", +damageScale]]
 					victim.DamageFunc(hit_entity, self.Name, prtl_name, "Fire", 1, -1, x, y, z, 0)
 					if Reference.EntitiesObjectData.has_key(prtl_name):
 						del Reference.EntitiesObjectData[prtl_name]
@@ -5176,7 +5311,7 @@ class Golem_lava (Golem_stone):
 						victim.InterruptCombat()
 						victim.LaunchAnmType("hurt_f_big")
 				elif victim.Weapon:
-					pass
+					return
 		# This particle should be removed, as it has been converted to smoke
 		ptcl=Bladex.GetEntity(prtl_name)
 		ptcl.RemoveFromWorld()
@@ -5184,15 +5319,15 @@ class Golem_lava (Golem_stone):
 
 	def CreateTestParticle(self, fireball_name,end_time,period):
 		fireball=Bladex.GetEntity(fireball_name)
-		if(fireball):
+		me = Bladex.GetEntity(self.Name)
+		if(fireball) and (me.AnimName=="g_spit"):
 			prtl=fireball.GetParticleEntity()
 			prtl.HitFunc=self.FirePrtlHit
 			prtl.ObjCTest= 1
 			if(Bladex.GetTime()<end_time):
 				Bladex.AddScheduledFunc(Bladex.GetTime()+period,self.CreateTestParticle,(fireball_name,end_time,period))
 		else:
-			pass
-			#print "system finished"
+			self.StopSpit(fireball_name, "PreEmptiveStop")
 
 	def StartSpit (self,EntityName,EventName):
 		me = Bladex.GetEntity(EntityName)
@@ -5203,27 +5338,23 @@ class Golem_lava (Golem_stone):
 		target= Bladex.GetEntity(me.GetEnemyName())
 		target_pos= target.Position
 		angle= -B3DLib.GetYAngle(target_pos[0]-x,target_pos[1]-y,target_pos[2]-z)
-		# print "angle was "+`angle`
-		# flamethrower style
-		duration= 20.0
+		duration= 1.45
 		end_time=Bladex.GetTime()+duration
-		period= 0.05
+		period= 0.02
 		new_name= EntityName+"_flamethrower_"+`self.AGE_Number`
-		print "Creating Flame "+new_name
+		# print "Creating Flame "+new_name+" at time " + `Bladex.GetTime()`
 		if self.Flame:
 			self.StopSpit (EntityName,EventName)
 		self.Flame=Bladex.CreateEntity(new_name,"Entity Particle System D1",x,y,z)
 		self.Flame.ParticleType="Flame"
 		self.Flame.PPS=512
 		self.Flame.Time2Live=21
-		#self.Flame.DeathTime=Bladex.GetTime()+0.75;
 
-		F= 18000.0             # Vector magnitude
-		Bladex.AddScheduledFunc(Bladex.GetTime()+5.0, self.StopSpit, (EntityName,""), "StopSpitFunc")
+		F= 10000.0             # Vector magnitude
 		angle= 	math.fmod(angle+2.8, Actions.TWOPI)
 		vx,vy,vz= me.GetDummyAxis("ViewPoint", -math.cos(angle)*F, -math.sin(angle)*F, 0.0, TRUE)
 		self.Flame.Velocity=vx,vy,vz
-		self.Flame.RandomVelocity=60.0
+		self.Flame.RandomVelocity=50.0
 		self.Flame.Friction=0.05
 		self.Flame.YGravity=-9000.0
 		me.LinkToNode(self.Flame,node)
@@ -5231,7 +5362,7 @@ class Golem_lava (Golem_stone):
 
 	def StopSpit (self,EntityName,EventName):
 		if self.Flame:
-			print "Stopping Flame "+self.Flame.Name
+			# print "Stopping Flame "+self.Flame.Name+" at time " + `Bladex.GetTime()`
 			self.Flame.DeathTime=Bladex.GetTime()
 			self.Flame= None
 
@@ -5287,9 +5418,6 @@ class Golem_ice (Golem_stone):      ### Proper implementation of Ice Golem. Need
 			self.ag.SetAuraGradient(2, 0.9, 1.0, 1.0, 0.2, 0.1, 0.4, 0.8, 1.0, 0.0, 0.8)
 			self.ag.SetAuraActive(1)
 		
-		me.AddAnmEventFunc("StoneAppears", self.StoneAppearsHandler)
-		me.OnStepFunc = darfuncs.QuakeStep
-		self.NoFXOnHit= TRUE
 		me.Alpha=0.6
         
 

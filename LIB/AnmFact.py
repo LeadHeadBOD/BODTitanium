@@ -9,6 +9,7 @@
 ##||| * Barbarian - normalized running and strafing speed (facing and non-facing) across all weapon types.
 ##||| * Chaos Knight - Sped up pain animations to make him less prone to stunlock at low health.
 ##||| * Lesser Demon - Slight speed up to pain animations to make them less prone to stunlock.
+##||| * Great Demon - minor changes, added backattack
 ##\\\ 
 
 
@@ -937,6 +938,7 @@ def AnmFactDwarf():
 	#Ejemplo de golpes -> Faltan muchos!
 	Bladex.AddTranTime("Dwf","g_08","g_01",0.1)
 	Bladex.AddTranTime("Dwf","g_08","g_02",0.05)
+	# Bladex.AddTranTime("Dwf","g_02","g_05",0.2)		# Sharp axe
 
 
 	Bladex.AddTranTime("Dwf","SNK","WLK",0.2)
@@ -1446,6 +1448,7 @@ def AnmFactLittleDemon():
 
 def AnmFactGreatDemon():
 	Bladex.AddTranTime("Gdm","","g_01",0.5, 0)
+	Bladex.AddTranTime("Gdm","g_01","",0.3, 0)
 	Bladex.AddTranTime("Gdm","","appears",0.5, 0)
 	Bladex.AddTranTime("Gdm","","g_12",0.5, 0)
 	Bladex.AddTranTime("Gdm","","g_claw",0.5, 0)
@@ -1458,8 +1461,9 @@ def AnmFactGreatDemon():
 	Bladex.SetAnimationFactor("Gdm_g_spitball",1.8)
 	Bladex.SetAnimationFactor("Gdm_g_spit_around",1.9)
 	Bladex.SetAnimationFactor("Gdm_g_01",4.1)
+	Bladex.SetAnimationFactor("Gdm_g_back",2.4)		# Add -LeadHead
 	Bladex.SetAnimationFactor("Gdm_g_12",1.6)
-	Bladex.SetAnimationFactor("Gdm_g_quake",1.4)
+	Bladex.SetAnimationFactor("Gdm_g_quake",1.6)	# Sped up from 1.4	-LeadHead
 
 #
 # Salamander
@@ -1617,6 +1621,7 @@ def AnmFactGolem():
 		Bladex.SetAnimationFactor("Glm_g_21",1.25)
 		Bladex.SetAnimationFactor("Glm_g_31",1.25)
 		Bladex.SetAnimationFactor("Glm_1tw",1.25)
+		Bladex.SetAnimationFactor("Glm_g_spit",1.25)	# add
 		
 		Bladex.AddTranTime("Glm","","",0.4) #last thing
 		done_golem=1

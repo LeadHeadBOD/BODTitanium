@@ -3854,7 +3854,7 @@ def Init():
     Bladex.AddAnmEvent("Glm_g_1tw","StoneAppears",0.25)
     Bladex.AddAnmEvent("Glm_g_1tw","ThrowLeftEvent",0.54)
     Bladex.AddAnmEvent("Glm_g_spit","Spit",0.361)           # Changed    
-    Bladex.AddAnmEvent("Glm_g_spit","Stop_Spit",0.855)      #
+    Bladex.AddAnmEvent("Glm_g_spit","Stop_Spit",0.715)      #
     Bladex.AddAnmEvent("Glm_rlx_no","HitInitialItp",0.159)
     Bladex.AddAnmEvent("Glm_rlx_no","HitFinalItp",0.578)
 

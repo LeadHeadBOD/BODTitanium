@@ -2,7 +2,7 @@
 ##||| AuxFuncs.PY TITANIUM
 ##||| Change list:
 ##||| * Add func GetDynamicFires()
-##||| * 
+##||| * Add func FadeAndScaleV2 - allows parallel funcs and runs at 60fps
 ##||| * 
 ##\\\ 
 
@@ -513,6 +513,7 @@ def FadeAndScaleGrad(obj_name, time):
 			obj.RemoveFromWorld()
 
 def FadeAndScale(obj_name, pos, init_alpha, end_alpha, alpha_acc, init_scl, end_scl, scl_acc, time, ang_var=0, destroy=0, axis=(0, 0, 1)):
+	print "~~~WARNING~~~ starting old FadeAndScale"
 	obj=Bladex.GetEntity(obj_name)
 	obj.Alpha=init_alpha
 	obj.Scale=init_scl
@@ -535,6 +536,60 @@ def FadeAndScale(obj_name, pos, init_alpha, end_alpha, alpha_acc, init_scl, end_
 	obj.TimerFunc=FadeAndScaleGrad
 	obj.SubscribeToList("Timer30")
 
+
+### Titanium func - supports parallel funcs and runs at 60fps ###
+def FadeAndScaleV2(obj_name, pos, init_alpha, end_alpha, alpha_acc, init_scl, end_scl, scl_acc, time, ang_var=0, destroy=0, axis=(0, 0, 1), WhileSclFunc="", WhileSclArgs=(), EndSclFunc="", EndSclArgs=()):
+	print "starting FadeAndScale V2"
+	obj=Bladex.GetEntity(obj_name)
+	obj.Alpha=init_alpha
+	obj.Scale=init_scl
+	obj.Position=pos
+	InitDataField.Initialise(obj)
+	obj.Data.AuxFuncsData= ObjectAuxFuncsData()
+	obj.Data.AuxFuncsData.InitAlpha=init_alpha
+	obj.Data.AuxFuncsData.EndAlpha=end_alpha
+	obj.Data.AuxFuncsData.AlphaAcc=alpha_acc*2.0*(end_alpha-init_alpha)/time**2
+	obj.Data.AuxFuncsData.AlphaInitVel=(end_alpha-init_alpha-alpha_acc*(end_alpha-init_alpha))/time
+	obj.Data.AuxFuncsData.InitScale=init_scl
+	obj.Data.AuxFuncsData.EndScale=end_scl
+	obj.Data.AuxFuncsData.ScaleAcc=scl_acc*2.0*(end_scl-init_scl)/time**2
+	obj.Data.AuxFuncsData.ScaleInitVel=(end_scl-init_scl-scl_acc*(end_scl-init_scl))/time
+	obj.Data.AuxFuncsData.AngleVar=ang_var
+	obj.Data.AuxFuncsData.Axis=axis
+	obj.Data.AuxFuncsData.WhileSclFunc=WhileSclFunc
+	obj.Data.AuxFuncsData.WhileSclArgs=WhileSclArgs
+	obj.Data.AuxFuncsData.EndSclFunc=EndSclFunc
+	obj.Data.AuxFuncsData.EndSclArgs=EndSclArgs
+	obj.Data.AuxFuncsData.DestroyOnEnd=destroy
+	obj.Data.AuxFuncsData.InitTime=Bladex.GetTime()
+	obj.Data.AuxFuncsData.TotalTime=time
+	obj.TimerFunc=FadeAndScaleGradV2
+	obj.SubscribeToList("Timer60")
+
+
+def FadeAndScaleGradV2(obj_name, time):
+	obj=Bladex.GetEntity(obj_name)
+	curr_time=Bladex.GetTime()-obj.Data.AuxFuncsData.InitTime
+	obj.Alpha=obj.Data.AuxFuncsData.InitAlpha+obj.Data.AuxFuncsData.AlphaInitVel*curr_time+0.5*obj.Data.AuxFuncsData.AlphaAcc*curr_time**2
+	obj.Scale=obj.Data.AuxFuncsData.InitScale+obj.Data.AuxFuncsData.ScaleInitVel*curr_time+0.5*obj.Data.AuxFuncsData.ScaleAcc*curr_time**2
+	if obj.Data.AuxFuncsData.WhileSclFunc:
+		apply(obj.Data.AuxFuncsData.WhileSclFunc, obj.Data.AuxFuncsData.WhileSclArgs)
+	if obj.Data.AuxFuncsData.AngleVar:
+		x, y, z=obj.Data.AuxFuncsData.Axis
+		ang=whrandom.uniform(-obj.Data.AuxFuncsData.AngleVar, obj.Data.AuxFuncsData.AngleVar)
+		obj.RotateRel(0, 0, 0, x, y, z, ang)
+	if curr_time>=obj.Data.AuxFuncsData.TotalTime:
+		obj.Alpha=obj.Data.AuxFuncsData.EndAlpha
+		obj.Scale=obj.Data.AuxFuncsData.EndScale
+		obj.RemoveFromList("Timer60")
+		obj.TimerFunc=""
+		if obj.Data.AuxFuncsData.EndSclFunc:
+			apply(obj.Data.AuxFuncsData.EndSclFunc, obj.Data.AuxFuncsData.EndSclArgs)
+		if obj.Data.AuxFuncsData.DestroyOnEnd==DESTROY_METHOD_BIN:
+			obj.SubscribeToList("Pin")
+		elif obj.Data.AuxFuncsData.DestroyOnEnd==DESTROY_METHOD_REMOVE:
+			obj.RemoveFromWorld()
+### TiFunc end ###
 
 def ScaleObjectV2Grad(obj_name, time):
 	obj=Bladex.GetEntity(obj_name)
