@@ -4,7 +4,7 @@
 ##||| * Added automatic default spark-type parser.
 ##||| * Added dirt for grass and earth impacts on world.
 ##||| * Wood shields will now throw wood sparks.
-##||| 
+##||| * Cristal now uses unique sound name to avoid conflict with the one Materials.py
 ##\\\ 
 
 import Bladex
@@ -247,7 +247,7 @@ def ThrowSparksShield(hit_entity, hitting_entity, xhit_point, yhit_point, zhit_p
 		Reference.DefaultObjectData[hit_ent.Kind][3].Play(xhit_point, yhit_point, zhit_point, 0)
 	else:
 		if datos_esc[0]==Reference.OBJ_WEAPON:
-			if Reference.GiveWeaponFlag(hit_entity)<>Reference.W_FLAG_1H:
+			if Reference.GiveWeaponFlag(hit_entity)!=Reference.W_FLAG_1H:
 				Reference.DefaultObjectData[hit_ent.Kind][5][6].Play(xhit_point, yhit_point, zhit_point, 0)
 
 	VictimName=hit_ent.Parent
@@ -316,7 +316,7 @@ def MakeShield(obj_name):
 		esc.Height=2000
 		esc.Radius=750
 		if datos_esc[0]==Reference.OBJ_STANDARD or datos_esc[0]==Reference.OBJ_WEAPON:
-			if Reference.GiveWeaponFlag(obj_name)<>Reference.W_FLAG_1H:
+			if Reference.GiveWeaponFlag(obj_name)!=Reference.W_FLAG_1H:
 				esc.Cone=datos_esc[5][1]
 				esc.Height=datos_esc[5][2]
 				esc.Radius=datos_esc[5][3]
@@ -441,17 +441,26 @@ def SectorThrowWater(sector_index, entity_name, xhit_point, yhit_point, zhit_poi
 	Aguita1.DeathTime=Bladex.GetTime()+0.10
 	Aguita1.Reflects=0
 
-	Aguita2=Bladex.CreateEntity("Cristales","Entity Particle System Dobj", 0, 0, 0)
-	Aguita2.ObjectName=entity_name
-	Aguita2.ParticleType= "Splash"
-	Aguita2.PPS= 1024
-	Aguita2.YGravity= 4500.0
-	Aguita2.Friction= 0.1
-	Aguita2.RandomVelocity= 13.0
-	Aguita2.Time2Live= 64
-	Aguita2.DeathTime= Bladex.GetTime()+0.2
-	Aguita2.Reflects=0
+	if not Bladex.GetEntity(entity_name).Person:        # Prevents unnecessary particle entity creation which cannot be assigned        -LeadHead
+		Aguita2=Bladex.CreateEntity("Cristales","Entity Particle System Dobj", 0, 0, 0)
+		Aguita2.ObjectName=entity_name
+		Aguita2.ParticleType= "Splash"
+		Aguita2.PPS= 1024
+		Aguita2.YGravity= 4500.0
+		Aguita2.Friction= 0.1
+		Aguita2.RandomVelocity= 13.0
+		Aguita2.Time2Live= 64
+		Aguita2.DeathTime= Bladex.GetTime()+0.2
+		Aguita2.Reflects=0
+   
+"""
+def SectorThrowLava(sector_index, entity_name, xhit_point, yhit_point, zhit_point, ximpulse, yimpulse, zimpulse, x_norm, y_norm, z_norm, material):
+    pass
     
+def SectorThrowAcid(sector_index, entity_name, xhit_point, yhit_point, zhit_point, ximpulse, yimpulse, zimpulse, x_norm, y_norm, z_norm, material):
+    pass
+"""
+
 ## New dirt impacts -LeadHead
 ## Experimental, might remove them if I can't get them to look perfect.
 
@@ -538,7 +547,7 @@ def SetSectorOnHitFuncs():
 	GolpeMetal= Bladex.CreateSound('../../Sounds/GOLPE-ARMADUR-1.wav', 'GolpeMetal')
 	GolpeMetal.SetPitchVar(1, -8000, 8000, 0, 0)
 
-	GolpeCristal= Bladex.CreateSound('../../Sounds/golpe-cristal-4.wav', 'GolpeCristal')
+	GolpeCristal= Bladex.CreateSound('../../Sounds/golpe-cristal-4.wav', 'GolpeCristalWorld')
 	GolpeCristal.SetPitchVar(1, -8000, 8000, 0, 0)
 
 
@@ -556,6 +565,7 @@ def SetSectorOnHitFuncs():
 	Reference.MaterialOnHitInfo['Barro']=        [None, None]
 	Reference.MaterialOnHitInfo['Water']=        [GolpeAgua, SectorThrowWater]
 	Reference.MaterialOnHitInfo['Metal']=        [GolpeMetal, SectorThrowSparks]
+	Reference.MaterialOnHitInfo['cristal']=      [GolpeCristal, None]
 	Reference.MaterialOnHitInfo['Cristal']=      [GolpeCristal, None]
 
 	if netgame.GetNetState() == 0:
