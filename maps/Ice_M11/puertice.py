@@ -2,6 +2,7 @@
 ##||| Ice_M11/puertice.PY TITANIUM
 ##||| * Fixed Minorx not having default deadfunc being executed
 ##||| * Restored missing elevator sound
+##||| * Removed duplicate sound assignment for Minorx
 ##\\\ 
 
 import Doors
@@ -416,7 +417,6 @@ garrote=Bladex.CreateEntity("IceMinGarropin1","Hachacarnicero",0,0,0,"Weapon")
 Minorx=Bladex.CreateEntity("Minorx","Minotaur",86727, -874, 2561,"Person")
 Minorx.Angle = 2.8
 Minorx.Level = 12
-AniSound.AsignarSonidosMinotaur("Minorx")
 
 EnemyTypes.EnemyDefaultFuncs(Minorx)
 Actions.TakeObject(Minorx.Name,"IceMinGarropin1")

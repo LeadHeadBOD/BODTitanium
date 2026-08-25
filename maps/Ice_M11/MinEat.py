@@ -2,6 +2,7 @@
 ##||| Ice_M11/MinEat.PY TITANIUM
 ##||| Change list:
 ##||| * Disabled collision on meat so the scene actually works
+##||| * Removed duplicate sound assignment to Mino
 ##\\\ 
 
 import EnemyTypes
@@ -65,7 +66,6 @@ garropineat=Bladex.CreateEntity("MinGarropinEat","Hachacarnicero",0,0,0,"Weapon"
 Mino=Bladex.CreateEntity("MinoEat","Minotaur",78400,-1200,18000,"Person")
 Mino.Angle = 2.8
 Mino.Level=lvl_control.GiveLevel(3,7)
-AniSound.AsignarSonidosMinotaur("MinoEat")
 EnemyTypes.EnemyDefaultFuncs(Mino)
 Mino.DamageFunc = None
 Mino.Deaf = 1

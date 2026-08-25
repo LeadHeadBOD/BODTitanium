@@ -96,7 +96,7 @@ Actions.SetBurnable("EnricBarril6",BoxBurnTime,BoxDestroyTime)
 
 ############BARRILES Y CAJAS A UN LADO DEL PUENTE LEVADIZO
 
-o=Bladex.CreateEntity("CAJent1","Barril",-33521.817231,9072.546587,65966.397684opps,"Physic")
+o=Bladex.CreateEntity("CAJent1","Barril",-33521.817231,9072.546587,65966.397684,"Physic")
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 pan=Breakings.CreateHiddenObject("pan2", "Paletilla",1.2,(0.0,0.0,0.0),(0.5,0.5,0.5,-0.5))
