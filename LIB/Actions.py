@@ -15,6 +15,7 @@
 ##||| * No longer will draw shield when have a two-handed weapon on InstanAttack
 ##||| * DropRelease --> added "DropLeft2Event", called from Damage.
 ##||| * Added ability for NPCs to pick up non-1handed weapons without crashing the game (see TakeObject)
+##||| * NPC arrows now make a sound when flying by player
 ##\\\ 
 
 import Bladex
@@ -40,6 +41,8 @@ import Select
 import Netval
 import Torchs
 import ItemTypes
+
+import whrandom
 
 #
 # Fade out values -> For Enric
@@ -2968,10 +2971,15 @@ def EndDrawBowEventHandler(EntityName, EventName):
 			# Release the arrow
 			arrow.ExcludeHitFor(me)
 			arrow.PutToWorld()
+			InitDataField.Initialise(arrow)
 
 			# Let the arrow fly along its own Z axis
 			if me.Data.NPC:
 				vx,vy,vz= me.AimVector
+				
+				# Make arrows make a fly-pass sound
+				arrow.TimerFunc = NpcArrowTimerFunc
+				arrow.SubscribeToList("Timer20")
 			else:
 				vx,vy,vz= arrow.Rel2AbsVector(0,0,-40000)
 			arrow.Fly(vx,vy,vz)
@@ -2980,7 +2988,7 @@ def EndDrawBowEventHandler(EntityName, EventName):
 			arrow.MessageEvent(MESSAGE_START_TRAIL,0,0)
 
 			# Arrange for the MESSAGE_STOP_WEAPON to be sent
-			InitDataField.Initialise(arrow)
+			
 			Bladex.AddScheduledFunc(Bladex.GetTime()+2.0, ThrownWeaponStopFunc,(arrow.Name,),"Stop Weapon: "+arrow.Name)
 			arrow.Data.PrevInflictHitFunc= arrow.InflictHitFunc
 			arrow.InflictHitFunc= ThrownWeaponInflictHitFunc
@@ -3003,6 +3011,26 @@ def EndDrawBowEventHandler(EntityName, EventName):
 	#print EntityName+" EndDrawBowEventHandler:b3"
 	me.LaunchAnmType ("b3")
 
+
+def NpcArrowTimerFunc(entity, time):
+	arrow = Bladex.GetEntity(entity)
+	if B3DLib.GetXZDistance(entity,"Player1") < 5200:
+		flypass_sound=Bladex.CreateEntity(arrow.Name+"PassSound", "Entity Sound", 0, 0, 0)
+		soundVar = whrandom.randint(1,3)
+		pitchVar = whrandom.uniform(0.8, 1.2)
+		flypass_sound.SetSound("../../Sounds/flecha_pass"+`soundVar`+".wav")
+		flypass_sound.MinDistance=4000
+		flypass_sound.MaxDistance=9000
+		flypass_sound.Pitch=pitchVar
+		arrow.Link(flypass_sound)
+		flypass_sound.PlaySound(0)
+		arrow.TimerFunc = None
+		arrow.RemoveFromList("Timer20")
+		
+	if (arrow.Velocity[0] or arrow.Velocity[2]) == 0:
+		arrow.TimerFunc = None
+		arrow.RemoveFromList("Timer20")
+		
 
 def CheckRefireBowEventHandler(EntityName, EventName):
 	me= Bladex.GetEntity(EntityName)
