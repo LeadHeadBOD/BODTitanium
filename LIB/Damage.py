@@ -15,6 +15,7 @@
 ##||| * Rebalanced all player dodge attacks to make their spam less effective
 ##||| * NPCs won't drop 2handed weapons if shield in hand anymore
 ##||| * Special effect is now applied to shield instead of parent entity if full damage is blocked
+##||| * Invincible entities no longer make blood
 ##\\\ 
 
 import Reference
@@ -1627,18 +1628,19 @@ def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone
 		
 		effective_damage= effective_damage + special_damage
 	
-	if(not Shielded) and (DamageType=="Impale" or DamageType=="Slash") and Bladex.GetBloodLevel()>0:
-		me.Data.TakeBleedingImpact= effective_damage
-	elif(me.Kind in Blood.DustDeathEntities) and DamageType=="Crush": ### Sparks and dust on crushing damage -LeadHead
-		me.Data.TakeBleedingImpact= effective_damage
-	else:
-		me.Data.TakeBleedingImpact= 0
-	
 	prevLife=me.Life
-	
-	if not me.Data.Invincibility:
+	if not me.Data.Invincibility:		# This has been moved and subsequent funcs nested, to prevent blood on invincible enemies	-LeadHead
 		Bladex.PlayHaptic(1)
 		me.Life= me.Life - effective_damage
+		
+		if(not Shielded) and (DamageType=="Impale" or DamageType=="Slash") and Bladex.GetBloodLevel()>0:
+			me.Data.TakeBleedingImpact= effective_damage
+		elif(me.Kind in Blood.DustDeathEntities) and DamageType=="Crush": ### Sparks and dust on crushing damage -LeadHead
+			me.Data.TakeBleedingImpact= effective_damage
+		else:
+			me.Data.TakeBleedingImpact= 0
+	
+
 			
 	if effective_damage>0:
 		me.Data.Mutilate=  me.Life <= 0 and (DamageType=="Slash" or (DamageType=="Crush" and me.Kind=="Skeleton")) ### Skeletons now can be mutilated by crushing damage -LeadHead
