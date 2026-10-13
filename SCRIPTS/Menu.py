@@ -88,6 +88,26 @@ def PlaySound(Chound):
 #Bladex.AddMusicEventMP3( "MenuMusic",  "../../Sounds/abismo-fin1.MP3",     2.0, 1.0, 1.0, 10001, 1, -1 )
 #-----------------------------------------
 
+# -----------------------------------------
+# by Sryml: start
+# -----------------------------------------
+
+def GetMenuWidget(name, Frame=None):
+    if not _MainMenu:
+        return (None, -1)
+    CurrFrame = not Frame and _MainMenu.MenuStack.Top() or Frame
+
+    for i in range(len(CurrFrame.MenuItems)):
+        item = CurrFrame.MenuItems[i]
+        if hasattr(item, "MenuDescr") and item.MenuDescr["Name"] == name:
+            return (item, i)
+        elif hasattr(item, "Menudesc") and item.Menudesc["Name"] == name:
+            return (item, i)
+    return (None, -1)
+# -----------------------------------------
+# by Sryml: end
+# -----------------------------------------
+
 def BackMenu(option):
 	_MainMenu.DeActivateMenuItem()
 
@@ -813,6 +833,7 @@ def SetDeFacingValue(v):
   i = Bladex.SetAecGap(v)
   SaveConfiguration()
   return  i
+
 
 
 #Inicio de TravelBook
@@ -2335,6 +2356,18 @@ Options_Menu = {"Name":MenuText.GetMenuText("OPTIONS"),
                                     ]
 
                        }
+"""
+if "Casa" == Bladex.GetCurrentMap():
+  Options_Menu["ListDescr"].insert(7,
+			   {"Name":MenuText.GetMenuText("LANGUAGE:"),
+					  "VSep":2,
+					  "Font":MenuFontBig,
+					  "Kind":MenuWidget.B_MenuItemOption,
+					  "Options":languagesTranslated,
+					  "Command": SetLanguage,
+					  "SelOptionFunc":GetLanguage
+   })
+"""
 
 if(Bladex.IsRunningOnHandheldDevice() == 0):
     Options_Menu["ListDescr"][0]["ListDescr"][0]["VSep"] = 15

@@ -201,14 +201,13 @@ def NoExitMenu(val):
 
 def Show(type = 0,r = 255,g = 255,b = 255):
     import Menu
-    Menu.SndNewMenu.Volume = 0          # Added
-    Menu.SndCorreGema.Volume = 0        # -LeadHead
     Menu.ActivateMenu("credits")
-    
-    ### PLAGUE: This is bad - need to figure out a way to immediately trigger the credits without such hacks
-    Menu._MainMenu.MenuPrevItem()
-    Menu._MainMenu.MenuPrevItem()
-    Menu._MainMenu.ActivateMenuItem()
+
+    # -Sryml
+    frame = Menu._MainMenu.MenuStack.Top()
+    w, idx = Menu.GetMenuWidget("CREDITS", frame)
+    frame.SetFocus_Idx(idx)
+    w.ActivateItem(1)
 
     Menu.EscapeFunction = NoExitMenu
 
