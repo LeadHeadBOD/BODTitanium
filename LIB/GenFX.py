@@ -227,6 +227,7 @@ class WeaponFX:
 			ObjStore.ObjectsStore[self.ObjId]=self
 
 
+import BladeTi
 
 def AddWeaponFX(WeaponName, data):
 	weapon=Bladex.GetEntity(WeaponName)
@@ -276,6 +277,9 @@ def AddWeaponFX(WeaponName, data):
 		print "No hay efecto definido para este tipo de arma!"
 		return
 	data.WeaponFX=WeaponFX(WeaponName, auraparams, auragradient, prtldata, lightdata)
+	if lightdata:
+		BladeTi.GiveShadowMask(weapon)
+
 
 ###			 	  ###
 # Multi-part object #
@@ -294,25 +298,25 @@ def CreateMultiParts(objName):
 		type_part = kind+"Pieza"
 		partposrel= [(-176.01,0,413.108), (179.492,-58.747,444.756), (179.494,0,413.737), (-179.494,58.747,444.756), (0,0,318.22), (0,0,0)]
 		n_parts   = (0, 1, 2, 3, 4, 5)
-		partsAlph = (0.7, 0.7, 0.7, 0.7, 0.7, 1.0)
+		partsAlph = (0.61, 0.59, 0.68, 0.68, 0.65, 1.0)
 		partsIlum = (0.2, 0.2, 0.2, 0.2, 0.2, 0.05)
 	elif kind == ("IceSword"):
 		type_part = kind+"Part"
 		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
 		n_parts   = (0, 1)
-		partsAlph = (1.0, 0.7)
+		partsAlph = (1.0, 0.60)
 		partsIlum = (0.05, 0.2)
 	elif kind == ("IceWand"):
 		type_part = kind+"Part"
 		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
 		n_parts   = (0, 1)
-		partsAlph = (1.0, 0.7)
+		partsAlph = (1.0, 0.60)
 		partsIlum = (0.05, 0.2)
 	elif kind == ("IceAxe"):
 		type_part = kind+"Part"
 		partposrel= [(0.0, 0.0, 0.0), (0.0, 0.0, 0.0)]
 		n_parts   = (0, 1)
-		partsAlph = (1.0, 0.7)
+		partsAlph = (1.0, 0.60)
 		partsIlum = (0.05, 0.2)
 	elif kind in ("TaiSword", "Baston3","Varita2","Varita5"):
 		print "error in GenFX.CreateMultiParts() - kind not implement!"
@@ -342,7 +346,7 @@ def CreateMultiParts(objName):
 # All of this will have to be reworked at some point for a couple reasons.
 # * need a way to callback individual parts for scripting
 # * shadow control over individual parts (for example torches and "Baston3")
-# * do not send sector messages on the parts
+# * scale with parent entity
 ###
 
 #############################################
@@ -504,22 +508,22 @@ def PersonMagicallyAppearing():
 	char.RasterMode="Read"
 	Bladex.AddScheduledFunc(time+TimeEffect, ChangeRasterMode, ("Player1", "Full"))
 	AuxFuncs.FadeObject("Player1", 0.01, 1.0, 2.0)
-	if char.InvLeft<>"":
+	if char.InvLeft!="":
 		obj=Bladex.GetEntity(char.InvLeft)
 		obj.RasterMode="Read"
 		Bladex.AddScheduledFunc(time+TimeEffect, ChangeRasterMode, (char.InvLeft, "Full"))
 		AuxFuncs.FadeObject(char.InvLeft, 0.01, obj.Alpha, TimeEffect)
-	if char.InvRight<>"":
+	if char.InvRight!="":
 		obj=Bladex.GetEntity(char.InvRight)
 		obj.RasterMode="Read"
 		Bladex.AddScheduledFunc(time+TimeEffect, ChangeRasterMode, (char.InvRight, "Full"))
 		AuxFuncs.FadeObject(char.InvRight, 0.01, obj.Alpha, TimeEffect)
-	if char.InvLeftBack<>"":
+	if char.InvLeftBack!="":
 		obj=Bladex.GetEntity(char.InvLeftBack)
 		obj.RasterMode="Read"
 		Bladex.AddScheduledFunc(time+TimeEffect, ChangeRasterMode, (char.InvLeftBack, "Full"))
 		AuxFuncs.FadeObject(char.InvLeftBack, 0.01, obj.Alpha, TimeEffect)
-	if char.InvRightBack<>"":
+	if char.InvRightBack!="":
 		obj=Bladex.GetEntity(char.InvRightBack)
 		obj.RasterMode="Read"
 		Bladex.AddScheduledFunc(time+TimeEffect, ChangeRasterMode, (char.InvRightBack, "Full"))
@@ -552,19 +556,19 @@ def PersonMagicallyDisappearing():
 	char.Alpha=1.0
 	char.RasterMode="Read"
 	AuxFuncs.FadeObject("Player1", 1.0, 0.01, TimeEffect)
-	if char.InvLeft<>"":
+	if char.InvLeft!="":
 		obj=Bladex.GetEntity(char.InvLeft)
 		obj.RasterMode="Read"
 		AuxFuncs.FadeObject(char.InvLeft, obj.Alpha, 0.01, TimeEffect)
-	if char.InvRight<>"":
+	if char.InvRight!="":
 		obj=Bladex.GetEntity(char.InvRight)
 		obj.RasterMode="Read"
 		AuxFuncs.FadeObject(char.InvRight, obj.Alpha, 0.01, TimeEffect)
-	if char.InvLeftBack<>"":
+	if char.InvLeftBack!="":
 		obj=Bladex.GetEntity(char.InvLeftBack)
 		obj.RasterMode="Read"
 		AuxFuncs.FadeObject(char.InvLeftBack, obj.Alpha, 0.01, TimeEffect)
-	if char.InvRightBack<>"":
+	if char.InvRightBack!="":
 		obj=Bladex.GetEntity(char.InvRightBack)
 		obj.RasterMode="Read"
 		AuxFuncs.FadeObject(char.InvRightBack, obj.Alpha, 0.01, TimeEffect)
@@ -744,7 +748,7 @@ def ModifyParticles(prtl_sys, new_pps, new_rnd_vel, new_normal_vel, new_friction
 	prtl_sys.NormalVelocity=new_normal_vel
 	prtl_sys.RandomVelocity=new_rnd_vel
 	prtl_sys.Friction=new_friction
-	if new_ygravity<>-1:
+	if new_ygravity!=-1:
 		prtl_sys.YGravity=new_ygravity
 	if new_death_time:
 		prtl_sys.DeathTime=Bladex.GetTime()+new_death_time
