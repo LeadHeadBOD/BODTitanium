@@ -2,6 +2,7 @@
 ##||| SolidMask.PY TITANIUM
 ##||| Change list:
 ##||| * Added the following props: Monjema, TronoEscarabeu
+##||| * New prop - MetalBlocker
 ##\\\ 
 
 EX_PERSON = 1
@@ -12,6 +13,7 @@ EX_EYE    = 32
 def Init():
     import Bladex
 
+    Bladex.SetSolidMask('MetalBlocker',0)       # New -LeadHead
     Bladex.SetSolidMask('Adoquinpulsador2',0)
     Bladex.SetSolidMask('Adoquinpulsador',0)
     Bladex.SetSolidMask('Altar',0)

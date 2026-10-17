@@ -9,6 +9,7 @@
 ##||| * Added missing shields (KingShield, Barbarian Shield).
 ##||| * Added some other misc items to have a default material.
 ##||| * Added all missing weapons (amazon stuff, some special weapons, etc.)
+##||| * Added Metal blocker for footsteps and stuff
 ##\\\ 
 
 
@@ -61,6 +62,9 @@ def Init():
     s.MaxDistance=15000
     s.SetPitchVar(1, -8000, 8000, 0, 0)
     mat=Bladex.CreateMaterial('metal mediano')
+    mat.HitSound=s
+    
+    mat=Bladex.CreateMaterial("Metal")
     mat.HitSound=s
 
     s=Bladex.CreateSound('../../sounds/golpe-metal-pesado.wav', 'GolpeMetalPesado')
@@ -184,7 +188,6 @@ def Init():
     Bladex.SetDefaultMaterial('PuenteFernando', 'madera ligera')
     Bladex.SetDefaultMaterial('Rama1', 'madera ligera')
     Bladex.SetDefaultMaterial('Rama2', 'madera ligera')
-    Bladex.SetDefaultMaterial('Silla', 'madera ligera')
     Bladex.SetDefaultMaterial('VigaPlana', 'madera ligera')
     Bladex.SetDefaultMaterial('Plataforma', 'madera ligera')             # Added for stepsounds
     Bladex.SetDefaultMaterial('PlataformaRail', 'madera ligera')         # 
@@ -253,6 +256,7 @@ def Init():
     Bladex.SetDefaultMaterial('Mesita', 'madera mediana')
     Bladex.SetDefaultMaterial('Palanca2', 'madera mediana')
     Bladex.SetDefaultMaterial('Taburete', 'madera mediana')
+    Bladex.SetDefaultMaterial('Silla', 'madera mediana')         # Previously was "madera ligera"
     Bladex.SetDefaultMaterial('Timon', 'madera mediana')
     Bladex.SetDefaultMaterial('Escudo9', 'madera mediana')      # Added -LeadHead
     Bladex.SetDefaultMaterial('Bichero', 'madera mediana')      #
@@ -281,8 +285,8 @@ def Init():
     Bladex.SetDefaultMaterial('Camabad', 'madera pesada')                #      -LeadHead
 
 
-
-
+    # *** Metal generic (used for footsteps) -LeadHead  ***
+    Bladex.SetDefaultMaterial('MetalBlocker', 'Metal')
     # *** Metal ligero   ***
     Bladex.SetDefaultMaterial('Antorcha2', 'metal ligero')
     Bladex.SetDefaultMaterial('Amuletofantasma', 'metal ligero')
@@ -327,8 +331,14 @@ def Init():
     Bladex.SetDefaultMaterial('KatarMoon', 'metal ligero')     #
     Bladex.SetDefaultMaterial('Brazalete', 'metal ligero')     #
     ### Metal shield pieces
-    Bladex.SetDefaultMaterial('Escudo5Pieza1', 'metal ligero')     #
-    Bladex.SetDefaultMaterial('Escudo5Pieza2', 'metal ligero')     #        -LeadHead
+    Bladex.SetDefaultMaterial('Escudo5Pieza1', 'metal ligero')     # comet shield
+    Bladex.SetDefaultMaterial('Escudo5Pieza2', 'metal ligero')     #        
+    Bladex.SetDefaultMaterial('Escudo4Pieza1', 'metal ligero')     # Wall Shield
+    Bladex.SetDefaultMaterial('Escudo4Pieza2', 'metal ligero')     #        
+    # Bladex.SetDefaultMaterial('Escudo5Pieza1', 'metal ligero')     # 
+    # Bladex.SetDefaultMaterial('Escudo5Pieza2', 'metal ligero')     #        
+    # Bladex.SetDefaultMaterial('Escudo5Pieza1', 'metal ligero')     # 
+    # Bladex.SetDefaultMaterial('Escudo5Pieza2', 'metal ligero')     #        -LeadHead
 
 
 
