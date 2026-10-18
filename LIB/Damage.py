@@ -16,6 +16,7 @@
 ##||| * NPCs won't drop 2handed weapons if shield in hand anymore
 ##||| * Special effect is now applied to shield instead of parent entity if full damage is blocked
 ##||| * Invincible entities no longer make blood
+##||| * Fixed electric bolt entities continuously hitting persons while game is paused
 ##\\\ 
 
 import Reference
@@ -1232,7 +1233,9 @@ def CheckRightHandToDrop(EntityName):
 
 def CalculateDamage(VictimName, AttackerName, WeaponName, DamageType, DamageZone, DamageNode, x, y, z, Shielded):
 	#pdb.set_trace()
-    
+	if Bladex.GetAppMode() == "Menu": # -Sryml
+		return
+		
 	CheckRightHandToDrop(VictimName)		# PLAGUE: shouldn't this be under BasicFuncs.RespondToHit() ?
 
 	# Additive vars set to 0
