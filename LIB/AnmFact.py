@@ -10,6 +10,7 @@
 ##||| * Chaos Knight - Sped up pain animations to make him less prone to stunlock at low health.
 ##||| * Lesser Demon - Slight speed up to pain animations to make them less prone to stunlock.
 ##||| * Great Demon - minor changes, added backattack
+##||| * Troll restored hurt_head anim
 ##\\\ 
 
 
@@ -1169,6 +1170,7 @@ def AnmFactTroll():
 		Bladex.SetAnimationFactor("Trl_hurt_r_leg",5)
 		Bladex.SetAnimationFactor("Trl_hurt_l_leg",5)
 		Bladex.SetAnimationFactor("Trl_hurt_breast",5)
+		Bladex.SetAnimationFactor("Trl_hurt_head",2)		# Add
 					
 		Bladex.SetAnimationFactor("Trl_wlk_no",1.1)
 		Bladex.SetAnimationFactor("Trl_attack_f",1.25) 
@@ -1187,6 +1189,12 @@ def AnmFactTroll():
 		Bladex.AddTranTime("Trl","","g_19",0.2)
 		Bladex.AddTranTime("Trl","","g_18",0.2)
 		Bladex.AddTranTime("Trl","","g_31",0.2)
+		# Bladex.AddTranTime("Trl","","hurt_r_arm",0.15)		# Add
+		# Bladex.AddTranTime("Trl","","hurt_r_leg",0.15)		# 
+		# Bladex.AddTranTime("Trl","","hurt_l_leg",0.15)		#
+		# Bladex.AddTranTime("Trl","","hurt_breast",0.15)		#
+		# Bladex.AddTranTime("Trl","","hurt_head",0.15)		#		-LeadHead
+		
 		done_troll=1
 
 
