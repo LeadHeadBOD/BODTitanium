@@ -18,6 +18,9 @@ which are part of the mesh (.bod) file.
 To overcome this limitation, we create a duplicate entity that is
 linked to the parent. This dupe entity has all of its children deleted.
 
+Creating a dupe is not needed if the entity has a light with
+zero intensity - in that case we just delete the spot entity.
+
 
 ~~~OLD IDEA~~~
 Create new mesh files which don't have any of the anchors/fires/spots, etc.
@@ -39,7 +42,7 @@ for this purpose.
 def GiveShadowMask(ent):
     if ent.Lights and (ent.Lights[0][0]==0):
         AuxFuncs.GetSpot(ent).SubscribeToList("Pin")
-        # if ent.FiresIntensity and (ent.FiresIntensity[0][0]>19):
+        # if ent.FiresIntensity and (ent.FiresIntensity[0][0]>17):
             # while ent.GetNChildren():
                 # Bladex.GetEntity(ent.GetChild(0)).SubscribeToList("Pin")
     else:
@@ -55,8 +58,8 @@ def GiveShadowMask(ent):
         # shmKind = ent.Kind+"_shm"
         shmName = ent.Name+"_shMask"
         shmObj = Bladex.CreateEntity(shmName,ent.Kind,0,0,0)
-            while shmObj.GetNChildren():
-                Bladex.GetEntity(shmObj.GetChild(0)).SubscribeToList("Pin")
+        while shmObj.GetNChildren():
+            Bladex.DeleteEntity(shmObj.GetChild(0))
         shmObj.Orientation = (1.0, 0.0, 0.0, 0.0)
         shmObj.Scale = ent.Scale
         shmObj.Solid = 0
