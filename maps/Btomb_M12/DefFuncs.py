@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Fixed error with broken walking introduced in re-release at the end of the level
 ##||| * Better visual effects for breakable walls/pillars.
+##||| * Vampire death now properly interrupts anims and calls regular ImDeadFunc
 ##\\\ 
 
 import def_class
@@ -74,19 +75,6 @@ def RompeMuroFalso(sector_index, entity_name, px, py, pz,a=0,b=0,c=0,d=0,e=0,f=0
 			dustTriangle("breakDustBarrote1",p0,p1,p2)
 			dustTriangle("breakDustBarrote2",p1,p2,p3)
 
-		"""
-		if ((sectorrompebarroteb.Index == sector_index) and (pz!=0)):
-			sonidoroturamurofalso.Play(340000,1000,-157000, 0)
-			sectorbarrote.DoBreak((600.0, -50.0, -100.0), (30000,-1000,0), (0.0, 0.0, 0.0))
-			sectorrompebarroteb.OnHit=""
-
-		if ((sectorrompebarrotec.Index == sector_index) and (pz!=0)):
-			sonidoroturamurofalso.Play(340000,1000,-157000, 0)
-			sectorbarrote.DoBreak((600.0, -50.0, -100.0), (30000,-1000,0), (0.0, 0.0, 0.0))
-			sectorrompebarrotec.OnHit=""
-		"""
-
-
 		if (sectorrompesecreto.Index == sector_index):
 			sonidoroturamurofalso.Play(342000,0,-148000, 0)
 			sectorsecreto.DoBreak((950.0, -20.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
@@ -115,22 +103,10 @@ def RompeMuroFalso(sector_index, entity_name, px, py, pz,a=0,b=0,c=0,d=0,e=0,f=0
 			dustTriangle("breakDustBarrote21",p0,p1,p2)
 			dustTriangle("breakDustBarrote22",p0,p2,p3)
 
-		"""
-	if ((sectorrompebarrote2b.Index == sector_index) and (pz!=0)):
-		sonidoroturamurofalso.Play(329100,0,-181500, 0)
-		sectorbarrote2.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		sectorrompebarrote2b.OnHit=""
-
-	if ((sectorrompebarrote2c.Index == sector_index) and (pz!=0)):
-		sonidoroturamurofalso.Play(329100,0,-181500, 0)
-		sectorbarrote2.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		sectorrompebarrote2c.OnHit=""
-		"""
-
-	#if ((sectorrompebarrote4.Index == sector_index) and (pz!=0)):
-		#sonidoroturamurofalso.Play(333100,0,-183000)
-		#sectorbarrote4.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
-		#sectorrompebarrote4.OnHit=""
+		#if ((sectorrompebarrote4.Index == sector_index) and (pz!=0)):
+			#sonidoroturamurofalso.Play(333100,0,-183000)
+			#sectorbarrote4.DoBreak((0.0, 0.0, -2.5), (30000,-1000,0), (0.0, 0.0, 0.0))
+			#sectorrompebarrote4.OnHit=""
 
 #*************************************************************************************************
 #*************************************************************************************************
@@ -592,6 +568,8 @@ def MusicaytextoB():
 
 
 def MurioElVamp(entity_name):
+	Drakula = Bladex.GetEntity("Drakula")      # Added, fixes inconsistent death behaviour
+	Drakula.Data.OldImDeadFunc(entity_name)    #       -LeadHead
 	Bladex.AddScheduledFunc(Bladex.GetTime()+0.1,Bladex.TriggerEvent, (33,))
 	global EnCounter
 	global IsEnBucle
@@ -602,6 +580,7 @@ def MurioElVamp(entity_name):
 	per = Bladex.GetEntity(entity_name)
 	AuxFuncs.FadeTo(5.5,24.0)
 	Bladex.DeactivateInput()
+	Scorer.SetVisible(0)    # Add
 	import GotoMapVars
 	Bladex.AddScheduledFunc(Bladex.GetTime()+5.5,GotoMapVars.EndOfLevel,())
 
@@ -618,6 +597,7 @@ def CreaElVampiro():
 def AnimaElVampiro():
 	Drakula = Bladex.GetEntity("Drakula")
 
+	Drakula.Data.OldImDeadFunc = Drakula.ImDeadFunc # Add
 	Drakula.ImDeadFunc  = MurioElVamp
 	Drakula.SetTmpAnmFlags(1,1,1,0,5,1,0)
 	Drakula.Wuea=Reference.WUEA_ENDED
