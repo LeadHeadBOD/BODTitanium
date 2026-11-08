@@ -3,6 +3,8 @@
 ##||| Change list:
 ##||| * Fixed softlock in case you are hit while picking up the blue gem.
 ##||| * Changed sound for acid trap door
+##||| * Orc ambush scene now skippable
+##||| * Spider ambush scene now skippable
 ##\\\ 
 
 import Bladex
@@ -456,7 +458,7 @@ def runSpiders() :
 	Bladex.AddScheduledFunc(time + 4.7, CaeArana,("spiderC",SoundCaida3),"spiderB CaeArana")
 
 	Bladex.AddScheduledFunc(time + 6.0, SoundDesliz.StopSound,(),"SoundDesliz.StopSound")
-	Bladex.AddScheduledFunc(time + 7.0, spidersAttack, (),"spidersAttack")
+	# Bladex.AddScheduledFunc(time + 7.0, spidersAttack, (),"spidersAttack")
 
 	Bladex.AddScheduledFunc(time + 0.0, runSpyders,(),"runSpyders")
 
@@ -466,7 +468,9 @@ def restoreSpdrSceneCam(camera,frame):
 	cam = Bladex.GetEntity("Camera")
 	cam.SetPersonView("Player1")
 	cam.Cut()
-	Bladex.ActivateInput()
+	spidersAttack()			# moved this func here, makes more sense -LeadHead
+	# Bladex.ActivateInput()
+	ScriptSkip.SkipScriptEnd()
 	Scorer.SetVisible(1)
 
 def setSpdrSceneCamC(camera, frame) :
@@ -484,7 +488,8 @@ def setSpdrSceneCamA() :
 	cam = Bladex.GetEntity("Camera")
 	cam.SetMaxCamera("spd_minacamera02.cam",0,50)
 	cam.AddCameraEvent(-1,setSpdrSceneCamB)
-	Bladex.DeactivateInput()
+	# Bladex.DeactivateInput()
+	ScriptSkip.SkipScriptStart("MineSpiders")
 	Scorer.SetVisible(0)
 
 def playSpdrScene()  :
@@ -792,7 +797,8 @@ def enemyGroupOut( ax, az, ay, bx, bz, by, cx, cz, cy ) :
 		if (orksInScene<2) :
 			orkweapon=Bladex.CreateEntity("mineg1ork1espad","Gladius",0,0,0,"Weapon")
 			shield=Bladex.CreateEntity("mineg1ork1escud","Escudo1",0,0,0)
-			Sparks.MakeShield("mineg1ork1escud")
+			ItemTypes.ItemDefaultFuncs (orkweapon)
+			ItemTypes.ItemDefaultFuncs (shield)
 			ork=Bladex.CreateEntity("g1ork1","Ork",ax,az,ay,"Person")
 			ork.Angle=6
 			ork.Level=lvl_control.GiveLevel(1,4)
@@ -810,7 +816,8 @@ def enemyGroupOut( ax, az, ay, bx, bz, by, cx, cz, cy ) :
 		if (orksInScene<2) :
 			orkweapon=Bladex.CreateEntity("mineg1ork2espad","Gladius",0,0,0,"Weapon")
 			shield=Bladex.CreateEntity("mineg1ork2escud","Escudo1",0,0,0)
-			Sparks.MakeShield("mineg1ork2escud")
+			ItemTypes.ItemDefaultFuncs (orkweapon)
+			ItemTypes.ItemDefaultFuncs (shield)
 			ork=Bladex.CreateEntity("g1ork2","Ork",bx,bz,by,"Person")
 			ork.Angle=4.7
 			ork.Level=lvl_control.GiveLevel(1,4)
@@ -828,7 +835,8 @@ def enemyGroupOut( ax, az, ay, bx, bz, by, cx, cz, cy ) :
 		if (orksInScene<2) :
 			orkweapon=Bladex.CreateEntity("mineg1ork3espad","Gladius",0,0,0,"Weapon")
 			shield=Bladex.CreateEntity("mineg1ork3escud","Escudo1",0,0,0)
-			Sparks.MakeShield("mineg1ork3escud")
+			ItemTypes.ItemDefaultFuncs (orkweapon)
+			ItemTypes.ItemDefaultFuncs (shield)
 			ork=Bladex.CreateEntity("g1ork3","Ork",cx,cz,cy,"Person")
 			ork.Angle=4.7
 			ork.Level=lvl_control.GiveLevel(1,4)
@@ -854,7 +862,8 @@ def enemyGroupOut( ax, az, ay, bx, bz, by, cx, cz, cy ) :
 		if (orksInScene<2) :
 			orkweapon=Bladex.CreateEntity("mineg2ork1espad","Gladius",0,0,0,"Weapon")
 			shield=Bladex.CreateEntity("mineg2ork1escud","Escudo1",0,0,0)
-			Sparks.MakeShield("mineg2ork1escud")
+			ItemTypes.ItemDefaultFuncs (orkweapon)
+			ItemTypes.ItemDefaultFuncs (shield)
 			ork=Bladex.CreateEntity("g2ork1","Ork",ax,az,ay,"Person")
 			ork.Angle=0
 			ork.Level=lvl_control.GiveLevel(1,4)
@@ -872,7 +881,8 @@ def enemyGroupOut( ax, az, ay, bx, bz, by, cx, cz, cy ) :
 		if (orksInScene<2) :
 			orkweapon=Bladex.CreateEntity("mineg2ork2espad","Gladius",0,0,0,"Weapon")
 			shield=Bladex.CreateEntity("mineg2ork2escud","Escudo1",0,0,0)
-			Sparks.MakeShield("mineg2ork2escud")
+			ItemTypes.ItemDefaultFuncs (orkweapon)
+			ItemTypes.ItemDefaultFuncs (shield)
 			ork=Bladex.CreateEntity("g2ork2","Ork",bx,bz,by,"Person")
 			ork.Angle=0
 			ork.Level=lvl_control.GiveLevel(1,4)
@@ -889,6 +899,7 @@ def enemyGroupOut( ax, az, ay, bx, bz, by, cx, cz, cy ) :
 		# grupo 2 troll 1
 		if (orksInScene<2) :
 			trollweapon=Bladex.CreateEntity("mineg2TrollGarr","Garropin",0,0,0,"Weapon")
+			ItemTypes.ItemDefaultFuncs (trollweapon)
 			troll=Bladex.CreateEntity("g2Troll","Great_Ork",cx,cz,cy,"Person")
 			troll.Angle=0
 			troll.Level=lvl_control.GiveLevel(1,3)
@@ -1529,7 +1540,8 @@ def StopCameraEmboscada(Camera,Frame):
 	Actions.QuickTurnToFaceEntity("MineAmbushOrk3","Player1")
 
 	Bladex.SetListenerPosition(1)
-	Bladex.ActivateInput()
+	# Bladex.ActivateInput()
+	ScriptSkip.SkipScriptEnd()
 
 def SonidoOrco(orco,sound):
 	ork = Bladex.GetEntity(orco)
@@ -1585,7 +1597,8 @@ def Emboscada2():
 	ambushork3.LaunchAnimation("Ork_3_ambush_mine")
 
 	Bladex.SetListenerPosition(2)
-	Bladex.DeactivateInput()
+	# Bladex.DeactivateInput()
+	ScriptSkip.SkipScriptStart("ambushOrk")
 
 def Emboscada():
 	Emboscada2()

@@ -2,6 +2,7 @@
 ##||| Mine_M5/objs.PY TITANIUM
 ##||| Change list:
 ##||| * Shadowpass
+##||| * Torches are now weapons for proper hitdetection, rather than physic.
 ##\\\ 
 
 import Sparks
@@ -271,7 +272,7 @@ o.FiresIntensity=[ 3 ]
 o.Lights=[ (22.000000,0.031250,(255,160,55)) ]
 """
 
-o=Bladex.CreateEntity("ant1","Antorcha",-40709.598000,-21353.868000,2354.362000,"Physic")
+o=Bladex.CreateEntity("ant1","Antorcha",-40709.598000,-21353.868000,2354.362000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.026177,0.999657,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
@@ -502,7 +503,7 @@ o.Scale=1.000000
 o.Orientation=0.587785,0.809017,0.000000,0.000000
 """
 
-o=Bladex.CreateEntity("ant2","Antorcha",-125160.199000,-13344.122000,1037.024000,"Physic")
+o=Bladex.CreateEntity("ant2","Antorcha",-125160.199000,-13344.122000,1037.024000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.010241,0.077788,-0.026096,0.996576
 o.FiresIntensity=[ 3 ]
@@ -630,7 +631,7 @@ o.Scale=0.811430
 o.Orientation=0.525483,0.525483,-0.473147,0.473147
 
 
-o=Bladex.CreateEntity("ant3","Antorcha",-27170.553000,3986.225000,-286.239000,"Physic")
+o=Bladex.CreateEntity("ant3","Antorcha",-27170.553000,3986.225000,-286.239000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.998630,-0.052336,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
@@ -1898,7 +1899,7 @@ o.Orientation=0.707107,0.707107,0.000000,0.000000
 Sparks.SetStoneSparkling(o.Name)
 
 
-o=Bladex.CreateEntity("antfin","Antorcha",-16056.127000,-12067.391000,-27713.057000,"Physic")
+o=Bladex.CreateEntity("antfin","Antorcha",-16056.127000,-12067.391000,-27713.057000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.906693,-0.002173,-0.414522,0.077939
 o.FiresIntensity=[ 52 ]

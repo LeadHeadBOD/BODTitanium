@@ -1,3 +1,10 @@
+##///
+##||| Mine_back.PY TITANIUM
+##||| Change list:
+##||| * Removed duplicate "atmempty" entry
+##||| * Uses high quality .mp3/.ogg audio where possible
+##\\\ 
+
 import Bladex
 import DMusic
 import Language
@@ -22,7 +29,6 @@ Bladex.AddMusicEventMP3("Coro1","../../Sounds/CORO1.mp3",             0.5, 1.0, 
 Bladex.AddMusicEventMP3("Atmosfera24","../../Sounds/ATMOSFERA24.mp3", 0.1, 1.0, 1.0, 0.0, 1, -1 )
 Bladex.AddMusicEventWAV("Atmosfera4","../../Sounds/ATMOSFERA4.wav",   0.1, 1.0, 1.0, 0.0, 1, -1 )
 Bladex.AddMusicEventMP3("Atmosfera18","../../Sounds/ATMOSFERA18.mp3", 0.1, 1.0, 1.0, 0.0, 1, -1 )
-Bladex.AddMusicEventMP3("atmemptyloquesea", "",                          2.0, 0.5, 1.0, 0.0, 1, -1 )
 Bladex.AddMusicEventWAV("Combate6","../../Sounds/COMBATE6.wav",       0.1, 0.1, 1.0, 0.0, 1, 0 )
 Bladex.AddMusicEventMP3("atmemptyloquesea", "",                          2.0, 0.5, 1.0, 0.0, 1, -1 )
 
