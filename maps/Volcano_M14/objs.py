@@ -1188,7 +1188,7 @@ o=Bladex.CreateEntity("LAMPEG3","Lamparaegipto",31554.639000,-5716.750000,-10054
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (30.000000,0.800000,(255,142,17)) ]
+o.Lights=[ (30.000000,0.600000,(255,142,17)) ]	# precision was 0.8
 
 
 
@@ -1196,7 +1196,7 @@ o=Bladex.CreateEntity("LAMPEG1","Lamparaegipto",-15037.024000,-5738.048000,-1049
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 6 ]
-o.Lights=[ (5.000000,1.000000,(251,132,0)) ]
+o.Lights=[ (5.000000,0.800000,(251,132,0)) ] 	# precision was 1.0
 
 
 
