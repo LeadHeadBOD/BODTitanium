@@ -1,3 +1,8 @@
+##///
+##||| Barb_M1/Enemigos.PY TITANIUM
+##||| Change list:
+##||| * All Sparks.MakeShield etc. replaced with ItemDefaultFuncs for consistency
+##\\\ 
 #from megaimport import *
 
 from math import pow
@@ -11,8 +16,7 @@ import darfuncs
 
 
 Espada1=Bladex.CreateEntity("barbEspada1","Garrote",0,0,0,"Weapon")
-Breakings.SetBreakableWS("barbEspada1")
-
+ItemTypes.ItemDefaultFuncs(Espada1)
 
 pers=Bladex.CreateEntity("1ORC","Ork",-130531.27838, -6967.8173963, -26497.5388876,"Person")
 pers.Angle=1.23404798421
@@ -29,9 +33,8 @@ pers.SetOnFloor()
 
 Espada2=Bladex.CreateEntity("barbEspada2","Garrote",0,0,0,"Weapon")
 escudo2=Bladex.CreateEntity("barbEscudo2","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo2")
-Breakings.SetBreakableWS("barbEscudo2")
-Breakings.SetBreakableWS("barbEspada2")
+ItemTypes.ItemDefaultFuncs(escudo2)
+ItemTypes.ItemDefaultFuncs(Espada2)
 potion=Bladex.CreateEntity("PotionO2","Pocima25",0,0,0)
 potion.Static=0
 potion.Solid=1
@@ -69,7 +72,7 @@ pers.AddBayPoint=-116882.495861, -9305.98498724, -44745.7979041
 
 #---1
 Espada3=Bladex.CreateEntity("barbEspada3","Gladius",0,0,0,"Weapon")
-Breakings.SetBreakableWS("barbEspada3")
+ItemTypes.ItemDefaultFuncs(Espada3)
 
 pers=Bladex.CreateEntity("3ORC","Ork",-77768.3664835, -11159.6285462, -81408.8238848,"Person")
 pers.Angle=3.60287491073
@@ -83,9 +86,8 @@ EnemyTypes.EnemyDefaultFuncs(pers)
 #---2
 Espada4=Bladex.CreateEntity("barbEspada4","Garrote",0,0,0,"Weapon")
 escudo4=Bladex.CreateEntity("barbEscudo4","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo4")
-Breakings.SetBreakableWS("barbEscudo4")
-Breakings.SetBreakableWS("barbEspada4")
+ItemTypes.ItemDefaultFuncs(Espada4)
+ItemTypes.ItemDefaultFuncs(escudo4)
 potion=Bladex.CreateEntity("PotionO4","Pocima25",0,0,0)
 potion.Static=0
 potion.Solid=1
@@ -110,9 +112,8 @@ pers.SetOnFloor()
 #----1	en la caseta
 Espada5=Bladex.CreateEntity("barbEspada5","Garrote",0,0,0,"Weapon")
 escudo5=Bladex.CreateEntity("barbEscudo5","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo5")
-Breakings.SetBreakableWS("barbEscudo5")
-Breakings.SetBreakableWS("barbEspada5")
+ItemTypes.ItemDefaultFuncs(Espada5)
+ItemTypes.ItemDefaultFuncs(escudo5)
 
 pers=Bladex.CreateEntity("5ORC","Ork",-74720.7497453, -11959.0939721, -42887.9934098,"Person")
 pers.Angle=4.55205587735
@@ -133,9 +134,8 @@ pers.AddBayPoint=-53261.8417117, -12061.6892196, -14043.6628038
 #----1	en la al lado del fuego
 Espada5=Bladex.CreateEntity("barbEspada5b","Garrote",0,0,0,"Weapon")
 escudo5=Bladex.CreateEntity("barbEscudo5b","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo5b")
-Breakings.SetBreakableWS("barbEscudo5b")
-Breakings.SetBreakableWS("barbEspada5b")
+ItemTypes.ItemDefaultFuncs(Espada5)
+ItemTypes.ItemDefaultFuncs(escudo5)
 
 pers=Bladex.CreateEntity("5bORC","Ork",-44995.3389882, -12426.0839639, -16455.8786951,"Person")
 pers.Angle=1.2
@@ -150,7 +150,7 @@ pers.SetOnFloor()
 #----2	 EN LA CASITA DEL HERMITANYO
 
 espada6=Bladex.CreateEntity("barbespada6","Gladius",0,0,0,"Weapon")
-Breakings.SetBreakableWS("barbespada6")
+ItemTypes.ItemDefaultFuncs(espada6)
 
 pers=Bladex.CreateEntity("H6ORC","Ork",15060.2790355, -22221.6863333, 53467.5477254,"Person")
 pers.Angle=2.37530708478
@@ -165,7 +165,7 @@ pers.SetOnFloor()
 #----2	debajo de los puentes naturales
 
 espada6=Bladex.CreateEntity("barbespada6","Garrote",0,0,0,"Weapon")
-Breakings.SetBreakableWS("barbespada6")
+ItemTypes.ItemDefaultFuncs(Espada6)
 
 pers=Bladex.CreateEntity("6ORC","Ork",-3553.25363186, -10459.1323469, 53923.4973735,"Person")
 pers.Angle=2.37530708478
@@ -198,7 +198,7 @@ pers.AddBayPoint=-3064.48932814, -10467.9243498, 50220.6557104
 
 #1
 #Espada7=Bladex.CreateEntity("barbEspada7","Garrote",0,0,0,"Weapon")
-#Breakings.SetBreakableWS("barbEspada7")
+#ItemTypes.ItemDefaultFuncs(Espada7)
 ##potion=Bladex.CreateEntity("PotionO7","Pocima50",0,0,0)
 #potion.Static=0
 #potion.Solid=1
@@ -219,9 +219,8 @@ pers.AddBayPoint=-3064.48932814, -10467.9243498, 50220.6557104
 #2
 Espada8=Bladex.CreateEntity("barbEspada8","Gladius",0,0,0,"Weapon")
 escudo8=Bladex.CreateEntity("barbEscudo8","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo8")
-Breakings.SetBreakableWS("barbEscudo8")
-Breakings.SetBreakableWS("barbEspada8")
+ItemTypes.ItemDefaultFuncs(Espada8)
+ItemTypes.ItemDefaultFuncs(escudo8)
 
 
 pers=Bladex.CreateEntity("8ORC","Ork",-33430.6910776, -11638.09038, 56054.2316482,"Person")
@@ -246,11 +245,9 @@ pers.AddBayPoint=-26186.6322375, -10837.7215113, 60168.3393045
 
 #1
 Espada9=Bladex.CreateEntity("barbEspada9","Gladius",0,0,0,"Weapon")
-Espada9.Weapon=1
 escudo9=Bladex.CreateEntity("barbEscudo9","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo9")
-Breakings.SetBreakableWS("barbEscudo9")
-Breakings.SetBreakableWS("barbEspada9")
+ItemTypes.ItemDefaultFuncs(Espada9)
+ItemTypes.ItemDefaultFuncs(escudo9)
 
 
 pers=Bladex.CreateEntity("9ORC","Ork",-55400.739138, -12231.8235567, 58053.0047823,"Person")
@@ -269,7 +266,7 @@ pers.AddBayPoint=-67308.5096626, -12461.2877023, 69675.540308
 
 #2
 Espada10=Bladex.CreateEntity("barbEspada10","Garrote",0,0,0,"Weapon")
-Breakings.SetBreakableWS("barbEspada10")
+ItemTypes.ItemDefaultFuncs(Espada10)
 
 pers=Bladex.CreateEntity("10ORC","Ork",-74810.5211031, -10245.1482164, 75959.6679414,"Person")
 pers.Angle=0.776129621307
@@ -293,9 +290,8 @@ pers.AddBayPoint=-84664.0356283, -9881.17132503, 76883.6033607
 
 Espada11=Bladex.CreateEntity("barbEspada11","Hacha",0,0,0,"Weapon")
 escudo11=Bladex.CreateEntity("barbEscudo11","Escudo2",0,0,0)
-Sparks.MakeShield("barbEscudo11")
-Breakings.SetBreakableWS("barbEscudo11")
-Breakings.SetBreakableWS("barbEspada11")
+ItemTypes.ItemDefaultFuncs(Espada11)
+ItemTypes.ItemDefaultFuncs(escudo11)
 potion=Bladex.CreateEntity("Potion11","Pocima50",0,0,0)
 potion.Static=0
 potion.Solid=1
@@ -322,7 +318,7 @@ pers.AddBayPoint=-165884.659009, -6289.49618279, 134077.21883
 
 #---1---
 Espada12=Bladex.CreateEntity("barbEspada12","Garrote",0,0,0,"Weapon")
-Breakings.SetBreakableWS("barbEspada12")
+ItemTypes.ItemDefaultFuncs(Espada12)
 
 pers=Bladex.CreateEntity("12ORC","Ork",-109551.103257, -7876.89449812, 120220.389773,"Person")
 pers.Angle=2.18172778005
@@ -337,9 +333,8 @@ pers.SetOnFloor()
 #---2---
 Espada13=Bladex.CreateEntity("barbEspada13","Garrote",0,0,0,"Weapon")
 escudo13=Bladex.CreateEntity("barbEscudo13","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo13")
-Breakings.SetBreakableWS("barbEscudo13")
-Breakings.SetBreakableWS("barbEspada13")
+ItemTypes.ItemDefaultFuncs(Espada13)
+ItemTypes.ItemDefaultFuncs(escudo13)
 
 
 pers=Bladex.CreateEntity("13ORC","Ork",-151539.460088, -8074.9171658, 149163.609201,"Person")
@@ -361,7 +356,7 @@ pers.SetOnFloor()
 
 #---1---
 Espada19=Bladex.CreateEntity("barbEspada19","Garrote",0,0,0,"Weapon")
-Breakings.SetBreakableWS("barbEspada19")
+ItemTypes.ItemDefaultFuncs(Espada19)
 
 
 pers=Bladex.CreateEntity("19ZM","Lich",-140241.1271, -20488.5006214, 181763.700343,"Person")
@@ -378,9 +373,8 @@ pers.SetOnFloor()
 #---2---
 Espada20=Bladex.CreateEntity("barbEspada20","Hacha",0,0,0,"Weapon")
 escudo20=Bladex.CreateEntity("barbEscudo20","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo20")
-Breakings.SetBreakableWS("barbEscudo20")
-Breakings.SetBreakableWS("barbEspada20")
+ItemTypes.ItemDefaultFuncs(Espada20)
+ItemTypes.ItemDefaultFuncs(escudo20)
 
 pers=Bladex.CreateEntity("20ZM","Lich",-131981.592522, -25275.5432216, 165710.034904,"Person")
 pers.Angle=0.683543204155
@@ -437,9 +431,8 @@ pers.SetOnFloor()
 #1
 Espada21=Bladex.CreateEntity("barbEspada21","Maza",0,0,0,"Weapon")
 escudo21=Bladex.CreateEntity("barbEscudo21","Escudo2",0,0,0)
-Sparks.MakeShield("barbEscudo21")
-Breakings.SetBreakableWS("barbEscudo21")
-Breakings.SetBreakableWS("barbEspada21")
+ItemTypes.ItemDefaultFuncs(Espada21)
+ItemTypes.ItemDefaultFuncs(escudo21)
 
 pers=Bladex.CreateEntity("21ZM","Skeleton",-58524.664879, -30296.5470709, 157781.193137,"Person")
 pers.Angle=1.09276331014
@@ -454,9 +447,8 @@ pers.SetOnFloor()
 #2
 Espada22=Bladex.CreateEntity("barbEspada22","Hacha",0,0,0,"Weapon")
 escudo22=Bladex.CreateEntity("barbEscudo22","Escudo2",0,0,0)
-Sparks.MakeShield("barbEscudo22")
-Breakings.SetBreakableWS("barbEscudo22")
-Breakings.SetBreakableWS("barbEspada22")
+ItemTypes.ItemDefaultFuncs(Espada22)
+ItemTypes.ItemDefaultFuncs(escudo22)
 
 pers=Bladex.CreateEntity("22ZM","Skeleton",-75632.3967294, -31991.6729537, 147371.43794,"Person")
 pers.Angle=0.373207196344
@@ -474,9 +466,8 @@ pers.SetOnFloor()
 #1
 Espada23=Bladex.CreateEntity("barbEspada23","Garrote",0,0,0,"Weapon")
 escudo23=Bladex.CreateEntity("barbEscudo23","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo23")
-Breakings.SetBreakableWS("barbEscudo23")
-Breakings.SetBreakableWS("barbEspada23")
+ItemTypes.ItemDefaultFuncs(Espada23)
+ItemTypes.ItemDefaultFuncs(escudo23)
 
 pers=Bladex.CreateEntity("23ZM","Lich",-56364.06391, -34364.5492384, 127937.527031,"Person")
 pers.Angle=6.14396422389
@@ -491,9 +482,8 @@ pers.SetOnFloor()
 #2
 Espada24=Bladex.CreateEntity("barbEspada24","Maza",0,0,0,"Weapon")
 escudo24=Bladex.CreateEntity("barbEscudo24","Escudo2",0,0,0)
-Sparks.MakeShield("barbEscudo24")
-Breakings.SetBreakableWS("barbEscudo24")
-Breakings.SetBreakableWS("barbEspada24")
+ItemTypes.ItemDefaultFuncs(Espada24)
+ItemTypes.ItemDefaultFuncs(escudo24)
 
 pers=Bladex.CreateEntity("24ZM","Skeleton",-51363.3911947, -34364.6141634, 127923.755387,"Person")
 pers.Angle=6.14396446051
@@ -510,9 +500,8 @@ pers.SetOnFloor()
 #4
 Espada25=Bladex.CreateEntity("barbEspada25","Hacha",0,0,0,"Weapon")
 escudo25=Bladex.CreateEntity("barbEscudo25","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo25")
-Breakings.SetBreakableWS("barbEscudo25")
-Breakings.SetBreakableWS("barbEspada25")
+ItemTypes.ItemDefaultFuncs(Espada25)
+ItemTypes.ItemDefaultFuncs(escudo25)
 
 pers=Bladex.CreateEntity("25ZM","Lich",-38909.8332441, -30018.8368523, 147120.583789,"Person")
 pers.Angle=0.159018356021
@@ -530,9 +519,8 @@ pers.SetOnFloor()
 #1
 Espada21=Bladex.CreateEntity("barbEspada26","Hacha",0,0,0,"Weapon")
 escudo21=Bladex.CreateEntity("barbEscudo26","Escudo5",0,0,0)
-Sparks.MakeShield("barbEscudo26")
-Breakings.SetBreakableWS("barbEscudo26")
-Breakings.SetBreakableWS("barbEspada26")
+ItemTypes.ItemDefaultFuncs(Espada21)
+ItemTypes.ItemDefaultFuncs(escudo21)
 
 pers=Bladex.CreateEntity("26ZM","Skeleton",30000, -47500, 159000,"Person")
 pers.Angle=3.14
