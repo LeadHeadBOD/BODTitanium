@@ -1,3 +1,9 @@
+##///
+##||| TOMB_M7/templo.PY TITANIUM
+##||| Change list:
+##||| * Fix for buggy generated weapons
+##\\\ 
+
 import EnemyTypes
 #-ESQUELETOS EN EL TEMPLO----
 
@@ -25,9 +31,9 @@ pers.ImDeadFunc = deKeletum
 
 #2
 Espada2t=Bladex.CreateEntity("TombEspada2t","Hacha",0,0,0,"Weapon")
-ItemTypes.ItemDefaultFuncs (o)
+ItemTypes.ItemDefaultFuncs (Espada2t) # -Sryml
 escudo=Bladex.CreateEntity("TombEscudo2t","Escudo1",0,0,0,"Weapon")
-ItemTypes.ItemDefaultFuncs (o)
+ItemTypes.ItemDefaultFuncs (escudo) # -Sryml
 
 pers=Bladex.CreateEntity("SKLt2","Skeleton",28000,-1300,11875,"Person")
 pers.Level=5
@@ -46,7 +52,7 @@ pers.ImDeadFunc = deKeletum
 o=Bladex.CreateEntity("TombEspada3t","Hacha",0,0,0,"Weapon")
 ItemTypes.ItemDefaultFuncs (o)
 escudo=Bladex.CreateEntity("TombEscudo3t","Escudo1",0,0,0,"Weapon")
-ItemTypes.ItemDefaultFuncs (o)
+ItemTypes.ItemDefaultFuncs (escudo) # -Sryml
 
 
 pers=Bladex.CreateEntity("SKLt3","Skeleton",10750,-1300,-15125,"Person")
@@ -62,9 +68,9 @@ pers.ImDeadFunc = deKeletum
 
 #4
 Espada4t=Bladex.CreateEntity("TombEspada4t","Hacha",0,0,0,"Weapon")
-ItemTypes.ItemDefaultFuncs (o)
+ItemTypes.ItemDefaultFuncs (Espada4t) # -Sryml
 escudo=Bladex.CreateEntity("TombEscudo4t","Escudo1",0,0,0,"Weapon")
-ItemTypes.ItemDefaultFuncs (o)
+ItemTypes.ItemDefaultFuncs (escudo) # -Sryml
 
 pers=Bladex.CreateEntity("SKLt4","Skeleton",28000,-1300,-14975,"Person")
 pers.Level=5

@@ -4,6 +4,7 @@
 ##||| * Fix for characters sinking in ground when picking up King's shield.
 ##||| * King's sword now shatters on death.
 ##||| * Dwarf now uses appropriate "esfuerzo" sounds in cutscene.
+##||| * Fixed func ElArqueroSeDestapaLosOidos, thus restoring the missing music as well
 ##\\\ 
 
 import def_class
@@ -36,7 +37,7 @@ import Breakings
 #################################### enemigos.py ####################################
 #####################################################################################
 def ElArqueroSeDestapaLosOidos():
-	Bladex.GetEntity("entraguardia").Deaf = 0
+	Bladex.GetEntity("Tombarq31").Deaf = 0      # Previously targeted entity "entraguardia" which doesn't exist -LeadHead
 
 def MuerteesqueletoDeMierda(NombreDelEsqueletoQueMurio):
 	global Nukeleto
@@ -443,7 +444,7 @@ def Cierralados():
 
 def EntroEnTriggerSector(trsector_name, entity_name):
 	#print("entidad:"+entity_name+", en sector"+trsector_name);
-	if (entity_name<>"Player1") : return
+	if (entity_name!="Player1") : return
 	Cierralados()
 
 def AbrePuertata():
@@ -602,7 +603,7 @@ def CreaSkeletoDichoso(o):
 
 def EntroEnTriggerSector(trsector_name, entity_name):
 	#print("entidad:"+entity_name+", en sector"+trsector_name);
-	if (entity_name<>"Player1") : return
+	if (entity_name!="Player1") : return
 	generadorT1.GenerateEnemy()
 	Bladex.RemoveTriggerSectorFunc(trsector_name, "OnEnter")
 	CierraPuertaLlave2()
@@ -747,7 +748,7 @@ def tsOpenDoorB():
 
 def tsStart(index,ent):
 	global tsStarted
-	if (ent<>"Player1") : return
+	if (ent!="Player1") : return
 	if (tsStarted) : return
 	tsStarted=1
 	Bladex.AddScheduledFunc( Bladex.GetTime()+1.0, tsOpenDoorB, () )
@@ -775,7 +776,7 @@ def wsWakeUp() :
 
 def wsStart(index, ent) :
 	global wsStarted
-	if (ent<>"Player1") : return
+	if (ent!="Player1") : return
 	if (wsStarted==1) : return
 	wsStarted=1
 
@@ -1106,8 +1107,8 @@ def SetupPutFetiche(ent,place):
 def ActivateLever(lever,s):
 	global levers_activates
 
-	if (levers_activates <> 0):
-	 if (levers_activates <> lever):
+	if (levers_activates != 0):
+	 if (levers_activates != lever):
 		LeversActivateds()
 	else:
 		levers_activates = lever
@@ -2040,8 +2041,8 @@ def TheKingIsDeath(entity_name):
    wr  = Bladex.GetEntity(rey.InvRight)
 
    rey.Data.StdImDead(entity_name)
-   Breakings.SetBreakable(wr.Name)                      # Added.
-   Breakings.ExplodeSpecialObject (wr.Name, 1000.0)     #       -LeadHead
+   Breakings.SetBreakable(wr.Name)                       # Added.
+   Breakings.ExplodeSpecialObject (wr.Name, 100000.0)     #       -LeadHead
    Bladex.AddScheduledFunc(Bladex.GetTime()+0.05, rey.GetInventory().LinkLeftHand, ("EscudoDeFuego",))
 
 

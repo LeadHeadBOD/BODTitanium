@@ -4,6 +4,7 @@
 ##||| * Renamed some "reja"
 ##||| * Normalized FiresIntensity in some places.
 ##||| * Removed gravestone selectiondata to not interfere with anything.
+##||| * Shadowpass
 ##\\\ 
 
 import Reference
@@ -45,7 +46,7 @@ o=Bladex.CreateEntity("NoName4","Lampared",52874.282000,4641.716000,48451.985000
 o.Scale=1.374941
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (0.863836,0.091414,(255,196,128)) ]
+o.Lights=[ (3.0,0.091414,(255,196,128)) ]       # Intens was 0.86
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -63,7 +64,7 @@ o=Bladex.CreateEntity("NoName7","Lampared",46482.298000,-2100.943000,45296.53900
 o.Scale=1.160969
 o.Orientation=0.500000,0.500000,-0.500000,0.500000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (2.182873,0.116670,(255,196,128)) ]
+o.Lights = [(4.2, 0.08, (255, 196, 128))]           # Increased radius -LeadHead
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -72,7 +73,7 @@ o=Bladex.CreateEntity("NoName8","Lampared",64363.627000,-1923.640000,46813.67100
 o.Scale=1.126825
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (2.000000,0.100000,(255,196,128)) ]
+o.Lights=[ (3.000000,0.100000,(255,196,128)) ]      # intensity was 2 -LeadHead
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -174,7 +175,7 @@ o=Bladex.CreateEntity("NoName25","Lampared",83310.153000,5151.558000,56239.51800
 o.Scale=1.000000
 o.Orientation=0.512917,0.512917,0.486740,-0.486740
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (1.000000,0.031250,(255,153,40)) ]
+o.Lights=[ (3.000000,0.031250,(255,153,40)) ]       # Intens was 1.0    -LeadHead
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -236,7 +237,7 @@ o=Bladex.CreateEntity("NoName42","Palangana",57178.227000,-1421.562000,51223.983
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (2.000000,0.071626,(255,165,64)) ]
+o.Lights=[ (3.000000,0.071626,(255,165,64)) ]
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -280,7 +281,7 @@ o=Bladex.CreateEntity("NoName56","Lampcolg",-7471.928000,496.596000,-38625.00800
 o.Scale=1.361327
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (8.000000,0.128629,(255,196,128)) ]
+o.Lights= [(9.0, 0.07, (255, 196, 128))]        # Increased radius -LeadHead
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -317,7 +318,7 @@ o=Bladex.CreateEntity("NoName61","Hoguera",45849.486000,5762.149000,-38479.52800
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (4.000000,0.070000,(255,145,21)) ]
+o.Lights= [(8.0, 0.040000000298, (255, 145, 21))]   # Increased radius -LeadHead
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -426,7 +427,7 @@ o=Bladex.CreateEntity("luzrey2","LamparaMiguel",92499.526000,838.102000,-9771.02
 o.Scale=1.000000
 o.Orientation=0.012342,0.012341,0.706999,-0.706999
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (5.791800,0.180993,(255,155,81)) ]
+o.Lights=[ (5.800,0.06,(255,155,81)) ]      # Increased radius
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -460,7 +461,7 @@ o=Bladex.CreateEntity("NoName83","Lampared",88773.771000,-4336.970000,16174.2350
 o.Scale=1.000000
 o.Orientation=0.006164,0.006171,-0.707080,0.707080
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (6.081397,0.209523,(255,196,128)) ]
+o.Lights=[ (6.5, 0.0800 ,(255,196,128)) ]       # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -532,7 +533,7 @@ o=Bladex.CreateEntity("NoName93","Lampcolg",33447.176000,-10809.864000,-16919.35
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (5.003179,0.199546,(215,148,57)) ]
+o.Lights = [(5.1, 0.125, (215, 148, 57))]       # Changed
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -885,7 +886,7 @@ o=Bladex.CreateEntity("NoName175","Palangana",99105.168000,-2717.604000,35860.25
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 5 ]
-o.Lights=[ (1.000000,0.036176,(255,151,36)) ]
+o.Lights=[ (2.000000,0.036176,(255,151,36)) ]   # intens was 1.0    -LeadHead
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -903,7 +904,7 @@ o=Bladex.CreateEntity("NoName255","Palangana",2874.236000,-8373.341000,15197.141
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (1.000000,0.031250,(255,149,32)) ]
+o.Lights=[ (3.000000,0.031250,(255,149,32)) ]   # intens was 1.0
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -1328,7 +1329,7 @@ o=Bladex.CreateEntity("LEDEntity_temp309","Palangana",-1616.385000,5841.260000,2
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (1.000000,0.060000,(255,138,9)) ]
+o.Lights=[ (3.000000,0.032500,(255,138,9)) ]        # Increased radius
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -1355,7 +1356,7 @@ o=Bladex.CreateEntity("LEDEntity_temp319","LamparaMiguel",11494.455000,4173.1790
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (16.000000,0.070000,(255,164,62)) ]
+o.Lights=[ (16.000000,0.050000,(255,164,62)) ]  # prec was 0.07
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -1454,7 +1455,7 @@ o=Bladex.CreateEntity("luzrey1","LamparaMiguel",92542.841000,754.069000,11261.12
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (5.500000,0.070000,(254,126,22)) ]
+o.Lights=[(5.8, 0.06, (254, 126, 22))]          # Increasd radius
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión
 
@@ -1483,7 +1484,7 @@ o.Orientation=0.707107,0.707107,0.000000,0.000000
 o=Bladex.CreateEntity("LEDEntity_temp352","Cirio",12237.370000,4587.773000,-37007.352000,Reference.ObjType("Cirio"))
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
-o.FiresIntensity=[ 3 ]
+o.FiresIntensity=[ 4 ]      # was 3 -LeadHead
 o.Lights=[ (2.000000,0.080000,(255,174,85)) ]
 #o.NodesOrientation=?  En la siguiente versión
 #o.Scripts=?  En la siguiente versión

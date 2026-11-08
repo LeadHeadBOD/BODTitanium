@@ -1,3 +1,9 @@
+##///
+##||| TOMB_M7/king.PY TITANIUM
+##||| Change list:
+##||| * Shadowpass
+##\\\ 
+
 import OnOff
 import Actions
 import AuxFuncs
@@ -67,8 +73,8 @@ _SndGritoKeletum=Bladex.CreateSound("../../Sounds/SNOWTROLL-ESFUERZO-3.wav","Gri
 _SndGritoKeletum.MaxDistance=1000000.0
 
 
-OnOff.AddLightData("luzrey1",5.500000,0.070000)
-OnOff.AddLightData("luzrey2",5.791800,0.180993)
+OnOff.AddLightData("luzrey1",5.800,0.06)    # adjusted
+OnOff.AddLightData("luzrey2",5.800,0.06)    # adjusted
 OnOff.AddLightData("luzrey3",4.000000,0.070000)
 OnOff.AddLightData("luzrey4",31.947647,0.100000)
 

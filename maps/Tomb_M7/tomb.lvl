@@ -1,0 +1,23 @@
+
+Bitmaps -> tomb.mmp
+
+Bitmaps -> ../../3dObjs/3dobjs.mmp
+Bitmaps -> NOBJS.mmp
+Bitmaps -> Skl.mmp
+
+Bitmaps -> ../../3dChars/Bar.mmp
+Bitmaps -> ../../3dChars/Kgt.mmp
+
+Bitmaps -> ../../3dChars/ork.mmp
+Bitmaps -> ../../3dChars/Gok.mmp
+Bitmaps -> ../../3dChars/Glm_st.mmp
+Bitmaps -> ../../3dChars/cosita.mmp
+#Bitmaps -> ../../3dChars/Skl.mmp
+Bitmaps -> ../../3dChars/zkn.mmp
+
+Bitmaps -> ../../3dChars/Crow.mmp
+
+
+
+World -> tomb.bw
+WorldDome -> tomb_d.mmp

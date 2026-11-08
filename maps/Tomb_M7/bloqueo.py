@@ -1,5 +1,18 @@
+##///
+##||| TOMB_M7/bloqueo.PY TITANIUM
+##||| Change list:
+##||| * Added metal blocker at the grate for proper footsteps sounds and preventing early triggering of music event
+##\\\ 
+
 import Reference
 
+### Added, metal grate near zombie dungeon
+o=Bladex.CreateEntity("TiBlocker_t7","MetalBlocker",96215.1409413, 4634.87306287, 28124.9815034)
+o.Scale=4.2
+o.Solid=1
+o.Alpha = 0
+o.CastShadows=0
+Reference.EntitiesSelectionData[o.Name]=(0,0,"")
 
 
 o=Bladex.CreateEntity("toName0","Bloque",64576.408580,4144.529811,60051.957787)

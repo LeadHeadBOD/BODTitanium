@@ -1,3 +1,9 @@
+##///
+##||| TOMB_M7/Enemigos.PY TITANIUM
+##||| Change list:
+##||| * Fix for buggy generated weapons
+##\\\ 
+
 from math import pow
 import EnemyTypes
 import Sparks
@@ -533,9 +539,9 @@ tsSkeletonC.ImDeadFunc            = MuerteesqueletoDeMierda
 
 #2
 hachasorpresa=Bladex.CreateEntity("TombHachaSorpresa","Espadaromana",0,0,0,"Weapon")
-ItemTypes.ItemDefaultFuncs (o)
+ItemTypes.ItemDefaultFuncs (hachasorpresa) # -Sryml
 escudodorpresa=Bladex.CreateEntity("TombEscudoSorpresa","Escudo2",0,0,0,"Weapon")
-ItemTypes.ItemDefaultFuncs (o)
+ItemTypes.ItemDefaultFuncs (escudodorpresa) # -Sryml
  
 keletosorpresa1=Bladex.CreateEntity("KeletoSorpresa1","Skeleton",11427.4419, -351.626, 18387.63,"Person")
 keletosorpresa1.Angle=1.5739783841
