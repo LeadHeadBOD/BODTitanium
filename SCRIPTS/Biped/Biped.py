@@ -14,7 +14,7 @@ import os
 ### Scary stuff!
 #
 
-TiVersion = "v0.5"
+TiVersion = "v0.6"
 
 def VerifyTiVersion():
 	generateNew = 0
