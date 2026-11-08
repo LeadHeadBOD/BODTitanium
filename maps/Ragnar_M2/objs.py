@@ -6,6 +6,7 @@
 ##||| * Removed selection data from some inconsequential items
 ##||| * Added glitter to final pergament to make it obvious wtf you're supposed to do
 ##||| * Adjust item positions to make sure they don't float/stuck-in-geo
+##||| * Grates now use metal material blockers for proper footstep sounds (Adoq1-6)
 ##\\\ 
 
 import Sparks
@@ -15,6 +16,7 @@ import Bladex
 import Breakings
 import darfuncs
 import ItemTypes
+import BladeTi
 
 
 
@@ -39,43 +41,43 @@ o.Orientation=0.707107,-0.707107,0.000000,0.000000
 #####adoquines pulsadores invisibles
 ###########################
 
-adoq=Bladex.CreateEntity("Adoq0","Adoquinpulsador",-114811.969703,9465.504458,82328.308119)
+adoq=Bladex.CreateEntity("Adoq0","MetalBlocker",-114811.969703,9575.504458,82328.308119)
 adoq.Scale=2.238882
 adoq.Orientation=0.500000,0.500000,0.500000,-0.500000
 adoq.CastShadows=0
 adoq.Alpha = 0
 
-adoq=Bladex.CreateEntity("Adoq1","Adoquinpulsador",-108168.938581,2670.593059,-96009.186299)
+adoq=Bladex.CreateEntity("Adoq1","MetalBlocker",-108168.938581,2720.593059,-96009.186299)
 adoq.Scale=2.786772
 adoq.Orientation=0.707107,0.707107,0.000000,0.000000
 adoq.CastShadows=0
 adoq.Alpha = 0
 
-adoq=Bladex.CreateEntity("Adoq2","Adoquinpulsador",-99929.516426,2803.062968,-100021.905347)
+adoq=Bladex.CreateEntity("Adoq2","MetalBlocker",-99929.516426,2853.062968,-100021.905347)
 adoq.Scale=3.235356
 adoq.Orientation=0.495618,0.495618,0.504344,-0.504344
 adoq.CastShadows=0
 adoq.Alpha = 0
 
-adoq=Bladex.CreateEntity("Adoq3","Adoquinpulsador",-101864.166895,3184.377233,69259.401772)
+adoq=Bladex.CreateEntity("Adoq3","MetalBlocker",-101864.166895,3194.377233,69259.401772)
 adoq.Scale=4.769311
 adoq.Orientation=0.707107,0.707107,0.000000,0.000000
 adoq.CastShadows=0
 adoq.Alpha = 0
 
-adoq=Bladex.CreateEntity("Adoq4","Adoquinpulsador",-111959.533478,3156.364654,69277.992719)
+adoq=Bladex.CreateEntity("Adoq4","MetalBlocker",-111959.533478,3166.364654,69277.992719)
 adoq.Scale=4.629047
 adoq.Orientation=0.707107,0.707107,0.000000,0.000000
 adoq.CastShadows=0
 adoq.Alpha = 0
 
-adoq=Bladex.CreateEntity("Adoq5","Adoquinpulsador",-116467.320555,12588.166303,57909.514583)
+adoq=Bladex.CreateEntity("Adoq5","MetalBlocker",-116467.320555,12588.166303,57909.514583)
 adoq.Scale=3.538461
 adoq.Orientation=0.707107,0.707107,0.000000,0.000000
 adoq.CastShadows=0
 adoq.Alpha = 0
 
-adoq6=Bladex.CreateEntity("Adoq6","Adoquinpulsador",-103258.305, -10795.363, 39197.878)
+adoq6=Bladex.CreateEntity("Adoq6","MetalBlocker",-103258.305, -10835.363, 39197.878)
 adoq6.Scale=4
 adoq6.Orientation=0.500000,0.500000,0.500000,-0.500000
 adoq6.CastShadows=0
@@ -1038,6 +1040,7 @@ can9.Orientation=0.533660,0.533660,0.463904,-0.463904
 can9.FiresIntensity=[ 18 ]
 can9.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 Sparks.SetSparkling("Can9")
+BladeTi.GiveShadowMask(can9)
 
 
 

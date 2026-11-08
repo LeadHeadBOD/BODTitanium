@@ -1,3 +1,8 @@
+##///
+##||| Ragnar_M2/TalkingKnights.PY TITANIUM
+##||| Change list:
+##||| * All Sparks.MakeShield etc. replaced with ItemDefaultFuncs for consistency
+##\\\ 
 import def_class
 from math import pow
 import Bladex
@@ -29,8 +34,9 @@ false = 0
 ### tiene la LLAVE de la capilla
 
 sword1=Bladex.CreateEntity("RagnarEricsSword","Garrote",0,0,0,"Weapon")
+ItemTypes.ItemDefaultFuncs(sword1)
 shield1=Bladex.CreateEntity("RagnarEricsShield","Escudo2",0,0,0)
-Sparks.MakeShield("RagnarEricsShield")
+ItemTypes.ItemDefaultFuncs(shield1)
 
 knt1=Bladex.CreateEntity("Eric","Knight_Traitor",-91610, -8748, -7916,"Person")
 knt1.Level=2
@@ -52,8 +58,9 @@ knt1.SetOnFloor()
 #######################################################
 
 sword2=Bladex.CreateEntity("RagnarTerrysSword","Gladius",0,0,0,"Weapon")
+ItemTypes.ItemDefaultFuncs(sword2)
 shield2=Bladex.CreateEntity("RagnarTerrysShield","Escudo5",0,0,0)
-Sparks.MakeShield("RagnarTerrysShield")
+ItemTypes.ItemDefaultFuncs(shield2)
 
 potion1=Bladex.CreateEntity("TerrysPotion","Pocima25",0,0,0)
 potion1.Static=0
