@@ -3,6 +3,7 @@
 ##||| Change list:
 ##||| * Brightened some lights to make less awkward pitch black corners
 ##||| * Skeleton spawner light moved up 1m to make the fire look more natural
+##||| * Second skeleton spawner no longer casts shadows
 ##\\\ 
 
 
@@ -16,7 +17,7 @@ Lucex=Bladex.CreateEntity("hkgfoweua","Entity Spot",-14000, -36800, 7750)		# mov
 Lucex.Color=255,149,32
 Lucex.Intensity=3
 Lucex.Precission=0.066
-Lucex.CastShadows=1
+Lucex.CastShadows=0		# No longer casts shadows, just like the other one, I don't understand why it did, but whatever, just make them both the same
 Lucex.Visible=0
 Lucex.Flick=1
 

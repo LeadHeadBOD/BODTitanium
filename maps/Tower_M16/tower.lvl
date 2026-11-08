@@ -1,0 +1,46 @@
+GammaC -> 0.6
+Bitmaps -> tower.mmp
+Bitmaps -> vid.mmp
+
+Bitmaps -> NOBJS.mmp
+Bitmaps -> cielo.mmp
+Bitmaps -> pmiguel.mmp
+Bitmaps -> lava_128.mmp
+Bitmaps -> acido.mmp
+Bitmaps -> ../../3dObjs/weapons.mmp
+Bitmaps -> ../../3dObjs/genericos.mmp
+Bitmaps -> ../../3dobjs/3dobjs.mmp
+
+Bitmaps -> actors_javi.mmp
+Bitmaps -> ../../3dChars/Bar.mmp
+Bitmaps -> ../../3dChars/Kgt.mmp
+
+Bitmaps -> ../../3dChars/Slm.mmp
+Bitmaps -> Skl.mmp
+Bitmaps -> ../../3dChars/Ldm.mmp
+Bitmaps -> ../../3dChars/min.mmp
+Bitmaps -> ../../3dChars/cosita.mmp
+Bitmaps -> ../../3dChars/Gdemon.mmp
+Bitmaps -> ../../3dChars/Gok.mmp
+Bitmaps -> ../../3dChars/Ork.mmp
+Bitmaps -> ../../3dChars/DalGurak.mmp
+Bitmaps -> ../../3dChars/darklord.mmp
+
+Bitmaps -> ../../3dChars/DarkKnight.mmp
+Bitmaps -> ../../3dChars/Crow.mmp
+Bitmaps -> ../../3dChars/Glm_st.mmp
+Bitmaps -> ../../3dChars/Glm_mt.mmp
+Bitmaps -> ../../3dChars/Glm_lv.mmp
+
+Bitmaps -> ../../3dobjs/esferanegra.mmp
+Bitmaps -> ../../3dobjs/esferaorbital.mmp
+Bitmaps -> ../../3dobjs/halfmoontrail.mmp
+Bitmaps -> ../../3dobjs/magicshield.mmp
+Bitmaps -> ../../3dobjs/dalblade.mmp
+Bitmaps -> ../../3dobjs/firering.mmp
+
+
+
+
+World -> tower.bw
+WorldDome -> tower_d.mmp
