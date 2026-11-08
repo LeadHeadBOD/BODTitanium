@@ -1,3 +1,8 @@
+##///
+##||| Dwarf_M3/enanos.PY TITANIUM
+##||| Change list:
+##||| * All Sparks.MakeShield etc. replaced with ItemDefaultFuncs for consistency
+##\\\ 
 import darfuncs
 from math import pow
 import EnemyTypes
@@ -10,12 +15,10 @@ import Bladex
 import GameText
 
 """
-Orkswordx1=Bladex.CreateEntity("Gladiusx1","Gladius",0,0,0)
-Orkswordx1.Weapon=1
+Orkswordx1=Bladex.CreateEntity("Gladiusx1","Gladius",0,0,0,"Weapon")
+ItemTypes.ItemDefaultFuncs(Orkswordx1)
 escudo=Bladex.CreateEntity("Escudox1","Escudo1",0,0,0)
-Sparks.MakeShield("Escudox1")
-Breakings.SetBreakableWS("Escudox1")
-Breakings.SetBreakableWS("Gladiusx1")
+ItemTypes.ItemDefaultFuncs(escudo)
 
 pers=Bladex.CreateEntity("x1ORC","Ork",127096.43323, 5058.34872344, -89314.9678645)
 pers.Person=1
@@ -25,7 +28,6 @@ Actions.TakeObject(pers.Name,"Escudox1")
 #pers.ActionAreaMin=pow(2,0)
 #pers.ActionAreaMax=pow(2,1)
 EnemyTypes.EnemyDefaultFuncs(pers)
-AniSound.AsignarSonidosOrco('x1ORC')
 """
 
 darfuncs.MuertoyTroceado(109552.221511, 5983.35108641, -22875.7557749,"Enano2","",(1,7))

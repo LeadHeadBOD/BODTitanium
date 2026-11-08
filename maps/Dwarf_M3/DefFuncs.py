@@ -1,9 +1,13 @@
 ##///
 ##||| DWARF_M3/DEFFUNCS.PY TITANIUM
 ##||| Change list:
-##||| * Final book now twinkles to make it more obvious as to what you're supposed to do since all the books look the same.
-##||| * Removed comments for ScriptSkip events to make cutscenes skippable.
-##||| * Final cutscene is longer in English due to slower narration.
+##||| * Final book now twinkles to make it more obvious as to what you're supposed to do since all the books look the same
+##||| * Removed comments for ScriptSkip events to make cutscenes skippable
+##||| * Final cutscene is longer in English due to slower narration
+##||| * Library orcs now become hearing only once the door opens
+##||| * Store spiders now are frozen until the door opens
+##||| * Orcs after the troll fight now become sentient only after the door opens
+##||| * Replaced arrow trap with dart trap to better scale with low level health pools
 ##\\\ 
 
 
@@ -527,11 +531,15 @@ def EsperaYBajaElevador2():
 #*************************************************************************************************
 #*************************************************************************************************
 
+###
+# Replaced "Flecha" with "Pivote" to scale better with low levels -LeadHead
+###
+
 def BorraFlecha(Name):
 	global InsideTrap
 	en = Bladex.GetEntity(Name)
 	if (en.Parent==None) | (en.Parent == ""):
-		if(en.Kind == "Flecha"):
+		if(en.Kind == "Pivote"):
 			en.SubscribeToList("Pin")
 	if InsideTrap:
 		DropArrow()
@@ -557,14 +565,14 @@ def DropArrow():
 	
 	SPEED = 30000
 	
-	o=Bladex.CreateEntity(Bladex.GenerateEntityName(), "Flecha", -70689.0+__X__, -9982.0, whrandom.randint(-76121.0+__Z__,-67121.0+__Z__))
+	o=Bladex.CreateEntity(Bladex.GenerateEntityName(), "Pivote", -70689.0+__X__, -9982.0, whrandom.randint(-76121.0+__Z__,-67121.0+__Z__))
 	o.Orientation=0.50005787611, 0.50005787611, -0.499942094088, -0.499942094088
 	flechazo.Position = o.Position
 	flechazo.PlaySound(1)
 	char = Bladex.GetEntity("Player1")
 	
 	o.Arrow=1
-	o.Scale=0.7
+	o.Scale=1.0
 	o.MessageEvent(Reference.MESSAGE_START_WEAPON,0,0)
 	o.MessageEvent(Reference.MESSAGE_START_TRAIL, 0,0)
 	o.Gravity = 0,0,0
@@ -1157,7 +1165,7 @@ def Hit(Camera,Frame):
 	soundhit2player.PlaySound(0)
 
 def Avalancha(Camara,Frame):
-	if (Frame <> 1):
+	if (Frame != 1):
 		soundavalanche.StopSound()
 	
 	soundavalanche.Position = 58675.3793567, 6565.4, -118361.612274
@@ -1268,6 +1276,10 @@ def CierraPuertaLlave2():
 	
 def AbrePuertaLlave4():
 	puerta4.OpenDoor()
+	Bladex.GetEntity("5SPD").UnFreeze()
+	Bladex.GetEntity("6SPD").UnFreeze()
+	Bladex.GetEntity("7SPD").UnFreeze()
+	Bladex.GetEntity("8SPD").UnFreeze()
 
 def CierraPuertaLlave4():
 	puerta4.CloseDoor()
@@ -1284,12 +1296,15 @@ def CierraPuertar1():
 
 def EntroEnTriggerSector(trsector_name, entity_name):
 	#print("entidad:"+entity_name+", en sector"+trsector_name);
-	if (entity_name<>"Player1") : return
+	if (entity_name!="Player1") : return
 	AbrePuertar1()
 
 def Abrepta():
 	ptatrampa1.OpenDoor()
 	ptatrampa2.OpenDoor()
+	Bladex.GetEntity("39aORC").Deaf = 0		# Add
+	Bladex.GetEntity("39bORC").Deaf = 0		# -LeadHead
+
 
 def Cierrapta():
 	ptatrampa1.CloseDoor()
@@ -1310,6 +1325,8 @@ def LineaPolvo():
 def Abrepuertasag():
 	#puertasag1.OpenDoor()
 	puertasag2.OpenDoor()
+	Bladex.GetEntity("38ORC").Deaf = 0	# Add
+	Bladex.GetEntity("33ORC").Deaf = 0	# -LeadHead
 
 def CierraPuertasag(sectorindex,entityname):
 	if entityname=="Player1":
@@ -1527,6 +1544,9 @@ def Telmbluno_Com(sectorindex,entityname):
 		dust.RemueveTierraGen(-32904, -6500, -21004,2500,2000)
 		Bladex.AddScheduledFunc(Bladex.GetTime()+1.5, dust.DropDust,(-33076,-15002,-16374,100,-1000,-1000))
 		Bladex.AddScheduledFunc(Bladex.GetTime()+3.0, dust.DropDust,(-34834,-15555,-23438,100,-1000, 1000))
+		obj = Bladex.GetEntity("pedrolo25")		# Added
+		obj.Move(0,-30,0)						#
+		obj.Impulse(0,-700,-900000)				#		-LeadHead
 		char= Bladex.GetEntity("Player1")
 		Piedruna.Position = char.Position
 		Piedruna.PlaySound(1)
@@ -1535,7 +1555,7 @@ def Telmbluno_Com(sectorindex,entityname):
 # Segundo Temblor ENTRADA A LA CIUDAD
 def XTelmbluno_Com(sectorindex,entityname):
 	global Tiembla_
-	
+	print "XTelmbluno_Com"
 	if entityname == "Player1":
 		Tiembla_ = 1
 		XSActivaTembluno.OnEnter = ""
@@ -1560,7 +1580,7 @@ def XTelmbluno_Off(sectorindex,entityname):
 # Tercer Temblor TRAS LA SALA OCTOGONAL
 def YTelmbluno_Com(sectorindex,entityname):
 	global Tiembla_
-	
+	print "YTelmbluno_Com"
 	if entityname == "Player1":
 		Tiembla_ = 1
 		YSActivaTembluno.OnEnter = ""		
@@ -1583,7 +1603,7 @@ def YTelmbluno_Off(sectorindex,entityname):
 # CUARTO Temblor TRAS EL TROLL TONTO
 def ZTelmbluno_Com(sectorindex,entityname):
 	global Tiembla_
-	
+	print "ZTelmbluno_Com"
 	if entityname == "Player1":
 		Tiembla_ = 1
 		ZSActivaTembluno.OnEnter = ""		
@@ -1606,7 +1626,7 @@ def ZTelmbluno_Off(sectorindex,entityname):
 # quinto Temblor EN PARTE BAJA GRUTAS
 def ATelmbluno_Com(sectorindex,entityname):
 	global Tiembla_
-	
+	print "ATelmbluno_Com"
 	if entityname == "Player1":
 		Tiembla_ = 1
 		ASActivaTembluno.OnEnter = ""		
