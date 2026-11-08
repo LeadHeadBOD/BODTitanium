@@ -1,3 +1,9 @@
+##///
+##||| Ragnar_M2/InicioScene.PY TITANIUM
+##||| Change list:
+##||| * All Sparks.MakeShield etc. replaced with ItemDefaultFuncs for consistency
+##\\\ 
+
 from math import pow
 import Bladex
 import GameText
@@ -15,12 +21,10 @@ Scorer.SetVisible(0)
 
 ##caballero traidor 2 en mazmorras 
 
-Espadaromana=Bladex.CreateEntity("RagnarEspadaromana2","Gladius",0,0,0)
-Espadaromana.Weapon=1
-Breakings.SetBreakableWS("RagnarEspadaromana2")
+Espadaromana=Bladex.CreateEntity("RagnarEspadaromana2","Gladius",0,0,0,"Weapon")
+ItemTypes.ItemDefaultFuncs(Espadaromana)
 escudo=Bladex.CreateEntity("RagnarEsc2kgt","Escudo5",0,0,0)
-Sparks.MakeShield("RagnarEsc2kgt")
-Breakings.SetBreakableWS("RagnarEsc2kgt")
+ItemTypes.ItemDefaultFuncs(escudo)
 potion=Bladex.CreateEntity("Kngtant2Potion","PocimaTodo",0,0,0)
 potion.Static=0
 potion.Solid=1
