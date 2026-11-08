@@ -303,7 +303,7 @@ o=Bladex.CreateEntity("NoName71","CandilAurelio",-11147.803000,-560.242000,22511
 o.Scale=1.000000
 o.Orientation=0.500000,0.500000,-0.500000,0.500000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.209523,(255,163,60)) ]
+o.Lights=[ (10.000000,0.400000,(255,163,60)) ]  # Precision 0.2 -> 0.4 to prevent z-fighting shadows
 
 
 o=Bladex.CreateEntity("NoName72","Roca1Aurelio",-90065.101000,2413.336000,198673.214000,"Physic")
