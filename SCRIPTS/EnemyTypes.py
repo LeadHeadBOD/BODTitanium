@@ -15,6 +15,7 @@
 ##||| * Enabled fire spit for Golem_lava
 ##||| * Removed unnecessary checks for "if victim.InCombat:" in spit attacks
 ##||| * Great demon - better hit detection for fire ring, light on fire ring, dust on earthquake, immunity during powerup, scaling damage
+##||| * Adopted Lumen changes for EntityFader
 ##\\\ 
 
 
@@ -50,6 +51,7 @@ import GenFX
 import OnOff
 import DMusic
 import ObjStore
+import types
 
 
 
@@ -1099,8 +1101,8 @@ class Little_Demon (Enm_Def.NPCPerson):
 		self.SoundPriorities[Reference.SND_PC]      = 80.0
 
 		# Create a linear interpolator for fading
-		FadeList=[me.Name]
-		self.Fader= EntitiesFader (FadeList)
+		# FadeList=[me.Name]
+		self.Fader= EntitiesFader (me.Name)
 
 		self.DamageFactorNone  = 0.1
 		self.DamageFactorLight = 0.2
@@ -1118,7 +1120,7 @@ class Little_Demon (Enm_Def.NPCPerson):
 		if(NPCPerson_state[0]!=1):
 			print "ERROR: Little_Demon.__getstate__(): Base class version differs."
 			return NPCPerson_state
-		NPCPerson_state[1]["Little_Demon"]=(self.AGE_Number,)
+		NPCPerson_state[1]["Little_Demon"]=(self.AGE_Number,self.Fader)
 		return NPCPerson_state
 
 	def __setstate__(self,parm):
@@ -1128,11 +1130,12 @@ class Little_Demon (Enm_Def.NPCPerson):
 		if version==1:
 			parms=parm[1]["Little_Demon"]
 			self.AGE_Number=parms[0]
+			self.Fader=parms[1]
 
 		me=Bladex.GetEntity(self.Name)
 		# Create a linear interpolator for fading
-		FadeList=[me.Name]
-		self.Fader= EntitiesFader (FadeList)
+		# FadeList=[me.Name]
+		# self.Fader= EntitiesFader (FadeList)
 		self.FadeOutTime= 0.23333
 		self.FadeInTime= 0.23333
 		self.TransitTime= 0.0
@@ -1559,9 +1562,9 @@ class Troll_Dark (Enm_Def.NPCPerson):
 ################################################################################
 class Troll_snow (Enm_Def.NPCPerson):
 	def __init__(self, me):
-		# base class init		
+		# base class init
 		Enm_Def.NPCPerson.__init__(self, me)
-		
+
 		self.DamageFactorNone  = 0.15
 		self.DamageFactorLight = 0.25
 
@@ -1583,7 +1586,7 @@ class Troll_snow (Enm_Def.NPCPerson):
 
 	def ResetCombat (self,EntityName):
 		Enm_Def.NPCPerson.ResetCombat(self, EntityName)
-		me = Bladex.GetEntity(EntityName)	
+		me = Bladex.GetEntity(EntityName)
 		if me and me.Life>0:
 			me.BlockingPropensity = 0.8
 			me.AttackList = BCopy.deepcopy(Combat.TrollAttackData)
@@ -1990,16 +1993,18 @@ class Spidersmall (Enm_Def.NPCPerson):
 class EntitiesFader(Interpolator.LinearInt):
 	"Clase para hacer desaparecer una entidad"
 
-	def __init__(self, Entities2Fade):
-		Interpolator.LinearInt.__init__ (self,1.0,0.0)
+	def __init__(self, Owner, init_value=1.0, end_value=0.0):
+		Interpolator.LinearInt.__init__ (self,init_value,end_value)
 		self.ObjId=ObjStore.GetNewId() # Para identificarlo al grabar/guardar
 		ObjStore.ObjectsStore[self.ObjId]=self
 
-		name= "Entity Fader for; "
-		for entity_name in Entities2Fade:
-			name= name+entity_name+", "
-		self.Interpolator= Interpolator.Interp(name)
-		self.Entities2Fade= Entities2Fade
+		if type(Owner) in (types.ListType, types.TupleType):
+			Owner = Owner[0]
+
+		name= "Entity Fader for; " + Owner
+		self.Owner = Owner
+		self.Interpolator = Interpolator.Interp(name)
+		self.Entities2Fade = []
 
 	#def __del__(self):
 	#	Interpolator.LinearInt.__del__(self)
@@ -2013,30 +2018,46 @@ class EntitiesFader(Interpolator.LinearInt):
 		# Tiene que devolver c䮯 poder guardar el estado de la clase
 		return (1,
 			self.ObjId,
+			self.Owner,
 			self.Interpolator,
-			self.Entities2Fade
+			self.Entities2Fade,
+			self.init_value,
+			self.end_value,
+			self.period,
+			self.Execute,
 			)
 
 	def __setstate__(self,parm):
 		# Toma como par⮥tro lo que devuelve __getstate__() y debe recrear la clase
 		if parm[0]==1:
-			self.ObjId=parm[1]
+			(
+				self.ObjId,
+				self.Owner,
+				self.Interpolator,
+				self.Entities2Fade,
+				self.init_value,
+				self.end_value,
+				self.period,
+				self.Execute,
+			) = parm[1:]
 			ObjStore.ObjectsStore[self.ObjId]=self
-			self.Interpolator=parm[2]
-			self.Entities2Fade=parm[3]
-			self.init_value=1.0
-			self.end_value=0.0
-			self.period=self.end_value-self.init_value
 		else:
 			print "Warning -> Version mismatch in EntitiesFader.__setstate__()"
 			self.Interpolator= None
-			self.Entities2Fade= None
+			self.Entities2Fade= []
 			self.init_value=1.0
 			self.end_value=0.0
 			self.period=self.end_value-self.init_value
 
 			self.ObjId=ObjStore.GetNewId() # Para identificarlo al grabar/guardar
 			ObjStore.ObjectsStore[self.ObjId]=self
+
+	def SetEntities2Fade(self):
+		me = Bladex.GetEntity(self.Owner)
+		self.Entities2Fade = [self.Owner]
+		for name in (me.InvRight, me.InvRightBack, me.InvLeft, me.InvLeftBack):
+			if name:
+				self.Entities2Fade.append(name)
 
 	def ExecuteFadeOut(self,value):
 		#pdb.set_trace()
@@ -2054,6 +2075,7 @@ class EntitiesFader(Interpolator.LinearInt):
 				entity.Alpha= 1.0-ret
 
 	def FadeOut(self, period):
+		self.SetEntities2Fade()
 		self.Interpolator.Actions=[]
 		self.Execute= self.ExecuteFadeOut
 		time= Bladex.GetTime()
@@ -2061,6 +2083,7 @@ class EntitiesFader(Interpolator.LinearInt):
 
 	def FadeIn(self, period):
 		#pdb.set_trace()
+		self.SetEntities2Fade()
 		self.Interpolator.Actions=[]
 		self.Execute= self.ExecuteFadeIn
 		time= Bladex.GetTime()
@@ -2106,12 +2129,12 @@ class Vamp (Enm_Def.NPCPerson):
 		self.SoundPriorities[Reference.SND_PC]      = 80.0
 
 		# constants
-		FadeList=[me.Name]
-		if Actions.StatR(me.Name)!=Actions.RA_NO_WEAPON:
-			FadeList.append (me.InvRight)
-		if Actions.StatL(me.Name)!=Actions.LA_NO_WEAPON:
-			FadeList.append (me.InvLeft)
-		self.Fader= EntitiesFader (FadeList)
+		# FadeList=[me.Name]
+		# if Actions.StatR(me.Name)!=Actions.RA_NO_WEAPON:
+		# 	FadeList.append (me.InvRight)
+		# if Actions.StatL(me.Name)!=Actions.LA_NO_WEAPON:
+		# 	FadeList.append (me.InvLeft)
+		self.Fader= EntitiesFader (me.Name)
 
 		me.AddAnmEventFunc("Disappear", self.DisappearEvent)
 
@@ -2123,7 +2146,7 @@ class Vamp (Enm_Def.NPCPerson):
 		if(NPCPerson_state[0]!=1):
 			print "ERROR: Vamp.__getstate__(): Base class version differs."
 			return NPCPerson_state
-		NPCPerson_state[1]["Vamp"]=(self.Enemy, self.EnemyAngle)
+		NPCPerson_state[1]["Vamp"]=(self.Enemy, self.EnemyAngle, self.Fader)
 		return NPCPerson_state
 
 	def __setstate__(self,parm):
@@ -2134,15 +2157,16 @@ class Vamp (Enm_Def.NPCPerson):
 			parms=parm[1]["Vamp"]
 			self.Enemy=parms[0]
 			self.EnemyAngle=parms[1]
+			self.Fader=parms[2]
 
 		me=Bladex.GetEntity(self.Name)
 		# Create a linear interpolator for fading
-		FadeList=[me.Name]
-		if Actions.StatR(me.Name)!=Actions.RA_NO_WEAPON:
-			FadeList.append (me.InvRight)
-		if Actions.StatL(me.Name)!=Actions.LA_NO_WEAPON:
-			FadeList.append (me.InvLeft)
-		self.Fader= EntitiesFader (FadeList)
+		# FadeList=[me.Name]
+		# if Actions.StatR(me.Name)!=Actions.RA_NO_WEAPON:
+		# 	FadeList.append (me.InvRight)
+		# if Actions.StatL(me.Name)!=Actions.LA_NO_WEAPON:
+		# 	FadeList.append (me.InvLeft)
+		# self.Fader= EntitiesFader (FadeList)
 		self.FadeOutTime= 0.45
 		self.FadeInTime= 0.65
 		self.TransitTime= 0.20
@@ -2435,7 +2459,7 @@ class Lich (Enm_Def.NPCPerson):
 		if hit_entity != "BWorld":
 			victim=Bladex.GetEntity(hit_entity)
 			if victim:
-				if victim.Person and not victim.Kind=="Little_Demon":
+				if victim.Person and not victim.Kind=="Lich":
 					if self.SpitHits.has_key(SpitAge):
 						if not hit_entity in self.SpitHits[SpitAge]:
 							self.SpitHits[SpitAge].append(hit_entity)
@@ -2456,7 +2480,7 @@ class Lich (Enm_Def.NPCPerson):
 		# This particle should be removed, as it has collided
 
 		ptcl.RemoveFromWorld()
-        
+
 
 	def SpitFunc(self, vomit_name,end_time,period):
 		vomit=Bladex.GetEntity(vomit_name)
@@ -2551,14 +2575,8 @@ class Lich (Enm_Def.NPCPerson):
 								AttackerEntity= weapon
 							elif weapon.Parent:
 								AttackerEntity= Bladex.GetEntity(weapon.Parent)
-							elif weapon.Data:
-								try:                                                                    # Bugfix. If mutilation is done by a thrown weapon,
-									if weapon.Data.ThrownBy:                                            # previously would fail to trigger OnKilledEnemy func
-										AttackerEntity= weapon.Data.ThrownBy                            # like awarding experience              
-								except:                                                                 #
-									AttackerEntity= None                                                #                                   -LeadHead
 							else:
-								AttackerEntity= None
+								AttackerEntity= getattr(weapon.Data, "ThrownBy", None) # -Sryml
 							if AttackerEntity and AttackerEntity.Person:
 								AttackerEntity.Data.OnKilledEnemy(EntityName)
 			elif NewMutilation==self.RightHand or NewMutilation==self.RightArm:
@@ -2825,8 +2843,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 	shield_particle_system= None
 	LifeUpCalled=0
 
-	back_aura=None
-	front_aura=None
+	# back_aura=None # AutoSave
+	# front_aura=None # AutoSave
 
 	GDLevelUpParticleData=[]
 
@@ -2853,8 +2871,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 		me.ImDeadFunc=self.ImDeadFunc
 
 		# Create a linear interpolator for fading
-		FadeList=[me.Name]
-		self.Fader= EntitiesFader (FadeList)
+		# FadeList=[me.Name]
+		self.Fader= EntitiesFader (me.Name)
 
 		pos= me.Position
 
@@ -2911,21 +2929,22 @@ class Great_Demon (Enm_Def.NPCPerson):
 			print "ERROR: Great_Demon.__getstate__(): Base class version differs."
 			return NPCPerson_state
 
-		shield_light_Name=""
-		if self.shield_light:
-			shield_light_Name=self.shield_light.Name
+		# shield_light_Name=""
+		# if self.shield_light:
+		# 	shield_light_Name=self.shield_light.Name
 
-		shield_particle_system_Name=""
-		if self.shield_particle_system:
-			shield_particle_system_Name=self.shield_particle_system.Name
+		# shield_particle_system_Name=""
+		# if self.shield_particle_system:
+		# 	shield_particle_system_Name=self.shield_particle_system.Name
 
 		NPCPerson_state[1]["Great_Demon"]=(self.Flame,
 						self.AGE_Number,
 						self.Phase,
-						shield_light_Name,
-						shield_particle_system_Name,
+						self.shield_light,
+						self.shield_particle_system,
 						self.LifeUpCalled,
-						self.RingName)
+						self.RingName,
+						self.Fader,)
 		return NPCPerson_state
 
 	def __setstate__(self,parm):
@@ -2933,8 +2952,8 @@ class Great_Demon (Enm_Def.NPCPerson):
 
 		Enm_Def.NPCPerson.__setstate__(self,parm)
 
-		shield_light_Name=""
-		shield_particle_system_Name=""
+		# shield_light_Name=""
+		# shield_particle_system_Name=""
 		me=Bladex.GetEntity(self.Name)
 		version=parm[0]
 		if version==1:
@@ -2943,19 +2962,19 @@ class Great_Demon (Enm_Def.NPCPerson):
 			self.AGE_Number=parms[1]
 			self.Phase=parms[2]
 
-			shield_light_Name= parms[3]
-			shield_particle_system_Name=parms[4]
+			self.shield_light= parms[3]
+			self.shield_particle_system=parms[4]
 			self.LifeUpCalled=parms[5]
 			self.RingName=parms[6]
 
-			self.shield_light=Bladex.GetEntity(shield_light_Name)
-			self.shield_particle_system=Bladex.GetEntity(shield_particle_system_Name)
+			# self.shield_light=Bladex.GetEntity(shield_light_Name)
+			# self.shield_particle_system=Bladex.GetEntity(shield_particle_system_Name)
 
 			# constants
-			self.LevelUpTime=0.5		# was 0.5
-			self.ImplosionPeriod = 2.8	# was 2.5
+			self.LevelUpTime=0.5
+			self.ImplosionPeriod = 2.5
 			self.DeathBallPeriod = 3.5
-			self.LifeUpCalled=0
+			# self.LifeUpCalled=0 # Fixed -Sryml
 			me.AddAnmEventFunc("Spit", self.StartSpit)
 			me.AddAnmEventFunc("Stop_Spit", self.StopSpit)
 			me.AddAnmEventFunc("Quake", self.Quake)
@@ -2966,20 +2985,20 @@ class Great_Demon (Enm_Def.NPCPerson):
 			self.ShieldLife= 10000.0
 
 			# Create a linear interpolator for fading
-			FadeList=[me.Name]
-			self.Fader= EntitiesFader (FadeList)
+			# FadeList=[me.Name]
+			# self.Fader= EntitiesFader (FadeList)
 			self.FadeOutTime= 0.23333
 			self.FadeInTime= 0.23333
 			self.TransitTime= 0.0
 
-			pos= me.Position
-			self.back_aura= Bladex.GetEntity(me.Name+"_BackAura")
-			self.front_aura= Bladex.GetEntity(me.Name+"_FrontAura")
-			self.SetAuraIntensity()
-			self.back_aura.SetAuraGradient(2,  0.0, 0.0, 1.0, 0.3, 0.6, 1.0, 1.0, 1.0, 0.0, 1.0)
-			self.front_aura.SetAuraGradient(2,  0.0, 0.0, 1.0, 0.1, 0.0  , 1.0, 1.0, 1.0, 0.0, 1.0)
-			self.back_aura.SetAuraActive(0)
-			self.front_aura.SetAuraActive(0)
+			# pos= me.Position
+			# self.back_aura= Bladex.GetEntity(me.Name+"_BackAura")
+			# self.front_aura= Bladex.GetEntity(me.Name+"_FrontAura")
+			# self.SetAuraIntensity()
+			# self.back_aura.SetAuraGradient(2,  0.0, 0.0, 1.0, 0.3, 0.6, 1.0, 1.0, 1.0, 0.0, 1.0)
+			# self.front_aura.SetAuraGradient(2,  0.0, 0.0, 1.0, 0.1, 0.0  , 1.0, 1.0, 1.0, 0.0, 1.0)
+			# self.back_aura.SetAuraActive(0)
+			# self.front_aura.SetAuraActive(0)
 			Bladex.CreateTimer("Timer8",1.0/8.0)
 			me.Alpha= 0.9
 
@@ -3167,7 +3186,7 @@ class Great_Demon (Enm_Def.NPCPerson):
 		x,y,z= me.GraspPos("1H_L")
 		lball=Bladex.CreateEntity(self.Name+"_Fire","Entity Particle System D1",x,y,z)
 		lball.ParticleType="Flame"
-		lball.PPS=160			# Reduced to stop killing framnerates/entity limits		-LeadHead
+		lball.PPS=160			# Reduced to stop killing framerates/entity limits		-LeadHead
 		lball.YGravity=-300.0
 		lball.Friction=0.04
 		lball.RandomVelocity=-30.0
@@ -3367,9 +3386,6 @@ class Great_Demon (Enm_Def.NPCPerson):
 		x,y,z= me.GraspPos("ViewPoint")
 		self.AGE_Number=self.AGE_Number+1
 		node= me.GetNodeIndex("Head")
-		
-		# print `me.Name` + " started spit at " + `Bladex.GetTime()`
-		
 		# Get an angle to the target
 		target= Bladex.GetEntity(me.GetEnemyName())
 		target_pos= target.Position
@@ -3467,12 +3483,18 @@ class Great_Demon (Enm_Def.NPCPerson):
 				return
 
 		if self.shield_light.Intensity > 0.0:
-			damage_absorbed= (self.shield_light.Intensity/self.ShieldIntensityMax) * DamagePoints
+			# Fixed -Sryml
+			prev_shield_life = (self.shield_light.Intensity/self.ShieldIntensityMax) * self.ShieldLife
+			current_shield_life = max(0, prev_shield_life - DamagePoints)
+			if current_shield_life == 0:
+				damage_absorbed = prev_shield_life
+			else:
+				damage_absorbed = DamagePoints
+			#
+
 			if me and me.Life > -damage_absorbed:
 				me.Life= me.Life+damage_absorbed
 				DamagePoints= max (DamagePoints-damage_absorbed, 0.0)
-				current_shield_life= (self.shield_light.Intensity/self.ShieldIntensityMax) * self.ShieldLife
-				current_shield_life= current_shield_life - damage_absorbed
 				self.shield_light.Intensity = (current_shield_life/self.ShieldLife)*self.ShieldIntensityMax
 				self.SetAuraIntensity()
 				#print "shield at "+`(self.shield_light.Intensity/self.ShieldIntensityMax)`
@@ -4646,8 +4668,8 @@ class DalGurak (Enm_Def.NPCPerson):
 
 		#constants
 		# Create a linear interpolator for fading
-		FadeList=[me.Name]
-		self.Fader= EntitiesFader (FadeList)
+		# FadeList=[me.Name]
+		self.Fader= EntitiesFader (me.Name)
 		me.AddAnmEventFunc("StartBall", self.StartBall)
 		me.AddAnmEventFunc("FireBall", self.ShootBall)
 		me.AddAnmEventFunc("Diskcreate", self.CreateDisk)
@@ -4694,10 +4716,10 @@ class DalGurak (Enm_Def.NPCPerson):
 		if(NPCPerson_state[0]!=1):
 			print "ERROR: DalGurak.__getstate__(): Base class version differs."
 			return NPCPerson_state
-		if self.Dalweapon: DalweaponName= self.Dalweapon.Name
-		else: DalweaponName= ""
-		if self.Dalshield: DalshieldName= self.Dalshield.Name
-		else: DalshieldName= ""
+		# if self.Dalweapon: DalweaponName= self.Dalweapon.Name
+		# else: DalweaponName= ""
+		# if self.Dalshield: DalshieldName= self.Dalshield.Name
+		# else: DalshieldName= ""
 		NPCPerson_state[1]["DalGurak"]=(self.positionlist,
 										self.last_disappeared_at,
 										self.AGE_Number,
@@ -4705,8 +4727,9 @@ class DalGurak (Enm_Def.NPCPerson):
 										self.Phase,
 										self.BallName,
 										self.MissileName,
-										DalweaponName,
-										DalshieldName)
+										self.Dalweapon,
+										self.Dalshield,
+										self.Fader,)
 		return NPCPerson_state
 
 	def __setstate__(self,parm):
@@ -4721,20 +4744,23 @@ class DalGurak (Enm_Def.NPCPerson):
 			self.Phase= parms[4]
 			self.BallName= parms[5]
 			self.MissileName= parms[6]
-			DalweaponName=  parms[7]
-			DalshieldName=  parms[8]
+			self.Dalweapon=  parms[7]
+			self.Dalshield=  parms[8]
+			self.Fader= parms[9]
 
-			if DalweaponName: self.Dalweapon= Bladex.GetEntity(DalweaponName)
-			else: self.Dalweapon= None
-			if DalshieldName: self.Dalshield= Bladex.GetEntity(DalshieldName)
-			else: self.Dalshield= None
+
+			# if DalweaponName: self.Dalweapon= Bladex.GetEntity(DalweaponName)
+			# else: self.Dalweapon= None
+			# if DalshieldName: self.Dalshield= Bladex.GetEntity(DalshieldName)
+			# else: self.Dalshield= None(DalshieldName)
+			# else: self.Dalshield= None
 			Enm_Def.NPCPerson.__setstate__(self,parm)
 
 			#constants
 			# Create a linear interpolator for fading
 			me=Bladex.GetEntity(self.Name)
-			FadeList=[me.Name]
-			self.Fader= EntitiesFader (FadeList)
+			# FadeList=[me.Name]
+			# self.Fader= EntitiesFader (FadeList)
 			self.FadeOutTime= 0.23333
 			self.FadeInTime= 0.23333
 			self.TransitTime= 0.0
