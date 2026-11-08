@@ -5,6 +5,9 @@
 ##||| * Torture equipment now sparks joy
 ##||| * Corrected some floating metal bars
 ##||| * Metal bars now spark joy
+##||| * Shadowpass
+##||| * Powerpotion column now static
+##||| * Torches made from "Physic" to "Weapon"
 ##\\\ 
 
 import Sparks
@@ -65,7 +68,7 @@ o=Bladex.CreateEntity("NoName5","Antorchaenpared",22812.492000,26182.610000,6693
 o.Scale=1.000000
 o.Orientation=0.012343,0.086174,-0.706999,0.701836
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (7.000000,0.280780,(255,147,28)) ]
+o.Lights=[ (7.000000,0.20,(255,147,28)) ]   # prec
 
 
 
@@ -73,7 +76,7 @@ o=Bladex.CreateEntity("NoName8","Lampcolg",-6092.438000,27023.029000,64928.22800
 o.Scale=1.580459
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (20.000000,0.600000,(255,147,28)) ]
+o.Lights=[ (20.000000,0.400000,(255,147,28)) ]  # prec
 
 
 
@@ -93,7 +96,7 @@ o=Bladex.CreateEntity("NoName12","Lampcolg",10658.672000,27778.924000,49755.9590
 o.Scale=1.890462
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (44.952858,0.962417,(255,156,47)) ]
+o.Lights=[ (44.952858,0.25,(255,156,47)) ]  # prec
 
 
 
@@ -101,7 +104,7 @@ o=Bladex.CreateEntity("ANT13","Antorchaenpared",24418.811000,29757.632000,46373.
 o.Scale=1.000000
 o.Orientation=0.701836,0.701836,-0.086175,-0.086175
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.529454,(255,158,51)) ]
+o.Lights=[ (10.000000,0.325,(255,158,51)) ]  # prec
 
 
 
@@ -109,7 +112,7 @@ o=Bladex.CreateEntity("ANT19","Antorchaenpared",-3927.632000,24841.494000,52456.
 o.Scale=1.000000
 o.Orientation=0.061628,-0.024678,0.704416,-0.706676
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.674100,(255,154,43)) ]
+o.Lights=[ (9.000000,0.300000,(255,154,43)) ]   # prec and intens
 
 
 
@@ -117,7 +120,7 @@ o=Bladex.CreateEntity("ANT18","Antorchaenpared",14224.027000,24722.421000,28849.
 o.Scale=1.000000
 o.Orientation=0.508650,0.564721,-0.491198,0.425548
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (15.000000,0.500000,(255,140,13)) ]
+o.Lights=[ (15.000000,0.175000,(255,140,13)) ]  # prec
 
 
 
@@ -125,7 +128,7 @@ o=Bladex.CreateEntity("ANT17","Antorchaenpared",-1904.815000,24584.621000,30263.
 o.Scale=1.020100
 o.Orientation=0.454519,0.541675,-0.541675,0.454519
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.300000,(255,141,15)) ]
+o.Lights=[ (10.000000,0.150000,(255,141,15)) ]
 
 
 
@@ -133,7 +136,7 @@ o=Bladex.CreateEntity("ANT15","Antorchaenpared",18284.114000,29572.292000,22399.
 o.Scale=1.000000
 o.Orientation=0.495618,0.495618,0.504344,-0.504344
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (15.000000,0.656349,(255,153,40)) ]
+o.Lights=[ (15.000000,0.325,(255,153,40)) ]     # prec
 
 
 
@@ -197,7 +200,7 @@ o=Bladex.CreateEntity("ANT8","LamparaNegra",-6069.180000,29307.434000,39810.9560
 o.Scale=1.000000
 o.Orientation=0.463904,0.463904,-0.533660,0.533660
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (10.000000,0.600000,(255,160,55)) ]
+o.Lights=[ (10.000000,0.320000,(255,160,55)) ]      # prec
 
 
 
@@ -205,7 +208,7 @@ o=Bladex.CreateEntity("ANT14","Antorchaenpared",24497.150000,29465.132000,28476.
 o.Scale=1.000000
 o.Orientation=0.705384,0.705384,-0.049325,-0.049325
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (8.000000,0.931250,(255,155,45)) ]
+o.Lights=[ (10.000000,0.300000,(255,155,45)) ]           # prec
 
 
 
@@ -258,7 +261,7 @@ o=Bladex.CreateEntity("ANT34","Antorchaenpared",-11914.746000,46847.851000,34550
 o.Scale=1.061520
 o.Orientation=0.092296,-0.043168,0.701057,-0.705788
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (25.000000,0.431250,(255,147,28)) ]
+o.Lights=[ (25.000000,0.400000,(255,147,28)) ]      # prec
 
 
 
@@ -266,7 +269,7 @@ o=Bladex.CreateEntity("ANT32","Antorchaenpared",-9518.304000,46249.519000,60525.
 o.Scale=1.000000
 o.Orientation=0.707107,0.707107,0.000000,0.000000
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (27.597580,0.529454,(255,141,15)) ]
+o.Lights=[ (27.50000,0.32500,(255,141,15)) ]        # prec
 
 
 
@@ -352,11 +355,10 @@ o.FiresIntensity=[ 3 ]
 o.Lights=[ (10.000000,0.500000,(255,149,32)) ]
 
 
-
-o=Bladex.CreateEntity("NoName111","Arbolseco2",5989.797000,34248.642000,53691.721000,"Physic")
+o=Bladex.CreateEntity("NoName111","Arbolseco2",5989.797, 34848.642, 53691.721,"Physic")       # Moved a bit more down not to stick out on floor above
 o.Scale=1.580459
 o.Orientation=0.936672,-0.350207,0.000000,0.000000
-Sparks.SetWoodenSparkling(o.Name)
+# Sparks.SetWoodenSparkling(o.Name)
 
 
 o=Bladex.CreateEntity("NoName116","Pinchos",-20507.913000,47173.656000,24181.658000,"Physic")       # Y was 47008.
@@ -454,7 +456,7 @@ o=Bladex.CreateEntity("ANT16","Antorchaenpared",1824.418000,29517.446000,22395.2
 o.Scale=1.000000
 o.Orientation=0.517145,0.517145,0.482246,-0.482246
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (8.010000,0.531250,(255,141,15)) ]
+o.Lights=[ (8.000000,0.21,(255,141,15)) ]       # Prec
 
 
 
@@ -524,7 +526,7 @@ o=Bladex.CreateEntity("ANT1","Antorchaenpared",49424.853000,47040.401000,-2751.7
 o.Scale=1.115668
 o.Orientation=0.468543,0.468543,0.529592,-0.529592
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (8.149651,0.631250,(236,124,0)) ]
+o.Lights=[(8.19999980927, 0.10000000149, (236, 124, 0))]    # prec
 
 
 
@@ -532,7 +534,7 @@ o=Bladex.CreateEntity("ANT12","Antorchaenpared",20581.815000,29965.796000,34760.
 o.Scale=1.000000
 o.Orientation=0.006164,-0.104517,0.707080,-0.699340
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (7.401227,0.950822,(255,153,40)) ]
+o.Lights=[(7.5, 0.40000000596, (255, 153, 40))]     # prec
 
 
 
@@ -546,7 +548,7 @@ o=Bladex.CreateEntity("ANT33","Antorchaenpared",-11910.513000,46973.163000,52325
 o.Scale=1.000000
 o.Orientation=0.000000,0.122787,-0.707107,0.696364
 o.FiresIntensity=[ 3 ]
-o.Lights=[ (4.000000,0.331250,(255,146,26)) ]
+o.Lights=[ (10.000000,0.160000,(255,146,26)) ]      # prec and inten
 
 
 
@@ -680,7 +682,7 @@ o=Bladex.CreateEntity("ANT37","Antorchaenpared",36024.213000,45015.056000,20106.
 o.Scale=1.000000
 o.Orientation=0.024677,-0.049325,0.706676,-0.705384
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (30.000000,0.931250,(255,156,47)) ]
+o.Lights=[ (30.000000,0.50000,(255,156,47)) ]       # prec
 
 
 
@@ -696,7 +698,7 @@ o=Bladex.CreateEntity("ANT26","Antorchaenpared",18521.100000,43707.876000,16299.
 o.Scale=1.000000
 o.Orientation=0.477714,0.560986,-0.521334,0.430459
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (20.000000,0.531250,(255,145,21)) ]
+o.Lights=[ (20.000000,0.325,(255,145,21)) ]         # prec
 
 
 
@@ -752,7 +754,7 @@ o=Bladex.CreateEntity("ANT0","Antorchaenpared",-7271.841000,47440.597000,14305.7
 o.Scale=1.000000
 o.Orientation=0.512917,0.430459,0.486740,-0.560986
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (20.000000,0.631250,(255,142,17)) ]
+o.Lights=[ (20.000000,0.20000,(255,142,17)) ]       # prec
 
 
 
@@ -1074,7 +1076,7 @@ o.Orientation=0.707107,0.707107,0.000000,0.000000
 
 
 
-o=Bladex.CreateEntity("NoName0","Antorcha",-41211.460000,51646.698000,11327.358000,"Physic")
+o=Bladex.CreateEntity("NoName0","Antorcha",-41211.460000,51646.698000,11327.358000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.768688,-0.067252,0.633658,-0.055438
 o.FiresIntensity=[ 0 ]
@@ -1559,7 +1561,7 @@ o.Orientation=0.951659,0.029554,0.229685,-0.201783
 
 
 
-o=Bladex.CreateEntity("ants2","Antorcha",-7469.640000,49104.557000,12203.232000,"Physic")
+o=Bladex.CreateEntity("ants2","Antorcha",-7469.640000,49104.557000,12203.232000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.999657,0.026177,0.000000,0.000000
 o.FiresIntensity=[ 30 ]
@@ -1567,7 +1569,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 
 
 
-o=Bladex.CreateEntity("ants1","Antorcha",-8483.216000,49139.067000,13590.683000,"Physic")
+o=Bladex.CreateEntity("ants1","Antorcha",-8483.216000,49139.067000,13590.683000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.024519,0.936351,0.009167,0.350087
 o.FiresIntensity=[ 44 ]
@@ -1575,7 +1577,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 
 
 
-o=Bladex.CreateEntity("ants3","Antorcha",-8145.366000,49121.584000,-3400.621000,"Physic")
+o=Bladex.CreateEntity("ants3","Antorcha",-8145.366000,49121.584000,-3400.621000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.517145,0.517145,-0.482246,-0.482246
 o.FiresIntensity=[ 39 ]
@@ -1583,7 +1585,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 
 
 
-o=Bladex.CreateEntity("ants4","Antorcha",53082.999000,49741.256000,-8297.696000,"Physic")
+o=Bladex.CreateEntity("ants4","Antorcha",53082.999000,49741.256000,-8297.696000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.517145,0.517145,-0.482246,-0.482246
 o.FiresIntensity=[ 50 ]
@@ -1591,7 +1593,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 
 
 
-o=Bladex.CreateEntity("ants5","Antorcha",53013.529000,49732.265000,-7147.921000,"Physic")
+o=Bladex.CreateEntity("ants5","Antorcha",53013.529000,49732.265000,-7147.921000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.999391,0.034899,0.000000,0.000000
 o.FiresIntensity=[ 61 ]
@@ -1599,7 +1601,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 
 
 
-o=Bladex.CreateEntity("ants6","Antorcha",23445.772000,30933.807000,36303.685000,"Physic")
+o=Bladex.CreateEntity("ants6","Antorcha",23445.772000,30933.807000,36303.685000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.999848,0.017452,0.000000,0.000000
 o.FiresIntensity=[ 51 ]
@@ -1607,7 +1609,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 
 
 
-o=Bladex.CreateEntity("ants8","Antorcha",23787.931000,30932.355000,37718.615000,"Physic")
+o=Bladex.CreateEntity("ants8","Antorcha",23787.931000,30932.355000,37718.615000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.517145,0.517145,-0.482246,-0.482246
 o.FiresIntensity=[ 50 ]
@@ -1615,7 +1617,7 @@ o.Lights=[ (0.000000,0.031250,(255,196,128)) ]
 
 
 
-o=Bladex.CreateEntity("ants7","Antorcha",23736.786000,30922.653000,37058.180000,"Physic")
+o=Bladex.CreateEntity("ants7","Antorcha",23736.786000,30922.653000,37058.180000,"Weapon")
 o.Scale=1.000000
 o.Orientation=0.579228,0.444997,-0.405580,-0.549525
 o.FiresIntensity=[ 54 ]
@@ -1785,7 +1787,7 @@ o=Bladex.CreateEntity("NoName0","Antorchaenpared",13938.400000,49651.698000,2182
 o.Scale=1.000000
 o.Orientation=0.704927,0.704927,-0.055479,-0.055479
 o.FiresIntensity=[ 0 ]
-o.Lights=[ (20.000000,0.461250,(255,156,47)) ]
+o.Lights=[ (20.000000,0.325000,(255,156,47)) ]       # prec
 
 
 
@@ -2088,6 +2090,8 @@ o.Orientation=0.669696,0.193362,-0.187458,-0.692082
 o=Bladex.CreateEntity("NoName0","Columna",6276.832724,13380.637497,44454.963733,"Physic")
 o.Scale=1.000000
 o.Orientation=0.681390,0.681390,0.188966,-0.188966
+Sparks.SetStoneSparkling(o.Name) # Add
+o.Static=1                       #
 
 
 o=Bladex.CreateEntity("NoName3","EsqueletoPieza10",5483.096375,13747.419717,45557.609275,Reference.ObjType("EsqueletoPieza10"))

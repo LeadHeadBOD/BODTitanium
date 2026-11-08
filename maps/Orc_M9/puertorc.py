@@ -2,6 +2,7 @@
 ##||| ORC_M9/puertorc.PY TITANIUM
 ##||| Change list:
 ##||| * Lock to bottom floor cells now can actually be closed preventing players from keeping it open after descending.
+##||| * Restored one of the missing elevator sounds
 ##\\\ 
 
 import Doors
@@ -363,7 +364,10 @@ columnaelevador.c_end_displ=500
 
 enmarcha=0
 
-
+columnaelevador.SetWhileOpenSound(loopelevador)     #   Add
+columnaelevador.SetEndOpenSound(golpeelevador)      #
+columnaelevador.SetWhileCloseSound(loopelevador)    #
+columnaelevador.SetEndCloseSound(golpeelevador)     #       -LeadHead
 
 columnaelevador.OnEndCloseFunc=EsperaYBajaElevador
 columnaelevador.OnEndOpenFunc=ElevadorArriba
