@@ -2240,8 +2240,6 @@ def Init():
     Bladex.AddMaterialStepSound("PisadaSigilo","Piedra","SigiloSobrePiedra")
     Bladex.AddMaterialStepSound("default","Metal","Metal")
     Bladex.AddMaterialStepSound("PisadaSigilo","Metal","SigiloSobreMetal")
-    # Bladex.AddMaterialStepSound("default","metal pesado","Metal")                     # Disabled for now, need proper entities
-    # Bladex.AddMaterialStepSound("PisadaSigilo","metal pesado","SigiloSobreMetal")     # that will use it          -LeadHead
     Bladex.AddMaterialStepSound("default","Barro","Barro")
     Bladex.AddMaterialStepSound("PisadaSigilo","Barro","SigiloSobreBarro")
     Bladex.AddMaterialStepSound("default","Tierra","Tierra")
@@ -2395,7 +2393,6 @@ def Init():
     Bladex.AddActionStepSound("Ldm","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Slm","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Trl","default","PisadaEnemigos")
-    Bladex.AddActionStepSound("Trl_sn","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Vmp","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Cos","default","PisadaEnemigos")
     Bladex.AddActionStepSound("Spd","default","PisadaAranitos") #Added -LeadHead
