@@ -16,7 +16,7 @@ GOG Forums: https://www.gog.com/forum/blade_of_darkness/titanium_mod
 
 
 ## Installation
-Current version of Titanium (0.5.1a) is an experiment at getting something publicly out there. As such, there is no elegant installation yet, BODLoader is not an option,
+Current version of Titanium (0.6) is stable but early. As such, there is no elegant installation yet, BODLoader is not an option,
 since it does not work well for multiple folders containing same file names.
 
 To install the mod you will need to:
@@ -40,6 +40,7 @@ Thanks to
  * Harrison      - .max format BoD meshes and animations
  * SGI           - SGIMMP tool
  * LaughingSkull - 2D map missing narration restoration idea
+ * DeH4Uk        - help with python scripts
 
 
 
@@ -51,7 +52,7 @@ Special thanks:
                      Fugitive series of custom levels (arguably some of the best the game has ever seen) and
                      overall just being an absolute living legend in this tiny community.
  * SmartBlade                       - documentation of engine funcs via the BldMystery Github repository
- * All of the forgotten BoDders out there - JoshDahlby, IronLord, Masklin, BigTruck, Reality3D, SirRandom
+ * All of the forgotten BoDders out there - JoshDahlby, IronLord, Masklin, BigTruck, Reality3D, SirRandom, Argoon (aka HMart)
                                             and many others who have been instrumental in modding the game, but are no longer active.
 
 
@@ -80,3 +81,4 @@ Tools used:
 * SGIMMP
 * Official RAS level editor LED
 * Notepad++
+* Audacity
